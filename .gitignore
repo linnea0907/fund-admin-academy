@@ -17,6 +17,9 @@
 /.next/
 /out/
 
+# next.js 冷构建备份（mv .next .next.bak_<ts> 触发；保留可恢复但不入仓）
+/.next.bak.*
+
 # production
 /build
 

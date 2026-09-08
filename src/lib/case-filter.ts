@@ -1,29 +1,33 @@
 /**
- * Case Library — 筛选模型（V1.8 筛选区重构）
+ * Case Library — 筛选模型（V1.8.1 筛选区重构）
  *
- * 三级筛选结构：
- *   L1 业务模块（主筛选，默认只显示这一层）
- *   L2 具体技能（选中一级后动态展开）
- *   L3 标签（默认折叠进「高级筛选」）
- * 另附：难度归一（基础/进阶/高级）与状态口径（待学习/学习中/已完成）。
+ * 首屏四行筛选（顺序固定）：
+ *   1. 模块   Module 1~5（一级分类，来自 case.module，正交互斥）
+ *   2. 业务   合并后的业务领域（KYC & Onboarding / AML & Compliance /
+ *            Fund Structure / Fund Documents / Client Communication，可重叠命中）
+ *   3. 技能   选中业务领域后动态展开该域技能清单
+ *   4. 难度   基础 / 进阶 / 高级（归一）
+ * 「状态」（待学习/学习中/已完成）与「标签」收纳进默认折叠的【高级筛选】。
  *
  * 纯前端数据定义（无 fs/process 依赖），client/server 均可安全 import。
  */
 
 /* ================================================================
- * L1 · 业务模块注册表（7 类 + 全部）
+ * L2 · 业务领域注册表（V1.8.1 合并为 5 类 + 全部）
+ * 合并规则：KYC/CDD + Investor Onboarding → KYC & Onboarding；
+ *           AML + Compliance → AML & Compliance；其余三类不变。
  * 域成员判定：案例命中该域技能清单任一项即属该域；
  * 技能命中 = frontmatter skills 含该项，或（非受控词表的域技能如
  * Subscription Review）tags 含该项。
+ * 旧 area 值（kyc-cdd / aml / investor-onboarding / compliance）经
+ * DOMAIN_ALIASES 映射到合并后域，历史深链不失效。
  * ================================================================ */
 
 export type CaseDomainId =
-  | "kyc-cdd"
-  | "aml"
+  | "kyc-onboarding"
+  | "aml-compliance"
   | "fund-structure"
   | "fund-documents"
-  | "investor-onboarding"
-  | "compliance"
   | "client-communication";
 
 export interface CaseDomainDef {
@@ -38,22 +42,31 @@ export interface CaseDomainDef {
 
 export const CASE_DOMAINS: CaseDomainDef[] = [
   {
-    id: "kyc-cdd",
-    label: "KYC/CDD",
-    zh: "身份/文件审核与客户尽调",
+    id: "kyc-onboarding",
+    label: "KYC & Onboarding",
+    zh: "KYC/CDD 文件审核 + 投资者准入",
     skills: [
       "Identity Verification",
       "Address Proof Review",
       "Certification Review",
       "UBO Identification",
       "SOF Review",
+      "Investor Onboarding",
+      "KYC Review",
     ],
   },
   {
-    id: "aml",
-    label: "AML",
-    zh: "反洗钱：AML Letter / 筛查 / 风险",
-    skills: ["PEP Screening", "Adverse Media Review", "AML Letter Review", "Risk Assessment"],
+    id: "aml-compliance",
+    label: "AML & Compliance",
+    zh: "反洗钱（AML Letter / 筛查 / 风险）+ 合规升级",
+    skills: [
+      "PEP Screening",
+      "Adverse Media Review",
+      "AML Letter Review",
+      "Risk Assessment",
+      "Compliance Escalation",
+      "Regulatory Analysis",
+    ],
   },
   {
     id: "fund-structure",
@@ -68,18 +81,6 @@ export const CASE_DOMAINS: CaseDomainDef[] = [
     skills: ["Subscription Review", "Certification Review", "Closing Readiness Check"],
   },
   {
-    id: "investor-onboarding",
-    label: "Investor Onboarding",
-    zh: "投资者准入全流程",
-    skills: ["Investor Onboarding", "KYC Review"],
-  },
-  {
-    id: "compliance",
-    label: "Compliance",
-    zh: "合规升级与规则适用",
-    skills: ["Compliance Escalation", "Regulatory Analysis"],
-  },
-  {
     id: "client-communication",
     label: "Client Communication",
     zh: "客户沟通与问题处理",
@@ -87,10 +88,21 @@ export const CASE_DOMAINS: CaseDomainDef[] = [
   },
 ];
 
-/** 域 id → 定义 */
+/** V1.8 旧业务域 id → V1.8.1 合并后 id（保持历史 URL 深链可用） */
+const DOMAIN_ALIASES: Record<string, CaseDomainId> = {
+  "kyc-cdd": "kyc-onboarding",
+  "investor-onboarding": "kyc-onboarding",
+  aml: "aml-compliance",
+  compliance: "aml-compliance",
+};
+
+/** 域 id → 定义（支持 V1.8 旧 id 别名解析） */
 export function getCaseDomain(id: string | null): CaseDomainDef | null {
   if (!id) return null;
-  return CASE_DOMAINS.find((d) => d.id === id) ?? null;
+  const direct = CASE_DOMAINS.find((d) => d.id === id);
+  if (direct) return direct;
+  const alias = DOMAIN_ALIASES[id];
+  return alias ? CASE_DOMAINS.find((d) => d.id === alias) ?? null : null;
 }
 
 /** 某技能（或标签）属于哪个域（按注册顺序取第一个） */

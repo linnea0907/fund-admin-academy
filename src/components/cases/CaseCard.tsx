@@ -85,7 +85,7 @@ export default function CaseCard({
 
       {item.skills.length > 0 && (
         <div className="mt-2.5 flex flex-wrap gap-1.5">
-          {item.skills.slice(0, 3).map((s) => (
+          {item.skills.slice(0, 2).map((s) => (
             <span
               key={s}
               className="rounded-full bg-emerald-50 px-2 py-0.5 text-[11px] font-medium text-emerald-700 ring-1 ring-emerald-100"
@@ -94,9 +94,12 @@ export default function CaseCard({
               {s}
             </span>
           ))}
-          {item.skills.length > 3 && (
-            <span className="rounded-full bg-slate-50 px-2 py-0.5 text-[11px] text-slate-400 ring-1 ring-slate-200">
-              +{item.skills.length - 3}
+          {item.skills.length > 2 && (
+            <span
+              className="rounded-full bg-slate-50 px-2 py-0.5 text-[11px] text-slate-400 ring-1 ring-slate-200"
+              title={`其余能力：${item.skills.slice(2).join(" · ")}`}
+            >
+              +{item.skills.length - 2}
             </span>
           )}
         </div>
