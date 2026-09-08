@@ -1,9 +1,9 @@
 {
   "schema": "case-library-index",
   "version": 3,
-  "generatedAt": "2026-09-08T10:48:42.305Z",
-  "total": 25,
-  "ready": 9,
+  "generatedAt": "2026-09-08T10:57:27.910Z",
+  "total": 26,
+  "ready": 10,
   "cases": [
     {
       "id": "Case-001",
@@ -440,6 +440,25 @@
       ],
       "estimatedTime": null,
       "ready": false
+    },
+    {
+      "id": "Case-026",
+      "file": "Case-026.md",
+      "title": "台湾身份证是否可以作为身份证明文件",
+      "level": "L1",
+      "module": 1,
+      "tags": [
+        "KYC",
+        "Identity Document",
+        "Taiwan"
+      ],
+      "skills": [
+        "KYC Review",
+        "Identity Verification",
+        "Regulatory Analysis"
+      ],
+      "estimatedTime": 8,
+      "ready": true
     }
   ]
 }

@@ -2,19 +2,20 @@
 
 > 状态：V2 已落地，P1.8（Skills 能力标签 + 版本体系）已叠加（2026-09-08）。
 > 定位：**Real Fund Admin Cases**——让新人学会真实工作中的判断，而不是背 AML 法规；**标准答案优先依据 ICS 内部 SOP**，不以通用教材、CAMS 教材或监管理论作为标准答案。后续案例正文由 **Copilot 提供**，WorkBuddy 仅负责导入与前端展示。
-> 当前进度：Case-001 ~ Case-005（Module 1 · KYC File Review）已按《02.2 KYC/CDD 操作手册》撰写；Case-006 ~ Case-025 已建元数据骨架（含 title/module/level/skills），正文待对应 SOP 提供后导入。
+> 当前进度（2026-09-08）：正文已导入 10/26 —— Module 1：Case-001 ~ Case-005（按《02.2 KYC/CDD 操作手册》撰写）+ Case-026（台湾身份证，追加第 6 例）；Module 3：Case-012 / Case-013 / Case-014；Module 4：Case-018。其余为元数据骨架（含 title/module/level/skills），正文待对应 SOP 提供后导入。
 > 本文是案例文件字段/结构与导入工作流的唯一依据。
 
 ## 一、文件位置与目录
 
 ```
 content/cases/
-├─ Case-001.md  ~  Case-025.md   # 案例正文（Markdown 单文件，每模块 5 个）
+├─ Case-001.md  ~  Case-026.md   # 案例正文（Markdown 单文件；各模块数量可扩展，Module 1 现 6 例）
 └─ index.json                     # 数据索引（由脚本生成，勿手改）
 ```
 
-- 一个案例一个文件，文件名即案例编号 `Case-001.md`；编号按模块连续分配：
-  Module 1 = 001–005，Module 2 = 006–010，Module 3 = 011–015，Module 4 = 016–020，Module 5 = 021–025。
+- 一个案例一个文件，文件名即案例编号 `Case-001.md`。编号按模块连续分配；**新增案例在所属模块末尾追加新编号，不重排既有编号**：
+  初始划分 Module 1 = 001–005、Module 2 = 006–010、Module 3 = 011–015、Module 4 = 016–020、Module 5 = 021–025；
+  2026-09-08 已为 Module 1 追加 **Case-026**（台湾身份证）作为第 6 例，后续模块内容扩展同理追加。
 - 站点运行时直接读取 Markdown，**内容以 Markdown 文件为准**；`index.json` 为元数据索引与校验快照。
 
 ## 二、一级分类（Module 注册表）
@@ -134,7 +135,7 @@ Frontmatter 之后按**固定顺序**书写，标题必须与下表 label 完全
 Skills 独立于 Module：Module 是案例的一级分类，Skill 是案例训练的能力点。**一个案例可挂多个 Skill；一个 Skill 可出现在多个 Module 的案例中。**
 
 - 受控词表（20 项）与中文说明、分组的唯一来源：`src/lib/skill-defs.ts`。案例 frontmatter 的 `skills` 只应从词表取值，写错/新词会绕过注册表展示（前端会兜底显示但不计入分组）。
-- 打标责任：当前 25 个案例的 skills 由 WorkBuddy 按案例主题初标（每案例 2~4 项）；Copilot 导入正文时如与训练目标不符可修订。新案例由 Copilot 提供内容时**必须同时给出 skills**，WB 负责校验词表并入库。
+- 打标责任：现有 26 个案例的 skills 由 WorkBuddy 按案例主题初标（每案例 2~4 项）；Copilot 导入正文时如与训练目标不符可修订。新案例由 Copilot 提供内容时**必须同时给出 skills**，WB 负责校验词表并入库。
 - 分组（成长地图聚合维度，预留）：identity-docs（KYC 文件类）/ structure（架构与实益分析）/ aml-letter / onboarding（投资者准入）/ compliance（升级与合规）/ core（通用执业能力）。
 - 成长地图预留：`SkillStat`（skill-defs.ts）已定义每技能的案例/完成统计聚合结构；后续计划在 localStorage 记录 per-skill 熟练度并按 group 生成成长雷达，UI 随后续迭代上线。
 
