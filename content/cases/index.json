@@ -1,9 +1,9 @@
 {
   "schema": "case-library-index",
   "version": 3,
-  "generatedAt": "2026-09-08T09:41:01.794Z",
+  "generatedAt": "2026-09-08T09:54:17.008Z",
   "total": 25,
-  "ready": 5,
+  "ready": 6,
   "cases": [
     {
       "id": "Case-001",
@@ -203,17 +203,23 @@
     {
       "id": "Case-012",
       "file": "Case-012.md",
-      "title": "Fund Admin出具AML Letter",
-      "level": "进阶",
+      "title": "Fund Admin 出具 AML Letter 是否可以接受",
+      "level": "L2",
       "module": 3,
-      "tags": [],
+      "tags": [
+        "AML Letter",
+        "Investor Onboarding",
+        "Licensed Entity",
+        "Compliance Review"
+      ],
       "skills": [
         "AML Letter Review",
         "Regulatory Analysis",
-        "Problem Solving"
+        "Risk Assessment",
+        "Compliance Escalation"
       ],
-      "estimatedTime": null,
-      "ready": false
+      "estimatedTime": 15,
+      "ready": true
     },
     {
       "id": "Case-013",
