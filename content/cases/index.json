@@ -1,9 +1,9 @@
 {
   "schema": "case-library-index",
   "version": 3,
-  "generatedAt": "2026-09-08T10:23:03.159Z",
+  "generatedAt": "2026-09-08T10:33:34.897Z",
   "total": 25,
-  "ready": 7,
+  "ready": 8,
   "cases": [
     {
       "id": "Case-001",
@@ -245,17 +245,23 @@
     {
       "id": "Case-014",
       "file": "Case-014.md",
-      "title": "AML Letter超期",
-      "level": "入门",
+      "title": "AML Letter 超过一年是否仍可接受",
+      "level": "L2",
       "module": 3,
-      "tags": [],
+      "tags": [
+        "AML Letter",
+        "Investor Onboarding",
+        "Compliance Review",
+        "Existing Client"
+      ],
       "skills": [
         "AML Letter Review",
-        "KYC Review",
-        "Problem Solving"
+        "Regulatory Analysis",
+        "Risk Assessment",
+        "Compliance Escalation"
       ],
-      "estimatedTime": null,
-      "ready": false
+      "estimatedTime": 12,
+      "ready": true
     },
     {
       "id": "Case-015",
