@@ -79,6 +79,33 @@ export default function DashboardPage() {
         </div>
       </section>
 
+      {/* 学习中心说明 */}
+      <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+          <div>
+            <h2 className="text-base font-bold tracking-tight text-[#0e2a5e]">
+              Fund Admin Academy
+            </h2>
+            <p className="mt-1 text-xs font-medium uppercase tracking-widest text-slate-400">
+              境外基金行政管理学习中心
+            </p>
+          </div>
+          <span className="hidden shrink-0 rounded-full border border-slate-200 px-3 py-1 text-[11px] font-medium text-slate-400 sm:inline-flex">
+            必修 · 选修
+          </span>
+        </div>
+        <p className="mt-3 text-sm leading-relaxed text-slate-600">
+          基于《蓝宝书》与基金运营实践构建，帮助从业人员系统掌握基金架构、募集运营、AML/KYC、AEOI、Cayman、BVI
+          等核心知识。
+        </p>
+        <p className="mt-2 text-sm leading-relaxed text-slate-600">
+          建议先完成必修课程，再根据工作需要学习选修专题。
+        </p>
+        <p className="mt-3 border-t border-slate-100 pt-2.5 text-[11px] text-slate-400">
+          仅供内部学习参考，不构成法律、税务或监管意见。
+        </p>
+      </section>
+
       {/* 统计卡：总进度环 + 四个内容统计 */}
       <section className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
         <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
