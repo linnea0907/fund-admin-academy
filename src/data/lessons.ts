@@ -1,4 +1,5 @@
 import type { Lesson } from "@/types";
+import { electiveLessons } from "./electives";
 
 /**
  * Fund Admin Academy — 课程数据（v2 内容升级版）
@@ -1439,7 +1440,7 @@ export const lessons: Lesson[] = [
   },
 ];
 
-/** 便捷索引 */
+/** 便捷索引（必修） */
 export function getLessonBySlug(slug: string): Lesson | undefined {
   return lessons.find((l) => l.slug === slug);
 }
@@ -1449,3 +1450,30 @@ export function getLessonById(id: string): Lesson | undefined {
 }
 
 export const totalLessons = lessons.length;
+
+/* ===== 选修课程（E01-E11，独立数据文件；不影响必修） ===== */
+export { electiveLessons };
+
+/** 是否选修：id 以 "E" 开头 */
+export function isElectiveId(id: string): boolean {
+  return /^E\d+$/.test(id);
+}
+
+/** 全部课程（必修 + 选修） */
+export const allLessons: Lesson[] = [...lessons, ...electiveLessons];
+
+/** 在必修与选修中按 slug 查找（详情页/静态生成用） */
+export function findLessonBySlug(slug: string): Lesson | undefined {
+  return (
+    lessons.find((l) => l.slug === slug) ??
+    electiveLessons.find((l) => l.slug === slug)
+  );
+}
+
+/** 课程编号展示：必修 "第 14 讲" / 选修 "E01 · 选修" */
+export function lessonLabel(lesson: { id: string }): string {
+  return isElectiveId(lesson.id)
+    ? `${lesson.id} · 选修`
+    : `第 ${lesson.id} 讲`;
+}
+

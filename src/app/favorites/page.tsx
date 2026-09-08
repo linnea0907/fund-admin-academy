@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { lessons } from "@/data/lessons";
+import { allLessons as lessons } from "@/data/lessons";
 import { useAcademy } from "@/hooks/use-academy";
 import type { Favorite } from "@/types";
 
@@ -50,7 +50,11 @@ export default function FavoritesPage() {
                   <FavRow
                     key={`lesson:${fav.lessonId}`}
                     href={`/courses/${lesson.slug}`}
-                    tag={`第 ${lesson.id} 讲`}
+                    tag={
+                      lesson.id.startsWith("E")
+                        ? `选修 · ${lesson.id}`
+                        : `第 ${lesson.id} 讲`
+                    }
                     title={lesson.title}
                     subtitle={lesson.subtitle}
                     onRemove={() => toggleFavorite({ type: "lesson", lessonId: lesson.id })}

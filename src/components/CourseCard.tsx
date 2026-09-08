@@ -9,8 +9,14 @@ import {
   lessonPercent,
 } from "@/lib/progress";
 
-/** 课程中心卡片：简介 + 进度 + 状态 */
-export default function CourseCard({ lesson }: { lesson: Lesson }) {
+/** 课程卡片：简介 + 进度 + 状态（选修课通过 elective 显示徽章） */
+export default function CourseCard({
+  lesson,
+  elective = false,
+}: {
+  lesson: Lesson;
+  elective?: boolean;
+}) {
   const { state } = useAcademy();
   const completed = isLessonComplete(state, lesson);
   const percent = lessonPercent(state, lesson);
@@ -40,7 +46,13 @@ export default function CourseCard({ lesson }: { lesson: Lesson }) {
         )}
       </div>
 
-      <h3 className="mt-3 text-base font-bold text-slate-800 group-hover:text-[#0e2a5e]">
+      {elective && (
+        <span className="mt-3 inline-flex w-fit items-center rounded-md bg-amber-100 px-2 py-0.5 text-[11px] font-bold uppercase tracking-wide text-amber-700">
+          选修
+        </span>
+      )}
+
+      <h3 className={`${elective ? "" : "mt-3"} text-base font-bold text-slate-800 group-hover:text-[#0e2a5e]`}>
         {lesson.title}
       </h3>
       <p className="mt-1 line-clamp-2 text-sm leading-relaxed text-slate-500">

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useMemo, useRef, useState } from "react";
-import { orderedLessons } from "@/lib/ordering";
+import { orderedAllLessons } from "@/lib/ordering";
 import type { Lesson, LessonModule } from "@/types";
 
 function escapeRegExp(s: string): string {
@@ -50,7 +50,7 @@ export default function SearchPage() {
     const lower = kw.toLowerCase();
     const lh: LessonHit[] = [];
     const mh: ModuleHit[] = [];
-    for (const lesson of orderedLessons) {
+    for (const lesson of orderedAllLessons) {
       if (lesson.title.toLowerCase().includes(lower))
         lh.push({ lesson, field: "title" });
       else if (lesson.subtitle.toLowerCase().includes(lower))
@@ -153,8 +153,15 @@ export default function SearchPage() {
                         {lesson.id}
                       </span>
                       <span className="min-w-0 flex-1">
-                        <span className="block truncate text-sm font-semibold text-slate-700 group-hover:text-[#0e2a5e]">
-                          <Highlight text={lesson.title} keyword={kw} />
+                        <span className="flex items-center gap-2">
+                          {lesson.id.startsWith("E") && (
+                            <span className="shrink-0 rounded bg-amber-100 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-amber-700">
+                              选修
+                            </span>
+                          )}
+                          <span className="block truncate text-sm font-semibold text-slate-700 group-hover:text-[#0e2a5e]">
+                            <Highlight text={lesson.title} keyword={kw} />
+                          </span>
                         </span>
                         {field === "subtitle" ? (
                           <span className="mt-0.5 block truncate text-xs text-slate-400">
@@ -194,7 +201,9 @@ export default function SearchPage() {
                           <Highlight text={mod.title} keyword={kw} />
                         </span>
                         <span className="mt-0.5 block truncate text-xs text-slate-400">
-                          第 {lesson.id} 讲 · {lesson.title}
+                          {lesson.id.startsWith("E")
+                            ? `${lesson.id} · 选修 · ${lesson.title}`
+                            : `第 ${lesson.id} 讲 · ${lesson.title}`}
                         </span>
                       </span>
                       <span className="shrink-0 rounded-full bg-[#0e2a5e]/5 px-2.5 py-1 text-[11px] font-medium text-[#0e2a5e]">

@@ -1,34 +1,36 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getLessonBySlug } from "@/data/lessons";
-import { orderedIndex, orderedLessons } from "@/lib/ordering";
+import { findLessonBySlug, lessons, electiveLessons, lessonLabel } from "@/data/lessons";
+import { lessonNeighbors } from "@/lib/ordering";
 import LessonViewer from "@/components/LessonViewer";
 import { DesktopToc, MobileToc } from "@/components/LessonToc";
 
 type Params = Promise<{ slug: string }>;
 
+function allLessonSlugs() {
+  return [...lessons, ...electiveLessons].map((l) => ({ slug: l.slug }));
+}
+
 export function generateStaticParams() {
-  return orderedLessons.map((l) => ({ slug: l.slug }));
+  return allLessonSlugs();
 }
 
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
   const { slug } = await params;
-  const lesson = getLessonBySlug(slug);
+  const lesson = findLessonBySlug(slug);
   if (!lesson) return { title: "课程不存在" };
   return {
-    title: `第 ${lesson.id} 讲 · ${lesson.title}`,
+    title: `${lessonLabel(lesson)} · ${lesson.title}`,
     description: lesson.subtitle,
   };
 }
 
 export default async function LessonPage({ params }: { params: Params }) {
   const { slug } = await params;
-  const lesson = getLessonBySlug(slug);
+  const lesson = findLessonBySlug(slug);
   if (!lesson) notFound();
 
-  const idx = orderedIndex(lesson.id);
-  const prev = idx > 0 ? orderedLessons[idx - 1] : null;
-  const next = idx < orderedLessons.length - 1 ? orderedLessons[idx + 1] : null;
+  const { prev, next } = lessonNeighbors(lesson);
 
   return (
     <div>

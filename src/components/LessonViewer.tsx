@@ -59,7 +59,13 @@ export default function LessonViewer({ lesson, prev, next }: LessonViewerProps) 
               ← 课程中心
             </Link>
             <span>/</span>
-            <span>第 {lesson.id} 讲</span>
+            {lesson.id.startsWith("E") ? (
+              <span className="rounded bg-amber-300 px-2 py-0.5 font-semibold text-amber-950">
+                选修 · {lesson.id}
+              </span>
+            ) : (
+              <span>第 {lesson.id} 讲</span>
+            )}
             <span>/</span>
             <span className="rounded bg-white/10 px-2 py-0.5">⏱ {lesson.minutes} 分钟</span>
           </div>
