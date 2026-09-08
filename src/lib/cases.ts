@@ -1,35 +1,19 @@
 /**
- * Case Library V1 — 案例数据模块（仅服务端使用）
+ * Case Library V2 — 案例数据模块（仅服务端使用）
  *
- * - 内容源：content/cases/Case-001.md … Case-050.md（Markdown 单文件承载全部字段）
- * - 文件结构：frontmatter 元数据（id/title/level/category/tags）+ `## 小节`
- *   小节 key 顺序固定：background → facts → questions → analysis →
- *   practical_steps → common_mistakes → further_reading
- * - 本模块负责扫描文件、解析 frontmatter、切分正文小节、判断内容是否已导入
+ * - 内容源：content/cases/Case-001.md … Case-025.md（Markdown 单文件承载全部字段）
+ * - 文件结构：frontmatter 元数据（id/title/level/module/tags/estimatedTime）+ `# 中文小节`
+ *   小节 key 顺序固定（见 CASE_SECTIONS）：场景背景 → 已收到资料 → 缺失资料 → 你的判断 →
+ *   标准答案 → 理由分析 → 常见错误 → 客户沟通示例 → ICS SOP依据 → Takeaway
+ * - 标准答案以 ICS 内部 SOP 为准，不由通用教材/监管理论替代
  */
 import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
-import type { CaseId, CaseMeta, CaseSectionKey, CaseData } from "@/types";
+import type { CaseId, CaseMeta, CaseData, CaseSectionKey } from "@/types";
+import { SECTION_LABEL_TO_KEY } from "@/lib/case-modules";
 
 export const CASE_DIR = path.join(process.cwd(), "content", "cases");
-
-/** 正文小节展示顺序与中文标题 */
-export const CASE_SECTIONS: {
-  key: CaseSectionKey;
-  label: string;
-  hint: string;
-}[] = [
-  { key: "background", label: "案例背景", hint: "业务情境、相关主体与背景" },
-  { key: "facts", label: "关键事实", hint: "已知事实与需核对的文档" },
-  { key: "questions", label: "待决问题", hint: "本次案例需要回答的问题" },
-  { key: "analysis", label: "分析路径", hint: "判断链与要点" },
-  { key: "practical_steps", label: "实操步骤", hint: "Fund Admin 落地动作" },
-  { key: "common_mistakes", label: "常见错误", hint: "易错点与规避" },
-  { key: "further_reading", label: "延伸阅读", hint: "官方指引/法规/文档" },
-];
-
-const SECTION_KEYS = new Set<string>(CASE_SECTIONS.map((s) => s.key));
 
 /** 移除 Markdown 中的 HTML 注释（骨架占位注释不应视为内容） */
 function stripComments(md: string): string {
@@ -39,7 +23,7 @@ function stripComments(md: string): string {
 /** 从文件名解析 Case id：Case-001.md → "Case-001" */
 export function caseIdFromFile(file: string): CaseId | null {
   const m = /^(Case-\d{3,})\.md$/i.exec(file);
-  return m ? (m[1].charAt(0).toUpperCase() + m[1].slice(1)) : null;
+  return m ? m[1].charAt(0).toUpperCase() + m[1].slice(1) : null;
 }
 
 function normalizeTags(v: unknown): string[] {
@@ -52,7 +36,17 @@ function normalizeStr(v: unknown): string {
   return typeof v === "string" ? v.trim() : "";
 }
 
-/** 解析正文：按 `## key` 切分（忽略未知小节标题） */
+function normalizeModule(v: unknown): number {
+  const n = typeof v === "number" ? v : typeof v === "string" ? Number(v) : NaN;
+  return Number.isInteger(n) && n >= 1 && n <= 5 ? n : 0;
+}
+
+function normalizeTime(v: unknown): number | null {
+  const n = typeof v === "number" ? v : typeof v === "string" ? Number(v) : NaN;
+  return Number.isFinite(n) && n > 0 ? Math.round(n) : null;
+}
+
+/** 解析正文：按 `# 中文标题` 切分（仅识别注册过的小节；其余行归入当前小节） */
 function splitSections(body: string): Partial<Record<CaseSectionKey, string>> {
   const out: Partial<Record<CaseSectionKey, string>> = {};
   const lines = body.split(/\r?\n/);
@@ -68,20 +62,25 @@ function splitSections(body: string): Partial<Record<CaseSectionKey, string>> {
   };
 
   for (const line of lines) {
-    const m = /^##\s+([A-Za-z_]+)\s*$/.exec(line.trim());
-    if (m && SECTION_KEYS.has(m[1])) {
-      flush();
-      cur = m[1] as CaseSectionKey;
-    } else if (cur) {
-      buf.push(line);
+    const m = /^#\s+(.+?)\s*$/.exec(line.trim());
+    if (m) {
+      const key = SECTION_LABEL_TO_KEY[m[1].trim()];
+      if (key) {
+        flush();
+        cur = key;
+        continue;
+      }
     }
+    if (cur) buf.push(line);
   }
   flush();
   return out;
 }
 
 /** 读取并解析单个案例文件（文件不存在返回 null） */
-export function readCase(id: CaseId): (CaseMeta & { sections: CaseData["sections"] }) | null {
+export function readCase(
+  id: CaseId
+): (CaseData & { ready: boolean }) | null {
   if (!/^Case-\d{3,}$/.test(id)) return null;
   const file = path.join(CASE_DIR, `${id}.md`);
   if (!fs.existsSync(file)) return null;
@@ -89,15 +88,26 @@ export function readCase(id: CaseId): (CaseMeta & { sections: CaseData["sections
   const raw = fs.readFileSync(file, "utf8");
   const { data, content } = matter(raw);
   const title = normalizeStr(data.title);
+  const modNum = normalizeModule(data.module);
   const level = normalizeStr(data.level);
-  const category = normalizeStr(data.category);
   const tags = normalizeTags(data.tags);
+  const estimatedTime = normalizeTime(data.estimatedTime);
   const sections = splitSections(content);
   const ready =
     title !== "" &&
-    Object.values(sections).some((s) => stripComments(s).replace(/\s/g, "").length > 0);
+    modNum > 0 &&
+    Object.values(sections).some((s) => stripComments(s ?? "").replace(/\s/g, "").length > 0);
 
-  return { id, title, level, category, tags, ready, sections };
+  return {
+    id,
+    title,
+    module: modNum,
+    level,
+    tags,
+    estimatedTime,
+    sections,
+    ready,
+  };
 }
 
 /** 列出全部案例文件（按编号升序），返回 CaseId[] */
@@ -112,9 +122,7 @@ export function listCaseIds(): CaseId[] {
     })
     .filter((x): x is { f: string; n: number } => x !== null)
     .sort((a, b) => a.n - b.n);
-  return nums
-    .map((x) => caseIdFromFile(x.f))
-    .filter((x): x is CaseId => x !== null);
+  return nums.map((x) => caseIdFromFile(x.f)).filter((x): x is CaseId => x !== null);
 }
 
 /** 全部案例元数据（目录页用） */
@@ -123,7 +131,15 @@ export function listCaseMetas(): CaseMeta[] {
     .map((id) => {
       const c = readCase(id);
       return c
-        ? { id, title: c.title, level: c.level, category: c.category, tags: c.tags, ready: c.ready }
+        ? {
+            id,
+            title: c.title,
+            level: c.level,
+            module: c.module,
+            tags: c.tags,
+            estimatedTime: c.estimatedTime,
+            ready: c.ready,
+          }
         : null;
     })
     .filter((x): x is CaseMeta => x !== null);

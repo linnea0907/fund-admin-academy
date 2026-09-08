@@ -1,458 +1,282 @@
 {
   "schema": "case-library-index",
-  "version": 1,
-  "generatedAt": "2026-09-08T08:12:46.694Z",
-  "total": 50,
-  "ready": 0,
+  "version": 2,
+  "generatedAt": "2026-09-08T08:49:15.664Z",
+  "total": 25,
+  "ready": 5,
   "cases": [
     {
       "id": "Case-001",
       "file": "Case-001.md",
-      "title": "",
-      "level": "",
-      "category": "",
-      "tags": [],
-      "ready": false
+      "title": "开曼基金投资人仅提供香港永久居民身份证",
+      "level": "入门",
+      "module": 1,
+      "tags": [
+        "开曼基金",
+        "个人投资人",
+        "身份证明",
+        "香港证件"
+      ],
+      "estimatedTime": 10,
+      "ready": true
     },
     {
       "id": "Case-002",
       "file": "Case-002.md",
-      "title": "",
-      "level": "",
-      "category": "",
-      "tags": [],
-      "ready": false
+      "title": "客户提供移动账单作为 Address Proof",
+      "level": "入门",
+      "module": 1,
+      "tags": [
+        "香港基金",
+        "个人投资人",
+        "住址证明",
+        "账单审核"
+      ],
+      "estimatedTime": 8,
+      "ready": true
     },
     {
       "id": "Case-003",
       "file": "Case-003.md",
-      "title": "",
-      "level": "",
-      "category": "",
-      "tags": [],
-      "ready": false
+      "title": "客户提供未核证版护照",
+      "level": "入门",
+      "module": 1,
+      "tags": [
+        "BVI基金",
+        "个人投资人",
+        "核证"
+      ],
+      "estimatedTime": 8,
+      "ready": true
     },
     {
       "id": "Case-004",
       "file": "Case-004.md",
-      "title": "",
-      "level": "",
-      "category": "",
-      "tags": [],
-      "ready": false
+      "title": "Reference Letter 作为住址证明",
+      "level": "进阶",
+      "module": 1,
+      "tags": [
+        "开曼基金",
+        "住址证明",
+        "Reference Letter",
+        "推荐信"
+      ],
+      "estimatedTime": 12,
+      "ready": true
     },
     {
       "id": "Case-005",
       "file": "Case-005.md",
-      "title": "",
-      "level": "",
-      "category": "",
-      "tags": [],
-      "ready": false
+      "title": "新加坡蓝色身份证是否接受",
+      "level": "进阶",
+      "module": 1,
+      "tags": [
+        "开曼基金",
+        "新加坡",
+        "身份证明",
+        "属地差异"
+      ],
+      "estimatedTime": 10,
+      "ready": true
     },
     {
       "id": "Case-006",
       "file": "Case-006.md",
-      "title": "",
+      "title": "BVI公司投资开曼基金",
       "level": "",
-      "category": "",
+      "module": 2,
       "tags": [],
+      "estimatedTime": null,
       "ready": false
     },
     {
       "id": "Case-007",
       "file": "Case-007.md",
-      "title": "",
+      "title": "多层SPV穿透",
       "level": "",
-      "category": "",
+      "module": 2,
       "tags": [],
+      "estimatedTime": null,
       "ready": false
     },
     {
       "id": "Case-008",
       "file": "Case-008.md",
-      "title": "",
+      "title": "上市公司持股架构",
       "level": "",
-      "category": "",
+      "module": 2,
       "tags": [],
+      "estimatedTime": null,
       "ready": false
     },
     {
       "id": "Case-009",
       "file": "Case-009.md",
-      "title": "",
+      "title": "国企架构识别",
       "level": "",
-      "category": "",
+      "module": 2,
       "tags": [],
+      "estimatedTime": null,
       "ready": false
     },
     {
       "id": "Case-010",
       "file": "Case-010.md",
-      "title": "",
+      "title": "复杂Trust架构",
       "level": "",
-      "category": "",
+      "module": 2,
       "tags": [],
+      "estimatedTime": null,
       "ready": false
     },
     {
       "id": "Case-011",
       "file": "Case-011.md",
-      "title": "",
+      "title": "持牌管理人出具AML Letter",
       "level": "",
-      "category": "",
+      "module": 3,
       "tags": [],
+      "estimatedTime": null,
       "ready": false
     },
     {
       "id": "Case-012",
       "file": "Case-012.md",
-      "title": "",
+      "title": "Fund Admin出具AML Letter",
       "level": "",
-      "category": "",
+      "module": 3,
       "tags": [],
+      "estimatedTime": null,
       "ready": false
     },
     {
       "id": "Case-013",
       "file": "Case-013.md",
-      "title": "",
+      "title": "Discretionary Account结构",
       "level": "",
-      "category": "",
+      "module": 3,
       "tags": [],
+      "estimatedTime": null,
       "ready": false
     },
     {
       "id": "Case-014",
       "file": "Case-014.md",
-      "title": "",
+      "title": "AML Letter超期",
       "level": "",
-      "category": "",
+      "module": 3,
       "tags": [],
+      "estimatedTime": null,
       "ready": false
     },
     {
       "id": "Case-015",
       "file": "Case-015.md",
-      "title": "",
+      "title": "AML Letter缺少承诺条款",
       "level": "",
-      "category": "",
+      "module": 3,
       "tags": [],
+      "estimatedTime": null,
       "ready": false
     },
     {
       "id": "Case-016",
       "file": "Case-016.md",
-      "title": "",
+      "title": "个人投资人认购基金",
       "level": "",
-      "category": "",
+      "module": 4,
       "tags": [],
+      "estimatedTime": null,
       "ready": false
     },
     {
       "id": "Case-017",
       "file": "Case-017.md",
-      "title": "",
+      "title": "公司投资人认购基金",
       "level": "",
-      "category": "",
+      "module": 4,
       "tags": [],
+      "estimatedTime": null,
       "ready": false
     },
     {
       "id": "Case-018",
       "file": "Case-018.md",
-      "title": "",
+      "title": "信托投资基金",
       "level": "",
-      "category": "",
+      "module": 4,
       "tags": [],
+      "estimatedTime": null,
       "ready": false
     },
     {
       "id": "Case-019",
       "file": "Case-019.md",
-      "title": "",
+      "title": "持牌基金投资基金",
       "level": "",
-      "category": "",
+      "module": 4,
       "tags": [],
+      "estimatedTime": null,
       "ready": false
     },
     {
       "id": "Case-020",
       "file": "Case-020.md",
-      "title": "",
+      "title": "追加投资",
       "level": "",
-      "category": "",
+      "module": 4,
       "tags": [],
+      "estimatedTime": null,
       "ready": false
     },
     {
       "id": "Case-021",
       "file": "Case-021.md",
-      "title": "",
+      "title": "客户要求先Closing后补KYC",
       "level": "",
-      "category": "",
+      "module": 5,
       "tags": [],
+      "estimatedTime": null,
       "ready": false
     },
     {
       "id": "Case-022",
       "file": "Case-022.md",
-      "title": "",
+      "title": "客户拒绝披露UBO",
       "level": "",
-      "category": "",
+      "module": 5,
       "tags": [],
+      "estimatedTime": null,
       "ready": false
     },
     {
       "id": "Case-023",
       "file": "Case-023.md",
-      "title": "",
+      "title": "发现PEP",
       "level": "",
-      "category": "",
+      "module": 5,
       "tags": [],
+      "estimatedTime": null,
       "ready": false
     },
     {
       "id": "Case-024",
       "file": "Case-024.md",
-      "title": "",
+      "title": "发现负面新闻",
       "level": "",
-      "category": "",
+      "module": 5,
       "tags": [],
+      "estimatedTime": null,
       "ready": false
     },
     {
       "id": "Case-025",
       "file": "Case-025.md",
-      "title": "",
+      "title": "高风险国家投资人",
       "level": "",
-      "category": "",
+      "module": 5,
       "tags": [],
-      "ready": false
-    },
-    {
-      "id": "Case-026",
-      "file": "Case-026.md",
-      "title": "",
-      "level": "",
-      "category": "",
-      "tags": [],
-      "ready": false
-    },
-    {
-      "id": "Case-027",
-      "file": "Case-027.md",
-      "title": "",
-      "level": "",
-      "category": "",
-      "tags": [],
-      "ready": false
-    },
-    {
-      "id": "Case-028",
-      "file": "Case-028.md",
-      "title": "",
-      "level": "",
-      "category": "",
-      "tags": [],
-      "ready": false
-    },
-    {
-      "id": "Case-029",
-      "file": "Case-029.md",
-      "title": "",
-      "level": "",
-      "category": "",
-      "tags": [],
-      "ready": false
-    },
-    {
-      "id": "Case-030",
-      "file": "Case-030.md",
-      "title": "",
-      "level": "",
-      "category": "",
-      "tags": [],
-      "ready": false
-    },
-    {
-      "id": "Case-031",
-      "file": "Case-031.md",
-      "title": "",
-      "level": "",
-      "category": "",
-      "tags": [],
-      "ready": false
-    },
-    {
-      "id": "Case-032",
-      "file": "Case-032.md",
-      "title": "",
-      "level": "",
-      "category": "",
-      "tags": [],
-      "ready": false
-    },
-    {
-      "id": "Case-033",
-      "file": "Case-033.md",
-      "title": "",
-      "level": "",
-      "category": "",
-      "tags": [],
-      "ready": false
-    },
-    {
-      "id": "Case-034",
-      "file": "Case-034.md",
-      "title": "",
-      "level": "",
-      "category": "",
-      "tags": [],
-      "ready": false
-    },
-    {
-      "id": "Case-035",
-      "file": "Case-035.md",
-      "title": "",
-      "level": "",
-      "category": "",
-      "tags": [],
-      "ready": false
-    },
-    {
-      "id": "Case-036",
-      "file": "Case-036.md",
-      "title": "",
-      "level": "",
-      "category": "",
-      "tags": [],
-      "ready": false
-    },
-    {
-      "id": "Case-037",
-      "file": "Case-037.md",
-      "title": "",
-      "level": "",
-      "category": "",
-      "tags": [],
-      "ready": false
-    },
-    {
-      "id": "Case-038",
-      "file": "Case-038.md",
-      "title": "",
-      "level": "",
-      "category": "",
-      "tags": [],
-      "ready": false
-    },
-    {
-      "id": "Case-039",
-      "file": "Case-039.md",
-      "title": "",
-      "level": "",
-      "category": "",
-      "tags": [],
-      "ready": false
-    },
-    {
-      "id": "Case-040",
-      "file": "Case-040.md",
-      "title": "",
-      "level": "",
-      "category": "",
-      "tags": [],
-      "ready": false
-    },
-    {
-      "id": "Case-041",
-      "file": "Case-041.md",
-      "title": "",
-      "level": "",
-      "category": "",
-      "tags": [],
-      "ready": false
-    },
-    {
-      "id": "Case-042",
-      "file": "Case-042.md",
-      "title": "",
-      "level": "",
-      "category": "",
-      "tags": [],
-      "ready": false
-    },
-    {
-      "id": "Case-043",
-      "file": "Case-043.md",
-      "title": "",
-      "level": "",
-      "category": "",
-      "tags": [],
-      "ready": false
-    },
-    {
-      "id": "Case-044",
-      "file": "Case-044.md",
-      "title": "",
-      "level": "",
-      "category": "",
-      "tags": [],
-      "ready": false
-    },
-    {
-      "id": "Case-045",
-      "file": "Case-045.md",
-      "title": "",
-      "level": "",
-      "category": "",
-      "tags": [],
-      "ready": false
-    },
-    {
-      "id": "Case-046",
-      "file": "Case-046.md",
-      "title": "",
-      "level": "",
-      "category": "",
-      "tags": [],
-      "ready": false
-    },
-    {
-      "id": "Case-047",
-      "file": "Case-047.md",
-      "title": "",
-      "level": "",
-      "category": "",
-      "tags": [],
-      "ready": false
-    },
-    {
-      "id": "Case-048",
-      "file": "Case-048.md",
-      "title": "",
-      "level": "",
-      "category": "",
-      "tags": [],
-      "ready": false
-    },
-    {
-      "id": "Case-049",
-      "file": "Case-049.md",
-      "title": "",
-      "level": "",
-      "category": "",
-      "tags": [],
-      "ready": false
-    },
-    {
-      "id": "Case-050",
-      "file": "Case-050.md",
-      "title": "",
-      "level": "",
-      "category": "",
-      "tags": [],
+      "estimatedTime": null,
       "ready": false
     }
   ]

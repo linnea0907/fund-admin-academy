@@ -24,7 +24,7 @@ interface AcademyContextValue {
   toggleModuleComplete: (key: string) => void;
   /** 整课一键标记完成 / 取消完成（作用于该课全部模块） */
   setLessonCompletion: (moduleKeys: string[], complete: boolean) => void;
-  /** 标记/取消单个案例完成（Case Library V1，caseId = "Case-001"） */
+  /** 标记/取消单个案例完成（Case Library V2，caseId = "Case-001"） */
   toggleCaseComplete: (caseId: string) => void;
   /** 收藏 / 取消收藏（课程或模块） */
   toggleFavorite: (fav: Favorite) => void;

@@ -2,10 +2,13 @@
 /**
  * 生成案例数据索引：content/cases/index.json
  *
- * 扫描 content/cases/Case-*.md，解析 frontmatter（id/title/level/category/tags）
- * 并判断内容是否已导入（ready）。索引仅含元数据，不含正文。
+ * 扫描 content/cases/Case-*.md，解析 frontmatter（id/title/level/module/tags/estimatedTime）
+ * 并按 `# 中文小节` 判断内容是否已导入（ready）。索引仅含元数据，不含正文。
  *
- * 用法：node scripts/build-case-index.mjs
+ * V2 模板小节顺序：场景背景 → 已收到资料 → 缺失资料 → 你的判断 → 标准答案 →
+ * 理由分析 → 常见错误 → 客户沟通示例 → ICS SOP依据 → Takeaway
+ *
+ * 用法：node scripts/build-case-index.mjs （npm run gen:cases）
  */
 import fs from "node:fs";
 import path from "node:path";
@@ -20,13 +23,16 @@ function stripComments(md) {
 }
 
 const SECTIONS = [
-  "background",
-  "facts",
-  "questions",
-  "analysis",
-  "practical_steps",
-  "common_mistakes",
-  "further_reading",
+  "场景背景",
+  "已收到资料",
+  "缺失资料",
+  "你的判断",
+  "标准答案",
+  "理由分析",
+  "常见错误",
+  "客户沟通示例",
+  "ICS SOP依据",
+  "Takeaway",
 ];
 const KEY_SET = new Set(SECTIONS);
 
@@ -43,10 +49,10 @@ function splitSections(body) {
     buf.length = 0;
   };
   for (const line of lines) {
-    const m = /^##\s+([A-Za-z_]+)\s*$/.exec(line.trim());
-    if (m && KEY_SET.has(m[1])) {
+    const m = /^#\s+(.+?)\s*$/.exec(line.trim());
+    if (m && KEY_SET.has(m[1].trim())) {
       flush();
-      cur = m[1];
+      cur = m[1].trim();
     } else if (cur) {
       buf.push(line);
     }
@@ -56,6 +62,18 @@ function splitSections(body) {
 }
 
 const normStr = (v) => (typeof v === "string" ? v.trim() : "");
+const normNum = (v) => {
+  const n = typeof v === "number" ? v : typeof v === "string" ? Number(v) : NaN;
+  return Number.isFinite(n) ? Math.round(n) : 0;
+};
+const normTime = (v) => {
+  const n = normNum(v);
+  return n > 0 ? n : null;
+};
+const normModule = (v) => {
+  const n = normNum(v);
+  return n >= 1 && n <= 5 ? n : 0;
+};
 const normTags = (v) =>
   Array.isArray(v)
     ? v.map((t) => String(t).trim()).filter(Boolean)
@@ -75,25 +93,24 @@ const cases = files.map((file) => {
   const raw = fs.readFileSync(path.join(DIR, file), "utf8");
   const { data, content } = matter(raw);
   const title = normStr(data.title);
-  const level = normStr(data.level);
-  const category = normStr(data.category);
-  const tags = normTags(data.tags);
+  const modNum = normModule(data.module);
   const sections = splitSections(content);
-  const ready = title !== "" && Object.keys(sections).length > 0;
+  const ready = title !== "" && modNum > 0 && Object.keys(sections).length > 0;
   return {
     id: normStr(data.id) || file.replace(/\.md$/i, ""),
     file,
     title,
-    level,
-    category,
-    tags,
+    level: normStr(data.level),
+    module: modNum,
+    tags: normTags(data.tags),
+    estimatedTime: normTime(data.estimatedTime),
     ready,
   };
 });
 
 const index = {
   schema: "case-library-index",
-  version: 1,
+  version: 2,
   generatedAt: new Date().toISOString(),
   total: cases.length,
   ready: cases.filter((c) => c.ready).length,

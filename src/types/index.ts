@@ -99,25 +99,34 @@ export type ModuleKey = string;
 /** 案例 ID：如 "Case-001" */
 export type CaseId = string;
 
-/** 案例文件正文小节 key（与 Markdown 文件 `## xxx` 标题一一对应） */
-export type CaseSectionKey =
-  | "background"
-  | "facts"
-  | "questions"
-  | "analysis"
-  | "practical_steps"
-  | "common_mistakes"
-  | "further_reading";
+/** 一级分类（Module）编号：1 = KYC File Review … 5 = Escalation & Compliance */
+export type CaseModuleId = 1 | 2 | 3 | 4 | 5;
 
-/** 案例库中一个案例的完整结构（V1 预留，正文由 Copilot 导入） */
+/** 案例文件正文小节 key（与 Markdown 文件 `# 中文标题` 一一对应，V2 模板顺序） */
+export type CaseSectionKey =
+  | "scenario"
+  | "documents_received"
+  | "missing_documents"
+  | "questions"
+  | "standard_answer"
+  | "reasoning"
+  | "common_mistakes"
+  | "client_email"
+  | "sop_reference"
+  | "takeaway";
+
+/** 案例库中一个案例的完整结构（V2：Fund Admin 实务案例，答案以 ICS 内部 SOP 为准） */
 export interface CaseData {
   /** 案例编号，如 "Case-001"（与文件名一致） */
   id: CaseId;
   title: string;
-  /** 难度（导入后填充，如 入门/进阶/高级） */
+  /** 难度（入门/进阶/高级） */
   level: string;
-  category: string;
+  /** 一级分类编号 1~5（见 CASE_MODULES 注册表） */
+  module: number;
   tags: string[];
+  /** 预计学习时长（分钟）；未提供时为 null */
+  estimatedTime: number | null;
   /** 各小节 Markdown 正文 */
   sections: Partial<Record<CaseSectionKey, string>>;
 }
@@ -127,8 +136,9 @@ export interface CaseMeta {
   id: CaseId;
   title: string;
   level: string;
-  category: string;
+  module: number;
   tags: string[];
+  estimatedTime: number | null;
   /** 内容是否已导入（标题非空且至少一个正文小节有内容） */
   ready: boolean;
 }
@@ -138,7 +148,7 @@ export interface StoredState {
   version: 1;
   /** 已标记完成的模块 key 列表（一课的模块全完成 = 该课完成） */
   completedModules: ModuleKey[];
-  /** 已标记完成的案例 id 列表（Case Library V1） */
+  /** 已标记完成的案例 id 列表（Case Library V2） */
   completedCases: CaseId[];
   /** 收藏列表 */
   favorites: Favorite[];

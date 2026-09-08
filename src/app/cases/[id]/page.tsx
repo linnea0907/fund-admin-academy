@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { CASE_SECTIONS } from "@/lib/case-modules";
 import {
-  CASE_SECTIONS,
   caseNeighbors,
   caseSlug,
   findCaseBySlug,
@@ -24,9 +24,7 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   const c = id ? readCase(id) : null;
   return {
     title: c?.title ? `${id} · ${c.title}` : id ? `案例 ${id}` : "案例不存在",
-    description: id
-      ? `境外私募基金运营情景案例 ${id}`
-      : "案例不存在",
+    description: id ? `Fund Admin 实务案例 ${id}（答案以 ICS 内部 SOP 为准）` : "案例不存在",
   };
 }
 
@@ -56,9 +54,10 @@ export default async function CasePage({ params }: { params: Params }) {
     <CaseViewer
       id={c.id}
       title={c.title}
+      module={c.module}
       level={c.level}
-      category={c.category}
       tags={c.tags}
+      estimatedTime={c.estimatedTime}
       ready={c.ready}
       sections={sections}
       prev={readNeighbor(prevId)}

@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import type { CaseMeta } from "@/types";
+import { CASE_MODULES } from "@/lib/case-modules";
 import { useAcademy } from "@/hooks/use-academy";
 import CaseCard from "./CaseCard";
 
@@ -11,7 +12,7 @@ function sortValues(vals: Set<string>): string[] {
   return Array.from(vals).sort((a, b) => a.localeCompare(b, "zh-Hans-CN"));
 }
 
-/** 案例库目录：标签/难度/状态筛选 + 学习进度统计 */
+/** 案例库目录：模块 / 难度 / 标签 / 状态筛选 + 学习进度统计（V2） */
 export default function CaseLibrary({ cases }: { cases: CaseMeta[] }) {
   const { state } = useAcademy();
   const doneIds = useMemo(
@@ -20,6 +21,7 @@ export default function CaseLibrary({ cases }: { cases: CaseMeta[] }) {
   );
 
   const [status, setStatus] = useState<StatusFilter>("all");
+  const [module, setModule] = useState<number | null>(null);
   const [level, setLevel] = useState<string | null>(null);
   const [tag, setTag] = useState<string | null>(null);
 
@@ -37,6 +39,11 @@ export default function CaseLibrary({ cases }: { cases: CaseMeta[] }) {
     () => sortValues(new Set(cases.filter((c) => c.ready).flatMap((c) => c.tags))),
     [cases]
   );
+  const moduleCounts = useMemo(() => {
+    const m = new Map<number, number>();
+    for (const c of cases) m.set(c.module, (m.get(c.module) ?? 0) + 1);
+    return m;
+  }, [cases]);
 
   // 需要清除的筛选：难度/标签选中项若已不存在则自动重置
   const shownLevel = level && levels.includes(level) ? level : null;
@@ -44,9 +51,9 @@ export default function CaseLibrary({ cases }: { cases: CaseMeta[] }) {
 
   const filtered = cases.filter((c) => {
     if (status === "pending" && c.ready) return false;
-    if (status === "pending" && !c.ready) return true;
     if (status === "active" && (!c.ready || doneIds.has(c.id))) return false;
     if (status === "done" && !(c.ready && doneIds.has(c.id))) return false;
+    if (module !== null && c.module !== module) return false;
     if (shownLevel && c.level !== shownLevel) return false;
     if (shownTag && !c.tags.includes(shownTag)) return false;
     return true;
@@ -59,7 +66,7 @@ export default function CaseLibrary({ cases }: { cases: CaseMeta[] }) {
     { key: "done", label: "已完成", count: doneTotal },
   ];
 
-  const noFilter = !shownLevel && !shownTag && status === "all";
+  const noFilter = module === null && !shownLevel && !shownTag && status === "all";
 
   return (
     <div className="space-y-6">
@@ -69,7 +76,7 @@ export default function CaseLibrary({ cases }: { cases: CaseMeta[] }) {
           <div>
             <h1 className="text-xl font-bold text-slate-800 sm:text-2xl">案例库</h1>
             <p className="mt-1 text-sm text-slate-500">
-              情景化基金行政管理案例 · 共 {cases.length} 个预留编号，已导入{" "}
+              Fund Admin 实务案例库 · 答案以 ICS 内部 SOP 为准 · 共 {cases.length} 个案例，已导入{" "}
               {readyTotal} 个，完成 {doneTotal} 个
             </p>
           </div>
@@ -107,6 +114,36 @@ export default function CaseLibrary({ cases }: { cases: CaseMeta[] }) {
 
       {/* 筛选区 */}
       <section className="space-y-3 rounded-2xl border border-slate-200 bg-white p-5">
+        <div className="flex flex-wrap items-center gap-1.5">
+          <span className="mr-1 w-12 text-xs font-semibold text-slate-400">模块</span>
+          <button
+            type="button"
+            onClick={() => setModule(null)}
+            className={`rounded-full px-3 py-1.5 text-xs font-semibold transition ${
+              module === null
+                ? "bg-[#0e2a5e] text-white"
+                : "bg-slate-100 text-slate-500 hover:bg-slate-200"
+            }`}
+          >
+            全部
+          </button>
+          {CASE_MODULES.map((m) => (
+            <button
+              key={m.id}
+              type="button"
+              title={`${m.title} · ${m.zh}`}
+              onClick={() => setModule(module === m.id ? null : m.id)}
+              className={`rounded-full px-3 py-1.5 text-xs font-semibold transition ${
+                module === m.id
+                  ? "bg-[#0e2a5e] text-white"
+                  : "bg-slate-100 text-slate-500 hover:bg-slate-200"
+              }`}
+            >
+              M{m.id} · {m.zh} {moduleCounts.get(m.id) ?? 0}
+            </button>
+          ))}
+        </div>
+
         <div className="flex flex-wrap items-center gap-1.5">
           <span className="mr-1 w-12 text-xs font-semibold text-slate-400">状态</span>
           {statusTabs.map((t) => (
@@ -203,7 +240,7 @@ export default function CaseLibrary({ cases }: { cases: CaseMeta[] }) {
             {noFilter ? "暂无案例" : "没有符合当前筛选条件的案例"}
           </p>
           <p className="mt-1 text-xs text-slate-400">
-            案例正文由 Copilot 分阶段导入，导入后自动出现在此处
+            案例正文按模块分阶段导入（以 ICS 内部 SOP 为准），导入后自动出现在此处
           </p>
         </div>
       ) : (

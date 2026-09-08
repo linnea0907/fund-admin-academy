@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 import type { CaseMeta } from "@/types";
+import { getCaseModule } from "@/lib/case-modules";
 
-/** 案例卡片（Case Library V1） */
+/** 案例卡片（Case Library V2 · Fund Admin 实务案例） */
 export default function CaseCard({
   item,
   done,
@@ -12,6 +13,8 @@ export default function CaseCard({
   done: boolean;
 }) {
   const ready = item.ready;
+  const mod = getCaseModule(item.module);
+
   return (
     <Link
       href={`/cases/${item.id.toLowerCase()}`}
@@ -41,29 +44,33 @@ export default function CaseCard({
       </div>
 
       <h3
-        className={`mt-4 text-base font-bold ${
-          ready ? "text-slate-800 group-hover:text-[#0e2a5e]" : "text-slate-400"
+        className={`mt-4 text-base font-bold leading-snug ${
+          ready ? "text-slate-800 group-hover:text-[#0e2a5e]" : "text-slate-500"
         }`}
       >
-        {ready && item.title ? item.title : "（内容待 Copilot 导入）"}
+        {item.title || "（内容待 SOP 导入）"}
       </h3>
 
-      {item.level || item.category ? (
-        <div className="mt-2 flex flex-wrap items-center gap-2 text-xs">
-          {item.level && (
-            <span className="rounded-md bg-amber-100 px-2 py-0.5 font-semibold text-amber-700">
-              {item.level}
-            </span>
-          )}
-          {item.category && (
-            <span className="rounded-md bg-slate-100 px-2 py-0.5 font-medium text-slate-500">
-              {item.category}
-            </span>
-          )}
-        </div>
-      ) : (
-        <div className="mt-2" />
-      )}
+      <div className="mt-3 flex flex-wrap items-center gap-2 text-xs">
+        {mod && (
+          <span
+            className="rounded-md bg-[#0e2a5e]/5 px-2 py-0.5 font-semibold text-[#0e2a5e] ring-1 ring-[#0e2a5e]/10"
+            title={mod.title}
+          >
+            M{mod.id} · {mod.zh}
+          </span>
+        )}
+        {item.level && (
+          <span className="rounded-md bg-amber-100 px-2 py-0.5 font-semibold text-amber-700">
+            {item.level}
+          </span>
+        )}
+        {item.estimatedTime != null && (
+          <span className="rounded-md bg-slate-100 px-2 py-0.5 font-medium text-slate-500">
+            约 {item.estimatedTime} 分钟
+          </span>
+        )}
+      </div>
 
       {item.tags.length > 0 && (
         <div className="mt-2.5 flex flex-wrap gap-1.5">
@@ -80,7 +87,7 @@ export default function CaseCard({
 
       <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-3">
         <span className="text-xs text-slate-400">
-          {ready ? "情景案例" : "预留编号"}
+          {ready ? "ICS SOP 实务案例" : "正文待导入"}
         </span>
         <span className="text-sm font-medium text-[#0e2a5e] opacity-0 transition group-hover:opacity-100">
           查看案例 →

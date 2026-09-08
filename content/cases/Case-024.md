@@ -1,35 +1,48 @@
 ---
 id: Case-024
-title: ""
+title: "发现负面新闻"
 level: ""
-category: ""
+module: 5
 tags: []
+estimatedTime: ""
 ---
 
-## background
+# 场景背景
 
-<!-- 背景（background）：内容待 Copilot 导入 -->
+<!-- 正文待 SOP 导入（场景背景） -->
 
-## facts
+# 已收到资料
 
-<!-- 关键事实（facts）：内容待 Copilot 导入 -->
+<!-- 正文待 SOP 导入（已收到资料） -->
 
-## questions
+# 缺失资料
 
-<!-- 待决问题（questions）：内容待 Copilot 导入 -->
+<!-- 正文待 SOP 导入（缺失资料） -->
 
-## analysis
+# 你的判断
 
-<!-- 分析（analysis）：内容待 Copilot 导入 -->
+<!-- 正文待 SOP 导入（你的判断） -->
 
-## practical_steps
+# 标准答案
 
-<!-- 实操步骤（practical_steps）：内容待 Copilot 导入 -->
+<!-- 正文待 SOP 导入（标准答案） -->
 
-## common_mistakes
+# 理由分析
 
-<!-- 常见错误（common_mistakes）：内容待 Copilot 导入 -->
+<!-- 正文待 SOP 导入（理由分析） -->
 
-## further_reading
+# 常见错误
 
-<!-- 延伸阅读（further_reading）：内容待 Copilot 导入 -->
+<!-- 正文待 SOP 导入（常见错误） -->
+
+# 客户沟通示例
+
+<!-- 正文待 SOP 导入（客户沟通示例） -->
+
+# ICS SOP依据
+
+<!-- 正文待 SOP 导入（ICS SOP依据） -->
+
+# Takeaway
+
+<!-- 正文待 SOP 导入（Takeaway） -->

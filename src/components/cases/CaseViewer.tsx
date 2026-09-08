@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import type { CaseSectionKey } from "@/types";
+import { getCaseModule } from "@/lib/case-modules";
 import { useAcademy } from "@/hooks/use-academy";
 import MarkdownBody from "./MarkdownBody";
 
@@ -21,21 +22,30 @@ interface Neighbor {
 interface CaseViewerProps {
   id: string;
   title: string;
+  module: number;
   level: string;
-  category: string;
   tags: string[];
+  estimatedTime: number | null;
   ready: boolean;
   sections: CaseViewerSection[];
   prev: Neighbor | null;
   next: Neighbor | null;
 }
 
+/** 小节卡片底色：区分「先思考 / 答案 / 总结」三类 */
+const PANEL_STYLE: Partial<Record<CaseSectionKey, string>> = {
+  questions: "border-blue-200 bg-blue-50/40",
+  standard_answer: "border-amber-200 bg-amber-50/40",
+  takeaway: "border-emerald-200 bg-emerald-50/40",
+};
+
 export default function CaseViewer({
   id,
   title,
+  module,
   level,
-  category,
   tags,
+  estimatedTime,
   ready,
   sections,
   prev,
@@ -43,6 +53,7 @@ export default function CaseViewer({
 }: CaseViewerProps) {
   const { state, toggleCaseComplete } = useAcademy();
   const done = state.completedCases.includes(id);
+  const mod = getCaseModule(module);
 
   return (
     <div className="space-y-6">
@@ -58,6 +69,14 @@ export default function CaseViewer({
             <span className="rounded bg-white/10 px-2 py-0.5 font-semibold text-white">
               {id}
             </span>
+            {mod && (
+              <span
+                className="rounded bg-white/10 px-2 py-0.5 font-medium text-blue-100"
+                title={mod.title}
+              >
+                {mod.title}
+              </span>
+            )}
             {!ready && (
               <span className="rounded bg-amber-300 px-2 py-0.5 font-semibold text-amber-950">
                 内容待导入
@@ -71,31 +90,34 @@ export default function CaseViewer({
           </div>
 
           <h1 className="mt-3 text-xl font-bold leading-snug sm:text-2xl">
-            {ready && title ? title : `案例 ${id} · 内容待导入`}
+            {title || `案例 ${id} · 内容待导入`}
           </h1>
 
-          {(level || category || tags.length > 0) && (
-            <div className="mt-3 flex flex-wrap items-center gap-2">
-              {level && (
-                <span className="rounded-md bg-amber-300/90 px-2 py-0.5 text-xs font-semibold text-amber-950">
-                  {level}
-                </span>
-              )}
-              {category && (
-                <span className="rounded-md bg-white/10 px-2 py-0.5 text-xs font-medium text-blue-100">
-                  {category}
-                </span>
-              )}
-              {tags.map((t) => (
-                <span
-                  key={t}
-                  className="rounded-full bg-white/10 px-2 py-0.5 text-xs text-blue-100"
-                >
-                  #{t}
-                </span>
-              ))}
-            </div>
-          )}
+          <div className="mt-3 flex flex-wrap items-center gap-2">
+            {mod && (
+              <span className="rounded-md bg-white/10 px-2 py-0.5 text-xs font-medium text-blue-100">
+                M{mod.id} · {mod.zh}
+              </span>
+            )}
+            {level && (
+              <span className="rounded-md bg-amber-300/90 px-2 py-0.5 text-xs font-semibold text-amber-950">
+                {level}
+              </span>
+            )}
+            {estimatedTime != null && (
+              <span className="rounded-md bg-white/10 px-2 py-0.5 text-xs font-medium text-blue-100">
+                约 {estimatedTime} 分钟
+              </span>
+            )}
+            {tags.map((t) => (
+              <span
+                key={t}
+                className="rounded-full bg-white/10 px-2 py-0.5 text-xs text-blue-100"
+              >
+                #{t}
+              </span>
+            ))}
+          </div>
 
           <div className="mt-5">
             {ready ? (
@@ -112,7 +134,7 @@ export default function CaseViewer({
               </button>
             ) : (
               <p className="text-xs text-blue-200/90">
-                案例正文尚未导入，待 Copilot 提供内容后即可学习与标记完成。
+                正文待对应 SOP 导入后即可学习与标记完成。
               </p>
             )}
           </div>
@@ -122,25 +144,24 @@ export default function CaseViewer({
       {/* ===== 正文小节 ===== */}
       {!ready ? (
         <div className="rounded-2xl border border-dashed border-slate-200 bg-white/70 p-12 text-center">
-          <p className="text-base font-bold text-slate-500">本案例内容待导入</p>
-          <p className="mt-1.5 text-sm leading-relaxed text-slate-400">
-            11 个统一字段（id / title / level / category / tags / background / facts /
-            questions / analysis / practical_steps / common_mistakes / further_reading）
-            已预置在 content/cases/{id}.md 中，正文由 Copilot 分阶段填充。
+          <p className="text-base font-bold text-slate-500">本案例正文待导入</p>
+          <p className="mx-auto mt-1.5 max-w-xl text-sm leading-relaxed text-slate-400">
+            案例元数据已预置在 content/cases/{id}.md 中。正文按 V2 模板
+            （场景背景 → 已收到资料 → 缺失资料 → 你的判断 → 标准答案 → 理由分析 → 常见错误 →
+            客户沟通示例 → ICS SOP依据 → Takeaway）编写，标准答案以 ICS 内部 SOP 为准。
           </p>
         </div>
       ) : (
         sections.map((s) => (
           <section
             key={s.key}
-            className="scroll-mt-20 rounded-2xl border border-slate-200 bg-white p-5 sm:p-6"
+            className={`scroll-mt-20 rounded-2xl border p-5 sm:p-6 ${
+              PANEL_STYLE[s.key] ?? "border-slate-200 bg-white"
+            }`}
           >
             <h2 className="flex items-center gap-2 text-base font-bold text-slate-800">
-              <span className="flex h-6 items-center rounded-md bg-[#0e2a5e] px-2 text-xs text-white">
-                {id}
-              </span>
               {s.label}
-              <span className="text-xs font-normal text-slate-300">· {s.hint}</span>
+              <span className="text-xs font-normal text-slate-400">· {s.hint}</span>
             </h2>
             <div className="mt-4">
               <MarkdownBody content={s.content} />
@@ -159,7 +180,7 @@ export default function CaseViewer({
             <p className="text-xs text-slate-400">← 上一案例</p>
             <p className="mt-1 text-sm font-semibold text-slate-700">
               {prev.id}
-              {prev.title ? ` · ${prev.title}` : " · 待导入"}
+              {prev.title ? ` · ${prev.title}` : " · 正文待导入"}
             </p>
           </Link>
         ) : (
@@ -173,7 +194,7 @@ export default function CaseViewer({
             <p className="text-xs text-slate-400">下一案例 →</p>
             <p className="mt-1 text-sm font-semibold text-slate-700">
               {next.id}
-              {next.title ? ` · ${next.title}` : " · 待导入"}
+              {next.title ? ` · ${next.title}` : " · 正文待导入"}
             </p>
           </Link>
         )}

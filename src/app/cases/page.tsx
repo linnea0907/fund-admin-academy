@@ -4,7 +4,7 @@ import CaseLibrary from "@/components/cases/CaseLibrary";
 
 export const metadata: Metadata = {
   title: "案例库",
-  description: "境外私募基金运营情景案例库（Case Library V1）",
+  description: "Fund Admin 实务案例库：让新人学会真实工作中的判断，答案以 ICS 内部 SOP 为准（Case Library V2）",
 };
 
 export const dynamic = "force-static";

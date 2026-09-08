@@ -43,7 +43,7 @@ src/
 ├─ app/                    # App Router 页面
 │  ├─ page.tsx             # Dashboard 首页（总进度/统计/最近学习）
 │  ├─ courses/             # 课程中心 + 课程详情 [slug]
-│  ├─ cases/               # 案例库：目录 /cases + 案例详情 /cases/[id]（V1）
+│  ├─ cases/               # 案例库：目录 /cases + 案例详情 /cases/[id]（V2 实务案例库）
 │  ├─ favorites/           # 收藏夹（课程 / 模块两级收藏）
 │  └─ settings/            # 设置（重置 / 导出 / 导入）
 ├─ components/
@@ -57,11 +57,11 @@ src/
 │  └─ cases/               # 案例库组件（目录/卡片/详情/Markdown 渲染）
 ├─ data/lessons.ts         # ★ 全部课程内容（内容迭代只改此文件）
 ├─ hooks/use-academy.tsx   # 全局状态 Provider（localStorage 持久化）
-├─ lib/                    # storage / progress / cases 工具
+├─ lib/                    # storage / progress / case-modules / cases 工具
 └─ types/                  # 领域类型
 
 content/
-└─ cases/                  # ★ 案例库正文（Case-001.md ~ Case-050.md + index.json）
+└─ cases/                  # ★ 案例库正文（Case-001.md ~ Case-025.md + index.json）
 scripts/
 └─ build-case-index.mjs    # 案例索引生成脚本（npm run gen:cases）
 ```
@@ -99,7 +99,7 @@ scripts/
 ## 阶段规划
 
 - **V1（当前）**：Dashboard / 课程中心 / 课程详情 / 学习进度 / 收藏 / 设置（重置、导出、导入）；数据存于 localStorage。
-- **Case Library V1**：案例库骨架已上线（/cases 目录 + 详情 + 进度 + 筛选 + Markdown 渲染）；`content/cases/` 预留 Case-001 ~ Case-050 编号，正文待 Copilot 分阶段导入。
+- **Case Library V2（进行中）**：Fund Admin 实务案例库（取消原监管知识案例库思路），5 大 Module × 5 案例 = Case-001 ~ Case-025。目录/详情/模块筛选/进度/Markdown 渲染已上线；Module 1（KYC File Review）正文已按《02.2 KYC/CDD 操作手册》撰写，其余模块正文待对应 SOP 导入。
 - **V2+（预留）**：我的笔记、错题本、Investor Onboarding、Trust & PTC、Fund Documents、AI 导师、商业阅读、登录系统、数据库与团队同步。仅保留扩展空间，未实现业务逻辑。
 
 ## 免责声明
