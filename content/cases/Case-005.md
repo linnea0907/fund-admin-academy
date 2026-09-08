@@ -5,6 +5,7 @@ level: "进阶"
 module: 1
 tags: ["开曼基金", "新加坡", "身份证明", "属地差异"]
 estimatedTime: 10
+skills: ["KYC Review", "Identity Verification", "Regulatory Analysis", "Problem Solving"]
 ---
 
 # 场景背景

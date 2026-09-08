@@ -3,11 +3,13 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, type ReactNode } from "react";
+import { siteConfig } from "@/lib/site-config";
 
 const NAV = [
   { href: "/", label: "仪表盘" },
   { href: "/courses", label: "课程中心" },
   { href: "/cases", label: "案例库" },
+  { href: "/skills", label: "技能" },
   { href: "/search", label: "搜索" },
   { href: "/favorites", label: "收藏夹" },
   { href: "/settings", label: "设置" },
@@ -50,15 +52,20 @@ export default function AppShell({ children }: { children: ReactNode }) {
   );
 
   const brand = (
-    <div className="flex items-center gap-2.5">
-      <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-amber-300 text-sm font-black text-[#0e2a5e]">
-        FA
+      <div className="flex items-center gap-2.5">
+        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-amber-300 text-sm font-black text-[#0e2a5e]">
+          FA
+        </div>
+        <div className="leading-tight">
+          <p className="flex items-center gap-1.5 text-sm font-bold text-white">
+            {siteConfig.name}
+            <span className="rounded bg-amber-300 px-1 py-px text-[9px] font-black uppercase tracking-wide text-[#0e2a5e]">
+              Beta
+            </span>
+          </p>
+          <p className="text-[10px] text-blue-200/80">{siteConfig.version}</p>
+        </div>
       </div>
-      <div className="leading-tight">
-        <p className="text-sm font-bold text-white">Fund Admin Academy</p>
-        <p className="text-[10px] text-blue-200/80">境外私募基金学习中心</p>
-      </div>
-    </div>
   );
 
   return (
@@ -70,7 +77,11 @@ export default function AppShell({ children }: { children: ReactNode }) {
         <div className="mt-auto rounded-xl bg-white/5 px-3.5 py-3 text-[11px] leading-relaxed text-blue-200/70">
           学习数据保存在本机浏览器
           <br />
-          （localStorage · fund-admin-academy-v1）
+          （localStorage · {siteConfig.storageKey}）
+          <br />
+          <span className="text-blue-200/50">
+            {siteConfig.name} · {siteConfig.releaseStage} {siteConfig.version}
+          </span>
         </div>
       </aside>
 
@@ -116,8 +127,21 @@ export default function AppShell({ children }: { children: ReactNode }) {
       )}
 
       {/* 主内容 */}
-      <main className="px-4 pb-16 pt-6 sm:px-6 lg:ml-60 lg:px-10 lg:pt-8">
-        <div className="mx-auto w-full max-w-6xl">{children}</div>
+      <main className="flex min-h-screen flex-col px-4 pb-16 pt-6 sm:px-6 lg:ml-60 lg:px-10 lg:pt-8">
+        <div className="mx-auto w-full max-w-6xl flex-1">{children}</div>
+
+        {/* 全站页脚（所有页面底部） */}
+        <footer className="mx-auto mt-12 w-full max-w-6xl border-t border-slate-200 pb-2 pt-6 text-center">
+          <p className="text-xs font-semibold tracking-wide text-slate-500">
+            {siteConfig.name}
+          </p>
+          <p className="mt-1 text-[11px] text-slate-400">
+            Internal Beta Version · {siteConfig.version}
+          </p>
+          <p className="mt-0.5 text-[10px] text-slate-300">
+            {siteConfig.footerDisclaimer}
+          </p>
+        </footer>
       </main>
     </div>
   );

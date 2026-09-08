@@ -25,6 +25,7 @@ interface CaseViewerProps {
   module: number;
   level: string;
   tags: string[];
+  skills: string[];
   estimatedTime: number | null;
   ready: boolean;
   sections: CaseViewerSection[];
@@ -45,6 +46,7 @@ export default function CaseViewer({
   module,
   level,
   tags,
+  skills,
   estimatedTime,
   ready,
   sections,
@@ -109,6 +111,16 @@ export default function CaseViewer({
                 约 {estimatedTime} 分钟
               </span>
             )}
+            {skills.map((s) => (
+              <Link
+                key={s}
+                href={`/cases?skill=${encodeURIComponent(s)}`}
+                className="rounded-full bg-emerald-300/90 px-2 py-0.5 text-xs font-semibold text-emerald-950 transition hover:bg-emerald-200"
+                title="能力标签 · 点击按此技能筛选案例"
+              >
+                {s}
+              </Link>
+            ))}
             {tags.map((t) => (
               <span
                 key={t}

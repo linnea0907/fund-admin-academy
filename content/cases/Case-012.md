@@ -1,10 +1,11 @@
 ---
 id: Case-012
 title: "Fund Admin出具AML Letter"
-level: ""
+level: "进阶"
 module: 3
 tags: []
 estimatedTime: ""
+skills: ["AML Letter Review", "Regulatory Analysis", "Problem Solving"]
 ---
 
 # 场景背景

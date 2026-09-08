@@ -1,10 +1,11 @@
 ---
 id: Case-008
 title: "上市公司持股架构"
-level: ""
+level: "入门"
 module: 2
 tags: []
 estimatedTime: ""
+skills: ["Structure Chart Review", "UBO Identification", "Regulatory Analysis"]
 ---
 
 # 场景背景

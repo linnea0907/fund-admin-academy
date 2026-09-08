@@ -1,7 +1,7 @@
 {
   "schema": "case-library-index",
-  "version": 2,
-  "generatedAt": "2026-09-08T08:49:15.664Z",
+  "version": 3,
+  "generatedAt": "2026-09-08T09:41:01.794Z",
   "total": 25,
   "ready": 5,
   "cases": [
@@ -16,6 +16,12 @@
         "个人投资人",
         "身份证明",
         "香港证件"
+      ],
+      "skills": [
+        "KYC Review",
+        "Identity Verification",
+        "Certification Review",
+        "Client Communication"
       ],
       "estimatedTime": 10,
       "ready": true
@@ -32,6 +38,12 @@
         "住址证明",
         "账单审核"
       ],
+      "skills": [
+        "KYC Review",
+        "Address Proof Review",
+        "Certification Review",
+        "Client Communication"
+      ],
       "estimatedTime": 8,
       "ready": true
     },
@@ -45,6 +57,11 @@
         "BVI基金",
         "个人投资人",
         "核证"
+      ],
+      "skills": [
+        "KYC Review",
+        "Identity Verification",
+        "Certification Review"
       ],
       "estimatedTime": 8,
       "ready": true
@@ -61,6 +78,11 @@
         "Reference Letter",
         "推荐信"
       ],
+      "skills": [
+        "KYC Review",
+        "Address Proof Review",
+        "Certification Review"
+      ],
       "estimatedTime": 12,
       "ready": true
     },
@@ -76,6 +98,12 @@
         "身份证明",
         "属地差异"
       ],
+      "skills": [
+        "KYC Review",
+        "Identity Verification",
+        "Regulatory Analysis",
+        "Problem Solving"
+      ],
       "estimatedTime": 10,
       "ready": true
     },
@@ -83,9 +111,15 @@
       "id": "Case-006",
       "file": "Case-006.md",
       "title": "BVI公司投资开曼基金",
-      "level": "",
+      "level": "入门",
       "module": 2,
       "tags": [],
+      "skills": [
+        "Structure Chart Review",
+        "UBO Identification",
+        "Beneficial Ownership Analysis",
+        "Regulatory Analysis"
+      ],
       "estimatedTime": null,
       "ready": false
     },
@@ -93,9 +127,14 @@
       "id": "Case-007",
       "file": "Case-007.md",
       "title": "多层SPV穿透",
-      "level": "",
+      "level": "进阶",
       "module": 2,
       "tags": [],
+      "skills": [
+        "Structure Chart Review",
+        "UBO Identification",
+        "Beneficial Ownership Analysis"
+      ],
       "estimatedTime": null,
       "ready": false
     },
@@ -103,9 +142,14 @@
       "id": "Case-008",
       "file": "Case-008.md",
       "title": "上市公司持股架构",
-      "level": "",
+      "level": "入门",
       "module": 2,
       "tags": [],
+      "skills": [
+        "Structure Chart Review",
+        "UBO Identification",
+        "Regulatory Analysis"
+      ],
       "estimatedTime": null,
       "ready": false
     },
@@ -113,9 +157,15 @@
       "id": "Case-009",
       "file": "Case-009.md",
       "title": "国企架构识别",
-      "level": "",
+      "level": "进阶",
       "module": 2,
       "tags": [],
+      "skills": [
+        "Structure Chart Review",
+        "UBO Identification",
+        "Beneficial Ownership Analysis",
+        "Regulatory Analysis"
+      ],
       "estimatedTime": null,
       "ready": false
     },
@@ -123,9 +173,15 @@
       "id": "Case-010",
       "file": "Case-010.md",
       "title": "复杂Trust架构",
-      "level": "",
+      "level": "高级",
       "module": 2,
       "tags": [],
+      "skills": [
+        "Structure Chart Review",
+        "Trust Review",
+        "Beneficial Ownership Analysis",
+        "UBO Identification"
+      ],
       "estimatedTime": null,
       "ready": false
     },
@@ -133,9 +189,14 @@
       "id": "Case-011",
       "file": "Case-011.md",
       "title": "持牌管理人出具AML Letter",
-      "level": "",
+      "level": "入门",
       "module": 3,
       "tags": [],
+      "skills": [
+        "AML Letter Review",
+        "Regulatory Analysis",
+        "KYC Review"
+      ],
       "estimatedTime": null,
       "ready": false
     },
@@ -143,9 +204,14 @@
       "id": "Case-012",
       "file": "Case-012.md",
       "title": "Fund Admin出具AML Letter",
-      "level": "",
+      "level": "进阶",
       "module": 3,
       "tags": [],
+      "skills": [
+        "AML Letter Review",
+        "Regulatory Analysis",
+        "Problem Solving"
+      ],
       "estimatedTime": null,
       "ready": false
     },
@@ -153,9 +219,14 @@
       "id": "Case-013",
       "file": "Case-013.md",
       "title": "Discretionary Account结构",
-      "level": "",
+      "level": "进阶",
       "module": 3,
       "tags": [],
+      "skills": [
+        "AML Letter Review",
+        "Regulatory Analysis",
+        "Client Communication"
+      ],
       "estimatedTime": null,
       "ready": false
     },
@@ -163,9 +234,14 @@
       "id": "Case-014",
       "file": "Case-014.md",
       "title": "AML Letter超期",
-      "level": "",
+      "level": "入门",
       "module": 3,
       "tags": [],
+      "skills": [
+        "AML Letter Review",
+        "KYC Review",
+        "Problem Solving"
+      ],
       "estimatedTime": null,
       "ready": false
     },
@@ -173,9 +249,14 @@
       "id": "Case-015",
       "file": "Case-015.md",
       "title": "AML Letter缺少承诺条款",
-      "level": "",
+      "level": "入门",
       "module": 3,
       "tags": [],
+      "skills": [
+        "AML Letter Review",
+        "Regulatory Analysis",
+        "Client Communication"
+      ],
       "estimatedTime": null,
       "ready": false
     },
@@ -183,9 +264,15 @@
       "id": "Case-016",
       "file": "Case-016.md",
       "title": "个人投资人认购基金",
-      "level": "",
+      "level": "入门",
       "module": 4,
       "tags": [],
+      "skills": [
+        "Investor Onboarding",
+        "KYC Review",
+        "SOF Review",
+        "Closing Readiness Check"
+      ],
       "estimatedTime": null,
       "ready": false
     },
@@ -193,9 +280,15 @@
       "id": "Case-017",
       "file": "Case-017.md",
       "title": "公司投资人认购基金",
-      "level": "",
+      "level": "入门",
       "module": 4,
       "tags": [],
+      "skills": [
+        "Investor Onboarding",
+        "KYC Review",
+        "Beneficial Ownership Analysis",
+        "Closing Readiness Check"
+      ],
       "estimatedTime": null,
       "ready": false
     },
@@ -203,9 +296,14 @@
       "id": "Case-018",
       "file": "Case-018.md",
       "title": "信托投资基金",
-      "level": "",
+      "level": "进阶",
       "module": 4,
       "tags": [],
+      "skills": [
+        "Investor Onboarding",
+        "Trust Review",
+        "Beneficial Ownership Analysis"
+      ],
       "estimatedTime": null,
       "ready": false
     },
@@ -213,9 +311,15 @@
       "id": "Case-019",
       "file": "Case-019.md",
       "title": "持牌基金投资基金",
-      "level": "",
+      "level": "进阶",
       "module": 4,
       "tags": [],
+      "skills": [
+        "Investor Onboarding",
+        "Regulatory Analysis",
+        "Beneficial Ownership Analysis",
+        "Fund Structure Analysis"
+      ],
       "estimatedTime": null,
       "ready": false
     },
@@ -223,9 +327,15 @@
       "id": "Case-020",
       "file": "Case-020.md",
       "title": "追加投资",
-      "level": "",
+      "level": "入门",
       "module": 4,
       "tags": [],
+      "skills": [
+        "Investor Onboarding",
+        "KYC Review",
+        "SOF Review",
+        "Closing Readiness Check"
+      ],
       "estimatedTime": null,
       "ready": false
     },
@@ -233,9 +343,15 @@
       "id": "Case-021",
       "file": "Case-021.md",
       "title": "客户要求先Closing后补KYC",
-      "level": "",
+      "level": "入门",
       "module": 5,
       "tags": [],
+      "skills": [
+        "Compliance Escalation",
+        "Client Communication",
+        "Closing Readiness Check",
+        "Risk Assessment"
+      ],
       "estimatedTime": null,
       "ready": false
     },
@@ -243,9 +359,14 @@
       "id": "Case-022",
       "file": "Case-022.md",
       "title": "客户拒绝披露UBO",
-      "level": "",
+      "level": "入门",
       "module": 5,
       "tags": [],
+      "skills": [
+        "Compliance Escalation",
+        "UBO Identification",
+        "Client Communication"
+      ],
       "estimatedTime": null,
       "ready": false
     },
@@ -253,9 +374,14 @@
       "id": "Case-023",
       "file": "Case-023.md",
       "title": "发现PEP",
-      "level": "",
+      "level": "进阶",
       "module": 5,
       "tags": [],
+      "skills": [
+        "Compliance Escalation",
+        "PEP Screening",
+        "Risk Assessment"
+      ],
       "estimatedTime": null,
       "ready": false
     },
@@ -263,9 +389,15 @@
       "id": "Case-024",
       "file": "Case-024.md",
       "title": "发现负面新闻",
-      "level": "",
+      "level": "入门",
       "module": 5,
       "tags": [],
+      "skills": [
+        "Compliance Escalation",
+        "Adverse Media Review",
+        "Risk Assessment",
+        "Client Communication"
+      ],
       "estimatedTime": null,
       "ready": false
     },
@@ -273,9 +405,15 @@
       "id": "Case-025",
       "file": "Case-025.md",
       "title": "高风险国家投资人",
-      "level": "",
+      "level": "高级",
       "module": 5,
       "tags": [],
+      "skills": [
+        "Compliance Escalation",
+        "Risk Assessment",
+        "Regulatory Analysis",
+        "PEP Screening"
+      ],
       "estimatedTime": null,
       "ready": false
     }

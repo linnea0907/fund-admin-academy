@@ -125,6 +125,8 @@ export interface CaseData {
   /** 一级分类编号 1~5（见 CASE_MODULES 注册表） */
   module: number;
   tags: string[];
+  /** 能力标签（P1.8：受控词表见 src/lib/skill-defs.ts，每案例 1~N 个） */
+  skills: string[];
   /** 预计学习时长（分钟）；未提供时为 null */
   estimatedTime: number | null;
   /** 各小节 Markdown 正文 */
@@ -138,6 +140,7 @@ export interface CaseMeta {
   level: string;
   module: number;
   tags: string[];
+  skills: string[];
   estimatedTime: number | null;
   /** 内容是否已导入（标题非空且至少一个正文小节有内容） */
   ready: boolean;

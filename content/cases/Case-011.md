@@ -1,10 +1,11 @@
 ---
 id: Case-011
 title: "持牌管理人出具AML Letter"
-level: ""
+level: "入门"
 module: 3
 tags: []
 estimatedTime: ""
+skills: ["AML Letter Review", "Regulatory Analysis", "KYC Review"]
 ---
 
 # 场景背景

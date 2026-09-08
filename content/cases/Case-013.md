@@ -1,10 +1,11 @@
 ---
 id: Case-013
 title: "Discretionary Account结构"
-level: ""
+level: "进阶"
 module: 3
 tags: []
 estimatedTime: ""
+skills: ["AML Letter Review", "Regulatory Analysis", "Client Communication"]
 ---
 
 # 场景背景

@@ -43,21 +43,23 @@ src/
 ├─ app/                    # App Router 页面
 │  ├─ page.tsx             # Dashboard 首页（总进度/统计/最近学习）
 │  ├─ courses/             # 课程中心 + 课程详情 [slug]
-│  ├─ cases/               # 案例库：目录 /cases + 案例详情 /cases/[id]（V2 实务案例库）
+│  ├─ cases/               # 案例库：目录 /cases + 案例详情 /cases/[id]（Real Fund Admin Cases）
+│  ├─ skills/              # Skills 技能页（技能说明 / 案例覆盖 / 完成率）
 │  ├─ favorites/           # 收藏夹（课程 / 模块两级收藏）
 │  └─ settings/            # 设置（重置 / 导出 / 导入）
 ├─ components/
-│  ├─ AppShell.tsx         # 应用外壳：深蓝侧栏 + 移动端抽屉
+│  ├─ AppShell.tsx         # 应用外壳：深蓝侧栏 + 移动端抽屉 + 全站页脚
 │  ├─ CourseCard.tsx       # 课程卡片
 │  ├─ ProgressTracker.tsx  # 环形进度
 │  ├─ LessonViewer.tsx     # 课程详情主体
 │  ├─ LessonToc.tsx        # 目录（桌面 sticky / 移动 chips）
 │  ├─ MindMap.tsx          # 思维导图（纯 CSS）
 │  ├─ QuizPanel.tsx        # 课程自测（即时判分）
-│  └─ cases/               # 案例库组件（目录/卡片/详情/Markdown 渲染）
+│  ├─ cases/               # 案例库组件（目录/卡片/详情/Markdown 渲染）
+│  └─ skills/              # Skills 技能页组件
 ├─ data/lessons.ts         # ★ 全部课程内容（内容迭代只改此文件）
 ├─ hooks/use-academy.tsx   # 全局状态 Provider（localStorage 持久化）
-├─ lib/                    # storage / progress / case-modules / cases 工具
+├─ lib/                    # storage / progress / case-modules / skill-defs / site-config 等工具
 └─ types/                  # 领域类型
 
 content/
@@ -70,9 +72,11 @@ scripts/
 
 课程数据集中在 **`src/data/lessons.ts`**，每讲为 `Lesson` 对象（含 `goal` / `modules` / `risks` / `mindmap` / `quiz`）。**新增或修改课程内容时只替换该文件即可**，页面与交互逻辑无需改动。
 
-## 案例库如何维护（Case Library V1）
+## 案例库如何维护（Real Fund Admin Cases，V2 + P1.8）
 
-案例正文按 **`content/cases/Case-001.md ~ Case-050.md`** 存放（11 个统一字段：`id` / `title` / `level` / `category` / `tags` + `background` / `facts` / `questions` / `analysis` / `practical_steps` / `common_mistakes` / `further_reading`）。字段规范、导入工作流见 **`docs/CASE-LIBRARY-SPEC.md`**。导入内容后运行 `npm run gen:cases` 刷新 `content/cases/index.json`。
+案例正文按 **`content/cases/Case-001.md ~ Case-025.md`** 存放（frontmatter 7 字段：`id` / `title` / `level` / `module` / `tags` / `estimatedTime` / `skills` + 正文 10 个中文 `#` 小节：场景背景 → 已收到资料 → 缺失资料 → 你的判断 → 标准答案 → 理由分析 → 常见错误 → 客户沟通示例 → ICS SOP依据 → Takeaway）。标准答案以 **ICS 内部 SOP** 为准；Skills 受控词表（20 项）见 `src/lib/skill-defs.ts`。字段规范、导入工作流见 **`docs/CASE-LIBRARY-SPEC.md`**。目录/技能/详情页均为 **SSG**：开发模式编辑即刷新；生产模式改内容后 `npm run build`（prebuild 自动刷新 `index.json`，无需手动 `gen:cases`）。
+
+全站版本号统一维护于 **`src/lib/site-config.ts`**（当前 `v1.8 Beta`），升级版本只改该文件。
 
 ## 部署到 GitHub + Vercel
 
@@ -98,9 +102,11 @@ scripts/
 
 ## 阶段规划
 
-- **V1（当前）**：Dashboard / 课程中心 / 课程详情 / 学习进度 / 收藏 / 设置（重置、导出、导入）；数据存于 localStorage。
-- **Case Library V2（进行中）**：Fund Admin 实务案例库（取消原监管知识案例库思路），5 大 Module × 5 案例 = Case-001 ~ Case-025。目录/详情/模块筛选/进度/Markdown 渲染已上线；Module 1（KYC File Review）正文已按《02.2 KYC/CDD 操作手册》撰写，其余模块正文待对应 SOP 导入。
-- **V2+（预留）**：我的笔记、错题本、Investor Onboarding、Trust & PTC、Fund Documents、AI 导师、商业阅读、登录系统、数据库与团队同步。仅保留扩展空间，未实现业务逻辑。
+- **当前版本：Fund Admin Academy v1.8 Beta**（版本号读 `src/lib/site-config.ts`）。
+- **V1**：Dashboard / 课程中心 / 课程详情 / 学习进度 / 收藏 / 设置（重置、导出、导入）；数据存于 localStorage。
+- **Case Library V2**：Real Fund Admin Cases（取消原监管知识案例库思路），5 大 Module × 5 案例 = Case-001 ~ Case-025。目录/详情/多维筛选/进度/Markdown 渲染已上线；Module 1（KYC File Review）正文已按《02.2 KYC/CDD 操作手册》撰写，其余模块正文待对应 SOP 导入。
+- **P1.8**：Skills 能力标签体系（20 项受控词表 + `/skills` 技能页 + Module/Level/Skills/Tags/Status 多维筛选 + 成长地图数据结构预留）；全站版本号统一配置与内测标识（Beta Badge / 状态卡 / 页脚）。
+- **V2+（预留）**：我的笔记、错题本、Investor Onboarding、Trust & PTC、Fund Documents、AI 导师、商业阅读、登录系统、数据库与团队同步、技能成长地图 UI。仅保留扩展空间，未实现业务逻辑。
 
 ## 免责声明
 

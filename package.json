@@ -4,10 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "gen:cases": "node scripts/build-case-index.mjs",
+    "prebuild": "npm run gen:cases",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint",
-    "gen:cases": "node scripts/build-case-index.mjs"
+    "lint": "eslint"
   },
   "dependencies": {
     "gray-matter": "^4.0.3",

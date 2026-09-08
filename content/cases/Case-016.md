@@ -1,10 +1,11 @@
 ---
 id: Case-016
 title: "个人投资人认购基金"
-level: ""
+level: "入门"
 module: 4
 tags: []
 estimatedTime: ""
+skills: ["Investor Onboarding", "KYC Review", "SOF Review", "Closing Readiness Check"]
 ---
 
 # 场景背景

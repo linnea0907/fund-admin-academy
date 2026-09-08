@@ -1,8 +1,8 @@
-# Case Library V2 — Fund Admin 实务案例库数据规范
+# Case Library — Real Fund Admin Cases 数据规范（V2 + P1.8）
 
-> 状态：V2 已落地（2026-09-08）。
-> 思路：取消「监管知识案例库」，改为 **Fund Admin 实务案例库**——目标是让新人学会真实工作中的判断，而不是背 AML 法规；**案例答案以 ICS 内部 SOP 为准**，不以通用教材、CAMS 教材或监管理论作为标准答案。
-> 当前进度：Case-001 ~ Case-005（Module 1 · KYC File Review）已按《02.2 KYC/CDD 操作手册》撰写；Case-006 ~ Case-025 已建元数据骨架，正文待对应 SOP 提供后导入。
+> 状态：V2 已落地，P1.8（Skills 能力标签 + 版本体系）已叠加（2026-09-08）。
+> 定位：**Real Fund Admin Cases**——让新人学会真实工作中的判断，而不是背 AML 法规；**标准答案优先依据 ICS 内部 SOP**，不以通用教材、CAMS 教材或监管理论作为标准答案。后续案例正文由 **Copilot 提供**，WorkBuddy 仅负责导入与前端展示。
+> 当前进度：Case-001 ~ Case-005（Module 1 · KYC File Review）已按《02.2 KYC/CDD 操作手册》撰写；Case-006 ~ Case-025 已建元数据骨架（含 title/module/level/skills），正文待对应 SOP 提供后导入。
 > 本文是案例文件字段/结构与导入工作流的唯一依据。
 
 ## 一、文件位置与目录
@@ -33,7 +33,7 @@ Module 编号写入 frontmatter 的 `module` 字段，站点侧注册表位于 `
 
 每个 `.md` 由两部分组成：frontmatter 元数据 + 中文 `#` 小节正文。
 
-### 1. Frontmatter（6 个元数据字段）
+### 1. Frontmatter（7 个元数据字段）
 
 ```yaml
 ---
@@ -43,6 +43,7 @@ level: "入门"
 module: 1
 tags: ["开曼基金", "个人投资人", "身份证明"]
 estimatedTime: 10
+skills: ["KYC Review", "Identity Verification", "Certification Review", "Client Communication"]
 ---
 ```
 
@@ -54,10 +55,11 @@ estimatedTime: 10
 | `module` | ✅ | 一级分类编号 1~5，见上表 |
 | `tags` | 导入后 | 字符串数组，目录标签筛选用 |
 | `estimatedTime` | 导入后 | 预计学习分钟数（数字） |
+| `skills` | ✅ | 能力标签（Skills）数组，见「五、Skills 能力标签」；当前已按案例主题初标，正文导入时如与训练目标不符可修订 |
 
 ### 2. 正文小节（10 个内容小节，`#` 中文标题，顺序固定）
 
-Frontmatter 之后按**固定顺序**书写，标题必须与下表 label 完全一致：
+Frontmatter 之后按**固定顺序**书写，标题必须与下表 label 完全一致（英文列为 Copilot/ICS 侧使用的标准结构名，二者一一对应，不改标题文案）：
 
 ```markdown
 # 场景背景
@@ -94,18 +96,18 @@ Frontmatter 之后按**固定顺序**书写，标题必须与下表 label 完全
 一句话总结实务经验。
 ```
 
-| 小节 | 内容要求 |
-| --- | --- |
-| 场景背景 | 一段邮件/场景描述，尽量还原真实工作输入 |
-| 已收到资料 | 逐项列出客户已提供的文件 |
-| 缺失资料 | 逐项列出待补文件 |
-| 你的判断 | 固定 Q1–Q4 四问（可先遮住答案自测） |
-| 标准答案 | **以 ICS 内部 SOP 为准**逐问作答；SOP 未覆盖处明确写「需 Compliance 确认」，不得臆造 |
-| 理由分析 | 解释为什么这样判断（法规/属地差异/文件逻辑） |
-| 常见错误 | 新人最易犯的错误清单 |
-| 客户沟通示例 | 标准英文邮件（主题+正文）+ 中文要点 |
-| ICS SOP依据 | 精确到手册章节/QA 条目 |
-| Takeaway | 一句话 |
+| 小节 | 英文结构名（ICS 侧） | 内容要求 |
+| --- | --- | --- |
+| 场景背景 | Background | 一段邮件/场景描述，尽量还原真实工作输入 |
+| 已收到资料 | Documents Received | 逐项列出客户已提供的文件 |
+| 缺失资料 | Outstanding Items | 逐项列出待补文件 |
+| 你的判断 | Questions | 固定 Q1–Q4 四问（可先遮住答案自测） |
+| 标准答案 | Standard Answer | **以 ICS 内部 SOP 为准**逐问作答；SOP 未覆盖处明确写「需 Compliance 确认」，不得臆造 |
+| 理由分析 | Reasoning | 解释为什么这样判断（法规/属地差异/文件逻辑） |
+| 常见错误 | Common Mistakes | 新人最易犯的错误清单 |
+| 客户沟通示例 | Client Communication Example | 标准英文邮件（主题+正文）+ 中文要点 |
+| ICS SOP依据 | ICS SOP Reference | 精确到手册章节/QA 条目 |
+| Takeaway | Takeaways | 一句话 |
 
 ### 写作约束
 
@@ -125,9 +127,43 @@ Frontmatter 之后按**固定顺序**书写，标题必须与下表 label 完全
    ```
 3. 提交变更（正文 + `index.json` 一并提交）。
 
-> 站点构建时读取 Markdown；编辑保存后刷新即可生效。`id` 不得修改。
+> 生效方式：`/cases`、`/skills` 与 `/cases/[id]` 均为 **SSG**。开发模式（`npm run dev`）下编辑保存后刷新即生效；生产（`npm run build && npm start`）需重新构建——`npm run build` 会通过 `prebuild` 钩子自动先刷新索引，无需手动执行 `gen:cases`。构建期每个案例文件只解析一次（进程内 mtime 缓存）。`id` 不得修改。
 
-## 五、内容就绪判断
+## 五、Skills 能力标签
+
+Skills 独立于 Module：Module 是案例的一级分类，Skill 是案例训练的能力点。**一个案例可挂多个 Skill；一个 Skill 可出现在多个 Module 的案例中。**
+
+- 受控词表（20 项）与中文说明、分组的唯一来源：`src/lib/skill-defs.ts`。案例 frontmatter 的 `skills` 只应从词表取值，写错/新词会绕过注册表展示（前端会兜底显示但不计入分组）。
+- 打标责任：当前 25 个案例的 skills 由 WorkBuddy 按案例主题初标（每案例 2~4 项）；Copilot 导入正文时如与训练目标不符可修订。新案例由 Copilot 提供内容时**必须同时给出 skills**，WB 负责校验词表并入库。
+- 分组（成长地图聚合维度，预留）：identity-docs（KYC 文件类）/ structure（架构与实益分析）/ aml-letter / onboarding（投资者准入）/ compliance（升级与合规）/ core（通用执业能力）。
+- 成长地图预留：`SkillStat`（skill-defs.ts）已定义每技能的案例/完成统计聚合结构；后续计划在 localStorage 记录 per-skill 熟练度并按 group 生成成长雷达，UI 随后续迭代上线。
+
+20 项受控技能：
+
+| # | Skill | 分组 |
+| --- | --- | --- |
+| 1 | KYC Review | identity-docs |
+| 2 | Address Proof Review | identity-docs |
+| 3 | Identity Verification | identity-docs |
+| 4 | Certification Review | identity-docs |
+| 5 | SOF Review | identity-docs |
+| 6 | Structure Chart Review | structure |
+| 7 | UBO Identification | structure |
+| 8 | Beneficial Ownership Analysis | structure |
+| 9 | AML Letter Review | aml-letter |
+| 10 | Investor Onboarding | onboarding |
+| 11 | Trust Review | structure |
+| 12 | Fund Structure Analysis | structure |
+| 13 | PEP Screening | compliance |
+| 14 | Adverse Media Review | compliance |
+| 15 | Risk Assessment | compliance |
+| 16 | Compliance Escalation | compliance |
+| 17 | Client Communication | core |
+| 18 | Closing Readiness Check | onboarding |
+| 19 | Regulatory Analysis | core |
+| 20 | Problem Solving | core |
+
+## 六、内容就绪判断
 
 判定「已导入（ready）」需同时满足：
 
@@ -137,16 +173,16 @@ Frontmatter 之后按**固定顺序**书写，标题必须与下表 label 完全
 
 未就绪案例：目录页显示「待导入」+ 标题；详情页显示占位说明；不可标记完成。
 
-## 六、站点能力（V2）
+## 七、站点能力（V2 + P1.8）
 
 | 能力 | 说明 |
 | --- | --- |
-| 案例目录页 | `/cases`，卡片网格 + 进度统计 |
-| 模块筛选 | 按 Module 1~5（一级分类）筛选，带各模块数量 |
-| 难度筛选 | 由已导入案例 level 动态生成（入门/进阶/高级） |
-| 标签筛选 | 由已导入案例 tags 动态生成 |
-| 状态筛选 | 全部 / 待导入 / 学习中 / 已完成 |
+| 案例目录页 | `/cases`，卡片网格 + 进度统计；筛选状态由 URL 承载（可分享/回退） |
+| 多维筛选 | Module 1~5 · Level（难度）· Skills（技能）· Tags（标签）· 状态，可叠加；选项由全部案例聚合，当前条件可一键清除 |
+| Skills 技能页 | `/skills`，20 项技能分区展示：说明 + 案例数量 + 已完成数量 + 完成率；「筛选案例」跳目录页并自动带 skill 过滤 |
+| Skills 触点 | 案例详情页 skills 标签可点击 → `/cases?skill=…`；目录卡片展示技能 chips |
 | 学习进度记录 | localStorage 记录已完成案例 id（completedCases） |
 | 上/下一案例 | 详情页底部按编号序跳转 |
 | Markdown 渲染 | 正文按 10 小节卡片渲染（react-markdown + remark-gfm） |
 | 已完成标记 | 详情页按钮切换，目录卡片同步；未导入案例不可标记 |
+| 版本体系 | 版本号统一读 `src/lib/site-config.ts`（当前 v1.8 Beta）；全站页脚 + 首页 Beta Badge/内测状态卡 |

@@ -1,10 +1,11 @@
 ---
 id: Case-015
 title: "AML Letter缺少承诺条款"
-level: ""
+level: "入门"
 module: 3
 tags: []
 estimatedTime: ""
+skills: ["AML Letter Review", "Regulatory Analysis", "Client Communication"]
 ---
 
 # 场景背景

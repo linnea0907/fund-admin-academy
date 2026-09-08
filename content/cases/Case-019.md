@@ -1,10 +1,11 @@
 ---
 id: Case-019
 title: "持牌基金投资基金"
-level: ""
+level: "进阶"
 module: 4
 tags: []
 estimatedTime: ""
+skills: ["Investor Onboarding", "Regulatory Analysis", "Beneficial Ownership Analysis", "Fund Structure Analysis"]
 ---
 
 # 场景背景

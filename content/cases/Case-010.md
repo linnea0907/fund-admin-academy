@@ -1,10 +1,11 @@
 ---
 id: Case-010
 title: "复杂Trust架构"
-level: ""
+level: "高级"
 module: 2
 tags: []
 estimatedTime: ""
+skills: ["Structure Chart Review", "Trust Review", "Beneficial Ownership Analysis", "UBO Identification"]
 ---
 
 # 场景背景

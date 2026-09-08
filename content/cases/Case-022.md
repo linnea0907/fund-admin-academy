@@ -1,10 +1,11 @@
 ---
 id: Case-022
 title: "客户拒绝披露UBO"
-level: ""
+level: "入门"
 module: 5
 tags: []
 estimatedTime: ""
+skills: ["Compliance Escalation", "UBO Identification", "Client Communication"]
 ---
 
 # 场景背景

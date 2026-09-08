@@ -5,6 +5,7 @@ level: "入门"
 module: 1
 tags: ["BVI基金", "个人投资人", "核证"]
 estimatedTime: 8
+skills: ["KYC Review", "Identity Verification", "Certification Review"]
 ---
 
 # 场景背景

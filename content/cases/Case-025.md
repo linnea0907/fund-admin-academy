@@ -1,10 +1,11 @@
 ---
 id: Case-025
 title: "高风险国家投资人"
-level: ""
+level: "高级"
 module: 5
 tags: []
 estimatedTime: ""
+skills: ["Compliance Escalation", "Risk Assessment", "Regulatory Analysis", "PEP Screening"]
 ---
 
 # 场景背景

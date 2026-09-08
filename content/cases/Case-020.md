@@ -1,10 +1,11 @@
 ---
 id: Case-020
 title: "追加投资"
-level: ""
+level: "入门"
 module: 4
 tags: []
 estimatedTime: ""
+skills: ["Investor Onboarding", "KYC Review", "SOF Review", "Closing Readiness Check"]
 ---
 
 # 场景背景

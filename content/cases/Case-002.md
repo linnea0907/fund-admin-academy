@@ -5,6 +5,7 @@ level: "入门"
 module: 1
 tags: ["香港基金", "个人投资人", "住址证明", "账单审核"]
 estimatedTime: 8
+skills: ["KYC Review", "Address Proof Review", "Certification Review", "Client Communication"]
 ---
 
 # 场景背景

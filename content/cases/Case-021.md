@@ -1,10 +1,11 @@
 ---
 id: Case-021
 title: "客户要求先Closing后补KYC"
-level: ""
+level: "入门"
 module: 5
 tags: []
 estimatedTime: ""
+skills: ["Compliance Escalation", "Client Communication", "Closing Readiness Check", "Risk Assessment"]
 ---
 
 # 场景背景

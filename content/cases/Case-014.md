@@ -1,10 +1,11 @@
 ---
 id: Case-014
 title: "AML Letter超期"
-level: ""
+level: "入门"
 module: 3
 tags: []
 estimatedTime: ""
+skills: ["AML Letter Review", "KYC Review", "Problem Solving"]
 ---
 
 # 场景背景

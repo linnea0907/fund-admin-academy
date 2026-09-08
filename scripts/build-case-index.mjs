@@ -80,6 +80,19 @@ const normTags = (v) =>
     : typeof v === "string" && v.trim()
       ? [v.trim()]
       : [];
+const normSkills = (v) => {
+  if (!Array.isArray(v)) return [];
+  const seen = new Set();
+  const out = [];
+  for (const s of v) {
+    const t = String(s).trim();
+    if (t && !seen.has(t)) {
+      seen.add(t);
+      out.push(t);
+    }
+  }
+  return out;
+};
 
 const files = fs
   .readdirSync(DIR)
@@ -103,6 +116,7 @@ const cases = files.map((file) => {
     level: normStr(data.level),
     module: modNum,
     tags: normTags(data.tags),
+    skills: normSkills(data.skills),
     estimatedTime: normTime(data.estimatedTime),
     ready,
   };
@@ -110,7 +124,7 @@ const cases = files.map((file) => {
 
 const index = {
   schema: "case-library-index",
-  version: 2,
+  version: 3,
   generatedAt: new Date().toISOString(),
   total: cases.length,
   ready: cases.filter((c) => c.ready).length,

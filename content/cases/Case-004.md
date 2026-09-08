@@ -5,6 +5,7 @@ level: "进阶"
 module: 1
 tags: ["开曼基金", "住址证明", "Reference Letter", "推荐信"]
 estimatedTime: 12
+skills: ["KYC Review", "Address Proof Review", "Certification Review"]
 ---
 
 # 场景背景

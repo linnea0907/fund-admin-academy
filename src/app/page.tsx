@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { orderedLessons } from "@/lib/ordering";
+import { siteConfig } from "@/lib/site-config";
 import { useAcademy } from "@/hooks/use-academy";
 import {
   favoriteCount,
@@ -68,9 +69,18 @@ export default function DashboardPage() {
         <div className="pointer-events-none absolute -right-20 -top-24 h-64 w-64 rounded-full bg-blue-400/20 blur-3xl" />
         <div className="pointer-events-none absolute -bottom-24 right-32 h-52 w-52 rounded-full bg-amber-300/10 blur-2xl" />
         <div className="relative">
-          <p className="text-xs font-medium uppercase tracking-widest text-blue-200">
-            Dashboard
-          </p>
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <p className="text-xs font-medium uppercase tracking-widest text-blue-200">
+              Dashboard
+            </p>
+            {/* Beta Badge（首页右上角） */}
+            <span
+              className="inline-flex items-center gap-1 rounded-full bg-amber-300 px-3 py-1 text-[11px] font-black uppercase tracking-wide text-[#0e2a5e]"
+              title={`${siteConfig.name} · ${siteConfig.releaseStage} ${siteConfig.version}`}
+            >
+              Beta · {siteConfig.version}
+            </span>
+          </div>
           <h1 className="mt-1.5 text-xl font-bold sm:text-2xl">
             境外私募基金学习中心
           </h1>
@@ -87,6 +97,28 @@ export default function DashboardPage() {
               <span aria-hidden>→</span>
             </Link>
           )}
+        </div>
+      </section>
+
+      {/* 内测状态卡 */}
+      <section className="rounded-2xl border border-amber-200 bg-gradient-to-r from-amber-50/80 to-white p-5 shadow-sm sm:p-6">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-center gap-3.5">
+            <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-amber-100 text-xl">
+              {siteConfig.statusCard.icon}
+            </span>
+            <div>
+              <p className="text-sm font-bold text-amber-900">
+                {siteConfig.statusCard.title}
+              </p>
+              <p className="mt-0.5 text-xs text-amber-800/90">
+                Current Version: {siteConfig.version}
+              </p>
+            </div>
+          </div>
+          <p className="text-xs text-amber-700/80 sm:text-right">
+            {siteConfig.statusCard.line}
+          </p>
         </div>
       </section>
 

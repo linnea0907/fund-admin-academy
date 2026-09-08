@@ -1,10 +1,11 @@
 ---
 id: Case-018
 title: "信托投资基金"
-level: ""
+level: "进阶"
 module: 4
 tags: []
 estimatedTime: ""
+skills: ["Investor Onboarding", "Trust Review", "Beneficial Ownership Analysis"]
 ---
 
 # 场景背景

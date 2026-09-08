@@ -1,10 +1,11 @@
 ---
 id: Case-007
 title: "多层SPV穿透"
-level: ""
+level: "进阶"
 module: 2
 tags: []
 estimatedTime: ""
+skills: ["Structure Chart Review", "UBO Identification", "Beneficial Ownership Analysis"]
 ---
 
 # 场景背景

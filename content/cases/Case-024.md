@@ -1,10 +1,11 @@
 ---
 id: Case-024
 title: "发现负面新闻"
-level: ""
+level: "入门"
 module: 5
 tags: []
 estimatedTime: ""
+skills: ["Compliance Escalation", "Adverse Media Review", "Risk Assessment", "Client Communication"]
 ---
 
 # 场景背景

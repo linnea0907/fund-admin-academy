@@ -1,10 +1,11 @@
 ---
 id: Case-023
 title: "发现PEP"
-level: ""
+level: "进阶"
 module: 5
 tags: []
 estimatedTime: ""
+skills: ["Compliance Escalation", "PEP Screening", "Risk Assessment"]
 ---
 
 # 场景背景

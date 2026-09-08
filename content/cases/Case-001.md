@@ -5,6 +5,7 @@ level: "入门"
 module: 1
 tags: ["开曼基金", "个人投资人", "身份证明", "香港证件"]
 estimatedTime: 10
+skills: ["KYC Review", "Identity Verification", "Certification Review", "Client Communication"]
 ---
 
 # 场景背景

@@ -12,8 +12,7 @@ import CaseViewer, { type CaseViewerSection } from "@/components/cases/CaseViewe
 
 type Params = Promise<{ id: string }>;
 
-export const dynamic = "force-static";
-
+/** 已知案例预渲染为静态；未收录的新案例（导入后）按需动态渲染，无需重新构建 */
 export function generateStaticParams() {
   return listCaseIds().map((id) => ({ id: caseSlug(id) }));
 }
@@ -57,6 +56,7 @@ export default async function CasePage({ params }: { params: Params }) {
       module={c.module}
       level={c.level}
       tags={c.tags}
+      skills={c.skills}
       estimatedTime={c.estimatedTime}
       ready={c.ready}
       sections={sections}

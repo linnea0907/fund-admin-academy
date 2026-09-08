@@ -1,10 +1,11 @@
 ---
 id: Case-006
 title: "BVI公司投资开曼基金"
-level: ""
+level: "入门"
 module: 2
 tags: []
 estimatedTime: ""
+skills: ["Structure Chart Review", "UBO Identification", "Beneficial Ownership Analysis", "Regulatory Analysis"]
 ---
 
 # 场景背景
