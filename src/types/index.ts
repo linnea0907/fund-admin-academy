@@ -96,11 +96,50 @@ export type Favorite =
 /** 模块完成 key：`${lessonId}/${moduleId}` */
 export type ModuleKey = string;
 
+/** 案例 ID：如 "Case-001" */
+export type CaseId = string;
+
+/** 案例文件正文小节 key（与 Markdown 文件 `## xxx` 标题一一对应） */
+export type CaseSectionKey =
+  | "background"
+  | "facts"
+  | "questions"
+  | "analysis"
+  | "practical_steps"
+  | "common_mistakes"
+  | "further_reading";
+
+/** 案例库中一个案例的完整结构（V1 预留，正文由 Copilot 导入） */
+export interface CaseData {
+  /** 案例编号，如 "Case-001"（与文件名一致） */
+  id: CaseId;
+  title: string;
+  /** 难度（导入后填充，如 入门/进阶/高级） */
+  level: string;
+  category: string;
+  tags: string[];
+  /** 各小节 Markdown 正文 */
+  sections: Partial<Record<CaseSectionKey, string>>;
+}
+
+/** 案例元数据（目录页/列表用；不含正文） */
+export interface CaseMeta {
+  id: CaseId;
+  title: string;
+  level: string;
+  category: string;
+  tags: string[];
+  /** 内容是否已导入（标题非空且至少一个正文小节有内容） */
+  ready: boolean;
+}
+
 /** 本地持久化数据结构（Storage Key: fund-admin-academy-v1） */
 export interface StoredState {
   version: 1;
   /** 已标记完成的模块 key 列表（一课的模块全完成 = 该课完成） */
   completedModules: ModuleKey[];
+  /** 已标记完成的案例 id 列表（Case Library V1） */
+  completedCases: CaseId[];
   /** 收藏列表 */
   favorites: Favorite[];
   /** 最近学习（按时间倒序，最多保留 5 条） */

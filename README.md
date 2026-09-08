@@ -43,6 +43,7 @@ src/
 ├─ app/                    # App Router 页面
 │  ├─ page.tsx             # Dashboard 首页（总进度/统计/最近学习）
 │  ├─ courses/             # 课程中心 + 课程详情 [slug]
+│  ├─ cases/               # 案例库：目录 /cases + 案例详情 /cases/[id]（V1）
 │  ├─ favorites/           # 收藏夹（课程 / 模块两级收藏）
 │  └─ settings/            # 设置（重置 / 导出 / 导入）
 ├─ components/
@@ -52,16 +53,26 @@ src/
 │  ├─ LessonViewer.tsx     # 课程详情主体
 │  ├─ LessonToc.tsx        # 目录（桌面 sticky / 移动 chips）
 │  ├─ MindMap.tsx          # 思维导图（纯 CSS）
-│  └─ QuizPanel.tsx        # 课程自测（即时判分）
+│  ├─ QuizPanel.tsx        # 课程自测（即时判分）
+│  └─ cases/               # 案例库组件（目录/卡片/详情/Markdown 渲染）
 ├─ data/lessons.ts         # ★ 全部课程内容（内容迭代只改此文件）
 ├─ hooks/use-academy.tsx   # 全局状态 Provider（localStorage 持久化）
-├─ lib/                    # storage / progress 工具
+├─ lib/                    # storage / progress / cases 工具
 └─ types/                  # 领域类型
+
+content/
+└─ cases/                  # ★ 案例库正文（Case-001.md ~ Case-050.md + index.json）
+scripts/
+└─ build-case-index.mjs    # 案例索引生成脚本（npm run gen:cases）
 ```
 
 ## 课程内容如何维护
 
 课程数据集中在 **`src/data/lessons.ts`**，每讲为 `Lesson` 对象（含 `goal` / `modules` / `risks` / `mindmap` / `quiz`）。**新增或修改课程内容时只替换该文件即可**，页面与交互逻辑无需改动。
+
+## 案例库如何维护（Case Library V1）
+
+案例正文按 **`content/cases/Case-001.md ~ Case-050.md`** 存放（11 个统一字段：`id` / `title` / `level` / `category` / `tags` + `background` / `facts` / `questions` / `analysis` / `practical_steps` / `common_mistakes` / `further_reading`）。字段规范、导入工作流见 **`docs/CASE-LIBRARY-SPEC.md`**。导入内容后运行 `npm run gen:cases` 刷新 `content/cases/index.json`。
 
 ## 部署到 GitHub + Vercel
 
@@ -88,7 +99,8 @@ src/
 ## 阶段规划
 
 - **V1（当前）**：Dashboard / 课程中心 / 课程详情 / 学习进度 / 收藏 / 设置（重置、导出、导入）；数据存于 localStorage。
-- **V2+（预留）**：我的笔记、错题本、案例库、Investor Onboarding、Trust & PTC、Fund Documents、AI 导师、商业阅读、登录系统、数据库与团队同步。仅保留扩展空间，未实现业务逻辑。
+- **Case Library V1**：案例库骨架已上线（/cases 目录 + 详情 + 进度 + 筛选 + Markdown 渲染）；`content/cases/` 预留 Case-001 ~ Case-050 编号，正文待 Copilot 分阶段导入。
+- **V2+（预留）**：我的笔记、错题本、Investor Onboarding、Trust & PTC、Fund Documents、AI 导师、商业阅读、登录系统、数据库与团队同步。仅保留扩展空间，未实现业务逻辑。
 
 ## 免责声明
 

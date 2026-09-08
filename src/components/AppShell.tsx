@@ -7,6 +7,7 @@ import { useState, type ReactNode } from "react";
 const NAV = [
   { href: "/", label: "仪表盘" },
   { href: "/courses", label: "课程中心" },
+  { href: "/cases", label: "案例库" },
   { href: "/search", label: "搜索" },
   { href: "/favorites", label: "收藏夹" },
   { href: "/settings", label: "设置" },

@@ -111,7 +111,7 @@ export default function SettingsPage() {
           />
           <ActionCard
             title="重置全部进度"
-            desc="清空所有模块完成标记（保留收藏）"
+            desc="清空所有模块与案例完成标记（保留收藏）"
             action="重置进度"
             onClick={() => {
               if (window.confirm("确定清空全部学习进度？此操作不可撤销。")) {
@@ -181,7 +181,6 @@ export default function SettingsPage() {
           {[
             "我的笔记",
             "错题本",
-            "案例库",
             "Investor Onboarding",
             "Trust & PTC",
             "Fund Documents",
