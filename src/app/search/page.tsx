@@ -55,9 +55,9 @@ export default function SearchPage() {
         lh.push({ lesson, field: "title" });
       else if (lesson.subtitle.toLowerCase().includes(lower))
         lh.push({ lesson, field: "subtitle" });
-      for (const module of lesson.modules) {
-        if (module.title.toLowerCase().includes(lower))
-          mh.push({ lesson, module });
+      for (const mod of lesson.modules) {
+        if (mod.title.toLowerCase().includes(lower))
+          mh.push({ lesson, module: mod });
       }
     }
     return { lessonHits: lh, moduleHits: mh, total: lh.length + mh.length };
@@ -183,15 +183,15 @@ export default function SearchPage() {
                 模块（{moduleHits.length}）
               </h2>
               <ul className="mt-3 divide-y divide-slate-100">
-                {moduleHits.map(({ lesson, module }) => (
-                  <li key={`${lesson.id}/${module.id}`}>
+                {moduleHits.map(({ lesson, module: mod }) => (
+                  <li key={`${lesson.id}/${mod.id}`}>
                     <Link
-                      href={`/courses/${lesson.slug}#${module.id}`}
+                      href={`/courses/${lesson.slug}#${mod.id}`}
                       className="group flex items-center gap-3 py-3 transition hover:bg-slate-50"
                     >
                       <span className="min-w-0 flex-1">
                         <span className="block truncate text-sm font-semibold text-slate-700 group-hover:text-[#0e2a5e]">
-                          <Highlight text={module.title} keyword={kw} />
+                          <Highlight text={mod.title} keyword={kw} />
                         </span>
                         <span className="mt-0.5 block truncate text-xs text-slate-400">
                           第 {lesson.id} 讲 · {lesson.title}
