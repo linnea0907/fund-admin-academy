@@ -13,6 +13,7 @@ import {
 import MindMap from "@/components/MindMap";
 import QuizPanel from "@/components/QuizPanel";
 import Disclaimer from "@/components/Disclaimer";
+import PracticalGuide from "@/components/PracticalGuide";
 
 interface LessonViewerProps {
   lesson: Lesson;
@@ -222,6 +223,14 @@ export default function LessonViewer({ lesson, prev, next }: LessonViewerProps) 
           ))}
         </div>
       </section>
+
+      {/* ===== 实务手册 Practical Guide（风险提示 ↓ 此处 ↓ 思维导图） ===== */}
+      <PracticalGuide
+        checklist={lesson.checklist}
+        commonMistakes={lesson.commonMistakes}
+        documentsToCheck={lesson.documentsToCheck}
+        escalationTriggers={lesson.escalationTriggers}
+      />
 
       {/* ===== 思维导图 ===== */}
       <section className="mt-6">

@@ -39,6 +39,17 @@ export default function DashboardPage() {
   const riskCount = orderedLessons.reduce((n, l) => n + l.risks.length, 0);
   const quizCount = orderedLessons.reduce((n, l) => n + l.quiz.length, 0);
 
+  // 实务手册统计（自动派生）
+  const manualStats = orderedLessons.reduce(
+    (acc, l) => ({
+      checklist: acc.checklist + l.checklist.length,
+      commonMistakes: acc.commonMistakes + l.commonMistakes.length,
+      documents: acc.documents + l.documentsToCheck.length,
+      escalations: acc.escalations + l.escalationTriggers.length,
+    }),
+    { checklist: 0, commonMistakes: 0, documents: 0, escalations: 0 }
+  );
+
   // 最近学习
   const recent = state.recentlyViewed
     .map((r) => {
@@ -124,6 +135,20 @@ export default function DashboardPage() {
         <StatCard label="模块数" value={String(moduleCount)} sub="全部课程章节" />
         <StatCard label="风险提示数" value={String(riskCount)} sub="全部课程警示" />
         <StatCard label="自测题数" value={String(quizCount)} sub="全部课程题目" />
+      </section>
+
+      {/* 实务手册统计（全站自动统计） */}
+      <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+        <div className="flex flex-wrap items-baseline justify-between gap-2">
+          <h2 className="text-sm font-bold text-slate-800">实务手册统计</h2>
+          <span className="text-xs text-slate-400">从课程数据自动统计 · 必修范围</span>
+        </div>
+        <div className="mt-3 grid grid-cols-2 gap-4 lg:grid-cols-4">
+          <StatCard label="Admin Checklist" value={String(manualStats.checklist)} sub="必修 6 课操作清单" />
+          <StatCard label="Common Mistakes" value={String(manualStats.commonMistakes)} sub="必修 6 课警示" />
+          <StatCard label="Documents To Check" value={String(manualStats.documents)} sub="必修 6 课文件清单" />
+          <StatCard label="Escalation Triggers" value={String(manualStats.escalations)} sub="必修 6 课升级点" />
+        </div>
       </section>
 
       {/* 下一步推荐 */}
