@@ -1,9 +1,9 @@
 {
   "schema": "case-library-index",
   "version": 3,
-  "generatedAt": "2026-09-08T10:33:34.897Z",
+  "generatedAt": "2026-09-08T10:48:42.305Z",
   "total": 25,
-  "ready": 8,
+  "ready": 9,
   "cases": [
     {
       "id": "Case-001",
@@ -313,17 +313,23 @@
     {
       "id": "Case-018",
       "file": "Case-018.md",
-      "title": "信托投资基金",
-      "level": "进阶",
+      "title": "Trustee代表两个Trust认购时应收集哪些KYC资料",
+      "level": "L2",
       "module": 4,
-      "tags": [],
+      "tags": [
+        "Investor Onboarding",
+        "Trust",
+        "AML Letter",
+        "Subscription Review"
+      ],
       "skills": [
         "Investor Onboarding",
         "Trust Review",
-        "Beneficial Ownership Analysis"
+        "AML Letter Review",
+        "Risk Assessment"
       ],
-      "estimatedTime": null,
-      "ready": false
+      "estimatedTime": 15,
+      "ready": true
     },
     {
       "id": "Case-019",
