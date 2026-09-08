@@ -153,6 +153,8 @@ export interface StoredState {
   completedModules: ModuleKey[];
   /** 已标记完成的案例 id 列表（Case Library V2） */
   completedCases: CaseId[];
+  /** 已开始学习的案例 id 列表（V1.8：打开过详情即算开始；未完成 = 学习中） */
+  startedCases: CaseId[];
   /** 收藏列表 */
   favorites: Favorite[];
   /** 最近学习（按时间倒序，最多保留 5 条） */

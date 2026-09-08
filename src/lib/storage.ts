@@ -10,6 +10,7 @@ export function defaultState(): StoredState {
     version: 1,
     completedModules: [],
     completedCases: [],
+    startedCases: [],
     favorites: [],
     recentlyViewed: [],
     updatedAt: Date.now(),
@@ -41,6 +42,9 @@ export function normalize(input: Partial<StoredState> | null | undefined): Store
       : [],
     completedCases: Array.isArray(input.completedCases)
       ? input.completedCases.filter((x): x is string => typeof x === "string")
+      : [],
+    startedCases: Array.isArray(input.startedCases)
+      ? input.startedCases.filter((x): x is string => typeof x === "string")
       : [],
     favorites: Array.isArray(input.favorites)
       ? input.favorites.filter(isValidFavorite)

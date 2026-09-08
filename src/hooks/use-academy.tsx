@@ -26,6 +26,8 @@ interface AcademyContextValue {
   setLessonCompletion: (moduleKeys: string[], complete: boolean) => void;
   /** 标记/取消单个案例完成（Case Library V2，caseId = "Case-001"） */
   toggleCaseComplete: (caseId: string) => void;
+  /** 标记案例已开始学习（打开详情即调用；V1.8 状态口径：学习中 = started && !completed） */
+  markCaseStarted: (caseId: string) => void;
   /** 收藏 / 取消收藏（课程或模块） */
   toggleFavorite: (fav: Favorite) => void;
   /** 记录一次课程访问（用于"最近学习"） */
@@ -85,6 +87,14 @@ export function AcademyProvider({ children }: { children: ReactNode }) {
     }));
   }, []);
 
+  const markCaseStarted = useCallback((caseId: string) => {
+    setState((s) =>
+      s.startedCases.includes(caseId)
+        ? s
+        : { ...s, startedCases: [...s.startedCases, caseId] }
+    );
+  }, []);
+
   const toggleFavorite = useCallback((fav: Favorite) => {
     setState((s) => {
       const key =
@@ -126,6 +136,7 @@ export function AcademyProvider({ children }: { children: ReactNode }) {
       ...s,
       completedModules: [],
       completedCases: [],
+      startedCases: [],
     }));
   }, []);
 
@@ -166,6 +177,7 @@ export function AcademyProvider({ children }: { children: ReactNode }) {
       toggleModuleComplete,
       setLessonCompletion,
       toggleCaseComplete,
+      markCaseStarted,
       toggleFavorite,
       recordView,
       resetProgress,
@@ -179,6 +191,7 @@ export function AcademyProvider({ children }: { children: ReactNode }) {
       toggleModuleComplete,
       setLessonCompletion,
       toggleCaseComplete,
+      markCaseStarted,
       toggleFavorite,
       recordView,
       resetProgress,

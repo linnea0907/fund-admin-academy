@@ -1,117 +1,176 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import type { CaseMeta } from "@/types";
-import { CASE_MODULES } from "@/lib/case-modules";
-import { SKILL_DEFS } from "@/lib/skill-defs";
+import {
+  CASE_DOMAINS,
+  getCaseDomain,
+  domainOfAbility,
+  caseInDomain,
+  LEVEL_OPTIONS,
+  LEVEL_KEY_LABEL,
+  levelBucket,
+  STATUS_OPTIONS,
+  caseLearnStatus,
+  type CaseDomainId,
+  type CaseStatusKey,
+  type LevelKey,
+} from "@/lib/case-filter";
 import { useAcademy } from "@/hooks/use-academy";
 import CaseCard from "./CaseCard";
 
-type StatusFilter = "all" | "pending" | "active" | "done";
+/** 筛选行标签最小宽度 */
+const ROW_LABEL = "mr-1 w-13 shrink-0 text-xs font-semibold text-slate-400";
 
-const STATUS_KEYS: StatusFilter[] = ["all", "pending", "active", "done"];
-
-function isStatus(v: string | null): v is StatusFilter {
-  return v !== null && (STATUS_KEYS as string[]).includes(v);
+/** 统一 chip 样式（minimal：激活深蓝 / 未激活浅灰） */
+function chip(active: boolean, extra = ""): string {
+  return `rounded-full px-3 py-1.5 text-xs font-semibold transition ${
+    active ? "bg-[#0e2a5e] text-white" : "bg-slate-100 text-slate-500 hover:bg-slate-200"
+  } ${extra}`;
 }
 
-function sortZh(vals: Set<string>): string[] {
-  return Array.from(vals).sort((a, b) => a.localeCompare(b, "zh-Hans-CN"));
-}
-
-/** 从 URL 读取当前筛选（状态单一来源 = URL，支持分享 / 回退 / 刷新） */
+/** 解析 URL 筛选参数（合法值归一，非法返回 null/all） */
 function readFilters(sp: URLSearchParams) {
-  const rawModule = sp.get("module");
-  const n = rawModule ? Number(rawModule) : NaN;
+  const area = getCaseDomain(sp.get("area"))?.id ?? null;
+  const levelRaw = sp.get("level")?.trim() || null;
+  const level =
+    levelRaw && LEVEL_OPTIONS.some((o) => o.key === levelRaw)
+      ? (levelRaw as LevelKey)
+      : null;
+  const statusRaw = sp.get("status");
+  const status = (["all", "todo", "learning", "done"] as const).includes(
+    statusRaw as CaseStatusKey
+  )
+    ? (statusRaw as CaseStatusKey)
+    : "all";
   return {
-    module: Number.isInteger(n) && n >= 1 && n <= 5 ? n : null,
-    level: sp.get("level")?.trim() || null,
+    area,
     skill: sp.get("skill")?.trim() || null,
+    level,
     tag: sp.get("tag")?.trim() || null,
-    status: isStatus(sp.get("status")) ? sp.get("status")! : ("all" as StatusFilter),
+    status,
   };
 }
 
-/** 案例库目录：Module / Level / Skills / Tags / 状态 多维筛选 + 学习进度统计 */
+function sortZh(vals: string[]): string[] {
+  return Array.from(vals).sort((a, b) => a.localeCompare(b, "zh-Hans-CN"));
+}
+
+/** 案例库目录（V1.8 筛选区重构）：
+ *  三级筛选 = L1 业务模块（默认显示）→ L2 技能（按一级动态展开）→ L3 标签（高级筛选内折叠）；
+ *  难度归一 基础/进阶/高级；状态口径 待学习/学习中/已完成。全部维度写回 URL，可分享可回退。 */
 export default function CaseLibrary({ cases }: { cases: CaseMeta[] }) {
   const { state } = useAcademy();
   const router = useRouter();
   const pathname = usePathname();
   const sp = useSearchParams();
-  const filters = readFilters(sp);
+  const raw = readFilters(sp);
+
+  const [showTags, setShowTags] = useState(false);
 
   const doneIds = useMemo(
     () => new Set(state.completedCases.filter((c) => c.startsWith("Case-"))),
     [state.completedCases]
   );
+  const startedIds = useMemo(
+    () => new Set(state.startedCases.filter((c) => c.startsWith("Case-"))),
+    [state.startedCases]
+  );
 
-  /** 更新筛选（写回 URL；null 表示删除该维度） */
-  const update = (patch: Partial<{ module: number | null; level: string | null; skill: string | null; tag: string | null; status: StatusFilter | null }>) => {
+  /* ---------- 有效筛选条件（含失效保护） ---------- */
+
+  // 一级：选中域（URL 有值则用；深链 /cases?skill=X 时按技能自动归属域）
+  const areaDef = useMemo(() => {
+    if (raw.area) return getCaseDomain(raw.area);
+    if (raw.skill) return domainOfAbility(raw.skill);
+    return null;
+  }, [raw.area, raw.skill]);
+
+  // 二级：域内技能（仅接受该域清单内的技能；无域时仅接受真实存在的技能作为自由筛选）
+  const shownSkill = useMemo(() => {
+    if (!raw.skill) return null;
+    if (areaDef) return areaDef.skills.includes(raw.skill) ? raw.skill : null;
+    return cases.some((c) => c.skills.includes(raw.skill!)) ? raw.skill : null;
+  }, [raw.skill, areaDef, cases]);
+
+  // 难度 / 标签 / 状态
+  const shownLevel = raw.level;
+  const tagsInUse = useMemo(() => {
+    const m = new Map<string, number>();
+    for (const c of cases) for (const t of c.tags) m.set(t, (m.get(t) ?? 0) + 1);
+    return sortZh(Array.from(m.keys())).map((t) => ({ tag: t, count: m.get(t)! }));
+  }, [cases]);
+  const shownTag = raw.tag && tagsInUse.some((x) => x.tag === raw.tag) ? raw.tag : null;
+
+  const update = (
+    patch: Partial<{
+      area: CaseDomainId | null;
+      skill: string | null;
+      level: LevelKey | null;
+      tag: string | null;
+      status: CaseStatusKey | null;
+    }>
+  ) => {
     const p = new URLSearchParams(sp.toString());
     (Object.entries(patch) as [string, unknown][]).forEach(([k, v]) => {
-      if (v === null || v === "") p.delete(k);
+      if (v === null || v === "" || v === "all") p.delete(k);
       else p.set(k, String(v));
     });
     const q = p.toString();
     router.replace(q ? `${pathname}?${q}` : pathname, { scroll: false });
   };
 
-  // 统计（全量 / 已就绪 / 已完成）
+  /* ---------- 统计 ---------- */
   const readyTotal = cases.filter((c) => c.ready).length;
   const doneTotal = cases.filter((c) => c.ready && doneIds.has(c.id)).length;
-  const pendingTotal = cases.length - readyTotal;
+  const startedTotal = cases.filter(
+    (c) => c.ready && startedIds.has(c.id) && !doneIds.has(c.id)
+  ).length;
+  const todoTotal = readyTotal - startedTotal - doneTotal;
   const progress = readyTotal === 0 ? 0 : Math.round((doneTotal / readyTotal) * 100);
 
-  // 可选项（按需展示使用中的维度值）
-  const allSkillsInUse = useMemo(() => {
-    const used = new Set(cases.flatMap((c) => c.skills));
-    const inOrder = SKILL_DEFS.filter((s) => used.has(s.id)).map((s) => s.id);
-    const rest = sortZh(new Set([...used].filter((s) => !inOrder.includes(s))));
-    return [...inOrder, ...rest];
-  }, [cases]);
-  const levels = useMemo(() => sortZh(new Set(cases.map((c) => c.level).filter(Boolean))), [cases]);
-  const tags = useMemo(() => sortZh(new Set(cases.flatMap((c) => c.tags))), [cases]);
-  const moduleCounts = useMemo(() => {
-    const m = new Map<number, number>();
-    for (const c of cases) m.set(c.module, (m.get(c.module) ?? 0) + 1);
+  const domainCounts = useMemo(() => {
+    const m = new Map<CaseDomainId, number>();
+    for (const d of CASE_DOMAINS) {
+      m.set(d.id, cases.filter((c) => caseInDomain(c, d)).length);
+    }
     return m;
   }, [cases]);
 
-  // 失效选项保护：URL 指向已不存在的值时按空处理
-  const shownLevel = filters.level && levels.includes(filters.level) ? filters.level : null;
-  const shownTag = filters.tag && tags.includes(filters.tag) ? filters.tag : null;
-  const shownSkill = filters.skill && allSkillsInUse.includes(filters.skill) ? filters.skill : null;
+  const statusCounts: Record<CaseStatusKey, number> = {
+    all: cases.length,
+    todo: todoTotal,
+    learning: startedTotal,
+    done: doneTotal,
+  };
 
+  /* ---------- 结果过滤 ---------- */
   const filtered = cases.filter((c) => {
-    if (filters.status === "pending" && c.ready) return false;
-    if (filters.status === "active" && (!c.ready || doneIds.has(c.id))) return false;
-    if (filters.status === "done" && !(c.ready && doneIds.has(c.id))) return false;
-    if (filters.module !== null && c.module !== filters.module) return false;
-    if (shownLevel && c.level !== shownLevel) return false;
+    if (areaDef && !caseInDomain(c, areaDef)) return false;
     if (shownSkill && !c.skills.includes(shownSkill)) return false;
+    if (shownLevel && levelBucket(c.level) !== shownLevel) return false;
     if (shownTag && !c.tags.includes(shownTag)) return false;
+    if (raw.status !== "all") {
+      const st = caseLearnStatus(c, startedIds.has(c.id), doneIds.has(c.id));
+      if (st !== raw.status) return false;
+    }
     return true;
   });
 
-  const statusTabs: { key: StatusFilter; label: string; count: number }[] = [
-    { key: "all", label: "全部", count: cases.length },
-    { key: "pending", label: "待导入", count: pendingTotal },
-    { key: "active", label: "学习中", count: readyTotal - doneTotal },
-    { key: "done", label: "已完成", count: doneTotal },
-  ];
-
   const hasActive =
-    filters.module !== null ||
-    shownLevel !== null ||
+    areaDef !== null ||
     shownSkill !== null ||
+    shownLevel !== null ||
     shownTag !== null ||
-    filters.status !== "all";
+    raw.status !== "all";
 
-  const chipBase = (active: boolean) =>
-    `rounded-full px-3 py-1.5 text-xs font-semibold transition ${
-      active ? "bg-[#0e2a5e] text-white" : "bg-slate-100 text-slate-500 hover:bg-slate-200"
-    }`;
+  const statusLabel = (k: CaseStatusKey) =>
+    STATUS_OPTIONS.find((o) => o.key === k)?.label ?? "";
+
+  const setArea = (id: CaseDomainId | null) => update({ area: id, skill: null });
+  const setSkill = (s: string | null) =>
+    update(areaDef ? { area: areaDef.id, skill: s } : { skill: s });
 
   return (
     <div className="space-y-6">
@@ -159,136 +218,202 @@ export default function CaseLibrary({ cases }: { cases: CaseMeta[] }) {
 
       {/* 筛选区 */}
       <section className="space-y-3 rounded-2xl border border-slate-200 bg-white p-5">
+        {/* L1 · 业务模块（主筛选，始终显示） */}
         <div className="flex flex-wrap items-center gap-1.5">
-          <span className="mr-1 w-12 text-xs font-semibold text-slate-400">模块</span>
-          <button type="button" onClick={() => update({ module: null })} className={chipBase(filters.module === null)}>
+          <span className={ROW_LABEL}>业务</span>
+          <button
+            type="button"
+            onClick={() => setArea(null)}
+            className={chip(areaDef === null)}
+            title="查看全部案例"
+          >
             全部
           </button>
-          {CASE_MODULES.map((m) => (
-            <button
-              key={m.id}
-              type="button"
-              title={`${m.title} · ${m.zh}`}
-              onClick={() => update({ module: filters.module === m.id ? null : m.id })}
-              className={chipBase(filters.module === m.id)}
-            >
-              M{m.id} · {m.zh} {moduleCounts.get(m.id) ?? 0}
-            </button>
-          ))}
-        </div>
-
-        <div className="flex flex-wrap items-center gap-1.5">
-          <span className="mr-1 w-12 text-xs font-semibold text-slate-400">状态</span>
-          {statusTabs.map((t) => (
-            <button
-              key={t.key}
-              type="button"
-              onClick={() => update({ status: filters.status === t.key ? null : t.key })}
-              className={chipBase(filters.status === t.key)}
-            >
-              {t.label} {t.count}
-            </button>
-          ))}
-        </div>
-
-        <div className="flex flex-wrap items-center gap-1.5">
-          <span className="mr-1 w-12 text-xs font-semibold text-slate-400">难度</span>
-          {levels.length === 0 ? (
-            <span className="text-xs text-slate-300">暂无</span>
-          ) : (
-            <>
-              <button type="button" onClick={() => update({ level: null })} className={chipBase(!shownLevel)}>
-                全部
+          {CASE_DOMAINS.map((d) => {
+            const active = areaDef?.id === d.id;
+            return (
+              <button
+                key={d.id}
+                type="button"
+                title={`${d.label} · ${d.zh} · ${domainCounts.get(d.id) ?? 0} 例`}
+                onClick={() => setArea(active ? null : d.id)}
+                className={chip(active)}
+              >
+                {d.label}
+                <span className={active ? "text-blue-200" : "text-slate-400"}>
+                  {" "}
+                  {domainCounts.get(d.id) ?? 0}
+                </span>
               </button>
-              {levels.map((lv) => (
-                <button
-                  key={lv}
-                  type="button"
-                  onClick={() => update({ level: shownLevel === lv ? null : lv })}
-                  className={`rounded-full px-3 py-1.5 text-xs font-semibold transition ${
-                    shownLevel === lv
-                      ? "bg-amber-400 text-amber-950"
-                      : "bg-slate-100 text-slate-500 hover:bg-slate-200"
-                  }`}
-                >
-                  {lv}
-                </button>
-              ))}
-            </>
-          )}
+            );
+          })}
         </div>
 
-        <div className="flex flex-wrap items-center gap-1.5">
-          <span className="mr-1 w-12 text-xs font-semibold text-slate-400">技能</span>
-          {allSkillsInUse.length === 0 ? (
-            <span className="text-xs text-slate-300">暂无</span>
-          ) : (
-            <>
-              <button type="button" onClick={() => update({ skill: null })} className={chipBase(!shownSkill)}>
-                全部
-              </button>
-              {allSkillsInUse.map((s) => (
+        {/* L2 · 具体技能（按一级动态展开；一级=全部时不显示） */}
+        {areaDef && (
+          <div className="flex flex-wrap items-center gap-1.5">
+            <span className={ROW_LABEL}>技能</span>
+            <button
+              type="button"
+              onClick={() => setSkill(null)}
+              className={chip(shownSkill === null)}
+            >
+              本域全部
+            </button>
+            {areaDef.skills.map((s) => {
+              const active = shownSkill === s;
+              return (
                 <button
                   key={s}
                   type="button"
-                  title={`能力标签：${s}`}
-                  onClick={() => update({ skill: shownSkill === s ? null : s })}
-                  className={`rounded-full px-3 py-1.5 text-xs font-semibold transition ${
-                    shownSkill === s
-                      ? "bg-emerald-500 text-white"
-                      : "bg-emerald-50 text-emerald-700 ring-1 ring-emerald-100 hover:bg-emerald-100"
-                  }`}
+                  title={`${areaDef.label} · ${s}`}
+                  onClick={() => setSkill(active ? null : s)}
+                  className={chip(active)}
                 >
                   {s}
                 </button>
-              ))}
-            </>
-          )}
+              );
+            })}
+          </div>
+        )}
+
+        {/* 难度（归一：基础 / 进阶 / 高级） */}
+        <div className="flex flex-wrap items-center gap-1.5">
+          <span className={ROW_LABEL}>难度</span>
+          {LEVEL_OPTIONS.map((o) => {
+            const active = shownLevel === o.key;
+            return (
+              <button
+                key={o.key ?? "all"}
+                type="button"
+                onClick={() => update({ level: active ? null : o.key })}
+                className={chip(active)}
+              >
+                {o.label}
+              </button>
+            );
+          })}
         </div>
 
+        {/* 状态（待学习 / 学习中 / 已完成） */}
         <div className="flex flex-wrap items-center gap-1.5">
-          <span className="mr-1 w-12 text-xs font-semibold text-slate-400">标签</span>
-          {tags.length === 0 ? (
-            <span className="text-xs text-slate-300">暂无</span>
-          ) : (
-            <>
-              <button type="button" onClick={() => update({ tag: null })} className={chipBase(!shownTag)}>
-                全部
+          <span className={ROW_LABEL}>状态</span>
+          {STATUS_OPTIONS.map((o) => {
+            const active = raw.status === o.key;
+            return (
+              <button
+                key={o.key}
+                type="button"
+                onClick={() => update({ status: active ? "all" : o.key })}
+                className={chip(active)}
+              >
+                {o.label}
+                {active ? null : (
+                  <span className="text-slate-400"> {statusCounts[o.key]}</span>
+                )}
               </button>
-              {tags.map((t) => (
-                <button
-                  key={t}
-                  type="button"
-                  onClick={() => update({ tag: shownTag === t ? null : t })}
-                  className={`rounded-full px-3 py-1.5 text-xs font-semibold transition ${
-                    shownTag === t
-                      ? "bg-amber-400 text-amber-950"
-                      : "bg-slate-100 text-slate-500 hover:bg-slate-200"
-                  }`}
-                >
-                  #{t}
-                </button>
-              ))}
-            </>
+            );
+          })}
+        </div>
+
+        {/* L3 · 标签（高级筛选，默认折叠） */}
+        <div className="rounded-xl border border-slate-100 bg-slate-50/50">
+          <button
+            type="button"
+            onClick={() => setShowTags((v) => !v)}
+            className="flex w-full items-center justify-between px-3.5 py-2.5 text-xs font-semibold text-slate-600 transition hover:text-[#0e2a5e]"
+            aria-expanded={showTags}
+          >
+            <span className="flex items-center gap-2">
+              高级筛选 · 标签
+              {shownTag && (
+                <span className="rounded-full bg-amber-100 px-2 py-0.5 text-[11px] font-semibold text-amber-700">
+                  已选 #{shownTag}
+                </span>
+              )}
+            </span>
+            <span className="text-slate-400">{showTags ? "收起 ▲" : "展开 ▼"}</span>
+          </button>
+          {showTags && (
+            <div className="border-t border-slate-100 px-3.5 pb-3.5 pt-3">
+              {tagsInUse.length === 0 ? (
+                <p className="text-xs text-slate-300">暂无标签</p>
+              ) : (
+                <div className="flex flex-wrap items-center gap-1.5">
+                  <button
+                    type="button"
+                    onClick={() => update({ tag: null })}
+                    className={chip(shownTag === null)}
+                  >
+                    全部
+                  </button>
+                  {tagsInUse.map(({ tag, count }) => {
+                    const active = shownTag === tag;
+                    return (
+                      <button
+                        key={tag}
+                        type="button"
+                        onClick={() => update({ tag: active ? null : tag })}
+                        className={chip(active)}
+                      >
+                        #{tag}
+                        <span className={active ? "text-blue-200" : "text-slate-400"}>
+                          {" "}
+                          {count}
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
           )}
         </div>
       </section>
 
-      {/* 当前筛选提示 */}
+      {/* 当前筛选提示（可逐项移除） */}
       {hasActive && (
         <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-blue-100 bg-blue-50/60 px-4 py-2.5">
-          <p className="text-xs text-blue-900">
-            当前筛选：{filtered.length} / {cases.length} 个案例
-            {filters.module !== null && ` · M${filters.module}`}
-            {shownLevel && ` · ${shownLevel}`}
-            {shownSkill && ` · ${shownSkill}`}
-            {shownTag && ` · #${shownTag}`}
-            {filters.status !== "all" &&
-              ` · ${statusTabs.find((t) => t.key === filters.status)?.label ?? ""}`}
-          </p>
+          <div className="flex flex-wrap items-center gap-1.5 text-xs">
+            <span className="mr-1 font-semibold text-blue-900">
+              {filtered.length} / {cases.length} 例
+            </span>
+            {areaDef && (
+              <ActiveChip label={areaDef.label} onClear={() => setArea(null)} />
+            )}
+            {shownSkill && (
+              <ActiveChip
+                label={shownSkill}
+                onClear={() => setSkill(null)}
+                tone="emerald"
+              />
+            )}
+            {shownLevel && (
+              <ActiveChip
+                label={LEVEL_KEY_LABEL[shownLevel]}
+                onClear={() => update({ level: null })}
+                tone="amber"
+              />
+            )}
+            {shownTag && (
+              <ActiveChip
+                label={`#${shownTag}`}
+                onClear={() => update({ tag: null })}
+                tone="amber"
+              />
+            )}
+            {raw.status !== "all" && (
+              <ActiveChip
+                label={statusLabel(raw.status)}
+                onClear={() => update({ status: "all" })}
+              />
+            )}
+          </div>
           <button
             type="button"
-            onClick={() => update({ module: null, level: null, skill: null, tag: null, status: null })}
+            onClick={() =>
+              update({ area: null, skill: null, level: null, tag: null, status: "all" })
+            }
             className="rounded-full bg-white px-3 py-1 text-xs font-semibold text-blue-700 ring-1 ring-blue-200 transition hover:bg-blue-100"
           >
             清除全部筛选
@@ -303,16 +428,54 @@ export default function CaseLibrary({ cases }: { cases: CaseMeta[] }) {
             {!hasActive ? "暂无案例" : "没有符合当前筛选条件的案例"}
           </p>
           <p className="mt-1 text-xs text-slate-400">
-            案例正文按模块分阶段导入（以 ICS 内部 SOP 为准），导入后自动出现在此处
+            可尝试清除部分筛选条件，或在「高级筛选」中调整标签
           </p>
         </div>
       ) : (
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
           {filtered.map((c) => (
-            <CaseCard key={c.id} item={c} done={doneIds.has(c.id)} />
+            <CaseCard
+              key={c.id}
+              item={c}
+              done={doneIds.has(c.id)}
+              started={startedIds.has(c.id)}
+            />
           ))}
         </div>
       )}
     </div>
+  );
+}
+
+/** 当前筛选条件小 chip（带移除按钮） */
+function ActiveChip({
+  label,
+  onClear,
+  tone = "navy",
+}: {
+  label: string;
+  onClear: () => void;
+  tone?: "navy" | "emerald" | "amber";
+}) {
+  const toneCls =
+    tone === "emerald"
+      ? "bg-emerald-100 text-emerald-700"
+      : tone === "amber"
+        ? "bg-amber-100 text-amber-700"
+        : "bg-[#0e2a5e]/10 text-[#0e2a5e]";
+  return (
+    <span
+      className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 font-semibold ${toneCls}`}
+    >
+      {label}
+      <button
+        type="button"
+        onClick={onClear}
+        aria-label={`移除条件 ${label}`}
+        className="rounded-full leading-none opacity-60 transition hover:opacity-100"
+      >
+        ✕
+      </button>
+    </span>
   );
 }

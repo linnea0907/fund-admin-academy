@@ -179,7 +179,7 @@ Skills 独立于 Module：Module 是案例的一级分类，Skill 是案例训�
 | 能力 | 说明 |
 | --- | --- |
 | 案例目录页 | `/cases`，卡片网格 + 进度统计；筛选状态由 URL 承载（可分享/回退） |
-| 多维筛选 | Module 1~5 · Level（难度）· Skills（技能）· Tags（标签）· 状态，可叠加；选项由全部案例聚合，当前条件可一键清除 |
+| 多维筛选 | 三级结构：L1 业务模块（7 类：KYC/CDD / AML / Fund Structure / Fund Documents / Investor Onboarding / Compliance / Client Communication，默认显示）+ L2 技能（按一级动态展开）+ L3 标签（默认折叠进「高级筛选」）；另含难度（基础 / 进阶 / 高级，归一映射 入门·L1 / 进阶·L2 / 高级）与状态（待学习 / 学习中 / 已完成，首次打开已导入详情即记为开始）。可叠加，URL 承载全部筛选维度，当前条件以可逐项移除的 chip 展示 + 一键清除。 |
 | Skills 技能页 | `/skills`，20 项技能分区展示：说明 + 案例数量 + 已完成数量 + 完成率；「筛选案例」跳目录页并自动带 skill 过滤 |
 | Skills 触点 | 案例详情页 skills 标签可点击 → `/cases?skill=…`；目录卡片展示技能 chips |
 | 学习进度记录 | localStorage 记录已完成案例 id（completedCases） |

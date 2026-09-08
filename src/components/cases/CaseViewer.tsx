@@ -1,8 +1,10 @@
 "use client";
 
+import { useEffect } from "react";
 import Link from "next/link";
 import type { CaseSectionKey } from "@/types";
 import { getCaseModule } from "@/lib/case-modules";
+import { levelLabel } from "@/lib/case-filter";
 import { useAcademy } from "@/hooks/use-academy";
 import MarkdownBody from "./MarkdownBody";
 
@@ -53,9 +55,17 @@ export default function CaseViewer({
   prev,
   next,
 }: CaseViewerProps) {
-  const { state, toggleCaseComplete } = useAcademy();
+  const { state, toggleCaseComplete, markCaseStarted } = useAcademy();
   const done = state.completedCases.includes(id);
+  const started = state.startedCases.includes(id);
   const mod = getCaseModule(module);
+  const levelText = levelLabel(level);
+
+  // V1.8 状态口径：打开已导入案例详情即记为「开始学习」（已完成的不再改动）
+  useEffect(() => {
+    if (ready && !done && !started) markCaseStarted(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id, ready]);
 
   return (
     <div className="space-y-6">
@@ -89,6 +99,11 @@ export default function CaseViewer({
                 ✓ 已完成
               </span>
             )}
+            {ready && !done && started && (
+              <span className="rounded bg-blue-300 px-2 py-0.5 font-semibold text-blue-950">
+                学习中
+              </span>
+            )}
           </div>
 
           <h1 className="mt-3 text-xl font-bold leading-snug sm:text-2xl">
@@ -101,9 +116,9 @@ export default function CaseViewer({
                 M{mod.id} · {mod.zh}
               </span>
             )}
-            {level && (
+            {levelText && (
               <span className="rounded-md bg-amber-300/90 px-2 py-0.5 text-xs font-semibold text-amber-950">
-                {level}
+                {levelText}
               </span>
             )}
             {estimatedTime != null && (

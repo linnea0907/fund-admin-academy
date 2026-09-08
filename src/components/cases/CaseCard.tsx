@@ -3,14 +3,18 @@
 import Link from "next/link";
 import type { CaseMeta } from "@/types";
 import { getCaseModule } from "@/lib/case-modules";
+import { levelLabel } from "@/lib/case-filter";
 
-/** 案例卡片（Case Library V2 · Fund Admin 实务案例） */
+/** 案例卡片（Case Library V2 · Fund Admin 实务案例）
+ *  V1.8：状态口径统一 待导入/待学习/学习中/已完成；难度展示归一 基础/进阶/高级 */
 export default function CaseCard({
   item,
   done,
+  started,
 }: {
   item: CaseMeta;
   done: boolean;
+  started: boolean;
 }) {
   const ready = item.ready;
   const mod = getCaseModule(item.module);
@@ -36,9 +40,13 @@ export default function CaseCard({
           <span className="inline-flex items-center gap-1 rounded-full bg-emerald-100 px-2.5 py-1 text-xs font-semibold text-emerald-700">
             ✓ 已完成
           </span>
+        ) : started ? (
+          <span className="inline-flex items-center rounded-full bg-blue-100 px-2.5 py-1 text-xs font-semibold text-[#0e2a5e]">
+            学习中
+          </span>
         ) : (
-          <span className="inline-flex items-center rounded-full bg-blue-50 px-2.5 py-1 text-xs font-semibold text-[#0e2a5e]">
-            未完成
+          <span className="inline-flex items-center rounded-full bg-slate-100 px-2.5 py-1 text-xs font-semibold text-slate-500">
+            待学习
           </span>
         )}
       </div>
@@ -60,11 +68,14 @@ export default function CaseCard({
             M{mod.id} · {mod.zh}
           </span>
         )}
-        {item.level && (
-          <span className="rounded-md bg-amber-100 px-2 py-0.5 font-semibold text-amber-700">
-            {item.level}
-          </span>
-        )}
+        {item.level && (() => {
+          const lv = levelLabel(item.level);
+          return lv ? (
+            <span className="rounded-md bg-amber-100 px-2 py-0.5 font-semibold text-amber-700">
+              {lv}
+            </span>
+          ) : null;
+        })()}
         {item.estimatedTime != null && (
           <span className="rounded-md bg-slate-100 px-2 py-0.5 font-medium text-slate-500">
             约 {item.estimatedTime} 分钟
