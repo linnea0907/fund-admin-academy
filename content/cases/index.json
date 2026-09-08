@@ -1,9 +1,9 @@
 {
   "schema": "case-library-index",
   "version": 3,
-  "generatedAt": "2026-09-08T09:54:17.008Z",
+  "generatedAt": "2026-09-08T10:23:03.159Z",
   "total": 25,
-  "ready": 6,
+  "ready": 7,
   "cases": [
     {
       "id": "Case-001",
@@ -224,17 +224,23 @@
     {
       "id": "Case-013",
       "file": "Case-013.md",
-      "title": "Discretionary Account结构",
-      "level": "进阶",
+      "title": "Discretionary Managed Account 下是否需要披露底层客户 UBO",
+      "level": "L2",
       "module": 3,
-      "tags": [],
+      "tags": [
+        "AML Letter",
+        "Discretionary Account",
+        "Investor Onboarding",
+        "Licensed Entity"
+      ],
       "skills": [
         "AML Letter Review",
         "Regulatory Analysis",
-        "Client Communication"
+        "Risk Assessment",
+        "Compliance Escalation"
       ],
-      "estimatedTime": null,
-      "ready": false
+      "estimatedTime": 15,
+      "ready": true
     },
     {
       "id": "Case-014",
