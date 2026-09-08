@@ -50,6 +50,12 @@ export interface LessonMeta {
   escalationTriggers: string[];
 }
 
+/** 常见操作错误（Fund Admin 实务手册版） */
+export interface CommonMistake {
+  title: string;
+  detail: string;
+}
+
 /** 一讲（一门课） */
 export interface Lesson {
   /** 课程编号，如 "01" */
@@ -70,6 +76,14 @@ export interface Lesson {
   quiz: QuizQuestion[];
   /** 预计学习时长（分钟） */
   minutes: number;
+  /** 实务操作清单（V1.5：Fund Admin 手册化） */
+  checklist: string[];
+  /** 常见操作错误（V1.5） */
+  commonMistakes: CommonMistake[];
+  /** 办理时应核对的官方文件/单据清单（V1.5 权威清单；meta 同名项为兼容保留） */
+  documentsToCheck: string[];
+  /** 提示升级/上报的情形（V1.5 权威清单；meta 同名项为兼容保留） */
+  escalationTriggers: string[];
   /** 内容元数据（数据治理） */
   meta: LessonMeta;
 }

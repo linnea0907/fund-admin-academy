@@ -76,6 +76,22 @@ export const lessons: Lesson[] = [
           "基金资产可由基金直接持有，也可通过 SPV、托管人、受托人或其他合法安排持有——所有权链不同，估值与披露的口径随之不同",
         ],
       },
+      {
+        id: "m5",
+        title: "1.5 实务手册：募集、Closing、Side Letter 与年度维护",
+        body: [
+          "募集期主线：基金文件定稿 → 提供 PPM/IM → 投资者提交认购与 KYC → 治理方批准接纳 → 收款与份额发行 → 名册更新。Fund Admin 通常负责投资者尽调材料催收与初检、认购流程支持、份额台账准备与 Closing 后的名册维护；批准接纳属于治理方。",
+          "Closing 关键动作：核对名单与交割款、确认已批准投资者、按基金文件记载的定价发行份额/权益、计提首期费用、出具投资者确认与资本账户记录。Side Letter 属于基金与特殊投资者的附属协议，其费率、报告、信息权、最惠国等条款必须落入运营配置（费率引擎、报告分发、投决流程同步）；Fund Admin 应在 Closing 前取得经签署的 Side Letter 清单并复核可执行性。",
+          "年度维护：注册地与监管年费、服务商（注册代理/行政管理/审计）续约、年度审计与报表、AEOI/经济实质申报窗口、投资者年度报告与文件归档。建议由服务商合规日历统一管理并留痕。",
+        ],
+        points: [
+          "募集前核对：PPM 与基金文件一致、投资者属性与名额限制、Side Letter 清单",
+          "Closing checklist：批准名单 → 收款核对 → 份额发行 → 名册 → 费用计提 → 确认函",
+          "Side Letter 登记：条款摘要、生效条件、责任方、与主文件冲突处理",
+          "年度维护四表：费用表 / 申报表 / 审计表 / 报告表",
+          "任一接纳、转让、赎回变更同步名册与 AML 记录",
+        ],
+      },
     ],
     risks: [
       {
@@ -98,6 +114,47 @@ export const lessons: Lesson[] = [
         detail:
           "通过 SPV、托管人或受托人持有时，未同步更新簿记与披露口径，会导致资产归属、估值与报告不一致。",
       },
+    ],
+    checklist: [
+      "取得并核对经签署的基金文件、PPM 与最新 Side Letter 清单，确认谁有权接纳投资者",
+      "募集材料催收：认购文件、KYC/AML 资料、税务自我证明（CRS/FATCA）逐项打勾",
+      "Closing 前复核批准名单与交割款金额、币种与账户",
+      "Closing 后当日更新名册与资本账户，出具投资者确认函",
+      "Side Letter 条款登记并同步费率、报告分发与投决流程",
+      "建立年度维护日历：年费、审计、AEOI/经济实质、投资者报告",
+      "每次接纳/转让/赎回同步更新名册、AML 记录与 CRS 账户信息",
+      "对基金资产持有方式（直接/SPV/托管/受托）与簿记口径做一致性检查",
+    ],
+    commonMistakes: [
+      {
+        title: "把认购文件签署视为接纳已完成",
+        detail: "接纳以基金文件与治理方决议为准；签署、AML、到账、名册是独立环节。",
+      },
+      {
+        title: "Side Letter 只存档不落地",
+        detail: "条款未同步到费率与报告配置，会直接导致多收费或漏发报告。",
+      },
+      {
+        title: "Closing 只对钱不对名单",
+        detail: "漏核对批准状态就收款发行，可能在接纳问题上翻车。",
+      },
+      {
+        title: "年度维护靠记忆",
+        detail: "无合规日历导致年费、审计、申报窗口错过。",
+      },
+    ],
+    documentsToCheck: [
+      "LPA / 公司章程 / 信托契据（接纳、转让、定价与分配条款）",
+      "PPM/IM、认购文件、Side Letter 及签署版清单",
+      "投资管理协议 IMA、服务协议 SA、估值政策",
+      "AML 手册、CDD 政策与 CRS/FATCA 自我证明模板",
+      "年度维护：注册代理账单、CIMA/FSC 通知、审计委托书",
+    ],
+    escalationTriggers: [
+      "Side Letter 条款与主文件冲突或运营配置无法落地时",
+      "收到未经批准投资者的资金或已批准投资者款项异常时",
+      "名册、AML 记录与 CRS 账户信息不一致时",
+      "Closing/年度节点临近而关键文件（审计、申报）缺失时",
     ],
     mindmap: {
       label: "一只境外基金如何运转",
@@ -277,6 +334,22 @@ export const lessons: Lesson[] = [
           "三类判断互相独立，须分别读取各自依据",
         ],
       },
+      {
+        id: "m5",
+        title: "2.5 实务手册：ELP / SPC / LLC / VCC / OFC 速查",
+        body: [
+          "载体速查：Cayman ELP 是有限合伙，GP 管理、LP 出资，常用于 PE 主基金并具备分配灵活性；Cayman SPC 是公司法人下设多个隔离 SP，SP 无独立人格、资产隔离来自开曼立法，适合多策略/多产品；LLC 兼具法人有限责任与成员制灵活分配，常见于 GP 或管理公司层；新加坡 VCC 可单体或伞形、Sub-fund 间隔离，管理人须符合新加坡持牌/登记框架；香港 OFC 为公司型开放式结构，可伞形发行 Sub-fund 并具债务隔离效应，须由香港 9 号牌公司管理。",
+          "这些结构名称相似但法律制度、治理、管理人与监管要求各不相同，不能因为都含隔离或多子基金特征就互相套用。选择时以基金文件适用法、管理人持牌地与投资者税务画像为准，并按现行法规复核。",
+        ],
+        points: [
+          "ELP：合伙型、GP/LP、分配灵活（Cayman 有限合伙语境）",
+          "SPC：公司法人 + 隔离 SP；SP 通常无独立法律人格",
+          "LLC：成员制、有限责任与治理灵活，多用于 GP/管理公司",
+          "VCC：新加坡可变资本、伞形 Sub-fund 隔离、管理人框架现行复核",
+          "OFC：香港公司型开放式、伞形 Sub-fund 隔离、9 号牌管理人",
+          "同一结构在不同法域监管/税务/AEOI 分类仍须分别判断",
+        ],
+      },
     ],
     risks: [
       {
@@ -299,6 +372,44 @@ export const lessons: Lesson[] = [
         detail:
           "组织形式与监管/税务/AEOI 分类是不同判断，合并会导致申报主体与义务识别错误。",
       },
+    ],
+    checklist: [
+      "先定维度再选结构：组织形式 / 隔离结构 / 运作方式 / 监管分类不混层",
+      "确认适用法域与基金文件（LPA/章程）确定的载体类型与治理规则",
+      "涉及 SPC：核实 SP 隔离条款、SP 数量与各自资产负债记录边界",
+      "涉及 VCC/OFC：核对管理人持牌/登记框架与子基金设立流程（现行复核）",
+      "分别读取监管分类、税务分类与 AEOI 分类依据，不做单一标签概括",
+      "对每个主体（Fund/GP/Manager/SPV）分别确认注册、备案与任命义务",
+    ],
+    commonMistakes: [
+      {
+        title: "把 SP 当独立法人签约",
+        detail: "SP 通常无独立法律人格，对外行为与责任落在 SPC 整体框架内。",
+      },
+      {
+        title: "用开曼 SPC 经验套 VCC/OFC",
+        detail: "法域立法与治理不同，VCC/OFC 的管理人安排须按当地框架复核。",
+      },
+      {
+        title: "用监管分类直接当税务/AEOI 结论",
+        detail: "三个维度各自成体系，互相替代会造成申报主体识别错误。",
+      },
+      {
+        title: "名称即分类",
+        detail: "“LLC”“VCC”等是载体名称，与监管类别/牌照无关。",
+      },
+    ],
+    documentsToCheck: [
+      "基金组织文件（LPA/章程/M&A）与设立证书",
+      "SPC/VCC/OFC 设立地与现行基金法例及监管指引",
+      "管理人持牌/登记证明（如适用）",
+      "PPM 与募集文件（结构披露）",
+      "税务与 AEOI 分类判断底稿",
+    ],
+    escalationTriggers: [
+      "结构同时牵涉多法域监管分类而现行规则不明确时",
+      "客户要求以单一标签概括监管+税务+AEOI 时",
+      "SPC/VCC/OFC 子基金隔离安排与文件描述不一致时",
     ],
     mindmap: {
       label: "基金结构全景",
@@ -455,6 +566,21 @@ export const lessons: Lesson[] = [
           "数据保护：涉及投资者个人信息处理时须评估适用规则",
         ],
       },
+      {
+        id: "m5",
+        title: "3.5 实务手册：Private Fund 注册、审计、估值、经济实质与实益所有权",
+        body: [
+          "Private Fund 分析以现行法规为准：判断是否落入私募基金法框架、是否需 CIMA 注册或符合豁免条件；单一资产基金不当然排除。基金注册证书只证明基金本体注册状态，不是 Manager 或其他主体的牌照。",
+          "持续合规模块：年度审计（含提交时点）、估值安排与估值政策、资产保管或所有权验证、现金监控、证券识别、AML、AEOI、数据保护、经济实质（ES）与实益所有权（BO）登记。各模块启动时点、表格与窗口按 CIMA 现行指引执行，Fund Admin 以合规日历跟踪并留痕。",
+        ],
+        points: [
+          "注册/豁免判断：结合集合投资安排特征与现行法律，勿凭单一资产或名称下结论",
+          "审计：年度执行并按现行要求提交；协调审计师与行政管理员数据",
+          "估值：估值政策谁制定、谁批准、Admin 职责边界写清楚",
+          "ES：按主体判断相关活动与实质要求（Fund/GP/Manager 分层）",
+          "BO：登记册维护与披露边界，与 AML 尽调联动",
+        ],
+      },
     ],
     risks: [
       {
@@ -477,6 +603,44 @@ export const lessons: Lesson[] = [
         detail:
           "注册时序、期限、表格、费用会变化。写入培训材料时须附“办理时复核”，否则会迅速过时。",
       },
+    ],
+    checklist: [
+      "按判断链走一遍：集合投资安排 → 排除情形 → 赎回性 → Private/Mutual 框架",
+      "确认基金与各关联主体（Fund/GP/Manager/AIV/平行/Co-Invest/SPV）的注册与任命义务",
+      "安排年度审计并锁定提交窗口，与审计师/行政管理员对齐数据口径",
+      "复核估值政策与批准链条，明确 Admin 仅按协议准备/协助",
+      "维护经济实质申报日历与 BO 登记册，与 AML 尽调信息交叉核对",
+      "服务商任命变更、注册信息变更按 CIMA 现行要求备案",
+    ],
+    commonMistakes: [
+      {
+        title: "把注册证书当牌照",
+        detail: "基金注册状态不授予 Manager 等主体的牌照或注册资格。",
+      },
+      {
+        title: "单一资产即豁免思维",
+        detail: "单项目基金不当然排除 Private Fund 属性，须按安排特征与现行法判断。",
+      },
+      {
+        title: "估值/审计时点靠口头约定",
+        detail: "无书面日历容易错过审计提交与 AEOI 窗口。",
+      },
+      {
+        title: "BO 与 AML 尽调脱节",
+        detail: "实益所有权信息应在开户/变更时同步更新并互为校验。",
+      },
+    ],
+    documentsToCheck: [
+      "CIMA 现行注册/申报指引与表格",
+      "私募基金法/共同基金法现行版本、经济实质指引、BO 登记要求",
+      "审计委托书、估值政策、服务协议与行政管理协议",
+      "基金组织文件、注册证书与历次备案回执",
+    ],
+    escalationTriggers: [
+      "安排是否落入基金监管框架边界模糊、需法律意见时",
+      "审计/申报窗口临近而数据缺口大时",
+      "注册证书或服务商状态与事实不符时",
+      "BO/AML 信息冲突无法核实主体时",
     ],
     mindmap: {
       label: "Cayman 基金核心框架",
@@ -634,6 +798,22 @@ export const lessons: Lesson[] = [
           "可疑活动处理：记录、升级、保密、禁止 Tipping-off",
         ],
       },
+      {
+        id: "m5",
+        title: "4.5 实务手册：AMLCO / MLRO / DMLRO、PEP 与 EDD、SOF/SOW、Trust/PTC",
+        body: [
+          "AML 治理角色分工：AMLCO 负责反洗钱体系与政策的建立维护；MLRO 接收内部可疑活动报告并决定是否向金融情报机构提交；DMLRO 在 MLRO 缺位时代行并向其汇报。角色职责与备案要求按适用法域现行规定执行，Fund Admin 通常提供 CDD 操作支持而非最终决策。",
+          "PEP 适用强化尽调（EDD），且范围通常含近亲属与密切关联人；EDD 必须针对具体风险，如大额或来源不明的资金、复杂不透明结构。SOF（资金来源）回答这笔资金从哪里来，SOW（财富来源）回答其财富如何积累，二者在 EDD 中都要有支持文件。Trust/PTC 场景先做角色判断：Settlor、Trustee、Protector、受益人类别与其他行使最终有效控制的人，再定制化收集文件，避免一刀切。",
+        ],
+        points: [
+          "AMLCO 建体系、MLRO 定报告、DMLRO 替补——职能分离，别一人兼任到底",
+          "PEP：本人 + 近亲属 + 密切关联人；适用 EDD 并上报审批",
+          "EDD 针对具体风险：来源不明、复杂结构、敏感行业等，不留模板化痕迹",
+          "SOF 与 SOW 分开取证，结论与支持文件一并留档",
+          "Trust/PTC：按角色与控制关系定制尽调，最终有效控制人是核心",
+          "文件齐全 ≠ CDD 充分；认购完成 ≠ AML 完成",
+        ],
+      },
     ],
     risks: [
       {
@@ -656,6 +836,47 @@ export const lessons: Lesson[] = [
         detail:
           "不针对具体风险的模板化 EDD 无法满足监管预期，也可能遗漏真正的风险点。",
       },
+    ],
+    checklist: [
+      "开户前完成六步 CDD：Identify → Verify → Understand → Screen → Risk-rate → Monitor",
+      "个人投资者：身份/地址/税收居民/职业/目的/SOF/SOW/PEP/制裁/负面信息逐项覆盖",
+      "机构投资者：组织文件、董事、授权签字人、所有权链、UBO/控制人、监管或上市状态、SOF",
+      "Trust/PTC：先判断角色与最终有效控制，再定制化收集文件",
+      "明确 AMLCO/MLRO/DMLRO 与 Admin 的职责边界，落实记录与上报路径",
+      "制裁与 PEP 筛查含近似匹配复核并留存结论",
+      "投资者存续期内定期复核：股权/董事/税务居民变化触发重新评估",
+      "可疑情形按流程升级至 MLRO/DMLRO，注意保密与禁止 Tipping-off",
+    ],
+    commonMistakes: [
+      {
+        title: "一套文件通吃所有 Trust",
+        detail: "应先判断角色与控制关系，再按需收集，避免机械一刀切。",
+      },
+      {
+        title: "EDD 套模板堆文件",
+        detail: "不针对具体风险的 EDD 无法达到尽调目的，也难通过检查。",
+      },
+      {
+        title: "Admin 替 MLRO 拍板",
+        detail: "可疑活动报告决定属于指定报告角色，Admin 提供操作与记录。",
+      },
+      {
+        title: "SOF/SOW 混为一谈",
+        detail: "资金来源与财富来源是两个问题，须分别取证。",
+      },
+    ],
+    documentsToCheck: [
+      "适用法域 AML/CFT 法律与监管指引（现行版）",
+      "基金 AML 手册、CDD 政策与风险评级矩阵",
+      "制裁名单与 PEP 筛查工具说明及检索记录",
+      "自我证明与 KYC 档案（含 Trust 契据/决议、PTC 文件，如适用）",
+      "AMLCO/MLRO/DMLRO 任命与履职记录",
+    ],
+    escalationTriggers: [
+      "KYC 与自我声明矛盾无法澄清时",
+      "信托/公司结构无法确认最终有效控制人时",
+      "筛查命中/近似命中需要处置结论而权限不足时",
+      "潜在可疑活动需按流程上报 MLRO/DMLRO 时",
     ],
     mindmap: {
       label: "AML 与投资者尽调",
@@ -814,6 +1035,22 @@ export const lessons: Lesson[] = [
           "底稿留痕：从分类到申报的全链路证据",
         ],
       },
+      {
+        id: "m5",
+        title: "5.5 实务手册：FI / NFE 分类、Passive NFE、Controlling Person 与 GIIN",
+        body: [
+          "AEOI 分类速查：Financial Institution（金融机构）含 Investment Entity（投资实体）等子类；Non-Reporting FI 需满足特定条件；NFE（非金融实体）再分 Active NFE 与 Passive NFE——Passive NFE 指被动收入占比或活动测试未达标的实体，其 Controlling Persons（控制人）信息按 CRS 规则向税务机关申报。AML 中的 UBO 与 CRS 的 Controlling Person 口径不同，不能无条件等同。",
+          "GIIN 是 FATCA 注册标识而非金融牌照；注册角色（PPOC/Authorising Person 等）资格与兼任规则按办理时官方要求复核。年度工作含分类复核、自我证明合理性检查、数据质量校验与申报留痕；零申报不等于零工作，申报期限与可报告地区名单按报告年度复核。",
+        ],
+        points: [
+          "FI（Investment Entity 等）→ 注册/申报义务；Non-Reporting FI 条件严格",
+          "Passive NFE → Controlling Persons 信息申报；Active NFE 条件逐项核对",
+          "UBO（AML）与 Controlling Person（CRS）分别按各自口径识别",
+          "GIIN 只是注册标识，不证明完整 FATCA/CRS 合规状态",
+          "Self-Certification：签署、日期、TIN、税收居民地、合理性逐项检查",
+          "零申报 ≠ 零工作：分类、校验、申报、留痕都要完成",
+        ],
+      },
     ],
     risks: [
       {
@@ -836,6 +1073,47 @@ export const lessons: Lesson[] = [
         detail:
           "AML 的受益所有人概念与 CRS 的 Controlling Person 判定口径不同，不能无条件等同。",
       },
+    ],
+    checklist: [
+      "按四层框架推进：基金分类 → 注册与角色 → 投资者尽调 → 申报与底稿",
+      "确认基金 FATCA 与 CRS 分类（FI/Investment Entity/Non-Reporting FI/NFE），两套口径分别判断",
+      "注册与角色：GIIN 状态、本地申报门户、PPOC/Authorising Person 及申报授权（现行复核）",
+      "收集并核验投资者 Self-Certification：签署、日期、TIN、税收居民地、合理性",
+      "矛盾处理：KYC 与自我证明冲突先澄清取证，再决定是否接受/更新",
+      "情况变更（change in circumstances）触发重新收集与账户更新",
+      "Passive NFE 账户：识别并申报 Controlling Persons 信息",
+      "申报前数据质量校验（TIN/出生日期缺失项处理），完成后留痕归档",
+    ],
+    commonMistakes: [
+      {
+        title: "把国籍当税收居民身份",
+        detail: "FATCA/CRS 看税收居民身份，绿卡/居留测试都可能构成美国人。",
+      },
+      {
+        title: "UBO 直接当 Controlling Person",
+        detail: "AML 与 CRS 口径不同，识别规则分开执行。",
+      },
+      {
+        title: "矛盾自我证明直接放行",
+        detail: "US Indicia 等矛盾信号必须先澄清取证。",
+      },
+      {
+        title: "零申报即零工作",
+        detail: "分类、校验、申报与留痕的年度流程必须完整。",
+      },
+    ],
+    documentsToCheck: [
+      "适用辖区 AEOI 官方门户与年度申报指引（按报告年度）",
+      "IRS/FATCA 注册信息与 GIIN 状态",
+      "CRS 自我证明表模板与 TIN 规则说明",
+      "KYC 档案与账户信息（US Indicia 校验用）",
+      "PPOC/Authorising Person 任命与授权记录",
+    ],
+    escalationTriggers: [
+      "KYC 与自我证明矛盾经澄清仍无法解决时",
+      "账户重新定性（如 Passive NFE / 美国人）影响重大时",
+      "申报截止临近而数据质量缺口大时",
+      "注册角色/授权变更与现行官方要求不确定时",
     ],
     mindmap: {
       label: "FATCA 与 CRS",
@@ -991,6 +1269,21 @@ export const lessons: Lesson[] = [
           "基金投资、基金管理与持股业务在 ES 口径下分别判断",
         ],
       },
+      {
+        id: "m5",
+        title: "6.5 实务手册：基金分类速查、Approved Manager 与经济实质",
+        body: [
+          "BVI 分类速查：不要凭名称下结论。开放式集合投资安排一般进入共同基金（Mutual Fund）体系（含 Professional Fund 等面向专业投资者的类别）；封闭式集合投资安排重点分析 Private Investment Fund（PIF Act 体系）。Private Fund 与 Private Investment Fund 名称相近、制度不同，判断依据是运作方式、投资者限制与现行法律。",
+          "Approved Manager 是简化监管制度：适用基金范围与业务规模限制、董事、授权代表、财务报表、年度申报与重大事项通知构成持续义务；它不是注册代理牌照，也不替代基金的 AML、AEOI 与其他合规义务。经济实质（ES）按主体与业务分开判断：Fund、Manager、GP、持股 SPV 各自的主营业务不同，需区分基金投资业务、基金管理业务与持股业务。",
+        ],
+        points: [
+          "分类三步：运作方式（开放/封闭）→ 投资者限制 → 适用法（Mutual Fund 体系 / PIF 制度）",
+          "Approved Manager：有范围与规模限制的简化监管，非无监管",
+          "PIF 模块清单：FSC 认可、组织文件投资者限制、授权代表、董事与指定人士、估值、保管、利益冲突、审计、变更通知",
+          "BVI LP 法律人格可选择：以 BVI 现行法与合伙协议为准",
+          "ES：Fund/Manager/GP/SPV 分层，投资/管理/持股三类业务分开",
+        ],
+      },
     ],
     risks: [
       {
@@ -1013,6 +1306,46 @@ export const lessons: Lesson[] = [
         detail:
           "Fund、Manager、GP、持股 SPV 的主营业务不同，投资基金/基金管理/持股业务的 ES 口径分别判断。",
       },
+    ],
+    checklist: [
+      "收到基金/结构先做分类三步：名称 → 运作方式 → 投资者限制与适用法",
+      "封闭式安排进入 PIF 分析：FSC 认可、组织文件投资者限制、授权代表、董事与指定人士、估值、保管、利益冲突、审计、变更通知逐项核对",
+      "开放式安排按共同基金（Mutual Fund）体系相关类别分析",
+      "Approved Manager：监控适用基金范围与业务规模限制是否临近上限",
+      "核对 BVI LP 是否选择具有法律人格，并与合伙协议表述一致",
+      "ES 申报：按 Fund/Manager/GP/持股 SPV 分层，区分投资/管理/持股业务",
+      "服务商与授权代表变更按规定向 FSC 通知",
+    ],
+    commonMistakes: [
+      {
+        title: "凭名称定分类",
+        detail: "Private Fund 与 Private Investment Fund 名称相近但制度不同，看运作与现行法。",
+      },
+      {
+        title: "把 Approved Manager 当无监管",
+        detail: "范围与规模限制、董事、授权代表与年度申报都是持续义务。",
+      },
+      {
+        title: "用 Cayman ELP 逻辑套 BVI LP",
+        detail: "BVI 有限合伙可依法选择法律人格，规则与开曼不同。",
+      },
+      {
+        title: "ES 一锅端",
+        detail: "不按主体与业务类型分层，会导致申报主体与活动口径错误。",
+      },
+    ],
+    documentsToCheck: [
+      "FSC 现行指引与申请/申报表格",
+      "PIF Act / Mutual Funds Act 现行版本、基金组织文件",
+      "Approved Manager 获批文件与规模监测台账",
+      "BVI LP 法例与合伙协议（法律人格选择条款）",
+      "经济实质申报指引与既有申报记录",
+    ],
+    escalationTriggers: [
+      "基金名称与制度归属存在歧义需正式分类结论时",
+      "Approved Manager 业务接近或可能超过限制时",
+      "BVI LP 法律人格选择与组织文件不一致时",
+      "ES 主体/业务口径与既有申报冲突时",
     ],
     mindmap: {
       label: "BVI 基金与管理人",
