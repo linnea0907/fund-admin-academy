@@ -1,11 +1,23 @@
 ---
 id: Case-006
-title: "BVI公司投资开曼基金"
-level: "入门"
+title: BVI公司投资开曼基金
+level: 入门
 module: 2
-tags: []
-estimatedTime: ""
-skills: ["Structure Chart Review", "UBO Identification", "Beneficial Ownership Analysis", "Regulatory Analysis"]
+tags:
+  - BVI Company
+  - Corporate Chart
+estimatedTime: ''
+skills:
+  - Structure Chart Review
+  - UBO Identification
+  - Beneficial Ownership Analysis
+  - Regulatory Analysis
+jurisdiction:
+  - Cayman
+businessArea: Investor Onboarding
+entityType: Corporate
+topics:
+  - UBO
 ---
 
 # 场景背景

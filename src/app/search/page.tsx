@@ -31,7 +31,7 @@ export default function SearchPage() {
     modules: l.modules.map((m) => ({ id: m.id, title: m.title })),
   }));
 
-  // 案例（标题 / 模块 / 标签 / 技能）
+  // 案例（标题 / 模块 / 标签 / 技能 / V1.13.1 分类字段）
   const cases: SearchCase[] = caseMetas.map((c) => ({
     id: c.id,
     slug: caseSlug(c.id),
@@ -40,6 +40,10 @@ export default function SearchPage() {
     tags: c.tags,
     skills: c.skills,
     ready: c.ready,
+    jurisdiction: c.jurisdiction,
+    businessArea: c.businessArea,
+    entityType: c.entityType,
+    topics: c.topics,
   }));
 
   // 术语（单一数据源）

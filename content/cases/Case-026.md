@@ -1,17 +1,26 @@
 ---
 id: Case-026
-title: "台湾身份证是否可以作为身份证明文件"
-level: "L1"
+title: 台湾身份证是否可以作为身份证明文件
+level: L1
 module: 1
 tags:
   - KYC
   - Identity Document
   - Taiwan
+  - Taiwan ID
+  - National ID
 skills:
   - KYC Review
   - Identity Verification
   - Regulatory Analysis
 estimatedTime: 8
+jurisdiction:
+  - BVI
+  - Cayman
+businessArea: Investor Onboarding
+entityType: Individual
+topics:
+  - Identity Verification
 ---
 
 # 场景背景

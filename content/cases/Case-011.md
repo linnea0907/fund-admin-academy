@@ -1,11 +1,22 @@
 ---
 id: Case-011
-title: "持牌管理人出具AML Letter"
-level: "入门"
+title: 持牌管理人出具AML Letter
+level: 入门
 module: 3
-tags: []
-estimatedTime: ""
-skills: ["AML Letter Review", "Regulatory Analysis", "KYC Review"]
+tags:
+  - AML Letter
+  - Licensed Manager
+estimatedTime: ''
+skills:
+  - AML Letter Review
+  - Regulatory Analysis
+  - KYC Review
+jurisdiction:
+  - BVI
+businessArea: Investor Onboarding
+entityType: Fund
+topics:
+  - UBO
 ---
 
 # 场景背景

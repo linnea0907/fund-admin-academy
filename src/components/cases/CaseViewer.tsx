@@ -6,6 +6,12 @@ import { useRouter } from "next/navigation";
 import type { CaseSectionKey } from "@/types";
 import { getCaseModule } from "@/lib/case-modules";
 import { levelLabel } from "@/lib/case-filter";
+import {
+  jurisdictionMeta,
+  businessAreaMeta,
+  entityTypeMeta,
+  topicMeta,
+} from "@/lib/case-categories";
 import { useAcademy } from "@/hooks/use-academy";
 import MarkdownBody from "./MarkdownBody";
 import HighlightEngine from "@/components/reading/HighlightEngine";
@@ -35,6 +41,11 @@ interface CaseViewerProps {
   sections: CaseViewerSection[];
   prev: Neighbor | null;
   next: Neighbor | null;
+  /** V1.13.1 分类体系 */
+  jurisdiction: string[];
+  businessArea: string;
+  entityType: string;
+  topics: string[];
 }
 
 /** 小节卡片底色：区分「先思考 / 答案 / 总结」三类 */
@@ -56,6 +67,10 @@ export default function CaseViewer({
   sections,
   prev,
   next,
+  jurisdiction,
+  businessArea,
+  entityType,
+  topics,
 }: CaseViewerProps) {
   const router = useRouter();
   const { state, completeCase, toggleCaseComplete, markCaseStarted, toggleFavorite } = useAcademy();
@@ -152,6 +167,47 @@ export default function CaseViewer({
           <h1 className="mt-3 text-xl font-bold leading-snug sm:text-2xl">
             {title || `案例 ${id} · 内容待导入`}
           </h1>
+
+          {/* V1.13.1 分类条：📍 属地 · 📂 业务场景 · 👤 实体类型 · 🏷 知识主题 */}
+          <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1.5 text-[13px]">
+            {jurisdiction.map((j) => (
+              <Link
+                key={`j-${j}`}
+                href={`/cases?jurisdiction=${encodeURIComponent(j)}`}
+                className="rounded-md bg-blue-400/15 px-2.5 py-1 font-semibold text-blue-100 ring-1 ring-blue-300/30 transition hover:bg-blue-400/25"
+                title={`适用规则来源：${j} · 点击按属地筛选案例`}
+              >
+                {jurisdictionMeta(j)}
+              </Link>
+            ))}
+            {businessArea && (
+              <span
+                className="rounded-md bg-white/5 px-2.5 py-1 font-medium text-blue-100/90"
+                title="业务场景"
+              >
+                {businessAreaMeta(businessArea)}
+              </span>
+            )}
+            {entityType && (
+              <Link
+                href={`/cases?entity=${encodeURIComponent(entityType)}`}
+                className="rounded-md bg-white/5 px-2.5 py-1 font-medium text-blue-100/90 ring-1 ring-white/10 transition hover:bg-white/10"
+                title={`实体类型：${entityType} · 点击按实体筛选案例`}
+              >
+                {entityTypeMeta(entityType)}
+              </Link>
+            )}
+            {topics.slice(0, 3).map((t) => (
+              <Link
+                key={`t-${t}`}
+                href={`/cases?topic=${encodeURIComponent(t)}`}
+                className="rounded-md bg-white/5 px-2.5 py-1 font-medium text-blue-100/90 ring-1 ring-white/10 transition hover:bg-white/10"
+                title={`知识主题：${t} · 点击按主题筛选案例`}
+              >
+                {topicMeta(t)}
+              </Link>
+            ))}
+          </div>
 
           <div className="mt-3 flex flex-wrap items-center gap-2">
             {mod && (

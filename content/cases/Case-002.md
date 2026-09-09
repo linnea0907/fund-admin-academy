@@ -1,11 +1,27 @@
 ---
 id: Case-002
-title: "客户提供移动账单作为 Address Proof"
-level: "入门"
+title: 客户提供移动账单作为 Address Proof
+level: 入门
 module: 1
-tags: ["香港基金", "个人投资人", "住址证明", "账单审核"]
+tags:
+  - 香港基金
+  - 个人投资人
+  - 住址证明
+  - 账单审核
+  - Mobile Bill
+  - Utility Bill
 estimatedTime: 8
-skills: ["KYC Review", "Address Proof Review", "Certification Review", "Client Communication"]
+skills:
+  - KYC Review
+  - Address Proof Review
+  - Certification Review
+  - Client Communication
+jurisdiction:
+  - Hong Kong
+businessArea: Investor Onboarding
+entityType: Individual
+topics:
+  - Address Proof
 ---
 
 # 场景背景

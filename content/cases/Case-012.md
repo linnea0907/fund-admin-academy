@@ -1,19 +1,27 @@
 ---
 id: Case-012
-title: "Fund Admin 出具 AML Letter 是否可以接受"
-level: "L2"
+title: Fund Admin 出具 AML Letter 是否可以接受
+level: L2
 module: 3
 tags:
-- AML Letter
-- Investor Onboarding
-- Licensed Entity
-- Compliance Review
+  - AML Letter
+  - Investor Onboarding
+  - Licensed Entity
+  - Compliance Review
+  - Fund Administrator
+  - VCC
 skills:
-- AML Letter Review
-- Regulatory Analysis
-- Risk Assessment
-- Compliance Escalation
+  - AML Letter Review
+  - Regulatory Analysis
+  - Risk Assessment
+  - Compliance Escalation
 estimatedTime: 15
+jurisdiction:
+  - BVI
+businessArea: Investor Onboarding
+entityType: Fund
+topics:
+  - UBO
 ---
 # 场景背景
 

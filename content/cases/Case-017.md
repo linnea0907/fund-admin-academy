@@ -1,11 +1,23 @@
 ---
 id: Case-017
-title: "公司投资人认购基金"
-level: "入门"
+title: 公司投资人认购基金
+level: 入门
 module: 4
-tags: []
-estimatedTime: ""
-skills: ["Investor Onboarding", "KYC Review", "Beneficial Ownership Analysis", "Closing Readiness Check"]
+tags:
+  - Corporate Investor
+  - Company
+estimatedTime: ''
+skills:
+  - Investor Onboarding
+  - KYC Review
+  - Beneficial Ownership Analysis
+  - Closing Readiness Check
+jurisdiction:
+  - Cayman
+businessArea: Investor Onboarding
+entityType: Corporate
+topics:
+  - UBO
 ---
 
 # 场景背景

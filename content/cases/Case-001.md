@@ -1,11 +1,28 @@
 ---
 id: Case-001
-title: "开曼基金投资人仅提供香港永久居民身份证"
-level: "入门"
+title: 开曼基金投资人仅提供香港永久居民身份证
+level: 入门
 module: 1
-tags: ["开曼基金", "个人投资人", "身份证明", "香港证件"]
+tags:
+  - 开曼基金
+  - 个人投资人
+  - 身份证明
+  - 香港证件
+  - Hong Kong ID
+  - HKPR
+  - Passport
 estimatedTime: 10
-skills: ["KYC Review", "Identity Verification", "Certification Review", "Client Communication"]
+skills:
+  - KYC Review
+  - Identity Verification
+  - Certification Review
+  - Client Communication
+jurisdiction:
+  - Cayman
+businessArea: Investor Onboarding
+entityType: Individual
+topics:
+  - Identity Verification
 ---
 
 # 场景背景

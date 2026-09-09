@@ -1,11 +1,23 @@
 ---
 id: Case-020
-title: "追加投资"
-level: "入门"
+title: 追加投资
+level: 入门
 module: 4
-tags: []
-estimatedTime: ""
-skills: ["Investor Onboarding", "KYC Review", "SOF Review", "Closing Readiness Check"]
+tags:
+  - Additional Subscription
+  - Top-up
+estimatedTime: ''
+skills:
+  - Investor Onboarding
+  - KYC Review
+  - SOF Review
+  - Closing Readiness Check
+jurisdiction:
+  - Cayman
+businessArea: Investor Onboarding
+entityType: Corporate
+topics:
+  - SOF
 ---
 
 # 场景背景

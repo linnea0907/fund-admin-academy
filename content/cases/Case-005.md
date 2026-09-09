@@ -1,11 +1,28 @@
 ---
 id: Case-005
-title: "新加坡蓝色身份证是否接受"
-level: "进阶"
+title: 新加坡蓝色身份证是否接受
+level: 进阶
 module: 1
-tags: ["开曼基金", "新加坡", "身份证明", "属地差异"]
+tags:
+  - 开曼基金
+  - 新加坡
+  - 身份证明
+  - 属地差异
+  - Singapore IC
+  - Blue IC
+  - NRIC
 estimatedTime: 10
-skills: ["KYC Review", "Identity Verification", "Regulatory Analysis", "Problem Solving"]
+skills:
+  - KYC Review
+  - Identity Verification
+  - Regulatory Analysis
+  - Problem Solving
+jurisdiction:
+  - Cayman
+businessArea: Investor Onboarding
+entityType: Individual
+topics:
+  - Identity Verification
 ---
 
 # 场景背景

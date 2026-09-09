@@ -1,19 +1,26 @@
 ---
 id: Case-014
-title: "AML Letter 超过一年是否仍可接受"
-level: "L2"
+title: AML Letter 超过一年是否仍可接受
+level: L2
 module: 3
 tags:
   - AML Letter
   - Investor Onboarding
   - Compliance Review
   - Existing Client
+  - Validity
 skills:
   - AML Letter Review
   - Regulatory Analysis
   - Risk Assessment
   - Compliance Escalation
 estimatedTime: 12
+jurisdiction:
+  - Other
+businessArea: Investor Onboarding
+entityType: Corporate
+topics:
+  - UBO
 ---
 
 # 场景背景

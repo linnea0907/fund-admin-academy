@@ -1,11 +1,24 @@
 ---
 id: Case-010
-title: "复杂Trust架构"
-level: "高级"
+title: 复杂Trust架构
+level: 高级
 module: 2
-tags: []
-estimatedTime: ""
-skills: ["Structure Chart Review", "Trust Review", "Beneficial Ownership Analysis", "UBO Identification"]
+tags:
+  - Complex Trust
+  - Discretionary Trust
+estimatedTime: ''
+skills:
+  - Structure Chart Review
+  - Trust Review
+  - Beneficial Ownership Analysis
+  - UBO Identification
+jurisdiction:
+  - Cayman
+businessArea: Investor Onboarding
+entityType: Trust
+topics:
+  - Trust
+  - UBO
 ---
 
 # 场景背景

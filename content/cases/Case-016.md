@@ -1,11 +1,24 @@
 ---
 id: Case-016
-title: "个人投资人认购基金"
-level: "入门"
+title: 个人投资人认购基金
+level: 入门
 module: 4
-tags: []
-estimatedTime: ""
-skills: ["Investor Onboarding", "KYC Review", "SOF Review", "Closing Readiness Check"]
+tags:
+  - Individual Investor
+  - Subscription
+estimatedTime: ''
+skills:
+  - Investor Onboarding
+  - KYC Review
+  - SOF Review
+  - Closing Readiness Check
+jurisdiction:
+  - Cayman
+businessArea: Investor Onboarding
+entityType: Individual
+topics:
+  - Identity Verification
+  - SOF
 ---
 
 # 场景背景

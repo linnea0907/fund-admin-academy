@@ -1,11 +1,24 @@
 ---
 id: Case-004
-title: "Reference Letter 作为住址证明"
-level: "进阶"
+title: Reference Letter 作为住址证明
+level: 进阶
 module: 1
-tags: ["开曼基金", "住址证明", "Reference Letter", "推荐信"]
+tags:
+  - 开曼基金
+  - 住址证明
+  - Reference Letter
+  - 推荐信
 estimatedTime: 12
-skills: ["KYC Review", "Address Proof Review", "Certification Review"]
+skills:
+  - KYC Review
+  - Address Proof Review
+  - Certification Review
+jurisdiction:
+  - Cayman
+businessArea: Investor Onboarding
+entityType: Individual
+topics:
+  - Address Proof
 ---
 
 # 场景背景

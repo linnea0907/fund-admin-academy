@@ -18,6 +18,14 @@ import {
   type LevelKey,
 } from "@/lib/case-filter";
 import { CASE_MODULES } from "@/lib/case-modules";
+import {
+  CASE_JURISDICTIONS,
+  CASE_ENTITY_TYPES,
+  CASE_TOPICS,
+  jurisdictionMeta,
+  entityTypeMeta,
+  topicMeta,
+} from "@/lib/case-categories";
 import { useAcademy } from "@/hooks/use-academy";
 import CaseCard from "./CaseCard";
 
@@ -57,6 +65,21 @@ function readFilters(sp: URLSearchParams) {
   )
     ? (statusRaw as CaseStatusKey)
     : "all";
+  // V1.13.1 分类维度（受控清单内才接受）
+  const jurisdictionRaw = sp.get("jurisdiction")?.trim() || null;
+  const jurisdiction = (CASE_JURISDICTIONS as readonly string[]).includes(
+    jurisdictionRaw ?? ""
+  )
+    ? jurisdictionRaw
+    : null;
+  const entityRaw = sp.get("entity")?.trim() || null;
+  const entity = (CASE_ENTITY_TYPES as readonly string[]).includes(entityRaw ?? "")
+    ? entityRaw
+    : null;
+  const topicRaw = sp.get("topic")?.trim() || null;
+  const topic = (CASE_TOPICS as readonly string[]).includes(topicRaw ?? "")
+    ? topicRaw
+    : null;
   return {
     mod,
     area,
@@ -64,6 +87,9 @@ function readFilters(sp: URLSearchParams) {
     level,
     tag: sp.get("tag")?.trim() || null,
     status,
+    jurisdiction,
+    entity,
+    topic,
   };
 }
 
@@ -133,6 +159,9 @@ export default function CaseLibrary({ cases }: { cases: CaseMeta[] }) {
       level: LevelKey | null;
       tag: string | null;
       status: CaseStatusKey | null;
+      jurisdiction: string | null;
+      entity: string | null;
+      topic: string | null;
     }>
   ) => {
     const p = new URLSearchParams(sp.toString());
@@ -169,6 +198,26 @@ export default function CaseLibrary({ cases }: { cases: CaseMeta[] }) {
     return m;
   }, [cases]);
 
+  /* V1.13.1 分类维度计数 */
+  const jurisdictionCounts = useMemo(() => {
+    const m = new Map<string, number>();
+    for (const j of CASE_JURISDICTIONS)
+      m.set(j, cases.filter((c) => c.jurisdiction.includes(j)).length);
+    return m;
+  }, [cases]);
+  const entityCounts = useMemo(() => {
+    const m = new Map<string, number>();
+    for (const e of CASE_ENTITY_TYPES)
+      m.set(e, cases.filter((c) => c.entityType === e).length);
+    return m;
+  }, [cases]);
+  const topicCounts = useMemo(() => {
+    const m = new Map<string, number>();
+    for (const t of CASE_TOPICS)
+      m.set(t, cases.filter((c) => c.topics.includes(t)).length);
+    return m;
+  }, [cases]);
+
   const statusCounts: Record<CaseStatusKey, number> = {
     all: cases.length,
     todo: todoTotal,
@@ -183,6 +232,10 @@ export default function CaseLibrary({ cases }: { cases: CaseMeta[] }) {
     if (shownSkill && !c.skills.includes(shownSkill)) return false;
     if (shownLevel && levelBucket(c.level) !== shownLevel) return false;
     if (shownTag && !c.tags.includes(shownTag)) return false;
+    // V1.13.1 分类维度（组合 AND）
+    if (raw.jurisdiction && !c.jurisdiction.includes(raw.jurisdiction)) return false;
+    if (raw.entity && c.entityType !== raw.entity) return false;
+    if (raw.topic && !c.topics.includes(raw.topic)) return false;
     if (raw.status !== "all") {
       const st = caseLearnStatus(c, startedIds.has(c.id), doneIds.has(c.id));
       if (st !== raw.status) return false;
@@ -197,7 +250,10 @@ export default function CaseLibrary({ cases }: { cases: CaseMeta[] }) {
     shownSkill !== null ||
     shownLevel !== null ||
     shownTag !== null ||
-    statusActive;
+    statusActive ||
+    raw.jurisdiction !== null ||
+    raw.entity !== null ||
+    raw.topic !== null;
 
   const statusLabel = (k: CaseStatusKey) =>
     STATUS_OPTIONS.find((o) => o.key === k)?.label ?? "";
@@ -210,6 +266,9 @@ export default function CaseLibrary({ cases }: { cases: CaseMeta[] }) {
   };
   const setSkill = (s: string | null) =>
     update(areaDef ? { area: areaDef.id, skill: s } : { skill: s });
+  const setJurisdiction = (j: string | null) => update({ jurisdiction: j });
+  const setEntity = (e: string | null) => update({ entity: e });
+  const setTopic = (t: string | null) => update({ topic: t });
 
   return (
     <div className="space-y-6">
@@ -257,7 +316,38 @@ export default function CaseLibrary({ cases }: { cases: CaseMeta[] }) {
 
       {/* 筛选区 */}
       <section className="space-y-2 rounded-2xl border border-slate-200 bg-white p-4 sm:p-4">
-        {/* 行 1 · 模块（一级分类 Module 1~5） */}
+        {/* 行 1 · 属地 Jurisdiction（V1.13.1 核心分类，置顶首行） */}
+        <div className="flex flex-wrap items-center gap-1.5">
+          <span className={ROW_LABEL}>属地</span>
+          <button
+            type="button"
+            onClick={() => setJurisdiction(null)}
+            className={chip(raw.jurisdiction === null)}
+            title="查看全部司法管辖区"
+          >
+            📍 全部
+          </button>
+          {CASE_JURISDICTIONS.map((j) => {
+            const active = raw.jurisdiction === j;
+            return (
+              <button
+                key={j}
+                type="button"
+                title={`适用规则来源：${j}（${jurisdictionCounts.get(j) ?? 0} 例）`}
+                onClick={() => setJurisdiction(active ? null : j)}
+                className={chip(active)}
+              >
+                {j}
+                <span className={active ? "text-blue-200" : "text-slate-400"}>
+                  {" "}
+                  {jurisdictionCounts.get(j) ?? 0}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* 行 2 · 模块（一级分类 Module 1~5） */}
         <div className="flex flex-wrap items-center gap-1.5">
           <span className={ROW_LABEL}>模块</span>
           <button
@@ -387,6 +477,70 @@ export default function CaseLibrary({ cases }: { cases: CaseMeta[] }) {
           })}
         </div>
 
+        {/* 行 5 · 实体类型（V1.13.1） */}
+        <div className="flex flex-wrap items-center gap-1.5">
+          <span className={ROW_LABEL}>实体</span>
+          <button
+            type="button"
+            onClick={() => setEntity(null)}
+            className={chip(raw.entity === null)}
+            title="查看全部实体类型"
+          >
+            👤 全部
+          </button>
+          {CASE_ENTITY_TYPES.map((e) => {
+            const active = raw.entity === e;
+            return (
+              <button
+                key={e}
+                type="button"
+                title={`实体类型：${e}（${entityCounts.get(e) ?? 0} 例）`}
+                onClick={() => setEntity(active ? null : e)}
+                className={chip(active)}
+              >
+                {e}
+                <span className={active ? "text-blue-200" : "text-slate-400"}>
+                  {" "}
+                  {entityCounts.get(e) ?? 0}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* 行 6 · 知识主题（V1.13.1） */}
+        <div className="flex flex-wrap items-center gap-1.5">
+          <span className={ROW_LABEL}>主题</span>
+          <button
+            type="button"
+            onClick={() => setTopic(null)}
+            className={chip(raw.topic === null)}
+            title="查看全部知识主题"
+          >
+            🏷 全部
+          </button>
+          {CASE_TOPICS.map((t) => {
+            const count = topicCounts.get(t) ?? 0;
+            if (count === 0) return null;
+            const active = raw.topic === t;
+            return (
+              <button
+                key={t}
+                type="button"
+                title={`知识主题：${t}（${count} 例）`}
+                onClick={() => setTopic(active ? null : t)}
+                className={chip(active)}
+              >
+                {t}
+                <span className={active ? "text-blue-200" : "text-slate-400"}>
+                  {" "}
+                  {count}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+
         {/* 高级筛选（状态 + 标签，默认折叠） */}
         <div className="rounded-xl border border-slate-100 bg-slate-50/50">
           <button
@@ -510,6 +664,27 @@ export default function CaseLibrary({ cases }: { cases: CaseMeta[] }) {
                 tone="amber"
               />
             )}
+            {raw.jurisdiction && (
+              <ActiveChip
+                label={jurisdictionMeta(raw.jurisdiction)}
+                onClear={() => setJurisdiction(null)}
+                tone="navy"
+              />
+            )}
+            {raw.entity && (
+              <ActiveChip
+                label={entityTypeMeta(raw.entity)}
+                onClear={() => setEntity(null)}
+                tone="navy"
+              />
+            )}
+            {raw.topic && (
+              <ActiveChip
+                label={topicMeta(raw.topic)}
+                onClear={() => setTopic(null)}
+                tone="navy"
+              />
+            )}
             {statusActive && (
               <ActiveChip
                 label={statusLabel(raw.status)}
@@ -527,6 +702,9 @@ export default function CaseLibrary({ cases }: { cases: CaseMeta[] }) {
                 level: null,
                 tag: null,
                 status: "all",
+                jurisdiction: null,
+                entity: null,
+                topic: null,
               })
             }
             className="rounded-full bg-white px-3 py-1 text-xs font-semibold text-blue-700 ring-1 ring-blue-200 transition hover:bg-blue-100"

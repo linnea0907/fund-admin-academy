@@ -1,11 +1,22 @@
 ---
 id: Case-015
-title: "AML Letter缺少承诺条款"
-level: "入门"
+title: AML Letter缺少承诺条款
+level: 入门
 module: 3
-tags: []
-estimatedTime: ""
-skills: ["AML Letter Review", "Regulatory Analysis", "Client Communication"]
+tags:
+  - AML Letter
+  - Missing Covenant
+estimatedTime: ''
+skills:
+  - AML Letter Review
+  - Regulatory Analysis
+  - Client Communication
+jurisdiction:
+  - BVI
+businessArea: Investor Onboarding
+entityType: Corporate
+topics:
+  - UBO
 ---
 
 # 场景背景

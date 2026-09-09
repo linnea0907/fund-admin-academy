@@ -1,11 +1,23 @@
 ---
 id: Case-009
-title: "国企架构识别"
-level: "进阶"
+title: 国企架构识别
+level: 进阶
 module: 2
-tags: []
-estimatedTime: ""
-skills: ["Structure Chart Review", "UBO Identification", "Beneficial Ownership Analysis", "Regulatory Analysis"]
+tags:
+  - SOE
+  - State-owned Enterprise
+estimatedTime: ''
+skills:
+  - Structure Chart Review
+  - UBO Identification
+  - Beneficial Ownership Analysis
+  - Regulatory Analysis
+jurisdiction:
+  - Cayman
+businessArea: Investor Onboarding
+entityType: Corporate
+topics:
+  - UBO
 ---
 
 # 场景背景

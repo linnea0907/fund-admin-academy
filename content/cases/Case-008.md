@@ -1,11 +1,22 @@
 ---
 id: Case-008
-title: "上市公司持股架构"
-level: "入门"
+title: 上市公司持股架构
+level: 入门
 module: 2
-tags: []
-estimatedTime: ""
-skills: ["Structure Chart Review", "UBO Identification", "Regulatory Analysis"]
+tags:
+  - Listed Company
+  - Stock Exchange
+estimatedTime: ''
+skills:
+  - Structure Chart Review
+  - UBO Identification
+  - Regulatory Analysis
+jurisdiction:
+  - Cayman
+businessArea: Investor Onboarding
+entityType: Corporate
+topics:
+  - UBO
 ---
 
 # 场景背景

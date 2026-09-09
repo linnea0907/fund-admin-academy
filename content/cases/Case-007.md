@@ -1,11 +1,22 @@
 ---
 id: Case-007
-title: "多层SPV穿透"
-level: "进阶"
+title: 多层SPV穿透
+level: 进阶
 module: 2
-tags: []
-estimatedTime: ""
-skills: ["Structure Chart Review", "UBO Identification", "Beneficial Ownership Analysis"]
+tags:
+  - SPV
+  - Multi-layer Structure
+estimatedTime: ''
+skills:
+  - Structure Chart Review
+  - UBO Identification
+  - Beneficial Ownership Analysis
+jurisdiction:
+  - Cayman
+businessArea: Investor Onboarding
+entityType: Corporate
+topics:
+  - UBO
 ---
 
 # 场景背景

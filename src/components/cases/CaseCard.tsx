@@ -4,6 +4,12 @@ import Link from "next/link";
 import type { CaseMeta } from "@/types";
 import { getCaseModule } from "@/lib/case-modules";
 import { levelLabel } from "@/lib/case-filter";
+import {
+  jurisdictionMeta,
+  businessAreaMeta,
+  entityTypeMeta,
+  topicMeta,
+} from "@/lib/case-categories";
 
 /** 案例卡片（Case Library V2 · Fund Admin 实务案例）
  *  V1.8：状态口径统一 待导入/待学习/学习中/已完成；难度展示归一 基础/进阶/高级 */
@@ -58,6 +64,32 @@ export default function CaseCard({
       >
         {item.title || "（内容待 SOP 导入）"}
       </h3>
+
+      {/* V1.13.1 分类 meta 行：📍 属地 · 📂 业务场景 · 👤 实体 · 🏷 知识主题 */}
+      {(item.jurisdiction.length > 0 ||
+        item.businessArea ||
+        item.entityType ||
+        item.topics.length > 0) && (
+        <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] font-medium text-slate-500">
+          {item.jurisdiction.slice(0, 2).map((j) => (
+            <span key={`j-${j}`} className="whitespace-nowrap">
+              {jurisdictionMeta(j)}
+            </span>
+          ))}
+          {item.businessArea && (
+            <span className="whitespace-nowrap">{businessAreaMeta(item.businessArea)}</span>
+          )}
+          {item.entityType && (
+            <span className="whitespace-nowrap">{entityTypeMeta(item.entityType)}</span>
+          )}
+          {item.topics.length > 0 && (
+            <span className="whitespace-nowrap">
+              {topicMeta(item.topics[0])}
+              {item.topics.length > 1 && ` +${item.topics.length - 1}`}
+            </span>
+          )}
+        </div>
+      )}
 
       <div className="mt-3 flex flex-wrap items-center gap-2 text-xs">
         {mod && (

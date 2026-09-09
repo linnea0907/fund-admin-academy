@@ -1,11 +1,23 @@
 ---
 id: Case-019
-title: "持牌基金投资基金"
-level: "进阶"
+title: 持牌基金投资基金
+level: 进阶
 module: 4
-tags: []
-estimatedTime: ""
-skills: ["Investor Onboarding", "Regulatory Analysis", "Beneficial Ownership Analysis", "Fund Structure Analysis"]
+tags:
+  - Fund Investor
+  - Regulated Fund
+estimatedTime: ''
+skills:
+  - Investor Onboarding
+  - Regulatory Analysis
+  - Beneficial Ownership Analysis
+  - Fund Structure Analysis
+jurisdiction:
+  - Cayman
+businessArea: Investor Onboarding
+entityType: Fund
+topics:
+  - UBO
 ---
 
 # 场景背景

@@ -1,19 +1,27 @@
 ---
 id: Case-018
-title: "Trustee代表两个Trust认购时应收集哪些KYC资料"
-level: "L2"
+title: Trustee代表两个Trust认购时应收集哪些KYC资料
+level: L2
 module: 4
 tags:
   - Investor Onboarding
   - Trust
   - AML Letter
   - Subscription Review
+  - Trustee
+  - Trust Structure
 skills:
   - Investor Onboarding
   - Trust Review
   - AML Letter Review
   - Risk Assessment
 estimatedTime: 15
+jurisdiction:
+  - BVI
+businessArea: Investor Onboarding
+entityType: Trust
+topics:
+  - Trust
 ---
 
 # 场景背景

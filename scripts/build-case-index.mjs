@@ -18,6 +18,12 @@ const ROOT = process.cwd();
 const DIR = path.join(ROOT, "content", "cases");
 const OUT = path.join(DIR, "index.json");
 
+/** 受控清单（与 src/lib/case-categories.ts 保持一致；此处仅做值域校验与缺省兜底） */
+const JURISDICTIONS = new Set(["Cayman", "BVI", "Hong Kong", "Singapore", "China", "USA", "UK", "UAE", "Other"]);
+const BUSINESS_AREAS = new Set(["Investor Onboarding", "Transfer", "Redemption", "Periodic Review", "AEOI / CRS / FATCA", "Fund Setup", "Fund Governance", "Fund Operations"]);
+const ENTITY_TYPES = new Set(["Individual", "Corporate", "Trust", "Partnership", "Fund"]);
+const TOPICS = new Set(["Identity Verification", "Address Proof", "UBO", "Trust", "PEP", "Adverse Media", "SOF", "SOW", "Sanctions", "Tax Residency", "CRS", "FATCA"]);
+
 function stripComments(md) {
   return md.replace(/<!--[\s\S]*?-->/g, "");
 }
@@ -94,6 +100,32 @@ const normSkills = (v) => {
   return out;
 };
 
+/** 规范化受控多值字段（如 jurisdiction/topics）：值域外的项丢弃；缺省/非法 → [fallback] */
+const normList = (v, allowed, fallback) => {
+  if (Array.isArray(v)) {
+    const seen = new Set();
+    const out = [];
+    for (const x of v) {
+      const t = String(x).trim();
+      if (t && allowed.has(t) && !seen.has(t)) {
+        seen.add(t);
+        out.push(t);
+      }
+    }
+    if (out.length > 0) return out;
+    return fallback !== undefined ? [fallback] : [];
+  }
+  const t = normStr(v);
+  if (t && allowed.has(t)) return [t];
+  return fallback !== undefined ? [fallback] : [];
+};
+
+/** 规范化受控单值字段（businessArea/entityType）：非法 → fallback */
+const normSingle = (v, allowed, fallback) => {
+  const t = normStr(v);
+  return t && allowed.has(t) ? t : fallback;
+};
+
 const files = fs
   .readdirSync(DIR)
   .filter((f) => /^Case-\d{3,}\.md$/i.test(f))
@@ -119,12 +151,17 @@ const cases = files.map((file) => {
     skills: normSkills(data.skills),
     estimatedTime: normTime(data.estimatedTime),
     ready,
+    // V1.13.1 分类体系
+    jurisdiction: normList(data.jurisdiction, JURISDICTIONS, "Other"),
+    businessArea: normSingle(data.businessArea, BUSINESS_AREAS, "Investor Onboarding"),
+    entityType: normSingle(data.entityType, ENTITY_TYPES, "Other"),
+    topics: normList(data.topics, TOPICS),
   };
 });
 
 const index = {
   schema: "case-library-index",
-  version: 3,
+  version: 4,
   generatedAt: new Date().toISOString(),
   total: cases.length,
   ready: cases.filter((c) => c.ready).length,

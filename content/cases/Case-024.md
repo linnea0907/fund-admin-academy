@@ -1,11 +1,23 @@
 ---
 id: Case-024
-title: "发现负面新闻"
-level: "入门"
+title: 发现负面新闻
+level: 入门
 module: 5
-tags: []
-estimatedTime: ""
-skills: ["Compliance Escalation", "Adverse Media Review", "Risk Assessment", "Client Communication"]
+tags:
+  - Adverse Media
+  - Negative News
+estimatedTime: ''
+skills:
+  - Compliance Escalation
+  - Adverse Media Review
+  - Risk Assessment
+  - Client Communication
+jurisdiction:
+  - Cayman
+businessArea: Investor Onboarding
+entityType: Individual
+topics:
+  - Adverse Media
 ---
 
 # 场景背景

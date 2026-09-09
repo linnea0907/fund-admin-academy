@@ -1,11 +1,22 @@
 ---
 id: Case-022
-title: "客户拒绝披露UBO"
-level: "入门"
+title: 客户拒绝披露UBO
+level: 入门
 module: 5
-tags: []
-estimatedTime: ""
-skills: ["Compliance Escalation", "UBO Identification", "Client Communication"]
+tags:
+  - UBO Disclosure
+  - Refusal
+estimatedTime: ''
+skills:
+  - Compliance Escalation
+  - UBO Identification
+  - Client Communication
+jurisdiction:
+  - Cayman
+businessArea: Investor Onboarding
+entityType: Corporate
+topics:
+  - UBO
 ---
 
 # 场景背景

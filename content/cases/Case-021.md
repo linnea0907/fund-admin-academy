@@ -1,11 +1,23 @@
 ---
 id: Case-021
-title: "客户要求先Closing后补KYC"
-level: "入门"
+title: 客户要求先Closing后补KYC
+level: 入门
 module: 5
-tags: []
-estimatedTime: ""
-skills: ["Compliance Escalation", "Client Communication", "Closing Readiness Check", "Risk Assessment"]
+tags:
+  - Closing
+  - KYC
+estimatedTime: ''
+skills:
+  - Compliance Escalation
+  - Client Communication
+  - Closing Readiness Check
+  - Risk Assessment
+jurisdiction:
+  - Cayman
+businessArea: Investor Onboarding
+entityType: Corporate
+topics:
+  - Identity Verification
 ---
 
 # 场景背景

@@ -62,6 +62,10 @@ export default async function CasePage({ params }: { params: Params }) {
       sections={sections}
       prev={readNeighbor(prevId)}
       next={readNeighbor(nextId)}
+      jurisdiction={c.jurisdiction}
+      businessArea={c.businessArea}
+      entityType={c.entityType}
+      topics={c.topics}
     />
   );
 }

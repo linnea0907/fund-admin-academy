@@ -1,11 +1,25 @@
 ---
 id: Case-003
-title: "客户提供未核证版护照"
-level: "入门"
+title: 客户提供未核证版护照
+level: 入门
 module: 1
-tags: ["BVI基金", "个人投资人", "核证"]
+tags:
+  - BVI基金
+  - 个人投资人
+  - 核证
+  - Certification
+  - Uncertified Copy
 estimatedTime: 8
-skills: ["KYC Review", "Identity Verification", "Certification Review"]
+skills:
+  - KYC Review
+  - Identity Verification
+  - Certification Review
+jurisdiction:
+  - BVI
+businessArea: Investor Onboarding
+entityType: Individual
+topics:
+  - Identity Verification
 ---
 
 # 场景背景

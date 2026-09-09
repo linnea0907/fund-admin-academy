@@ -56,6 +56,11 @@ export interface SearchCase {
   tags: string[];
   skills: string[];
   ready: boolean;
+  /** V1.13.1 分类字段（纳入检索与结果展示） */
+  jurisdiction: string[];
+  businessArea: string;
+  entityType: string;
+  topics: string[];
 }
 
 export interface SearchTerm {
@@ -168,9 +173,12 @@ export default function SearchClient({ data }: { data: SearchData }) {
       }
     }
 
-    // 案例：标题 / 标签 / 技能 / 模块名
+    // 案例：标题 / 模块 / 标签 / 技能 / V1.13.1 分类字段（jurisdiction/businessArea/entityType/topics）
     const caseHits = data.cases.filter((c) =>
-      [c.title, c.module, ...c.tags, ...c.skills].join("\n").toLowerCase().includes(lower)
+      [c.title, c.module, ...c.tags, ...c.skills, ...c.jurisdiction, c.businessArea, c.entityType, ...c.topics]
+        .join("\n")
+        .toLowerCase()
+        .includes(lower)
     );
 
     // V1.12.2 新增三类知识源
@@ -640,6 +648,13 @@ export default function SearchClient({ data }: { data: SearchData }) {
                         </span>
                         <span className="mt-0.5 block truncate text-xs text-slate-400">
                           {c.module}
+                          {c.jurisdiction.length > 0 && (
+                            <>
+                              {" "}
+                              · {c.jurisdiction.map((j) => `📍 ${j}`).join(" + ")}
+                            </>
+                          )}
+                          {c.businessArea && <> · {c.businessArea}</>}
                           {c.tags.length > 0 && <> · #{c.tags.join(" · #")}</>}
                         </span>
                       </span>

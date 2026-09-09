@@ -1,19 +1,27 @@
 ---
 id: Case-013
-title: "Discretionary Managed Account 下是否需要披露底层客户 UBO"
-level: "L2"
+title: Discretionary Managed Account 下是否需要披露底层客户 UBO
+level: L2
 module: 3
 tags:
   - AML Letter
   - Discretionary Account
   - Investor Onboarding
   - Licensed Entity
+  - Licensed AM
+  - SFC
 skills:
   - AML Letter Review
   - Regulatory Analysis
   - Risk Assessment
   - Compliance Escalation
 estimatedTime: 15
+jurisdiction:
+  - BVI
+businessArea: Investor Onboarding
+entityType: Corporate
+topics:
+  - UBO
 ---
 
 # 场景背景

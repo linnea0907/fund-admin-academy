@@ -12,6 +12,12 @@ import path from "node:path";
 import matter from "gray-matter";
 import type { CaseId, CaseMeta, CaseData, CaseSectionKey } from "@/types";
 import { SECTION_LABEL_TO_KEY } from "@/lib/case-modules";
+import {
+  asJurisdictions,
+  asBusinessArea,
+  asEntityType,
+  asTopics,
+} from "@/lib/case-categories";
 
 export const CASE_DIR = path.join(process.cwd(), "content", "cases");
 /** 元数据索引（scripts/build-case-index.mjs 生成，npm run gen:cases / prebuild） */
@@ -22,7 +28,16 @@ export const CASE_INDEX_FILE = path.join(CASE_DIR, "index.json");
  * - 构建期 25 案例 ×（generateMetadata + render + 邻居）≈100 次文件读 + gray-matter 解析 → 降为每文件 1 次
  * - dev 下编辑 Markdown 后 mtime 变化即自动失效，无需重启
  */
-const parseCache = new Map<string, { mtimeMs: number; data: (CaseData & { ready: boolean }) | null }>();
+/** 单案例完整数据 = CaseData（含 sections 正文）+ ready + V1.13.1 分类字段 */
+export type ParsedCase = CaseData & {
+  ready: boolean;
+  jurisdiction: string[];
+  businessArea: string;
+  entityType: string;
+  topics: string[];
+};
+
+const parseCache = new Map<string, { mtimeMs: number; data: ParsedCase | null }>();
 let idsList: CaseId[] | null = null;
 let idsDirMtime = -1;
 let indexMetas: CaseMeta[] | null = null;
@@ -134,9 +149,7 @@ function splitSections(body: string): Partial<Record<CaseSectionKey, string>> {
 }
 
 /** 读取并解析单个案例文件（文件不存在返回 null；进程内按 mtime 缓存） */
-export function readCase(
-  id: CaseId
-): (CaseData & { ready: boolean }) | null {
+export function readCase(id: CaseId): ParsedCase | null {
   if (!/^Case-\d{3,}$/.test(id)) return null;
   const file = path.join(CASE_DIR, `${id}.md`);
   const st = safeStat(file);
@@ -169,6 +182,10 @@ export function readCase(
     estimatedTime,
     sections,
     ready,
+    jurisdiction: asJurisdictions(data.jurisdiction),
+    businessArea: asBusinessArea(data.businessArea) ?? "Investor Onboarding",
+    entityType: asEntityType(data.entityType) ?? "Other",
+    topics: asTopics(data.topics),
   };
   parseCache.set(id, { mtimeMs: st.mtimeMs, data: parsed });
   return parsed;
@@ -211,6 +228,10 @@ export function listCaseMetas(): CaseMeta[] {
           skills?: unknown;
           estimatedTime?: unknown;
           ready?: unknown;
+          jurisdiction?: unknown;
+          businessArea?: unknown;
+          entityType?: unknown;
+          topics?: unknown;
         }>;
       };
       if (Array.isArray(idx.cases) && idx.cases.length > 0) {
@@ -227,6 +248,10 @@ export function listCaseMetas(): CaseMeta[] {
               skills: normalizeSkills(c.skills),
               estimatedTime: normalizeTime(c.estimatedTime),
               ready: c.ready === true,
+              jurisdiction: asJurisdictions(c.jurisdiction),
+              businessArea: asBusinessArea(c.businessArea) ?? "Investor Onboarding",
+              entityType: asEntityType(c.entityType) ?? "Other",
+              topics: asTopics(c.topics),
             };
           })
           .filter((x): x is CaseMeta => x !== null);
@@ -251,6 +276,10 @@ export function listCaseMetas(): CaseMeta[] {
             skills: c.skills,
             estimatedTime: c.estimatedTime,
             ready: c.ready,
+            jurisdiction: c.jurisdiction,
+            businessArea: c.businessArea,
+            entityType: c.entityType,
+            topics: c.topics,
           }
         : null;
     })

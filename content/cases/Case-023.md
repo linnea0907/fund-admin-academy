@@ -1,11 +1,22 @@
 ---
 id: Case-023
-title: "发现PEP"
-level: "进阶"
+title: 发现PEP
+level: 进阶
 module: 5
-tags: []
-estimatedTime: ""
-skills: ["Compliance Escalation", "PEP Screening", "Risk Assessment"]
+tags:
+  - PEP
+  - Politically Exposed
+estimatedTime: ''
+skills:
+  - Compliance Escalation
+  - PEP Screening
+  - Risk Assessment
+jurisdiction:
+  - Cayman
+businessArea: Investor Onboarding
+entityType: Individual
+topics:
+  - PEP
 ---
 
 # 场景背景

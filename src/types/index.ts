@@ -181,6 +181,12 @@ export interface CaseMeta {
   estimatedTime: number | null;
   /** 内容是否已导入（标题非空且至少一个正文小节有内容） */
   ready: boolean;
+  /** V1.13.1 分类体系（Jurisdiction First；受控清单见 src/lib/case-categories.ts）
+   *  jurisdiction 为数组：跨属地对照案例可同时归属多个规则来源（如 BVI+Cayman） */
+  jurisdiction: string[];
+  businessArea: string;
+  entityType: string;
+  topics: string[];
 }
 
 /** 本地持久化数据结构（Storage Key: fund-admin-academy-v1） */
