@@ -9,7 +9,7 @@ export const siteConfig = {
   /** 中文副题（品牌区） */
   nameZh: "境外私募基金学习中心",
   /** 当前版本（首页 Badge / Footer / 设置页统一读取） */
-  version: "v1.9 Beta",
+  version: "v1.10 Beta",
   /** 版本阶段标签 */
   releaseStage: "Internal Beta",
   /** 内测状态卡文案 */
