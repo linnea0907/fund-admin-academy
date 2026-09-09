@@ -29,7 +29,10 @@ export function renderSegments(
   );
 }
 
-/** 独立文本块：直接渲染为行内片段（供课程正文段落/列表项使用） */
+/** 独立文本块：直接渲染为行内片段（供课程正文段落/列表项使用）
+ *  外层 <span class="break-words"> 提供 wrap 上下文——避免父 flex/grid 容器
+ *  在 Tablet 档被英文长术语（如 Unfunded Commitment）撑爆导致横向溢出。
+ *  break-words = overflow-wrap:break-word，仅在单词无法整体放下时才断字。 */
 export default function TermText({ text }: { text: string }) {
-  return <>{renderSegments(text)}</>;
+  return <span className="break-words">{renderSegments(text)}</span>;
 }

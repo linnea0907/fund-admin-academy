@@ -3,9 +3,12 @@
 import { useEffect, useRef, type ReactNode } from "react";
 import { useGlossary } from "./GlossaryProvider";
 
-/** 术语热词的统一样式：默认虚线下划线、不改变正文颜色；hover 加深 */
+/** 术语热词的统一样式：默认虚线下划线、不改变正文颜色；hover 加深。
+ *  保留 button 默认 inline-block 排版，不加 min-w-0/max-w-full/whitespace-normal，
+ *  避免在窄宽（Tablet 档）下被父容器收缩为几字符宽，导致"Commitment"等
+ *  英文长词被字符级断行。外层 li 上的 break-words 会按需在单词级换行。 */
 export const TERM_LINK_CLASS =
-  "glossary-term cursor-help rounded-[3px] border-b border-dotted border-[#0e2a5e]/45 px-px text-inherit transition hover:border-[#0e2a5e]/85 hover:bg-[#0e2a5e]/[0.05] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0e2a5e]/25";
+  "glossary-term cursor-help rounded-[3px] border-b border-dotted border-[#0e2a5e]/45 px-px align-baseline text-inherit transition hover:border-[#0e2a5e]/85 hover:bg-[#0e2a5e]/[0.05] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0e2a5e]/25";
 
 const HOVER_DELAY_MS = 140;
 

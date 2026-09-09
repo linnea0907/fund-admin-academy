@@ -105,7 +105,8 @@ export default function LessonViewer({ lesson, prev, next }: LessonViewerProps) 
             >
               {lessonFav ? "★ 已收藏本课" : "☆ 收藏本课"}
             </button>
-            <span className="ml-auto rounded-full bg-white/10 px-3 py-1 text-xs text-blue-100">
+            {/* 模块进度 chip：< xl(Tailwind xl=1280，对齐「桌面」) 独立成行（按钮下方）；≥ xl 与按钮同行右对齐 */}
+            <span className="basis-full rounded-full bg-white/10 px-3 py-1 text-center text-xs text-blue-100 xl:basis-auto xl:text-left xl:ml-auto">
               模块进度 {doneCount}/{lesson.modules.length}
             </span>
           </div>
@@ -133,7 +134,10 @@ export default function LessonViewer({ lesson, prev, next }: LessonViewerProps) 
         </h2>
         <ul className="mt-3 space-y-2">
           {lesson.goal.map((g, i) => (
-            <li key={i} className="flex items-start gap-2 text-sm leading-relaxed text-slate-600">
+            <li
+              key={i}
+              className="flex min-w-0 items-start gap-2 break-words text-sm leading-relaxed text-slate-600"
+            >
               <span className="mt-1.5 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-[#0e2a5e]" />
               <TermText text={g} />
             </li>
@@ -179,7 +183,7 @@ export default function LessonViewer({ lesson, prev, next }: LessonViewerProps) 
 
               <div className="mt-3 space-y-3 text-[15px] leading-relaxed text-slate-600">
                 {m.body.map((p, pi) => (
-                  <p key={pi}>
+                  <p key={pi} className="min-w-0 break-words">
                     <TermText text={p} />
                   </p>
                 ))}
@@ -188,7 +192,7 @@ export default function LessonViewer({ lesson, prev, next }: LessonViewerProps) 
               {m.points && m.points.length > 0 && (
                 <ul className="mt-3 space-y-1.5 rounded-xl bg-slate-50 p-4 text-sm text-slate-600">
                   {m.points.map((pt, pi) => (
-                    <li key={pi} className="flex gap-2">
+                    <li key={pi} className="flex min-w-0 gap-2 break-words">
                       <span className="text-[#0e2a5e]">▸</span>
                       <span>
                         <TermText text={pt} />
