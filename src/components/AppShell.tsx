@@ -5,15 +5,13 @@ import { usePathname } from "next/navigation";
 import { useState, type ReactNode } from "react";
 import { siteConfig } from "@/lib/site-config";
 
-/** 一级导航（导航规范 V1.0 定稿：全中文 · 顺序固化，非必要不调整） */
+/** 一级导航（导航规范 V1.2 定稿：按使用频率重构 · 案例库→案例工坊同一学习链路紧邻 · 术语库/技能中心/搜索并入「知识检索」） */
 const NAV = [
   { href: "/", label: "学习概览" },
   { href: "/courses", label: "课程中心" },
   { href: "/cases", label: "案例库" },
-  { href: "/glossary", label: "术语库" },
-  { href: "/skills", label: "技能中心" },
   { href: "/backlog", label: "案例工坊" },
-  { href: "/search", label: "搜索" },
+  { href: "/search", label: "知识检索" },
   { href: "/favorites", label: "收藏夹" },
   { href: "/settings", label: "设置" },
 ];

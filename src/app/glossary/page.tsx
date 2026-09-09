@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { GLOSSARY_TERMS } from "@/lib/glossary";
 import { buildGlossaryUsage } from "@/lib/glossary-usage";
 import GlossaryExplorer, { type TermUsageCounts } from "@/components/glossary/GlossaryExplorer";
@@ -22,5 +23,25 @@ export default function GlossaryPage() {
     };
   }
 
-  return <GlossaryExplorer usageCounts={usageCounts} />;
+  return (
+    <div className="space-y-4">
+      {/* V1.12.2：术语库已并入「知识检索」，保留本站内面包屑 */}
+      <nav
+        aria-label="面包屑"
+        className="flex items-center gap-1.5 text-xs text-slate-400"
+      >
+        <Link
+          href="/search"
+          className="rounded-md bg-white px-2 py-1 font-medium text-slate-500 ring-1 ring-slate-200 transition hover:text-[#0e2a5e] hover:ring-[#0e2a5e]/30"
+        >
+          知识检索
+        </Link>
+        <span aria-hidden>/</span>
+        <span className="rounded-md bg-[#0e2a5e]/5 px-2 py-1 font-semibold text-[#0e2a5e]">
+          术语库
+        </span>
+      </nav>
+      <GlossaryExplorer usageCounts={usageCounts} />
+    </div>
+  );
 }
