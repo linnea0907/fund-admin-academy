@@ -14,6 +14,7 @@ import MindMap from "@/components/MindMap";
 import QuizPanel from "@/components/QuizPanel";
 import Disclaimer from "@/components/Disclaimer";
 import PracticalGuide from "@/components/PracticalGuide";
+import TermText from "@/components/glossary/TermText";
 
 interface LessonViewerProps {
   lesson: Lesson;
@@ -130,7 +131,7 @@ export default function LessonViewer({ lesson, prev, next }: LessonViewerProps) 
           {lesson.goal.map((g, i) => (
             <li key={i} className="flex items-start gap-2 text-sm leading-relaxed text-slate-600">
               <span className="mt-1.5 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-[#0e2a5e]" />
-              {g}
+              <TermText text={g} />
             </li>
           ))}
         </ul>
@@ -173,7 +174,9 @@ export default function LessonViewer({ lesson, prev, next }: LessonViewerProps) 
 
               <div className="mt-3 space-y-3 text-[15px] leading-relaxed text-slate-600">
                 {m.body.map((p, pi) => (
-                  <p key={pi}>{p}</p>
+                  <p key={pi}>
+                    <TermText text={p} />
+                  </p>
                 ))}
               </div>
 
@@ -182,7 +185,9 @@ export default function LessonViewer({ lesson, prev, next }: LessonViewerProps) 
                   {m.points.map((pt, pi) => (
                     <li key={pi} className="flex gap-2">
                       <span className="text-[#0e2a5e]">▸</span>
-                      <span>{pt}</span>
+                      <span>
+                        <TermText text={pt} />
+                      </span>
                     </li>
                   ))}
                 </ul>
@@ -217,8 +222,12 @@ export default function LessonViewer({ lesson, prev, next }: LessonViewerProps) 
         <div className="mt-3 space-y-3">
           {lesson.risks.map((r, i) => (
             <div key={i} className="rounded-xl bg-white/70 p-4 ring-1 ring-amber-100">
-              <p className="text-sm font-semibold text-amber-900">{r.title}</p>
-              <p className="mt-1 text-sm leading-relaxed text-amber-800/90">{r.detail}</p>
+              <p className="text-sm font-semibold text-amber-900">
+                <TermText text={r.title} />
+              </p>
+              <p className="mt-1 text-sm leading-relaxed text-amber-800/90">
+                <TermText text={r.detail} />
+              </p>
             </div>
           ))}
         </div>

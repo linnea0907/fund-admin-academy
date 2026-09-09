@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import "./globals.css";
 import { AcademyProvider } from "@/hooks/use-academy";
+import GlossaryProvider from "@/components/glossary/GlossaryProvider";
 import AppShell from "@/components/AppShell";
 
 export const metadata: Metadata = {
@@ -24,7 +25,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="zh-CN">
       <body>
         <AcademyProvider>
-          <AppShell>{children}</AppShell>
+          <GlossaryProvider>
+            <AppShell>{children}</AppShell>
+          </GlossaryProvider>
         </AcademyProvider>
       </body>
     </html>

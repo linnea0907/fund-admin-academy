@@ -1,8 +1,40 @@
 "use client";
 
-import ReactMarkdown from "react-markdown";
+import ReactMarkdown, { type Components } from "react-markdown";
 import remarkGfm from "remark-gfm";
-import type { Components } from "react-markdown";
+import {
+  cloneElement,
+  isValidElement,
+  type ReactNode,
+} from "react";
+import { renderSegments } from "@/components/glossary/TermText";
+
+/**
+ * 递归标注 react-markdown 解析出的子节点：
+ * - 字符串叶子 → 按术语词表切段，命中处渲染为 <TermLink>（虚线下划线）
+ * - 仅深入纯 HTML 标签元素（strong/em/del…），跳过 code / pre / a（避免破坏代码与超链接）
+ * - 函数组件（react-markdown 自定义 components）不深入——它们各自负责自身标注
+ */
+function annotateChildren(node: ReactNode, keyPrefix: string): ReactNode {
+  if (typeof node === "string") {
+    const segs = renderSegments(node, keyPrefix);
+    if (segs.length === 1) return segs[0];
+    return <>{segs}</>;
+  }
+  if (Array.isArray(node)) {
+    return node.map((n, i) => annotateChildren(n, `${keyPrefix}-${i}`));
+  }
+  if (isValidElement<{ children?: ReactNode }>(node) && typeof node.type === "string") {
+    const tag = node.type;
+    if (tag === "code" || tag === "pre" || tag === "a") return node;
+    return cloneElement(
+      node,
+      { key: node.key ?? keyPrefix },
+      annotateChildren(node.props.children ?? "", `${keyPrefix}-c`)
+    );
+  }
+  return node;
+}
 
 const components: Components = {
   h1: ({ children }) => (
@@ -21,7 +53,9 @@ const components: Components = {
     </h3>
   ),
   p: ({ children }) => (
-    <p className="my-2 text-[15px] leading-relaxed text-slate-600">{children}</p>
+    <p className="my-2 text-[15px] leading-relaxed text-slate-600">
+      {annotateChildren(children, "p")}
+    </p>
   ),
   ul: ({ children }) => (
     <ul className="my-2 space-y-1.5 pl-5 text-[15px] leading-relaxed text-slate-600 [&>li]:list-disc">
@@ -33,10 +67,10 @@ const components: Components = {
       {children}
     </ol>
   ),
-  li: ({ children }) => <li>{children}</li>,
+  li: ({ children }) => <li>{annotateChildren(children, "li")}</li>,
   blockquote: ({ children }) => (
     <blockquote className="my-3 border-l-4 border-amber-300 bg-amber-50/70 px-4 py-2 text-[15px] leading-relaxed text-amber-900">
-      {children}
+      {annotateChildren(children, "bq")}
     </blockquote>
   ),
   strong: ({ children }) => (
@@ -73,16 +107,18 @@ const components: Components = {
   ),
   th: ({ children }) => (
     <th className="border-b border-slate-200 px-3 py-2 text-xs font-bold uppercase tracking-wide text-slate-500">
-      {children}
+      {annotateChildren(children, "th")}
     </th>
   ),
   td: ({ children }) => (
-    <td className="border-b border-slate-100 px-3 py-2 text-slate-600">{children}</td>
+    <td className="border-b border-slate-100 px-3 py-2 text-slate-600">
+      {annotateChildren(children, "td")}
+    </td>
   ),
   hr: () => <hr className="my-4 border-slate-200" />,
 };
 
-/** Markdown 渲染（案例正文等使用） */
+/** Markdown 渲染（案例正文等使用；术语词表自动标注为虚线下划线热词） */
 export default function MarkdownBody({ content }: { content: string }) {
   return (
     <div className="min-w-0">
