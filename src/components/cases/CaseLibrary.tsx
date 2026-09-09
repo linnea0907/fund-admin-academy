@@ -24,12 +24,16 @@ import CaseCard from "./CaseCard";
 /** 筛选行标签最小宽度 */
 const ROW_LABEL = "mr-1 w-13 shrink-0 text-xs font-semibold text-slate-400";
 
-/** 统一 chip 样式（minimal：激活深蓝 / 未激活浅灰） */
+/** 统一 chip 样式（V1.8.2 紧凑：py-1；minimal：激活深蓝 / 未激活浅灰） */
 function chip(active: boolean, extra = ""): string {
-  return `rounded-full px-3 py-1.5 text-xs font-semibold transition ${
+  return `rounded-full px-3 py-1 text-xs font-semibold transition ${
     active ? "bg-[#0e2a5e] text-white" : "bg-slate-100 text-slate-500 hover:bg-slate-200"
   } ${extra}`;
 }
+
+/** 技能行折叠按钮样式（虚线描边，弱化；与主筛选 chips 区分） */
+const SKILL_TOGGLE =
+  "rounded-full border border-dashed border-slate-300 px-3 py-1 text-xs font-semibold text-slate-500 transition hover:border-[#0e2a5e] hover:text-[#0e2a5e]";
 
 /** 模块 chip 展示名：M1 文件审核实务 … */
 function moduleChipLabel(id: CaseModuleId, zh: string): string {
@@ -67,10 +71,11 @@ function sortZh(vals: string[]): string[] {
   return Array.from(vals).sort((a, b) => a.localeCompare(b, "zh-Hans-CN"));
 }
 
-/** 案例库目录（V1.8.1 筛选区重构）：
- *  首屏行顺序固定 模块 → 业务领域 → 技能（选中域展开）→ 难度；
+/** 案例库目录（V1.8.2 筛选区重构）：
+ *  首屏行顺序固定 模块 → 业务领域 → 技能（默认折叠，点击「展开技能（N）」）→ 难度；
  *  状态与标签收纳进默认折叠的「高级筛选」。全部维度写回 URL，可分享可回退。
- *  域已由 7 类合并为 5 类（KYC & Onboarding / AML & Compliance / 其余三类不变）。 */
+ *  业务域维持 5 类（KYC & Onboarding / AML & Compliance / Fund Structure /
+ *  Fund Documents / Client Communication，结构与名称本轮不动）。 */
 export default function CaseLibrary({ cases }: { cases: CaseMeta[] }) {
   const { state } = useAcademy();
   const router = useRouter();
@@ -82,6 +87,8 @@ export default function CaseLibrary({ cases }: { cases: CaseMeta[] }) {
   const [showAdvanced, setShowAdvanced] = useState(
     () => raw.status !== "all" || raw.tag !== null
   );
+  // 技能行折叠控制：默认收起；深链已带 skill 时默认展开以高亮所选
+  const [showSkills, setShowSkills] = useState(() => raw.skill !== null);
 
   const doneIds = useMemo(
     () => new Set(state.completedCases.filter((c) => c.startsWith("Case-"))),
@@ -196,7 +203,11 @@ export default function CaseLibrary({ cases }: { cases: CaseMeta[] }) {
     STATUS_OPTIONS.find((o) => o.key === k)?.label ?? "";
 
   const setModule = (id: CaseModuleId | null) => update({ module: id });
-  const setArea = (id: CaseDomainId | null) => update({ area: id, skill: null });
+  const setArea = (id: CaseDomainId | null) => {
+    // 切换业务域后技能行回到折叠态
+    setShowSkills(false);
+    update({ area: id, skill: null });
+  };
   const setSkill = (s: string | null) =>
     update(areaDef ? { area: areaDef.id, skill: s } : { skill: s });
 
@@ -245,7 +256,7 @@ export default function CaseLibrary({ cases }: { cases: CaseMeta[] }) {
       </section>
 
       {/* 筛选区 */}
-      <section className="space-y-3 rounded-2xl border border-slate-200 bg-white p-5">
+      <section className="space-y-2 rounded-2xl border border-slate-200 bg-white p-4 sm:p-4">
         {/* 行 1 · 模块（一级分类 Module 1~5） */}
         <div className="flex flex-wrap items-center gap-1.5">
           <span className={ROW_LABEL}>模块</span>
@@ -308,31 +319,53 @@ export default function CaseLibrary({ cases }: { cases: CaseMeta[] }) {
           })}
         </div>
 
-        {/* 行 3 · 技能（选中业务领域后动态展开） */}
+        {/* 行 3 · 技能（选中业务域后出现，默认折叠为「展开技能（N）」） */}
         {areaDef && (
           <div className="flex flex-wrap items-center gap-1.5">
             <span className={ROW_LABEL}>技能</span>
-            <button
-              type="button"
-              onClick={() => setSkill(null)}
-              className={chip(shownSkill === null)}
-            >
-              本域全部
-            </button>
-            {areaDef.skills.map((s) => {
-              const active = shownSkill === s;
-              return (
+            {!showSkills ? (
+              <button
+                type="button"
+                onClick={() => setShowSkills(true)}
+                className={SKILL_TOGGLE}
+                title={`展开 ${areaDef.label} 的 ${areaDef.skills.length} 项技能`}
+                aria-expanded={false}
+              >
+                ▸ 展开技能（{areaDef.skills.length}）
+              </button>
+            ) : (
+              <>
                 <button
-                  key={s}
                   type="button"
-                  title={`${areaDef.label} · ${s}`}
-                  onClick={() => setSkill(active ? null : s)}
-                  className={chip(active)}
+                  onClick={() => setSkill(null)}
+                  className={chip(shownSkill === null)}
                 >
-                  {s}
+                  本域全部
                 </button>
-              );
-            })}
+                {areaDef.skills.map((s) => {
+                  const active = shownSkill === s;
+                  return (
+                    <button
+                      key={s}
+                      type="button"
+                      title={`${areaDef.label} · ${s}`}
+                      onClick={() => setSkill(active ? null : s)}
+                      className={chip(active)}
+                    >
+                      {s}
+                    </button>
+                  );
+                })}
+                <button
+                  type="button"
+                  onClick={() => setShowSkills(false)}
+                  className={SKILL_TOGGLE}
+                  aria-expanded={true}
+                >
+                  ▾ 收起
+                </button>
+              </>
+            )}
           </div>
         )}
 
@@ -359,7 +392,7 @@ export default function CaseLibrary({ cases }: { cases: CaseMeta[] }) {
           <button
             type="button"
             onClick={() => setShowAdvanced((v) => !v)}
-            className={`flex w-full items-center justify-between px-3.5 py-2.5 text-xs font-semibold transition hover:text-[#0e2a5e] ${
+            className={`flex w-full items-center justify-between px-3.5 py-2 text-xs font-semibold transition hover:text-[#0e2a5e] ${
               hasActive ? "text-[#0e2a5e]" : "text-slate-600"
             }`}
             aria-expanded={showAdvanced}
