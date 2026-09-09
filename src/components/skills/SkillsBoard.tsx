@@ -55,9 +55,9 @@ export default function SkillsBoard({ cases }: { cases: CaseMeta[] }) {
       <section className="rounded-2xl border border-slate-200 bg-white p-5 sm:p-6">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
-            <h1 className="text-xl font-bold text-slate-800 sm:text-2xl">技能</h1>
+            <h1 className="text-xl font-bold text-slate-800 sm:text-2xl">技能中心</h1>
             <p className="mt-1 text-sm text-slate-500">
-              Skills 能力标签 · 独立于 Module 的受控词表（20 项）· 每项展示挂载案例与完成进度
+              能力地图 · 受控技能词表（20 项），独立于课程模块；每项展示挂载案例与完成进度
             </p>
           </div>
           <div className="flex items-center gap-6 text-right">

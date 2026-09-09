@@ -193,9 +193,9 @@ export default function CaseBacklog() {
       <section className="rounded-2xl border border-slate-200 bg-white p-5 sm:p-6">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
-            <h1 className="text-xl font-bold text-slate-800 sm:text-2xl">Case Backlog</h1>
+            <h1 className="text-xl font-bold text-slate-800 sm:text-2xl">案例工坊</h1>
             <p className="mt-1 text-sm text-slate-500">
-              案例种子池（用于积累真实案例并批量生成标准案例）
+              案例种子库（用于积累真实案例并批量生成标准案例）
             </p>
             <p className="mt-1 text-[11px] text-slate-400">
               数据仅保存在本机浏览器 · localStorage（{BACKLOG_STORAGE_KEY}）

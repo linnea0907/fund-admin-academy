@@ -11,7 +11,7 @@ export default function NotFound() {
         href="/"
         className="mt-5 rounded-lg bg-[#0e2a5e] px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-900"
       >
-        回到仪表盘
+        回到学习概览
       </Link>
     </div>
   );

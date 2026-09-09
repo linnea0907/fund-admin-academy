@@ -24,7 +24,8 @@ function timeAgo(at: number): string {
   return `${d} 天前`;
 }
 
-export default function DashboardPage() {
+/** 学习概览（首页）：学习进度 / 最近学习 / 完成统计 / 收藏统计 / 推荐内容 */
+export default function HomePage() {
   const { state } = useAcademy();
   const stat = totalProgress(state);
   const favs = favoriteCount(state);
@@ -69,21 +70,16 @@ export default function DashboardPage() {
         <div className="pointer-events-none absolute -right-20 -top-24 h-64 w-64 rounded-full bg-blue-400/20 blur-3xl" />
         <div className="pointer-events-none absolute -bottom-24 right-32 h-52 w-52 rounded-full bg-amber-300/10 blur-2xl" />
         <div className="relative">
-          <div className="flex flex-wrap items-center justify-between gap-2">
-            <p className="text-xs font-medium uppercase tracking-widest text-blue-200">
-              Dashboard
-            </p>
-            {/* Beta Badge（首页右上角） */}
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <h1 className="text-xl font-bold sm:text-2xl">学习概览</h1>
+            {/* 版本徽标（首页右上角） */}
             <span
-              className="inline-flex items-center gap-1 rounded-full bg-amber-300 px-3 py-1 text-[11px] font-black uppercase tracking-wide text-[#0e2a5e]"
+              className="inline-flex items-center gap-1 rounded-full bg-amber-300 px-3 py-1 text-[11px] font-black tracking-wide text-[#0e2a5e]"
               title={`${siteConfig.name} · ${siteConfig.releaseStage} ${siteConfig.version}`}
             >
-              Beta · {siteConfig.version}
+              内测版 {siteConfig.version}
             </span>
           </div>
-          <h1 className="mt-1.5 text-xl font-bold sm:text-2xl">
-            境外私募基金学习中心
-          </h1>
           <p className="mt-2 max-w-xl text-sm leading-relaxed text-blue-100">
             课程编号体系：01 运转 → 02 结构 → 10 AML → 12 FATCA → 14 Cayman → 15 BVI。
             学习进度与收藏保存在本机浏览器。

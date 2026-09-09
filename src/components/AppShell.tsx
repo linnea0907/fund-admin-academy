@@ -5,13 +5,14 @@ import { usePathname } from "next/navigation";
 import { useState, type ReactNode } from "react";
 import { siteConfig } from "@/lib/site-config";
 
+/** 一级导航（导航规范 V1.0 定稿：全中文 · 顺序固化，非必要不调整） */
 const NAV = [
-  { href: "/", label: "仪表盘" },
+  { href: "/", label: "学习概览" },
   { href: "/courses", label: "课程中心" },
   { href: "/cases", label: "案例库" },
   { href: "/glossary", label: "术语库" },
-  { href: "/skills", label: "技能" },
-  { href: "/backlog", label: "Case Backlog" },
+  { href: "/skills", label: "技能中心" },
+  { href: "/backlog", label: "案例工坊" },
   { href: "/search", label: "搜索" },
   { href: "/favorites", label: "收藏夹" },
   { href: "/settings", label: "设置" },
@@ -54,20 +55,23 @@ export default function AppShell({ children }: { children: ReactNode }) {
   );
 
   const brand = (
-      <div className="flex items-center gap-2.5">
-        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-amber-300 text-sm font-black text-[#0e2a5e]">
-          FA
-        </div>
-        <div className="leading-tight">
-          <p className="flex items-center gap-1.5 text-sm font-bold text-white">
-            {siteConfig.name}
-            <span className="rounded bg-amber-300 px-1 py-px text-[9px] font-black uppercase tracking-wide text-[#0e2a5e]">
-              Beta
-            </span>
-          </p>
-          <p className="text-[10px] text-blue-200/80">{siteConfig.version}</p>
-        </div>
+    <div className="flex min-w-0 items-center gap-2.5">
+      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-amber-300 text-sm font-black text-[#0e2a5e]">
+        FA
       </div>
+      <div className="min-w-0 leading-tight">
+        <p className="truncate text-[13px] font-bold text-white">
+          {siteConfig.name}
+        </p>
+        {/* 空间不足时（移动端顶栏/抽屉）省略中文副题，采用 Logo 简化版 */}
+        <p className="hidden truncate text-[9px] text-blue-200/80 lg:block">
+          {siteConfig.nameZh}
+        </p>
+        <p className="truncate text-[10px] text-amber-200/90">
+          内测版 {siteConfig.version}
+        </p>
+      </div>
+    </div>
   );
 
   return (
