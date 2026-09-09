@@ -95,7 +95,10 @@ export type Favorite =
   | { type: "case"; caseId: string }
   | { type: "term"; termId: string };
 
-/** 学习笔记 / 高亮（V1.11 学习笔记 Tab；阅读划线浮窗后续版本写入同一结构） */
+/** 高亮/笔记定位状态（V1.12 三重定位恢复） */
+export type HLStatus = "active" | "partial" | "lost";
+
+/** 学习笔记 / 高亮（V1.11 学习笔记 Tab；V1.12 阅读划线写入同一结构） */
 export type NoteType = "highlight" | "note";
 export type NoteSourceType = "course" | "case";
 
@@ -109,8 +112,20 @@ export interface StudyNote {
   sourceTitle: string;
   /** 原文/划线摘录（type=note 时可为空） */
   selectedText: string;
-  /** 我的笔记/批注正文 */
+  /** 我的笔记/批注正文（type=highlight 允许为空 = 纯高亮） */
   note: string;
+  /** 块级锚点（如 "01-m1-p0"）；定位首选。永不使用字符坐标。 */
+  anchorId?: string;
+  /** 选区前一串文字（≤60 字符，用于同句多次出现时辨位） */
+  contextBefore?: string;
+  /** 选区后一串文字（≤60 字符） */
+  contextAfter?: string;
+  /** 最近一次恢复状态：active=正常 / partial=模糊恢复 / lost=原内容已不存在 */
+  status?: HLStatus;
+  /** 创建时的站点版本（如 "v1.12"） */
+  appVersion?: string;
+  /** 创建时的内容版本（课程 meta.contentVersion；案例留空） */
+  contentVersion?: string;
   createdAt: number;
   updatedAt: number;
 }

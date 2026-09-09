@@ -1,12 +1,13 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import Link from "next/link";
 import type { CaseSectionKey } from "@/types";
 import { getCaseModule } from "@/lib/case-modules";
 import { levelLabel } from "@/lib/case-filter";
 import { useAcademy } from "@/hooks/use-academy";
 import MarkdownBody from "./MarkdownBody";
+import HighlightEngine from "@/components/reading/HighlightEngine";
 
 export interface CaseViewerSection {
   key: CaseSectionKey;
@@ -68,8 +69,11 @@ export default function CaseViewer({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, ready]);
 
+  // V1.12 阅读高亮引擎的作用域（正文小节区域）
+  const bodyScopeRef = useRef<HTMLDivElement | null>(null);
+
   return (
-    <div className="space-y-6">
+    <div ref={bodyScopeRef} className="space-y-6">
       {/* ===== 深蓝 Banner ===== */}
       <header className="relative overflow-hidden rounded-2xl bg-[#0e2a5e] px-5 py-6 text-white sm:px-8 sm:py-8">
         <div className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full bg-blue-500/20 blur-2xl" />
@@ -203,7 +207,10 @@ export default function CaseViewer({
               {s.label}
               <span className="text-xs font-normal text-slate-400">· {s.hint}</span>
             </h2>
-            <div className="mt-4">
+            <div
+              className="mt-4"
+              data-reading-scope={`${id}-${s.key}`}
+            >
               <MarkdownBody content={s.content} />
             </div>
           </section>
@@ -239,6 +246,15 @@ export default function CaseViewer({
           </Link>
         )}
       </nav>
+
+      {/* V1.12 阅读高亮引擎（正文小节内选中文字 → 高亮/写笔记/复制） */}
+      <HighlightEngine
+        sourceType="case"
+        sourceId={id}
+        sourceTitle={title ? `${id} ${title}` : `${id} 内容待导入`}
+        scopeRef={bodyScopeRef}
+        ready={ready}
+      />
     </div>
   );
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import type { Lesson } from "@/types";
 import { useAcademy } from "@/hooks/use-academy";
 import {
@@ -15,6 +15,7 @@ import QuizPanel from "@/components/QuizPanel";
 import Disclaimer from "@/components/Disclaimer";
 import PracticalGuide from "@/components/PracticalGuide";
 import TermText from "@/components/glossary/TermText";
+import HighlightEngine from "@/components/reading/HighlightEngine";
 
 interface LessonViewerProps {
   lesson: Lesson;
@@ -31,6 +32,9 @@ export default function LessonViewer({ lesson, prev, next }: LessonViewerProps) 
     toggleFavorite,
     recordView,
   } = useAcademy();
+
+  // V1.12 阅读高亮引擎的正文作用域（模块 article 区域）
+  const moduleScopeRef = useRef<HTMLElement | null>(null);
 
   // 进入课程时记录"最近学习"
   useEffect(() => {
@@ -137,8 +141,8 @@ export default function LessonViewer({ lesson, prev, next }: LessonViewerProps) 
         </ul>
       </section>
 
-      {/* ===== 模块内容 ===== */}
-      <section className="mt-6 space-y-5">
+      {/* ===== 模块内容（V1.12：article 带 data-reading-scope 供高亮引擎扫描） ===== */}
+      <section ref={moduleScopeRef} className="mt-6 space-y-5">
         {lesson.modules.map((m) => {
           const done = isDone(m.id);
           const fav = isFav(m.id);
@@ -146,6 +150,7 @@ export default function LessonViewer({ lesson, prev, next }: LessonViewerProps) 
             <article
               key={m.id}
               id={m.id}
+              data-reading-scope={`${lesson.id}-${m.id}`}
               className="scroll-mt-20 rounded-2xl border border-slate-200 bg-white p-5 sm:p-6"
             >
               <div className="flex items-start justify-between gap-3">
@@ -210,6 +215,15 @@ export default function LessonViewer({ lesson, prev, next }: LessonViewerProps) 
           );
         })}
       </section>
+
+      {/* V1.12 阅读高亮引擎（选中文字 → 高亮/写笔记/复制；恢复与 ?hl= 定位） */}
+      <HighlightEngine
+        sourceType="course"
+        sourceId={lesson.id}
+        sourceTitle={`${lesson.id} ${lesson.title}`}
+        contentVersion={lesson.meta?.contentVersion}
+        scopeRef={moduleScopeRef}
+      />
 
       {/* ===== 风险提示 ===== */}
       <section className="mt-6 rounded-2xl border border-amber-200 bg-amber-50/70 p-5 sm:p-6">

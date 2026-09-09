@@ -58,3 +58,29 @@ body {
 .glossary-drawer-panel { animation: glossary-slide-in 0.22s ease-out; }
 .glossary-drawer-overlay { animation: glossary-fade-in 0.18s ease-out; }
 .glossary-tooltip { animation: glossary-pop 0.14s ease-out; }
+
+/* ============================================================
+   V1.12 阅读高亮（低饱和黄 / 部分匹配虚线 / 定位闪烁）
+   高亮为「用户学习资产」，颜色低饱和不刺眼（Kindle / 微信读书风格）
+   ============================================================ */
+mark[data-hl] {
+  background: #ffe9a3;
+  color: inherit;
+  border-radius: 2px;
+  padding: 0 1px;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+mark[data-hl][data-status="partial"] {
+  background: transparent;
+  color: inherit;
+  border-bottom: 2px dashed #f59e0b;
+  border-radius: 0;
+}
+mark.hl-flash {
+  animation: hl-flash 1.7s ease-out 2;
+}
+@keyframes hl-flash {
+  0% { box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.5); }
+  100% { box-shadow: 0 0 0 4px rgba(245, 158, 11, 0); }
+}

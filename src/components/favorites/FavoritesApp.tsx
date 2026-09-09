@@ -8,6 +8,7 @@ import { orderedAllLessons } from "@/lib/ordering";
 import { GLOSSARY_TERMS } from "@/lib/glossary";
 import {
   deleteNote,
+  hlStatusMeta,
   loadNotes,
   matchNote,
   noteCounts,
@@ -15,7 +16,9 @@ import {
   noteTypeLabel,
   upsertNote,
 } from "@/lib/notes";
+import { buildCourseBlocks, hasLocator, locateRecord } from "@/lib/reading";
 import type {
+  HLStatus,
   NoteSourceType,
   NoteType,
   StudyNote,
@@ -350,19 +353,57 @@ function NotesPanel({
     window.setTimeout(() => setMsg(null), 2600);
   };
 
+  /** 课程正文块（实时状态判定用；案例正文在服务端，用阅读页回写的 status） */
+  const courseBlocksByLesson = useMemo(() => {
+    const m = new Map<string, ReturnType<typeof buildCourseBlocks>>();
+    for (const n of notes) {
+      if (n.sourceType !== "course") continue;
+      const l = courseMap.get(n.sourceId);
+      if (l && !m.has(l.id)) m.set(l.id, buildCourseBlocks(l));
+    }
+    return m;
+  }, [notes, courseMap]);
+
+  const liveStatus = (
+    n: StudyNote
+  ): { key: HLStatus; label: string; hint: string } | null => {
+    if (!hasLocator(n)) return null;
+    if (n.sourceType === "course") {
+      const blocks = courseBlocksByLesson.get(n.sourceId);
+      if (!blocks) {
+        return { key: "lost", label: "失效", hint: hlStatusMeta("lost")!.hint };
+      }
+      const r = locateRecord(n, blocks);
+      const meta = hlStatusMeta(r.status) ?? hlStatusMeta("active")!;
+      return { key: r.status, label: meta.label, hint: meta.hint };
+    }
+    // 案例：无法在收藏夹读到 md 正文 → 用最近一次阅读恢复状态；整案下架才判失效
+    const exists = caseRefs.some((c) => c.id === n.sourceId);
+    if (!exists) {
+      return { key: "lost", label: "失效", hint: hlStatusMeta("lost")!.hint };
+    }
+    const st: HLStatus = n.status ?? "active";
+    const meta = hlStatusMeta(st) ?? hlStatusMeta("active")!;
+    return { key: st, label: meta.label, hint: meta.hint };
+  };
+
   const handleDelete = (n: StudyNote) => {
-    if (!window.confirm(`确定删除这条${noteTypeLabel(n.type)}记录？`)) return;
+    const kind = noteTypeLabel(n.type);
+    const extra = hasLocator(n) ? "，原页面高亮将同步消失" : "";
+    if (!window.confirm(`确定删除这条${kind}记录${extra}？`)) return;
     setNotes(deleteNote(notes, n.noteId));
     flash("已删除");
   };
 
   const jump = (n: StudyNote): string | null => {
+    // 高亮记录带 ?hl= 参数 → 阅读页自动滚动定位到对应高亮区域并闪烁
+    const hl = hasLocator(n) ? `?hl=${encodeURIComponent(n.noteId)}` : "";
     if (n.sourceType === "course") {
       const l = courseMap.get(n.sourceId);
-      return l ? `/courses/${l.slug}` : null;
+      return l ? `/courses/${l.slug}${hl}` : null;
     }
     const c = caseRefs.find((x) => x.id === n.sourceId);
-    return c ? c.href : null;
+    return c ? `${c.href}${hl}` : null;
   };
 
   return (
@@ -425,8 +466,8 @@ function NotesPanel({
           <p className="text-3xl">📝</p>
           <p className="mt-2 text-sm font-medium text-slate-600">还没有学习笔记</p>
           <p className="mx-auto mt-1 max-w-md text-xs leading-relaxed text-slate-400">
-            点击「新增笔记」把阅读中的心得记下来；未来在课程 / 案例正文选中文字，
-            划线高亮与批注会自动汇总到这里。
+            在课程 / 案例正文选中文字，点「高亮」或「写笔记」即自动汇总到这里；
+            内容升级后系统会按锚点 + 原文 + 上下文自动恢复高亮定位。
           </p>
           <button
             type="button"
@@ -449,6 +490,7 @@ function NotesPanel({
             <NoteCard
               key={n.noteId}
               note={n}
+              status={liveStatus(n)}
               href={jump(n)}
               onEdit={() => {
                 setEditing(n);
@@ -487,15 +529,25 @@ function NotesPanel({
 
 function NoteCard({
   note,
+  status,
   href,
   onEdit,
   onDelete,
 }: {
   note: StudyNote;
+  status: { key: HLStatus; label: string; hint: string } | null;
   href: string | null;
   onEdit: () => void;
   onDelete: () => void;
 }) {
+  const stColor =
+    status?.key === "active"
+      ? "bg-emerald-50 text-emerald-700 ring-emerald-200"
+      : status?.key === "partial"
+        ? "bg-amber-50 text-amber-700 ring-amber-200"
+        : status?.key === "lost"
+          ? "bg-rose-50 text-rose-600 ring-rose-200"
+          : "";
   return (
     <li className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
       <div className="flex flex-wrap items-center gap-2">
@@ -517,6 +569,14 @@ function NoteCard({
         >
           {noteTypeLabel(note.type)}
         </span>
+        {status && (
+          <span
+            className={`rounded-full px-2 py-0.5 text-[10px] font-bold ring-1 ${stColor}`}
+            title={status.hint || undefined}
+          >
+            {status.label}
+          </span>
+        )}
         <span className="ml-auto text-[11px] text-slate-400">
           {fmtDate(note.createdAt)}
         </span>
@@ -541,10 +601,27 @@ function NoteCard({
         <p className="text-[10px] font-bold uppercase tracking-wide text-slate-400">
           我的笔记
         </p>
-        <p className="mt-0.5 whitespace-pre-wrap text-sm leading-relaxed text-slate-700">
-          {note.note}
-        </p>
+        {note.note ? (
+          <p className="mt-0.5 whitespace-pre-wrap text-sm leading-relaxed text-slate-700">
+            {note.note}
+          </p>
+        ) : (
+          <p className="mt-0.5 text-sm text-slate-300">（未写批注 · 纯高亮）</p>
+        )}
       </div>
+
+      {status?.hint && (
+        <p
+          className={`mt-2 rounded-lg px-3 py-1.5 text-[11px] ${
+            status.key === "lost"
+              ? "bg-rose-50 text-rose-500"
+              : "bg-amber-50 text-amber-600"
+          }`}
+        >
+          {status.key === "lost" ? "⚠ " : "ℹ "}
+          {status.hint}
+        </p>
+      )}
 
       <div className="mt-3 flex flex-wrap items-center gap-2 border-t border-slate-100 pt-3 text-xs font-medium">
         {href ? (
@@ -562,11 +639,12 @@ function NoteCard({
           onClick={onEdit}
           className="rounded-lg px-3 py-1.5 text-slate-500 transition hover:bg-slate-100 hover:text-slate-700"
         >
-          编辑
+          {note.type === "highlight" && !note.note ? "写笔记" : "编辑"}
         </button>
         <button
           type="button"
           onClick={onDelete}
+          title={hasLocator(note) ? "删除记录（原页面高亮同步消失）" : undefined}
           className="rounded-lg px-3 py-1.5 text-slate-400 transition hover:bg-rose-50 hover:text-rose-500"
         >
           删除
