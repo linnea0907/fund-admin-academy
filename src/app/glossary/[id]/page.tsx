@@ -7,6 +7,7 @@ import {
   getTerm,
 } from "@/lib/glossary";
 import { getTermUsage } from "@/lib/glossary-usage";
+import TermFavoriteButton from "@/components/favorites/TermFavoriteButton";
 
 type Params = Promise<{ id: string }>;
 
@@ -62,8 +63,11 @@ export default async function GlossaryTermPage({ params }: { params: Params }) {
             {category.label}
           </span>
           <span className="text-xs text-slate-400">{category.zh}</span>
-          <span className="ml-auto rounded-full bg-slate-100 px-2.5 py-1 text-[11px] font-medium text-slate-500">
-            出现于 {usage.lessons.length} 讲课程 · {usage.cases.length} 个案例
+          <span className="ml-auto flex items-center gap-2">
+            <span className="rounded-full bg-slate-100 px-2.5 py-1 text-[11px] font-medium text-slate-500">
+              出现于 {usage.lessons.length} 讲课程 · {usage.cases.length} 个案例
+            </span>
+            <TermFavoriteButton termId={term.id} />
           </span>
         </div>
         <h1 className="mt-3 text-2xl font-bold text-slate-800 sm:text-3xl">{term.en}</h1>

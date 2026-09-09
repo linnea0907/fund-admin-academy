@@ -55,9 +55,10 @@ export default function CaseViewer({
   prev,
   next,
 }: CaseViewerProps) {
-  const { state, toggleCaseComplete, markCaseStarted } = useAcademy();
+  const { state, toggleCaseComplete, markCaseStarted, toggleFavorite } = useAcademy();
   const done = state.completedCases.includes(id);
   const started = state.startedCases.includes(id);
+  const fav = state.favorites.some((f) => f.type === "case" && f.caseId === id);
   const mod = getCaseModule(module);
   const levelText = levelLabel(level);
 
@@ -146,7 +147,7 @@ export default function CaseViewer({
             ))}
           </div>
 
-          <div className="mt-5">
+          <div className="mt-5 flex flex-wrap items-center gap-2">
             {ready ? (
               <button
                 type="button"
@@ -164,6 +165,18 @@ export default function CaseViewer({
                 正文待对应 SOP 导入后即可学习与标记完成。
               </p>
             )}
+            <button
+              type="button"
+              onClick={() => toggleFavorite({ type: "case", caseId: id })}
+              title={fav ? "取消收藏本案例" : "收藏本案例"}
+              className={`inline-flex items-center gap-1.5 rounded-lg px-3.5 py-2 text-sm font-semibold transition ${
+                fav
+                  ? "bg-amber-300 text-amber-950 hover:bg-amber-200"
+                  : "bg-white/10 text-blue-100 hover:bg-white/20"
+              }`}
+            >
+              {fav ? "★ 已收藏" : "☆ 收藏"}
+            </button>
           </div>
         </div>
       </header>

@@ -13,6 +13,7 @@ import type { ExportPayload, Favorite, StoredState } from "@/types";
 import {
   clearState,
   defaultState,
+  favoriteKey,
   loadState,
   normalize,
   saveState,
@@ -28,7 +29,7 @@ interface AcademyContextValue {
   toggleCaseComplete: (caseId: string) => void;
   /** 标记案例已开始学习（打开详情即调用；V1.8 状态口径：学习中 = started && !completed） */
   markCaseStarted: (caseId: string) => void;
-  /** 收藏 / 取消收藏（课程或模块） */
+  /** 收藏 / 取消收藏（课程/模块/案例/术语） */
   toggleFavorite: (fav: Favorite) => void;
   /** 记录一次课程访问（用于"最近学习"） */
   recordView: (lessonId: string) => void;
@@ -97,27 +98,12 @@ export function AcademyProvider({ children }: { children: ReactNode }) {
 
   const toggleFavorite = useCallback((fav: Favorite) => {
     setState((s) => {
-      const key =
-        fav.type === "lesson"
-          ? `lesson:${fav.lessonId}`
-          : `module:${fav.lessonId}:${fav.moduleId}`;
-      const exists = s.favorites.some((f) => {
-        const fk =
-          f.type === "lesson"
-            ? `lesson:${f.lessonId}`
-            : `module:${f.lessonId}:${f.moduleId}`;
-        return fk === key;
-      });
+      const key = favoriteKey(fav);
+      const exists = s.favorites.some((f) => favoriteKey(f) === key);
       return {
         ...s,
         favorites: exists
-          ? s.favorites.filter((f) => {
-              const fk =
-                f.type === "lesson"
-                  ? `lesson:${f.lessonId}`
-                  : `module:${f.lessonId}:${f.moduleId}`;
-              return fk !== key;
-            })
+          ? s.favorites.filter((f) => favoriteKey(f) !== key)
           : [...s.favorites, fav],
       };
     });

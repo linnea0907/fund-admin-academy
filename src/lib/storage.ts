@@ -70,6 +70,8 @@ function isValidFavorite(f: unknown): f is Favorite {
   if (fav.type === "module") {
     return typeof fav.lessonId === "string" && typeof fav.moduleId === "string";
   }
+  if (fav.type === "case") return typeof fav.caseId === "string";
+  if (fav.type === "term") return typeof fav.termId === "string";
   return false;
 }
 
@@ -92,9 +94,16 @@ export function clearState(): void {
 /* ---------- 派生查询 ---------- */
 
 export function favoriteKey(fav: Favorite): string {
-  return fav.type === "lesson"
-    ? `lesson:${fav.lessonId}`
-    : `module:${fav.lessonId}:${fav.moduleId}`;
+  switch (fav.type) {
+    case "lesson":
+      return `lesson:${fav.lessonId}`;
+    case "module":
+      return `module:${fav.lessonId}:${fav.moduleId}`;
+    case "case":
+      return `case:${fav.caseId}`;
+    case "term":
+      return `term:${fav.termId}`;
+  }
 }
 
 export function hasFavorite(favorites: Favorite[], fav: Favorite): boolean {
@@ -105,5 +114,8 @@ export function lessonModuleFavoriteCount(
   favorites: Favorite[],
   lessonId: string
 ): number {
-  return favorites.filter((f) => f.lessonId === lessonId).length;
+  return favorites.filter(
+    (f) =>
+      (f.type === "lesson" || f.type === "module") && f.lessonId === lessonId
+  ).length;
 }

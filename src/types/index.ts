@@ -88,10 +88,32 @@ export interface Lesson {
   meta: LessonMeta;
 }
 
-/** 收藏对象：整课 或 课程内某个模块 */
+/** 收藏对象：整课 / 课程内模块 / 案例 / 术语（V1.11 收藏夹支持三类资产） */
 export type Favorite =
   | { type: "lesson"; lessonId: string }
-  | { type: "module"; lessonId: string; moduleId: string };
+  | { type: "module"; lessonId: string; moduleId: string }
+  | { type: "case"; caseId: string }
+  | { type: "term"; termId: string };
+
+/** 学习笔记 / 高亮（V1.11 学习笔记 Tab；阅读划线浮窗后续版本写入同一结构） */
+export type NoteType = "highlight" | "note";
+export type NoteSourceType = "course" | "case";
+
+export interface StudyNote {
+  noteId: string;
+  type: NoteType;
+  sourceType: NoteSourceType;
+  /** 课程 = lesson.id（如 "01"）；案例 = case id（如 "Case-001"） */
+  sourceId: string;
+  /** 展示用标题（录入时固化，避免源数据改名后悬空） */
+  sourceTitle: string;
+  /** 原文/划线摘录（type=note 时可为空） */
+  selectedText: string;
+  /** 我的笔记/批注正文 */
+  note: string;
+  createdAt: number;
+  updatedAt: number;
+}
 
 /** 模块完成 key：`${lessonId}/${moduleId}` */
 export type ModuleKey = string;

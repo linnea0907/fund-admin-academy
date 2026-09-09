@@ -23,7 +23,9 @@ export default function CourseCard({
   const doneCount = lessonDoneCount(state, lesson);
   const moduleCount = lesson.modules.length;
   const favCount = state.favorites.filter(
-    (f) => f.lessonId === lesson.id
+    (f) =>
+      (f.type === "lesson" || f.type === "module") &&
+      f.lessonId === lesson.id
   ).length;
 
   return (
