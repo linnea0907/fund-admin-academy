@@ -190,6 +190,8 @@ export interface StoredState {
   completedModules: ModuleKey[];
   /** 已标记完成的案例 id 列表（Case Library V2） */
   completedCases: CaseId[];
+  /** 案例完成时间戳（V1.12.1：caseId → completedAt；仅记录已完成的案例，与 completedCases 同步维护） */
+  caseCompletedAt: Record<string, number>;
   /** 已开始学习的案例 id 列表（V1.8：打开过详情即算开始；未完成 = 学习中） */
   startedCases: CaseId[];
   /** 收藏列表 */

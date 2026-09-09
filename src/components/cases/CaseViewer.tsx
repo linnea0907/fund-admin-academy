@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import type { CaseSectionKey } from "@/types";
 import { getCaseModule } from "@/lib/case-modules";
 import { levelLabel } from "@/lib/case-filter";
@@ -56,12 +57,42 @@ export default function CaseViewer({
   prev,
   next,
 }: CaseViewerProps) {
-  const { state, toggleCaseComplete, markCaseStarted, toggleFavorite } = useAcademy();
+  const router = useRouter();
+  const { state, completeCase, toggleCaseComplete, markCaseStarted, toggleFavorite } = useAcademy();
   const done = state.completedCases.includes(id);
+  const completedAt = state.caseCompletedAt[id];
   const started = state.startedCases.includes(id);
   const fav = state.favorites.some((f) => f.type === "case" && f.caseId === id);
   const mod = getCaseModule(module);
   const levelText = levelLabel(level);
+
+  // V1.12.1 底部「完成学习」：轻量 Toast + 跳转节流（防连点）
+  const [toast, setToast] = useState<string | null>(null);
+  const [advancing, setAdvancing] = useState(false);
+  const toastTimer = useRef<number | null>(null);
+  const showToast = useCallback((text: string) => {
+    setToast(text);
+    if (toastTimer.current) window.clearTimeout(toastTimer.current);
+    toastTimer.current = window.setTimeout(() => setToast(null), 2600);
+  }, []);
+
+  /** 完成学习：置完成（幂等）→ Toast → 自动进入下一案例；已是最后一例则返回案例工坊 */
+  const handleFinish = useCallback(() => {
+    if (!ready || advancing) return;
+    if (!done) completeCase(id);
+    setAdvancing(true);
+    if (next) {
+      showToast(done ? "本案例已完成 · 前往下一案例" : "✅ 已标记为完成");
+      window.setTimeout(() => {
+        router.push(`/cases/${next.id.toLowerCase()}`);
+      }, done ? 350 : 800);
+    } else {
+      showToast(done ? "已是最后一个案例 · 返回案例工坊" : "🎉 已完成全部案例 · 返回案例工坊");
+      window.setTimeout(() => {
+        router.push("/cases");
+      }, done ? 350 : 1200);
+    }
+  }, [ready, advancing, done, id, next, completeCase, router, showToast]);
 
   // V1.8 状态口径：打开已导入案例详情即记为「开始学习」（已完成的不再改动）
   useEffect(() => {
@@ -100,7 +131,14 @@ export default function CaseViewer({
               </span>
             )}
             {done && (
-              <span className="rounded bg-emerald-400 px-2 py-0.5 font-semibold text-emerald-950">
+              <span
+                className="rounded bg-emerald-400 px-2 py-0.5 font-semibold text-emerald-950"
+                title={
+                  completedAt
+                    ? `完成于 ${fmtDateTime(completedAt)}（可点 Banner 按钮取消完成）`
+                    : "已完成（可点 Banner 按钮取消完成）"
+                }
+              >
                 ✓ 已完成
               </span>
             )}
@@ -217,35 +255,90 @@ export default function CaseViewer({
         ))
       )}
 
-      {/* ===== 上/下一案例 ===== */}
-      <nav className="grid gap-3 sm:grid-cols-2">
+      {/* ===== V1.12.1 底部完成学习操作条（看完即完成，无需滚回顶部） ===== */}
+      <div className="grid grid-cols-[1fr_auto_1fr] items-stretch gap-2 rounded-2xl border border-slate-200 bg-white p-3 shadow-sm sm:gap-3 sm:p-4">
+        {/* 上一案例 */}
         {prev ? (
           <Link
             href={`/cases/${prev.id.toLowerCase()}`}
-            className="rounded-2xl border border-slate-200 bg-white p-4 transition hover:border-blue-300 hover:shadow-sm"
+            className="group flex min-w-0 flex-col justify-center rounded-xl border border-slate-100 px-3 py-2.5 transition hover:border-blue-200 hover:bg-blue-50/40"
           >
-            <p className="text-xs text-slate-400">← 上一案例</p>
-            <p className="mt-1 text-sm font-semibold text-slate-700">
+            <span className="text-[11px] font-semibold text-slate-400 group-hover:text-[#0e2a5e]">
+              ← 上一案例
+            </span>
+            <span className="mt-0.5 truncate text-xs font-medium text-slate-600">
               {prev.id}
               {prev.title ? ` · ${prev.title}` : " · 正文待导入"}
-            </p>
+            </span>
           </Link>
         ) : (
-          <span />
+          <span aria-hidden />
         )}
-        {next && (
+
+        {/* ✅ 完成学习 */}
+        <div className="flex min-w-0 flex-col items-center justify-center gap-1.5 px-1">
+          {ready ? (
+            <button
+              type="button"
+              data-finish-case={id}
+              onClick={handleFinish}
+              disabled={advancing}
+              className={`inline-flex items-center gap-1.5 whitespace-nowrap rounded-xl px-4 py-2.5 text-sm font-bold transition sm:px-6 ${
+                done
+                  ? "bg-emerald-100 text-emerald-800 ring-1 ring-emerald-200 hover:bg-emerald-200"
+                  : "bg-emerald-500 text-white shadow-sm hover:bg-emerald-400 disabled:opacity-60"
+              }`}
+            >
+              {done && !next
+                ? "🎉 完成全部案例 · 返回案例工坊"
+                : done
+                  ? "✓ 已完成 · 前往下一案例"
+                  : "✅ 完成学习"}
+            </button>
+          ) : (
+            <span
+              className="cursor-not-allowed whitespace-nowrap rounded-xl bg-slate-100 px-4 py-2.5 text-sm font-bold text-slate-300 sm:px-6"
+              title="正文待导入，暂不能标记完成"
+            >
+              内容待导入
+            </span>
+          )}
+          {ready && (
+            <span className="hidden text-[10px] text-slate-400 sm:block">
+              {done
+                ? next
+                  ? "点击前往下一案例"
+                  : "已完成 · 点击返回案例工坊"
+                : "看完点击即完成 · 自动进入下一案例"}
+            </span>
+          )}
+        </div>
+
+        {/* 下一案例 */}
+        {next ? (
           <Link
             href={`/cases/${next.id.toLowerCase()}`}
-            className="rounded-2xl border border-slate-200 bg-white p-4 text-right transition hover:border-blue-300 hover:shadow-sm"
+            className="group flex min-w-0 flex-col items-end justify-center rounded-xl border border-slate-100 px-3 py-2.5 text-right transition hover:border-blue-200 hover:bg-blue-50/40"
           >
-            <p className="text-xs text-slate-400">下一案例 →</p>
-            <p className="mt-1 text-sm font-semibold text-slate-700">
+            <span className="text-[11px] font-semibold text-slate-400 group-hover:text-[#0e2a5e]">
+              下一案例 →
+            </span>
+            <span className="mt-0.5 truncate text-xs font-medium text-slate-600">
               {next.id}
               {next.title ? ` · ${next.title}` : " · 正文待导入"}
-            </p>
+            </span>
           </Link>
+        ) : (
+          <span aria-hidden />
         )}
-      </nav>
+      </div>
+
+      {/* 轻量 toast（完成学习反馈；自动跳转期间可见） */}
+      {toast && (
+        <div className="pointer-events-none fixed bottom-6 left-1/2 z-50 -translate-x-1/2 whitespace-nowrap rounded-full bg-[#0e2a5e] px-4 py-2 text-xs font-medium text-white shadow-lg">
+          {toast}
+        </div>
+      )}
 
       {/* V1.12 阅读高亮引擎（正文小节内选中文字 → 高亮/写笔记/复制） */}
       <HighlightEngine
@@ -257,4 +350,11 @@ export default function CaseViewer({
       />
     </div>
   );
+}
+
+/** V1.12.1 完成时间展示：YYYY-MM-DD HH:mm（本地时区） */
+function fmtDateTime(ts: number): string {
+  const d = new Date(ts);
+  const p = (n: number) => String(n).padStart(2, "0");
+  return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}`;
 }

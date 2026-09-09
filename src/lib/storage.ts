@@ -10,6 +10,7 @@ export function defaultState(): StoredState {
     version: 1,
     completedModules: [],
     completedCases: [],
+    caseCompletedAt: {},
     startedCases: [],
     favorites: [],
     recentlyViewed: [],
@@ -43,6 +44,21 @@ export function normalize(input: Partial<StoredState> | null | undefined): Store
     completedCases: Array.isArray(input.completedCases)
       ? input.completedCases.filter((x): x is string => typeof x === "string")
       : [],
+    // V1.12.1 完成时间戳（caseId → completedAt）。旧数据缺省 → 空表；
+    // 完成状态以 completedCases 为准，展示不依赖本字段；下次置完成时自动补齐。
+    caseCompletedAt:
+      input.caseCompletedAt &&
+      typeof input.caseCompletedAt === "object" &&
+      !Array.isArray(input.caseCompletedAt)
+        ? Object.fromEntries(
+            Object.entries(input.caseCompletedAt).filter(
+              (entry): entry is [string, number] =>
+                typeof entry[0] === "string" &&
+                typeof entry[1] === "number" &&
+                entry[1] > 0
+            )
+          )
+        : {},
     startedCases: Array.isArray(input.startedCases)
       ? input.startedCases.filter((x): x is string => typeof x === "string")
       : [],

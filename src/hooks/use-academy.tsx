@@ -27,6 +27,8 @@ interface AcademyContextValue {
   setLessonCompletion: (moduleKeys: string[], complete: boolean) => void;
   /** 标记/取消单个案例完成（Case Library V2，caseId = "Case-001"） */
   toggleCaseComplete: (caseId: string) => void;
+  /** V1.12.1 一键完成学习：单向往完成标记（幂等），并记录 completedAt */
+  completeCase: (caseId: string) => void;
   /** 标记案例已开始学习（打开详情即调用；V1.8 状态口径：学习中 = started && !completed） */
   markCaseStarted: (caseId: string) => void;
   /** 收藏 / 取消收藏（课程/模块/案例/术语） */
@@ -80,12 +82,39 @@ export function AcademyProvider({ children }: { children: ReactNode }) {
   );
 
   const toggleCaseComplete = useCallback((caseId: string) => {
-    setState((s) => ({
-      ...s,
-      completedCases: s.completedCases.includes(caseId)
-        ? s.completedCases.filter((c) => c !== caseId)
-        : [...s.completedCases, caseId],
-    }));
+    setState((s) => {
+      const already = s.completedCases.includes(caseId);
+      if (!already) {
+        return {
+          ...s,
+          completedCases: [...s.completedCases, caseId],
+          caseCompletedAt: { ...s.caseCompletedAt, [caseId]: Date.now() },
+        };
+      }
+      const nextAt = { ...s.caseCompletedAt };
+      delete nextAt[caseId];
+      return {
+        ...s,
+        completedCases: s.completedCases.filter((c) => c !== caseId),
+        caseCompletedAt: nextAt,
+      };
+    });
+  }, []);
+
+  /** V1.12.1 一键完成学习：只置完成、永不取消（重复标记保留首次 completedAt） */
+  const completeCase = useCallback((caseId: string) => {
+    setState((s) =>
+      s.completedCases.includes(caseId)
+        ? s
+        : {
+            ...s,
+            completedCases: [...s.completedCases, caseId],
+            caseCompletedAt: {
+              ...s.caseCompletedAt,
+              [caseId]: Date.now(),
+            },
+          }
+    );
   }, []);
 
   const markCaseStarted = useCallback((caseId: string) => {
@@ -122,6 +151,7 @@ export function AcademyProvider({ children }: { children: ReactNode }) {
       ...s,
       completedModules: [],
       completedCases: [],
+      caseCompletedAt: {},
       startedCases: [],
     }));
   }, []);
@@ -163,6 +193,7 @@ export function AcademyProvider({ children }: { children: ReactNode }) {
       toggleModuleComplete,
       setLessonCompletion,
       toggleCaseComplete,
+      completeCase,
       markCaseStarted,
       toggleFavorite,
       recordView,
@@ -177,6 +208,7 @@ export function AcademyProvider({ children }: { children: ReactNode }) {
       toggleModuleComplete,
       setLessonCompletion,
       toggleCaseComplete,
+      completeCase,
       markCaseStarted,
       toggleFavorite,
       recordView,
