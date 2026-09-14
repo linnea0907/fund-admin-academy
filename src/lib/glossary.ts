@@ -15,8 +15,10 @@ import { GLOSSARY_TERMS, GLOSSARY_BUILTIN_COUNT } from "@/data/glossary";
 import {
   GLOSSARY_CATEGORIES,
   TERM_JURISDICTIONS,
+  TERM_LEVELS,
   TERM_SCENARIOS,
   TERM_SOURCES,
+  getTermLevel,
   type GlossaryCategory,
   type GlossaryCategoryDef,
   type GlossaryTerm,
@@ -28,14 +30,18 @@ import {
 export {
   GLOSSARY_CATEGORIES,
   TERM_JURISDICTIONS,
+  TERM_LEVELS,
   TERM_SCENARIOS,
   TERM_SOURCES,
+  getTermLevel,
 };
 export type {
   GlossaryCategory,
   GlossaryCategoryDef,
   GlossaryTerm,
   TermJurisdiction,
+  TermLevel,
+  TermLevelDef,
   TermScenario,
   TermSourceDef,
   TermSourceId,
@@ -126,23 +132,52 @@ export interface TermSegment {
   termId?: string;
 }
 
+export interface AnnotateOptions {
+  /**
+   * 段落级去重（V1.14.1）：同一段文本内，同一术语**仅第一次**出现标注为热词，
+   * 后续出现降级为普通文本，降低正文标注密度、提升可读性。
+   * 调用侧按「段落 / 列表项 / 表格单元格」粒度调用即得到段落级效果。
+   */
+  unique?: boolean;
+  /**
+   * 外部共享的去重作用域。传入后本次标注与后续标注共用同一个「已标注术语」集合，
+   * 用于跨多次调用仍保持同一段落级去重（例：markdown 段落内嵌套 &lt;strong&gt; 时，
+   * 各文本叶子共享一个 Set）。
+   */
+  seen?: Set<string>;
+}
+
 /** 把一段文本切成 普通文本 + 术语 片段（术语按词表最长优先匹配） */
-export function annotateSegments(text: string): TermSegment[] {
+export function annotateSegments(text: string, options: AnnotateOptions = {}): TermSegment[] {
   if (!text) return [{ text: "" }];
+  const seen = options.seen ?? (options.unique ? new Set<string>() : null);
   const out: TermSegment[] = [];
+  // 相邻普通片段合并，减少 DOM 文本节点
+  const pushPlain = (t: string) => {
+    if (!t) return;
+    const last = out[out.length - 1];
+    if (last && last.termId === undefined) last.text += t;
+    else out.push({ text: t });
+  };
   GLOSSARY_PATTERN.lastIndex = 0;
   let cursor = 0;
   let m: RegExpExecArray | null;
   while ((m = GLOSSARY_PATTERN.exec(text)) !== null) {
     const start = m.index;
     const matched = m[0];
-    if (start > cursor) out.push({ text: text.slice(cursor, start) });
-    const termId = MATCH_TEXT_TO_ID.get(matched.toLowerCase());
-    out.push({ text: matched, termId });
+    if (start > cursor) pushPlain(text.slice(cursor, start));
+    let termId: string | undefined = MATCH_TEXT_TO_ID.get(matched.toLowerCase());
+    if (termId !== undefined && seen) {
+      // 同一段落内已标注过该术语（含其别名/全称）→ 本次降级为普通文本
+      if (seen.has(termId)) termId = undefined;
+      else seen.add(termId);
+    }
+    if (termId === undefined) pushPlain(matched);
+    else out.push({ text: matched, termId });
     cursor = start + matched.length;
     if (matched.length === 0) GLOSSARY_PATTERN.lastIndex += 1; // 防御空匹配
   }
-  if (cursor < text.length) out.push({ text: text.slice(cursor) });
+  if (cursor < text.length) pushPlain(text.slice(cursor));
   return out;
 }
 

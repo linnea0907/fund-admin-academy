@@ -10,6 +10,8 @@ import {
   type GlossaryTerm,
 } from "@/lib/glossary";
 import type { MissingTermCandidate } from "@/lib/missing-terms";
+import type { WikiHealthSummary } from "@/lib/glossary-usage";
+import WikiHealthPanel from "@/components/wiki/WikiHealthPanel";
 import {
   DRAFT_FIELDS,
   buildCsvTemplate,
@@ -29,7 +31,7 @@ import {
   type WikiLocalState,
 } from "@/lib/wiki-admin";
 
-type Tab = "import" | "missing" | "staging";
+type Tab = "health" | "import" | "missing" | "staging";
 
 interface PreviewRow {
   draft: TermDraft;
@@ -40,6 +42,7 @@ interface PreviewRow {
 
 export default function WikiApp({
   missing,
+  health,
   existingIds,
   existingLabels,
   builtinCount,
@@ -47,13 +50,14 @@ export default function WikiApp({
   totalCount,
 }: {
   missing: MissingTermCandidate[];
+  health: WikiHealthSummary;
   existingIds: string[];
   existingLabels: { id: string; term: string; zh: string }[];
   builtinCount: number;
   importedCount: number;
   totalCount: number;
 }) {
-  const [tab, setTab] = useState<Tab>("import");
+  const [tab, setTab] = useState<Tab>("health");
   // 本组件经 dynamic(ssr:false) 挂载，初始 render 只发生在客户端 → 可直接惰性读 localStorage
   const [state, setState] = useState<WikiLocalState>(() => loadWikiState());
   const [fileName, setFileName] = useState("");
@@ -232,7 +236,8 @@ export default function WikiApp({
           </span>
         </div>
         <p className="mt-2 max-w-3xl text-sm leading-relaxed text-slate-500">
-          批量导入（CSV / Excel / JSON）、待补充术语池与导出落盘。术语为构建期单一数据源：
+          知识网络健康度（覆盖率 / 孤立术语 / 热门术语）、批量导入（CSV / Excel / JSON）、
+          待补充术语池与导出落盘。术语为构建期单一数据源：
           导入内容先在<strong className="text-slate-600">本机暂存区</strong>解析与编辑，
           导出 <code className="rounded bg-slate-100 px-1 text-[12px]">imported.json</code> 放到{" "}
           <code className="rounded bg-slate-100 px-1 text-[12px]">content/glossary/</code> 后运行{" "}
@@ -241,6 +246,8 @@ export default function WikiApp({
         </p>
         <div className="mt-3 flex flex-wrap gap-2 text-xs">
           <Stat label="术语总数" value={totalCount} />
+          <Stat label="知识网络覆盖率" value={`${health.coverage}%`} />
+          <Stat label="孤立术语" value={health.isolated} />
           <Stat label="内置" value={builtinCount} />
           <Stat label="已导入（仓库生效）" value={importedCount} />
           <Stat label="暂存待导出" value={staged.length} />
@@ -250,6 +257,7 @@ export default function WikiApp({
 
       {/* Tabs */}
       <div className="flex flex-wrap gap-1.5 border-b border-slate-200 pb-2">
+        <TabBtn active={tab === "health"} onClick={() => setTab("health")} label="健康度 Dashboard" />
         <TabBtn active={tab === "import"} onClick={() => setTab("import")} label="批量导入" badge={preview?.length} />
         <TabBtn
           active={tab === "missing"}
@@ -271,6 +279,9 @@ export default function WikiApp({
           {toast}
         </p>
       )}
+
+      {/* ============ Tab 0 · Wiki 健康度 Dashboard ============ */}
+      {tab === "health" && <WikiHealthPanel health={health} />}
 
       {/* ============ Tab 1 · 批量导入 ============ */}
       {tab === "import" && (
@@ -785,7 +796,7 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
   );
 }
 
-function Stat({ label, value }: { label: string; value: number }) {
+function Stat({ label, value }: { label: string; value: number | string }) {
   return (
     <span className="inline-flex items-center gap-1.5 rounded-full bg-slate-100 px-3 py-1 font-medium text-slate-500">
       {label}

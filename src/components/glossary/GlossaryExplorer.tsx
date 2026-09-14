@@ -1,10 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   GLOSSARY_CATEGORIES,
+  TERM_LEVELS,
   getGlossaryCategory,
+  getTermLevel,
   getTermSource,
   searchTerms,
   termBrief,
@@ -12,6 +14,7 @@ import {
   type TermJurisdiction,
   type TermSourceDef,
 } from "@/lib/glossary";
+import { recordTermEvents } from "@/lib/wiki-metrics";
 
 export interface TermUsageCounts {
   lessons: number;
@@ -19,10 +22,12 @@ export interface TermUsageCounts {
 }
 
 /**
- * Fund Admin Wiki · Terms（术语）列表页（V1.14.0）
+ * Fund Admin Wiki · Terms（术语）列表页（V1.14.1）
  *
  * - 客户端检索：缩写 / 全称 / 中文名 / 别名 / 定义关键词 互搜（命中字段可读化）
- * - 分类（8 类）· 属地 · 来源 三重筛选 + 「仅看已在内容中出现」开关
+ * - 筛选：分类（8 类）· 属地 · 来源 · 等级（Core/Advanced/Expert）
+ *   + 「仅看已在内容中出现」/「仅看孤立术语（无课程且无案例）」
+ * - 检索命中会写入本机热度统计（供「热门术语 Top」）
  * - 行数据与统计由服务端预烘焙（SSG）
  */
 export default function GlossaryExplorer({
@@ -40,7 +45,9 @@ export default function GlossaryExplorer({
   const [cat, setCat] = useState<"all" | string>("all");
   const [jur, setJur] = useState<"all" | string>("all");
   const [src, setSrc] = useState<"all" | string>("all");
+  const [lvl, setLvl] = useState<"all" | string>("all");
   const [onlyUsed, setOnlyUsed] = useState(false);
+  const [onlyIsolated, setOnlyIsolated] = useState(false);
 
   const q = query.trim();
 
@@ -49,17 +56,56 @@ export default function GlossaryExplorer({
       if (cat !== "all" && t.category !== cat) return false;
       if (jur !== "all" && !t.jurisdiction.includes(jur as TermJurisdiction)) return false;
       if (src !== "all" && !t.source.includes(src as never)) return false;
-      if (onlyUsed) {
-        const u = usageCounts[t.id];
-        if (!u || (u.lessons === 0 && u.cases === 0)) return false;
-      }
+      if (lvl !== "all" && t.level !== lvl) return false;
+      const u = usageCounts[t.id];
+      const iso = !u || (u.lessons === 0 && u.cases === 0);
+      if (onlyUsed && iso) return false;
+      if (onlyIsolated && !iso) return false;
       return true;
     });
     if (!q) return filtered.map((t) => ({ term: t, fields: [] as string[] }));
     return searchTerms(filtered, q).map((h) => ({ term: h.term, fields: h.fields }));
-  }, [terms, cat, jur, src, onlyUsed, q, usageCounts]);
+  }, [terms, cat, jur, src, lvl, onlyUsed, onlyIsolated, q, usageCounts]);
 
-  const activeFilters = (cat !== "all" ? 1 : 0) + (jur !== "all" ? 1 : 0) + (src !== "all" ? 1 : 0);
+  const activeFilters =
+    (cat !== "all" ? 1 : 0) +
+    (jur !== "all" ? 1 : 0) +
+    (src !== "all" ? 1 : 0) +
+    (lvl !== "all" ? 1 : 0);
+
+  /** 等级分布（用于 chip 上的计数） */
+  const levelCounts = useMemo(() => {
+    const m: Record<string, number> = {};
+    for (const t of terms) m[t.level] = (m[t.level] ?? 0) + 1;
+    return m;
+  }, [terms]);
+
+  /** 孤立术语数（无课程且无案例关联） */
+  const isolatedTotal = useMemo(
+    () =>
+      terms.filter((t) => {
+        const u = usageCounts[t.id];
+        return !u || (u.lessons === 0 && u.cases === 0);
+      }).length,
+    [terms, usageCounts]
+  );
+
+  /**
+   * 检索命中写入本机热度统计（供「热门术语 Top」）。
+   * 防抖 700ms + 至少 2 字符，避免逐字输入把中间态也计入。
+   */
+  const hitIds = useMemo(() => rows.filter((r) => r.fields.length > 0).slice(0, 5).map((r) => r.term.id), [rows]);
+  const hitKey = hitIds.join(",");
+  const lastRecordedRef = useRef("");
+  useEffect(() => {
+    if (q.length < 2 || !hitKey) return;
+    if (lastRecordedRef.current === hitKey) return;
+    const timer = window.setTimeout(() => {
+      lastRecordedRef.current = hitKey;
+      recordTermEvents(hitKey.split(","), "search");
+    }, 700);
+    return () => window.clearTimeout(timer);
+  }, [q, hitKey]);
 
   return (
     <div className="space-y-6">
@@ -75,9 +121,18 @@ export default function GlossaryExplorer({
         </div>
         <p className="mt-2 max-w-3xl text-sm leading-relaxed text-slate-500">
           基金行政知识库术语层：统一结构涵盖 <b className="text-slate-600">缩写 / 全称 / 中文名 /
-          分类 / 属地 / 定义 / 重要性 / 实务场景 / 别名 / 来源 / 标签</b>，并自动汇集
-          关联术语、关联案例与关联课程。支持缩写、全称、中文名互搜。
+          分类 / 属地 / 等级 / 定义 / 重要性 / 实务场景 / 别名 / 来源 / 标签</b>，并自动汇集
+          关联术语、关联案例与关联课程。支持缩写、全称、中文名互搜；
+          <b className="text-slate-600">{isolatedTotal}</b> 条术语尚未进入知识网络，可用「仅看孤立术语」定位。
         </p>
+        <div className="mt-3 flex flex-wrap gap-2">
+          <Link
+            href="/wiki"
+            className="rounded-full bg-amber-300 px-3 py-1.5 text-xs font-bold text-[#0e2a5e] transition hover:bg-amber-200"
+          >
+            知识工坊 · 健康度 Dashboard →
+          </Link>
+        </div>
       </header>
 
       {/* 搜索 */}
@@ -170,23 +225,71 @@ export default function GlossaryExplorer({
               </span>
             </button>
           ))}
+        </div>
+
+        {/* 等级 + 知识网络状态（V1.14.1） */}
+        <div className="flex flex-wrap items-center gap-1.5">
+          <span className="mr-1 w-8 shrink-0 text-xs font-semibold text-slate-400">等级</span>
+          <button type="button" onClick={() => setLvl("all")} className={chip(lvl === "all")}>
+            全部
+          </button>
+          {TERM_LEVELS.map((l) => (
+            <button
+              key={l.id}
+              type="button"
+              title={`${l.label} · ${l.zh}`}
+              onClick={() => setLvl(lvl === l.id ? "all" : l.id)}
+              className={chip(lvl === l.id)}
+            >
+              {l.label}
+              <span className={lvl === l.id ? "text-blue-200" : "text-slate-400"}>
+                {" "}
+                {levelCounts[l.id] ?? 0}
+              </span>
+            </button>
+          ))}
           <label className="ml-1 inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-500 transition hover:border-[#0e2a5e]/40">
             <input
               type="checkbox"
               checked={onlyUsed}
-              onChange={(e) => setOnlyUsed(e.target.checked)}
+              onChange={(e) => {
+                setOnlyUsed(e.target.checked);
+                if (e.target.checked) setOnlyIsolated(false);
+              }}
               className="h-3.5 w-3.5 accent-[#0e2a5e]"
             />
             仅看已在课程/案例中出现
           </label>
-          {(activeFilters > 0 || onlyUsed) && (
+          <label
+            title="孤立术语 = 课程正文与案例正文都没有引用它"
+            className={`ml-1 inline-flex cursor-pointer items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-medium transition ${
+              onlyIsolated
+                ? "border-amber-300 bg-amber-50 text-amber-700"
+                : "border-slate-200 bg-white text-slate-500 hover:border-amber-300"
+            }`}
+          >
+            <input
+              type="checkbox"
+              checked={onlyIsolated}
+              onChange={(e) => {
+                setOnlyIsolated(e.target.checked);
+                if (e.target.checked) setOnlyUsed(false);
+              }}
+              className="h-3.5 w-3.5 accent-amber-500"
+            />
+            仅看孤立术语
+            <span className={onlyIsolated ? "text-amber-600" : "text-slate-400"}>{isolatedTotal}</span>
+          </label>
+          {(activeFilters > 0 || onlyUsed || onlyIsolated) && (
             <button
               type="button"
               onClick={() => {
                 setCat("all");
                 setJur("all");
                 setSrc("all");
+                setLvl("all");
                 setOnlyUsed(false);
+                setOnlyIsolated(false);
               }}
               className="rounded-full bg-slate-100 px-3 py-1.5 text-xs font-medium text-slate-500 transition hover:bg-slate-200"
             >
@@ -226,7 +329,9 @@ export default function GlossaryExplorer({
           <ul className="grid grid-cols-1 gap-3 md:grid-cols-2">
             {rows.map(({ term: t, fields }) => {
               const c = getGlossaryCategory(t.category);
+              const lv = getTermLevel(t.level);
               const u = usageCounts[t.id];
+              const isIsolatedCard = !u || (u.lessons === 0 && u.cases === 0);
               const refs =
                 u && (u.lessons > 0 || u.cases > 0)
                   ? `${u.lessons > 0 ? `${u.lessons} 讲` : ""}${
@@ -245,6 +350,16 @@ export default function GlossaryExplorer({
                       >
                         {c.label}
                       </span>
+                      <span
+                        className={`rounded-full px-2 py-0.5 text-[10px] font-bold tracking-wide ring-1 ${lv.tint}`}
+                      >
+                        {lv.label}
+                      </span>
+                      {isIsolatedCard && (
+                        <span className="rounded-full bg-amber-50 px-2 py-0.5 text-[10px] font-medium text-amber-700 ring-1 ring-amber-200">
+                          孤立
+                        </span>
+                      )}
                       {t.jurisdiction.slice(0, 3).map((j) => (
                         <span
                           key={j}

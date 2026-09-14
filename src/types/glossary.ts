@@ -149,6 +149,33 @@ export const TERM_JURISDICTIONS = [
 export type TermJurisdiction = (typeof TERM_JURISDICTIONS)[number];
 
 /* ================================================================
+ * Level · 术语成熟度等级（V1.14.1）
+ *   用于学习路径 / 考试系统 / 新人培养分层：
+ *   core     = 基础：入门必学、日常高频
+ *   advanced = 进阶：需要一定实务经验
+ *   expert   = 专精：高度专业或小众主题
+ * ================================================================ */
+export type TermLevel = "core" | "advanced" | "expert";
+
+export interface TermLevelDef {
+  id: TermLevel;
+  label: string;
+  zh: string;
+  /** chip 配色（Tailwind 组合，浅底深字） */
+  tint: string;
+}
+
+export const TERM_LEVELS: TermLevelDef[] = [
+  { id: "core", label: "Core", zh: "基础", tint: "bg-emerald-50 text-emerald-700 ring-emerald-200" },
+  { id: "advanced", label: "Advanced", zh: "进阶", tint: "bg-amber-50 text-amber-700 ring-amber-200" },
+  { id: "expert", label: "Expert", zh: "专精", tint: "bg-rose-50 text-rose-700 ring-rose-200" },
+];
+
+export function getTermLevel(id: TermLevel): TermLevelDef {
+  return TERM_LEVELS.find((l) => l.id === id) ?? TERM_LEVELS[0];
+}
+
+/* ================================================================
  * 术语（V1.14.0 统一结构）
  * ================================================================ */
 export interface GlossaryTerm {
@@ -162,6 +189,8 @@ export interface GlossaryTerm {
   zh: string;
   /** Category：八大分类之一 */
   category: GlossaryCategory;
+  /** Level：成熟度等级（Core / Advanced / Expert；V1.14.1） */
+  level: TermLevel;
   /** Jurisdiction：属地（可多个；Global 表示通用规则） */
   jurisdiction: TermJurisdiction[];
   /** Definition：定义 */

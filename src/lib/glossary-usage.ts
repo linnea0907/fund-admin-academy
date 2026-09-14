@@ -14,11 +14,16 @@
 
 import { orderedAllLessons } from "@/lib/ordering";
 import {
+  GLOSSARY_CATEGORIES,
   GLOSSARY_TERMS,
+  TERM_LEVELS,
   findTermMatches,
+  getGlossaryCategory,
+  type GlossaryCategory,
   type GlossaryUsageMap,
   type TermCaseRef,
   type TermLessonRef,
+  type TermLevel,
   type TermUsage,
 } from "@/lib/glossary";
 import { caseSlug, listCaseIds, readCase } from "@/lib/cases";
@@ -194,4 +199,197 @@ export function getTermRelations(termId: string): TermRelations {
       manualCases: [],
     }
   );
+}
+
+/* ================================================================
+ * V1.14.1 Wiki 健康度（Health Dashboard）
+ *   覆盖率 = 至少关联 1 门课程 或 1 个案例 的术语占比。
+ *   「孤立术语（Isolated）」= 既无课程关联、也无案例关联。
+ * ================================================================ */
+
+export interface WikiHealthRow {
+  id: string;
+  term: string;
+  zh: string;
+  category: GlossaryCategory;
+  level: TermLevel;
+  lessonCount: number;
+  caseCount: number;
+  isolated: boolean;
+}
+
+export interface WikiHealthBreakdown {
+  key: string;
+  label: string;
+  total: number;
+  linked: number;
+  isolated: number;
+  /** 0~100，四舍五入 */
+  coverage: number;
+}
+
+export interface WikiHealth {
+  total: number;
+  /** 至少关联 1 门课程的术语数 */
+  linkedCourses: number;
+  /** 至少关联 1 个案例的术语数 */
+  linkedCases: number;
+  /** 课程 + 案例都关联的术语数 */
+  linkedBoth: number;
+  /** 至少关联其一（并集） */
+  linkedAny: number;
+  /** 孤立术语数 */
+  isolated: number;
+  /** 覆盖率 %（linkedAny / total × 100） */
+  coverage: number;
+  byCategory: WikiHealthBreakdown[];
+  byLevel: WikiHealthBreakdown[];
+  rows: WikiHealthRow[];
+}
+
+const pct = (n: number, d: number) => (d === 0 ? 0 : Math.round((n / d) * 100));
+
+let healthCache: WikiHealth | null = null;
+
+/** 全量术语健康度（构建期静态烘焙；进程内缓存） */
+export function buildWikiHealth(): WikiHealth {
+  if (healthCache) return healthCache;
+  const relations = buildTermRelations();
+
+  const rows: WikiHealthRow[] = GLOSSARY_TERMS.map((t) => {
+    const r = relations[t.id];
+    const lessonCount = r?.lessons.length ?? 0;
+    const caseCount = r?.cases.length ?? 0;
+    return {
+      id: t.id,
+      term: t.term,
+      zh: t.zh,
+      category: t.category,
+      level: t.level,
+      lessonCount,
+      caseCount,
+      isolated: lessonCount === 0 && caseCount === 0,
+    };
+  });
+
+  const total = rows.length;
+  const linkedCourses = rows.filter((r) => r.lessonCount > 0).length;
+  const linkedCases = rows.filter((r) => r.caseCount > 0).length;
+  const linkedBoth = rows.filter((r) => r.lessonCount > 0 && r.caseCount > 0).length;
+  const linkedAny = rows.filter((r) => !r.isolated).length;
+  const isolated = total - linkedAny;
+
+  const group = (
+    keyOf: (r: WikiHealthRow) => string,
+    labelOf: (key: string) => string,
+    order: string[]
+  ): WikiHealthBreakdown[] =>
+    order
+      .map((key) => {
+        const list = rows.filter((r) => keyOf(r) === key);
+        const linked = list.filter((r) => !r.isolated).length;
+        return {
+          key,
+          label: labelOf(key),
+          total: list.length,
+          linked,
+          isolated: list.length - linked,
+          coverage: pct(linked, list.length),
+        };
+      })
+      .filter((b) => b.total > 0);
+
+  healthCache = {
+    total,
+    linkedCourses,
+    linkedCases,
+    linkedBoth,
+    linkedAny,
+    isolated,
+    coverage: pct(linkedAny, total),
+    byCategory: group(
+      (r) => r.category,
+      (k) => getGlossaryCategory(k as GlossaryCategory).label,
+      GLOSSARY_CATEGORIES.map((c) => c.id)
+    ),
+    byLevel: group(
+      (r) => r.level,
+      (k) => TERM_LEVELS.find((l) => l.id === k)?.label ?? k,
+      TERM_LEVELS.map((l) => l.id)
+    ),
+    rows,
+  };
+  return healthCache;
+}
+
+/** 孤立术语条目（Dashboard 展开列表用） */
+export interface WikiIsolatedTerm {
+  id: string;
+  term: string;
+  zh: string;
+  category: GlossaryCategory;
+  level: TermLevel;
+}
+
+/** 可序列化的健康度摘要（服务端 → 客户端 Dashboard） */
+export interface WikiHealthSummary {
+  total: number;
+  linkedCourses: number;
+  linkedCases: number;
+  linkedBoth: number;
+  linkedAny: number;
+  isolated: number;
+  coverage: number;
+  byCategory: WikiHealthBreakdown[];
+  byLevel: WikiHealthBreakdown[];
+  isolatedTerms: WikiIsolatedTerm[];
+  /**
+   * 「仅正文自动命中」口径（不含术语数据里人工指定的关联）。
+   * 用于区分：覆盖率提升是**内容侧真的引用了**，还是**人工挂靠**。
+   */
+  auto: {
+    linkedCourses: number;
+    linkedCases: number;
+    linkedBoth: number;
+    linkedAny: number;
+    isolated: number;
+    coverage: number;
+  };
+}
+
+/** 健康度摘要（不含 155 行明细，控制 RSC 载荷） */
+export function wikiHealthSummary(): WikiHealthSummary {
+  const h = buildWikiHealth();
+  const usage = buildGlossaryUsage();
+  const autoRows = GLOSSARY_TERMS.map((t) => {
+    const u = usage[t.id];
+    return { l: u?.lessons.length ?? 0, c: u?.cases.length ?? 0 };
+  });
+  const aCourses = autoRows.filter((r) => r.l > 0).length;
+  const aCases = autoRows.filter((r) => r.c > 0).length;
+  const aBoth = autoRows.filter((r) => r.l > 0 && r.c > 0).length;
+  const aAny = autoRows.filter((r) => r.l > 0 || r.c > 0).length;
+
+  return {
+    total: h.total,
+    linkedCourses: h.linkedCourses,
+    linkedCases: h.linkedCases,
+    linkedBoth: h.linkedBoth,
+    linkedAny: h.linkedAny,
+    isolated: h.isolated,
+    coverage: h.coverage,
+    byCategory: h.byCategory,
+    byLevel: h.byLevel,
+    isolatedTerms: h.rows
+      .filter((r) => r.isolated)
+      .map((r) => ({ id: r.id, term: r.term, zh: r.zh, category: r.category, level: r.level })),
+    auto: {
+      linkedCourses: aCourses,
+      linkedCases: aCases,
+      linkedBoth: aBoth,
+      linkedAny: aAny,
+      isolated: h.total - aAny,
+      coverage: pct(aAny, h.total),
+    },
+  };
 }

@@ -10,6 +10,7 @@ export const LEGAL_ENTITY_TERMS: GlossaryTerm[] = [
     fullName: "Exempted Company",
     zh: "豁免公司（开曼）",
     category: "legal-entity",
+    level: "core",
     jurisdiction: ["Cayman"],
     definition:
       "开曼最常见的离岸公司形态，主要在原属地以外经营业务，可向政府申请 20 年（可续）的免税承诺（Tax Undertaking），并须维持注册办事处与注册代理、每年申报年费与董事/股东资料。",
@@ -28,6 +29,7 @@ export const LEGAL_ENTITY_TERMS: GlossaryTerm[] = [
     fullName: "Limited Liability Company",
     zh: "有限责任公司",
     category: "legal-entity",
+    level: "advanced",
     jurisdiction: ["Cayman", "BVI", "USA", "Global"],
     definition:
       "股东以出资额为限承担责任的法人实体，可以设董事与股东，也可以采用管理成员制。开曼 LLC 兼具公司法人资格与合伙的税务穿透特性。",
@@ -46,6 +48,7 @@ export const LEGAL_ENTITY_TERMS: GlossaryTerm[] = [
     fullName: "Protected Cell Company",
     zh: "受保护单元公司",
     category: "legal-entity",
+    level: "advanced",
     jurisdiction: ["BVI"],
     definition:
       "BVI《公司法》下的公司形态：公司在同一法人内设一个核心（Core）与多个受保护单元（Cell），各单元资产与负债受法定隔离保护，单元间互不牵连。",
@@ -64,6 +67,7 @@ export const LEGAL_ENTITY_TERMS: GlossaryTerm[] = [
     fullName: "Nominee",
     zh: "代名人",
     category: "legal-entity",
+    level: "core",
     jurisdiction: ["Global", "BVI", "Cayman"],
     definition:
       "受他人委托、以自己名义持有股份、权益或资产，但实际权益与风险归委托人（实益拥有人）的主体。代名安排常见于隐私保护、代持股权与信托持股场景。",
@@ -83,6 +87,7 @@ export const LEGAL_ENTITY_TERMS: GlossaryTerm[] = [
     fullName: "Nominee Shareholder",
     zh: "名义股东",
     category: "legal-entity",
+    level: "advanced",
     jurisdiction: ["Global", "BVI", "Cayman"],
     definition:
       "名义上登记于股东名册、实际权益归属于委托人的持股主体，通常由公司服务商或受托关联公司担任，并以代名协议（Nominee Agreement）明确权利义务。",
@@ -101,6 +106,7 @@ export const LEGAL_ENTITY_TERMS: GlossaryTerm[] = [
     fullName: "Nominee Director",
     zh: "名义董事",
     category: "legal-entity",
+    level: "advanced",
     jurisdiction: ["Global", "BVI", "Cayman"],
     definition:
       "由公司服务商指派、名义上担任董事、实际按委托人指示行事的董事，须遵守当地关于名义董事登记与披露的法定要求。",
@@ -119,6 +125,7 @@ export const LEGAL_ENTITY_TERMS: GlossaryTerm[] = [
     fullName: "Registered Office",
     zh: "注册办事处",
     category: "legal-entity",
+    level: "core",
     jurisdiction: ["Cayman", "BVI", "Hong Kong", "Global"],
     definition:
       "法律要求公司在其注册地维持的官方地址，用于接收政府与法律文书送达、存放法定登记册。离岸公司通常由注册代理提供注册办事处服务。",
@@ -137,6 +144,7 @@ export const LEGAL_ENTITY_TERMS: GlossaryTerm[] = [
     fullName: "Registered Agent",
     zh: "注册代理",
     category: "legal-entity",
+    level: "core",
     jurisdiction: ["Cayman", "BVI"],
     definition:
       "在离岸辖区持牌、为本地注册公司提供注册办事处、法定登记册保管与政府申报服务的中介机构。开曼豁免公司与 BVI 公司必须持续委任注册代理。",
@@ -155,6 +163,7 @@ export const LEGAL_ENTITY_TERMS: GlossaryTerm[] = [
     fullName: "Corporate Services Provider",
     zh: "公司服务提供商",
     category: "legal-entity",
+    level: "core",
     jurisdiction: ["Hong Kong", "Cayman", "BVI", "Global"],
     definition:
       "为基金及基金实体提供公司秘书、董事委派、注册代理对接、法定登记册维护、董事会支持等行政服务的机构，常同时承担 AML 合规的客户尽调职责。",
@@ -174,6 +183,7 @@ export const LEGAL_ENTITY_TERMS: GlossaryTerm[] = [
     fullName: "Certificate of Good Standing",
     zh: "良好存续证明",
     category: "legal-entity",
+    level: "core",
     jurisdiction: ["Cayman", "BVI", "Hong Kong", "Global"],
     definition:
       "由公司注册处出具的证明文件，确认公司依法设立、已缴清规费且处于正常存续状态，通常注明公司名称、编号、设立日期与出具时间。",
@@ -193,6 +203,7 @@ export const LEGAL_ENTITY_TERMS: GlossaryTerm[] = [
     fullName: "Register of Members",
     zh: "成员名册（法定登记册）",
     category: "legal-entity",
+    level: "core",
     jurisdiction: ["Cayman", "BVI", "Hong Kong", "Global"],
     definition:
       "公司依法须在注册办事处或指定地点维护的股东/成员登记册，记载成员名称、持股数量与类别、入股与退股日期等，是股东资格的法定证据。",

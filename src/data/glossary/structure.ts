@@ -11,6 +11,7 @@ export const FUND_STRUCTURE_TERMS: GlossaryTerm[] = [
     fullName: "Segregated Portfolio Company",
     zh: "独立投资组合公司",
     category: "fund-structure",
+    level: "core",
     jurisdiction: ["Cayman"],
     definition:
       "开曼《公司法》下的特殊公司形态：公司在同一法人主体内下设一个或多个「独立投资组合」（Segregated Portfolio，SP），各组合的资产与负债在法律上相互隔离，可以各自发行股份、各自核算，但公司整体仍为一家法人。",
@@ -33,6 +34,7 @@ export const FUND_STRUCTURE_TERMS: GlossaryTerm[] = [
     fullName: "Segregated Portfolio",
     zh: "独立投资组合",
     category: "fund-structure",
+    level: "advanced",
     jurisdiction: ["Cayman"],
     definition:
       "SPC 内部的一个资产与负债单元，通常对应一只子基金或一类投资策略。组合资产只能用于清偿该组合自身的负债，原则上不受其他组合债权人追索。",
@@ -52,6 +54,7 @@ export const FUND_STRUCTURE_TERMS: GlossaryTerm[] = [
     fullName: "Umbrella Fund",
     zh: "伞形基金",
     category: "fund-structure",
+    level: "core",
     jurisdiction: ["Cayman", "BVI", "Luxembourg"],
     definition:
       "在同一法律载体下设立多个子基金/组合的基金架构，子基金可各有不同投资策略、费率与投资者群体，但共用董事会、注册办事处与管理人资源。",
@@ -71,6 +74,7 @@ export const FUND_STRUCTURE_TERMS: GlossaryTerm[] = [
     fullName: "Sub-Fund",
     zh: "子基金",
     category: "fund-structure",
+    level: "core",
     jurisdiction: ["Cayman", "BVI", "Singapore"],
     definition:
       "伞形基金下独立运作的投资单元，各自设有投资目标、费用安排、估值与申赎条款，并由同一法人载体或同一信托统一管理。",
@@ -89,6 +93,7 @@ export const FUND_STRUCTURE_TERMS: GlossaryTerm[] = [
     fullName: "Exempted Limited Partnership",
     zh: "豁免有限合伙",
     category: "fund-structure",
+    level: "advanced",
     jurisdiction: ["Cayman"],
     definition:
       "开曼《豁免有限合伙法》下的有限合伙载体，须有一名开曼持牌普通合伙人（GP），GP 承担无限责任、LP 以认缴出资为限承担责任，且无需在开曼进行经济实质申报（其活动本身性质除外）。",
@@ -108,6 +113,7 @@ export const FUND_STRUCTURE_TERMS: GlossaryTerm[] = [
     fullName: "BVI Limited Partnership",
     zh: "BVI 有限合伙",
     category: "fund-structure",
+    level: "advanced",
     jurisdiction: ["BVI"],
     definition:
       "依英属维尔京群岛《有限合伙法》设立的有限合伙载体，由 GP 负责管理与对外代表、LP 承担有限责任，采用 BVI 的公司服务与监管框架。",
@@ -126,6 +132,7 @@ export const FUND_STRUCTURE_TERMS: GlossaryTerm[] = [
     fullName: "Limited Partnership",
     zh: "有限合伙",
     category: "fund-structure",
+    level: "core",
     jurisdiction: ["Cayman", "BVI", "Singapore", "UK"],
     definition:
       "由 GP 与 LP 组成的合伙法律载体：GP 执行管理并承担无限责任，LP 出资并承担有限责任且不参与日常经营。基金层面的权利义务以合伙协议（LPA）与有限合伙登记为准。",
@@ -145,6 +152,7 @@ export const FUND_STRUCTURE_TERMS: GlossaryTerm[] = [
     fullName: "General Partner",
     zh: "普通合伙人",
     category: "fund-structure",
+    level: "core",
     jurisdiction: ["Cayman", "BVI", "Global"],
     definition:
       "有限合伙基金中的执行角色：负责基金运营与投资管理、对外代表合伙、承担无限责任，通常由管理人控制的实体担任。与承担有限责任、不参与日常经营的 LP 相对。",
@@ -164,6 +172,7 @@ export const FUND_STRUCTURE_TERMS: GlossaryTerm[] = [
     fullName: "Limited Partner",
     zh: "有限合伙人",
     category: "fund-structure",
+    level: "core",
     jurisdiction: ["Cayman", "BVI", "Global"],
     definition:
       "有限合伙基金的主要出资人：以其承诺出资额为限承担责任，一般不参与日常管理，享有收益分配权与信息权。多数境外私募基金投资人均以 LP 身份入伙。",
@@ -183,6 +192,7 @@ export const FUND_STRUCTURE_TERMS: GlossaryTerm[] = [
     fullName: "Master Fund",
     zh: "主基金（投资层）",
     category: "fund-structure",
+    level: "core",
     jurisdiction: ["Cayman", "BVI", "Global"],
     definition:
       "Master-Feeder 结构中的上层投资主体：各 Feeder 基金把募集资金投入 Master，由 Master 统一进行投资，从而让不同辖区/税务身份的投资人共享同一投资组合。",
@@ -202,6 +212,7 @@ export const FUND_STRUCTURE_TERMS: GlossaryTerm[] = [
     fullName: "Feeder Fund",
     zh: "联接基金（募集层）",
     category: "fund-structure",
+    level: "core",
     jurisdiction: ["Cayman", "BVI", "Global"],
     definition:
       "Master-Feeder 结构中的募集主体：面向特定辖区或特定投资人（如美国税务敏感投资人）募集资金，再以 LP/股东身份投资 Master Fund。投资人 KYC 与名册通常登记于 Feeder 层。",
@@ -221,6 +232,7 @@ export const FUND_STRUCTURE_TERMS: GlossaryTerm[] = [
     fullName: "Special Purpose Vehicle",
     zh: "特殊目的载体",
     category: "fund-structure",
+    level: "core",
     jurisdiction: ["Global"],
     definition:
       "为特定目的（持有某项资产、隔离风险、便利共同投资或融资）设立的法律实体。基金结构中的 SPV 常由基金全资持有，用于持有项目公司股权或承接特定交易。",
@@ -240,6 +252,7 @@ export const FUND_STRUCTURE_TERMS: GlossaryTerm[] = [
     fullName: "Co-Investment",
     zh: "共同投资",
     category: "fund-structure",
+    level: "advanced",
     jurisdiction: ["Global"],
     definition:
       "投资人与基金（或其他投资人）就同一标的按约定比例共同出资的安排，通常通过 SPV 或平行载体实施，附带独立的认购文件与费用条款。",
@@ -258,6 +271,7 @@ export const FUND_STRUCTURE_TERMS: GlossaryTerm[] = [
     fullName: "Separately Managed Account",
     zh: "单独管理账户",
     category: "fund-structure",
+    level: "advanced",
     jurisdiction: ["Global"],
     definition:
       "投资人在管理人处开立并由管理人按其指令（或约定策略）管理的独立账户，资产归投资人所有，不与其他投资人共池，通常以投资管理协议而非基金文件约束。",
@@ -276,6 +290,7 @@ export const FUND_STRUCTURE_TERMS: GlossaryTerm[] = [
     fullName: "Discretionary Managed Account",
     zh: "全权委托管理账户",
     category: "fund-structure",
+    level: "expert",
     jurisdiction: ["Global"],
     definition:
       "投资人全权委托管理人以自身名义作出投资决策的账户安排：管理人享有投资裁量权，但账户资产的最终权益人与风险承担者仍为投资人本人。",
@@ -296,6 +311,7 @@ export const FUND_STRUCTURE_TERMS: GlossaryTerm[] = [
     fullName: "Closed-Ended Fund",
     zh: "封闭式基金",
     category: "fund-structure",
+    level: "core",
     jurisdiction: ["Cayman", "BVI", "Global"],
     definition:
       "份额总量在募集期结束后基本封闭、投资人不得按需赎回的基金，通常以资本催缴（Capital Call）与到期/退出分配实现资金循环，常见于私募股权、创投、地产与基础设施基金。",
@@ -314,6 +330,7 @@ export const FUND_STRUCTURE_TERMS: GlossaryTerm[] = [
     fullName: "Open-Ended Fund",
     zh: "开放式基金",
     category: "fund-structure",
+    level: "core",
     jurisdiction: ["Cayman", "BVI", "Hong Kong", "Singapore"],
     definition:
       "按约定周期持续接受认购并允许投资人赎回的基金，通常设固定认购/赎回日与估值日，以每单位 NAV 计价，常见于对冲基金与流动性策略产品。",
@@ -332,6 +349,7 @@ export const FUND_STRUCTURE_TERMS: GlossaryTerm[] = [
     fullName: "Hedge Fund",
     zh: "对冲基金",
     category: "fund-structure",
+    level: "core",
     jurisdiction: ["Cayman", "BVI", "Global"],
     definition:
       "面向专业/合格投资人、采用多空、杠杆、衍生品等策略追求绝对收益的基金，通常为开放式、设锁定期与赎回限制，并以业绩报酬（Performance Fee）激励管理人。",
@@ -350,6 +368,7 @@ export const FUND_STRUCTURE_TERMS: GlossaryTerm[] = [
     fullName: "Private Equity Fund",
     zh: "私募股权基金",
     category: "fund-structure",
+    level: "core",
     jurisdiction: ["Cayman", "BVI", "Luxembourg", "Global"],
     definition:
       "以非公开方式募集、投资于未上市企业股权并通过管理提升与退出获利的封闭式基金，多采用有限合伙形式，设承诺出资、资本催缴、收益分配瀑布与业绩报酬。",
@@ -368,6 +387,7 @@ export const FUND_STRUCTURE_TERMS: GlossaryTerm[] = [
     fullName: "Fund of Funds",
     zh: "母基金（基金中的基金）",
     category: "fund-structure",
+    level: "expert",
     jurisdiction: ["Global"],
     definition:
       "以其他基金为投资标的的基金：向投资人募集后分散投资于多只底层基金，由母基金层面统一进行资产配置、尽调与监控。",
@@ -386,6 +406,7 @@ export const FUND_STRUCTURE_TERMS: GlossaryTerm[] = [
     fullName: "Unit Trust",
     zh: "单位信托",
     category: "fund-structure",
+    level: "advanced",
     jurisdiction: ["Hong Kong", "BVI", "Singapore", "Global"],
     definition:
       "由受托人（Trustee）以信托方式持有基金资产、投资人通过持有「单位」（Unit）享有受益权的基金载体；管理人负责投资运作，受托人负责资产保管与监督。",
@@ -405,6 +426,7 @@ export const FUND_STRUCTURE_TERMS: GlossaryTerm[] = [
     fullName: "Trust",
     zh: "信托",
     category: "fund-structure",
+    level: "core",
     jurisdiction: ["BVI", "Cayman", "Global"],
     definition:
       "由委托人（Settlor）将财产转移给受托人（Trustee），由受托人为受益人（Beneficiary）利益持有与管理财产的法律安排。信托本身不是法人，但可作为基金载体或投资人持股/传承工具。",
@@ -424,6 +446,7 @@ export const FUND_STRUCTURE_TERMS: GlossaryTerm[] = [
     fullName: "Private Trust Company",
     zh: "私人信托公司",
     category: "fund-structure",
+    level: "advanced",
     jurisdiction: ["BVI", "Cayman", "Other"],
     definition:
       "专为单一家族或特定信托群组设立、担任相关信托受托人的公司。PTC 通常依当地法规取得受限信托牌照或豁免，不向公众提供信托服务，由家族成员或其委任董事管理。",
@@ -443,6 +466,7 @@ export const FUND_STRUCTURE_TERMS: GlossaryTerm[] = [
     fullName: "Foundation",
     zh: "私人基金会",
     category: "fund-structure",
+    level: "advanced",
     jurisdiction: ["Other", "Global"],
     definition:
       "在大陆法系或特定离岸辖区（如列支敦士登、巴拿马、泽西）设立、具有独立法人资格且无股东的财富持有与传承载体，由理事会（Council）管理、以基金会章程与附则规范受益人安排。",
@@ -461,6 +485,7 @@ export const FUND_STRUCTURE_TERMS: GlossaryTerm[] = [
     fullName: "Variable Capital Company",
     zh: "可变资本公司",
     category: "fund-structure",
+    level: "advanced",
     jurisdiction: ["Singapore"],
     definition:
       "新加坡《可变资本公司法》下专为投资基金设计的公司型载体：可按需增减股本、以资本支付分配，并可在同一 VCC 下设多个子基金（Sub-Fund），各子基金资产与负债彼此隔离。",

@@ -10,6 +10,7 @@ export const AEOI_TERMS: GlossaryTerm[] = [
     fullName: "Automatic Exchange of Information",
     zh: "税务信息自动交换",
     category: "aeoi",
+    level: "core",
     jurisdiction: ["Global"],
     definition:
       "各税务管辖区按统一标准定期自动交换金融账户涉税信息的国际机制，包含美国主导的 FATCA 体系与 OECD 主导的 CRS 体系两条主线。",
@@ -28,6 +29,7 @@ export const AEOI_TERMS: GlossaryTerm[] = [
     fullName: "Foreign Account Tax Compliance Act",
     zh: "美国海外账户税收合规法案",
     category: "aeoi",
+    level: "core",
     jurisdiction: ["USA", "Global"],
     definition:
       "美国 2010 年立法，要求境外金融机构识别美国纳税人（US Person）持有的账户并向美国 IRS 申报，未合规者其来源于美国的款项可能面临 30% 预扣税。",
@@ -51,6 +53,7 @@ export const AEOI_TERMS: GlossaryTerm[] = [
     fullName: "Common Reporting Standard",
     zh: "共同申报准则",
     category: "aeoi",
+    level: "core",
     jurisdiction: ["Global"],
     definition:
       "OECD 制定的金融账户涉税信息自动交换标准，要求参与辖区的金融机构识别账户持有人的税务居民身份、识别控权人，并向本地主管机关申报、由其与对方辖区交换。",
@@ -74,6 +77,7 @@ export const AEOI_TERMS: GlossaryTerm[] = [
     fullName: "Global Intermediary Identification Number",
     zh: "全球中介机构识别号",
     category: "aeoi",
+    level: "advanced",
     jurisdiction: ["USA", "Global"],
     definition:
       "注册于 IRS FATCA 注册门户的金融机构取得的 19 位唯一识别号，用于在 W-8BEN-E、FFI 协议列表与申报文件中标识该机构身份。",
@@ -92,6 +96,7 @@ export const AEOI_TERMS: GlossaryTerm[] = [
     fullName: "Foreign Financial Institution",
     zh: "外国金融机构",
     category: "aeoi",
+    level: "advanced",
     jurisdiction: ["USA", "Global"],
     definition:
       "FATCA 语境下非美国金融机构的统称，涵盖银行、托管机构、投资实体与特定保险机构。基金及其管理人常被认定为「投资实体」从而构成 FFI。",
@@ -110,6 +115,7 @@ export const AEOI_TERMS: GlossaryTerm[] = [
     fullName: "Non-Financial Foreign Entity",
     zh: "非金融外国实体",
     category: "aeoi",
+    level: "advanced",
     jurisdiction: ["USA", "Global"],
     definition:
       "FATCA 语境下不属于 FFI 的外国实体，须依其性质区分为主动型（Active）或被动型（Passive）：被动型 NFFE 须申报其美国控权人或证明无美国控权人。",
@@ -128,6 +134,7 @@ export const AEOI_TERMS: GlossaryTerm[] = [
     fullName: "Active Non-Financial Entity",
     zh: "主动型非金融外国实体",
     category: "aeoi",
+    level: "expert",
     jurisdiction: ["USA", "Global"],
     definition:
       "以主动经营业务为主（如贸易、制造、服务）或属上市/政府/非营利等特定类别的 NFFE，其被动收入与资产占比低于法定门槛（通常被动收入 < 50%）。",
@@ -146,6 +153,7 @@ export const AEOI_TERMS: GlossaryTerm[] = [
     fullName: "Passive Non-Financial Entity",
     zh: "被动型非金融外国实体",
     category: "aeoi",
+    level: "expert",
     jurisdiction: ["USA", "Global"],
     definition:
       "不符合主动型标准、以持有投资/被动收入为主的 NFFE（或本身为另一 FFI/NFFE 的投资实体），须申报其控权人（Controlling Persons）信息，或在无美国控权人时作出声明。",
@@ -164,6 +172,7 @@ export const AEOI_TERMS: GlossaryTerm[] = [
     fullName: "Controlling Person",
     zh: "控权人",
     category: "aeoi",
+    level: "advanced",
     jurisdiction: ["Global"],
     definition:
       "CRS 与 FATCA 语境下对某一实体行使控制权的自然人，包括股权控制（通常 > 25%）、表决权控制、其他控制方式，以及信托的委托人、受托人、保护人与受益人等角色。",
@@ -183,6 +192,7 @@ export const AEOI_TERMS: GlossaryTerm[] = [
     fullName: "Self-Certification",
     zh: "自我证明",
     category: "aeoi",
+    level: "core",
     jurisdiction: ["Global"],
     definition:
       "账户持有人就其税务居民身份、实体类型（FFI/NFFE、主动/被动）与控制人情况向金融机构作出的书面声明，通常以固定格式表格随认购文件一并提交，并由机构核验其合理性。",
@@ -203,6 +213,7 @@ export const AEOI_TERMS: GlossaryTerm[] = [
     fullName: "Reportable Account",
     zh: "需申报账户",
     category: "aeoi",
+    level: "advanced",
     jurisdiction: ["Global"],
     definition:
       "经尽职调查程序识别为属于需申报辖区税务居民的账户（CRS），或由美国人士持有/控制的账户（FATCA），须在规定期限内向主管机关申报账户与持有人信息。",
@@ -220,6 +231,7 @@ export const AEOI_TERMS: GlossaryTerm[] = [
     fullName: "Reportable Jurisdiction",
     zh: "需申报税务管辖区",
     category: "aeoi",
+    level: "advanced",
     jurisdiction: ["Global"],
     definition:
       "与本地辖区已建立 CRS 信息交换关系、且已立法生效的对方辖区。只有账户持有人属需申报辖区税务居民时，该账户才构成 CRS 下的需申报账户。",
@@ -238,6 +250,7 @@ export const AEOI_TERMS: GlossaryTerm[] = [
     fullName: "Participating Jurisdiction",
     zh: "参与税务管辖区",
     category: "aeoi",
+    level: "advanced",
     jurisdiction: ["Global"],
     definition:
       "已签署 CRS 多边主管当局协议（MCAA）或已启动信息交换的辖区。判断某机构是否为「参与辖区的金融机构」（进而作为 FFI 处理）时以此名单为依据。",
@@ -256,6 +269,7 @@ export const AEOI_TERMS: GlossaryTerm[] = [
     fullName: "FATCA Reporting",
     zh: "FATCA 申报",
     category: "aeoi",
+    level: "advanced",
     jurisdiction: ["USA", "Global"],
     definition:
       "FFI 与申报 Model 1 辖区的金融机构按年向本地主管机关提交美国账户信息（由本地机关转交 IRS）或依 Model 2 直接向 IRS 提交（Form 8966 等）的申报动作。",
@@ -273,6 +287,7 @@ export const AEOI_TERMS: GlossaryTerm[] = [
     fullName: "CRS Reporting",
     zh: "CRS 申报",
     category: "aeoi",
+    level: "advanced",
     jurisdiction: ["Global"],
     definition:
       "金融机构按年向本地主管税务机关提交需申报账户信息（账户持有人身份、TIN、账户余额/价值、所得金额等），由本地机关与对方辖区交换的申报动作。",
@@ -291,6 +306,7 @@ export const AEOI_TERMS: GlossaryTerm[] = [
     fullName: "Form W-8BEN",
     zh: "美国预扣税声明表（个人）",
     category: "aeoi",
+    level: "core",
     jurisdiction: ["USA"],
     definition:
       "由非美国个人受益所有人填写、用于证明其非美国纳税人身份并主张税收协定待遇与预扣税率的表格，有效期至次年年底或信息变更时终止。",
@@ -310,6 +326,7 @@ export const AEOI_TERMS: GlossaryTerm[] = [
     fullName: "Form W-8BEN-E",
     zh: "美国预扣税声明表（实体）",
     category: "aeoi",
+    level: "core",
     jurisdiction: ["USA"],
     definition:
       "由非美国实体（含 FFI 与 NFFE）填写、声明其 FATCA 身份分类与协定待遇的表格，需填写 GIIN、实体类型（主动/被动 NFFE 等）及控权人信息。",
@@ -328,6 +345,7 @@ export const AEOI_TERMS: GlossaryTerm[] = [
     fullName: "Form W-9",
     zh: "美国纳税人身份声明表",
     category: "aeoi",
+    level: "core",
     jurisdiction: ["USA"],
     definition:
       "由美国人士（US Person）向付款方提供的表格，载明其 TIN、实体类型与免预扣依据，用于替代 W-8 系列表格申报其美国纳税人身份。",
@@ -346,6 +364,7 @@ export const AEOI_TERMS: GlossaryTerm[] = [
     fullName: "Taxpayer Identification Number",
     zh: "纳税人识别号",
     category: "aeoi",
+    level: "core",
     jurisdiction: ["Global"],
     definition:
       "各税务管辖区为主张税务居民身份的自然人或实体分配的识别号（如美国 SSN/EIN、中国纳税人识别号），用于 CRS/FATCA 申报中的身份匹配与交换。",
@@ -364,6 +383,7 @@ export const AEOI_TERMS: GlossaryTerm[] = [
     fullName: "Model 1 Intergovernmental Agreement",
     zh: "模式一政府间协议",
     category: "aeoi",
+    level: "advanced",
     jurisdiction: ["USA", "Global"],
     definition:
       "美国与他辖区签署的 FATCA 合作模式：该辖区金融机构向本地主管机关报告美国账户信息，再由本地机关转交 IRS；与之相对 Model 2 则由机构直接向 IRS 申报。",

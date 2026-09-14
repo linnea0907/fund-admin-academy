@@ -5,7 +5,7 @@ import {
   glossaryJurisdictions,
   glossarySources,
 } from "@/lib/glossary";
-import { buildGlossaryUsage } from "@/lib/glossary-usage";
+import { buildTermRelations } from "@/lib/glossary-usage";
 import GlossaryExplorer, { type TermUsageCounts } from "@/components/glossary/GlossaryExplorer";
 
 export const metadata: Metadata = {
@@ -16,15 +16,16 @@ export const metadata: Metadata = {
 
 /** Fund Admin Wiki · Terms（术语列表；V1.12.2 起并入「知识检索」体系） */
 export default function GlossaryPage() {
-  // 使用索引：列表与详情页在构建期静态烘焙（新内容 build 后自动刷新）
-  const usage = buildGlossaryUsage();
+  // 关联关系（自动扫描 ∪ 人工指定）：与术语详情页 / 健康度 Dashboard 同源，
+  // 保证「孤立」判定在列表、详情、Dashboard 三处一致。
+  const relations = buildTermRelations();
 
   const usageCounts: Record<string, TermUsageCounts> = {};
   for (const t of GLOSSARY_TERMS) {
-    const u = usage[t.id];
+    const r = relations[t.id];
     usageCounts[t.id] = {
-      lessons: u?.lessons.length ?? 0,
-      cases: u?.cases.length ?? 0,
+      lessons: r?.lessons.length ?? 0,
+      cases: r?.cases.length ?? 0,
     };
   }
 

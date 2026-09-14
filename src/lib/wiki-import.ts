@@ -13,11 +13,13 @@
 import {
   GLOSSARY_CATEGORIES,
   TERM_JURISDICTIONS,
+  TERM_LEVELS,
   TERM_SCENARIOS,
   TERM_SOURCES,
   type GlossaryCategory,
   type GlossaryTerm,
   type TermJurisdiction,
+  type TermLevel,
   type TermScenario,
   type TermSourceId,
 } from "@/types/glossary";
@@ -31,6 +33,7 @@ export type DraftFieldKey =
   | "fullName"
   | "zh"
   | "category"
+  | "level"
   | "jurisdiction"
   | "definition"
   | "whyImportant"
@@ -65,6 +68,13 @@ export const DRAFT_FIELDS: DraftFieldDef[] = [
     label: "分类",
     required: true,
     hint: GLOSSARY_CATEGORIES.map((c) => c.label).join(" / "),
+  },
+  {
+    key: "level",
+    header: "Level",
+    label: "等级",
+    required: false,
+    hint: `成熟度等级：${TERM_LEVELS.map((l) => `${l.label}(${l.zh})`).join(" / ")}；留空默认 Core`,
   },
   {
     key: "jurisdiction",
@@ -179,6 +189,7 @@ export interface TermDraft {
   fullName: string;
   zh: string;
   category: string;
+  level: string;
   jurisdiction: string;
   definition: string;
   whyImportant: string;
@@ -200,6 +211,7 @@ export function emptyDraft(): TermDraft {
     fullName: "",
     zh: "",
     category: "",
+    level: "",
     jurisdiction: "",
     definition: "",
     whyImportant: "",
@@ -266,6 +278,18 @@ export function asScenarioValue(v: string): TermScenario | null {
   for (const s of TERM_SCENARIOS) {
     if (k === normKey(s)) return s;
   }
+  return null;
+}
+
+/** Level：Core / Advanced / Expert（容忍中文「基础/进阶/专精」与简写） */
+export function asLevel(v: string): TermLevel | null {
+  const k = normKey(v);
+  for (const l of TERM_LEVELS) {
+    if (k === normKey(l.id) || k === normKey(l.label) || k === normKey(l.zh)) return l.id;
+  }
+  if (k === "c" || k === "初级" || k === "入门") return "core";
+  if (k === "a" || k === "中级") return "advanced";
+  if (k === "e" || k === "高级") return "expert";
   return null;
 }
 
@@ -413,6 +437,17 @@ export function draftToTerm(
     );
   }
 
+  // Level：留空默认 Core（导入预览会提示，便于事后校正）
+  let level: TermLevel = "core";
+  const levelRaw = (draft.level ?? "").trim();
+  if (levelRaw) {
+    const v = asLevel(levelRaw);
+    if (v) level = v;
+    else warnings.push(`等级「${levelRaw}」不在受控清单内，已按 Core 处理`);
+  } else {
+    warnings.push("未指定 Level，已按 Core 处理");
+  }
+
   const jurisdictionRaw = splitMulti(draft.jurisdiction);
   const jurisdiction: TermJurisdiction[] = [];
   for (const j of jurisdictionRaw) {
@@ -451,6 +486,7 @@ export function draftToTerm(
     fullName,
     zh,
     category,
+    level,
     jurisdiction: jurisdiction.length > 0 ? jurisdiction : ["Global"],
     definition,
     whyImportant: draft.whyImportant.trim(),
@@ -489,6 +525,7 @@ export function buildCsvTemplate(): string {
     "Full Name": "Variable Capital Company",
     "Chinese Name": "可变资本公司",
     Category: "Fund Structure",
+    Level: "Advanced",
     Jurisdiction: "Singapore",
     Definition: "新加坡推出的公司型基金架构，可按需增减股本并下设资产隔离的子基金。",
     "Why Important": "当前新加坡基金最主流架构之一。",

@@ -5,11 +5,13 @@ import {
   GLOSSARY_TERMS,
   getGlossaryCategory,
   getTerm,
+  getTermLevel,
   getTermSource,
   termBrief,
 } from "@/lib/glossary";
 import { getTermRelations } from "@/lib/glossary-usage";
 import TermFavoriteButton from "@/components/favorites/TermFavoriteButton";
+import TermViewTracker from "@/components/wiki/TermViewTracker";
 
 type Params = Promise<{ id: string }>;
 
@@ -47,7 +49,9 @@ export default async function GlossaryTermPage({ params }: { params: Params }) {
   if (!term) notFound();
 
   const category = getGlossaryCategory(term.category);
+  const level = getTermLevel(term.level);
   const relations = getTermRelations(id);
+  const isIsolated = relations.lessons.length === 0 && relations.cases.length === 0;
   const idx = GLOSSARY_TERMS.findIndex((t) => t.id === id);
   const prevT = idx > 0 ? GLOSSARY_TERMS[idx - 1] : null;
   const nextT = idx >= 0 && idx < GLOSSARY_TERMS.length - 1 ? GLOSSARY_TERMS[idx + 1] : null;
@@ -55,6 +59,7 @@ export default async function GlossaryTermPage({ params }: { params: Params }) {
 
   return (
     <div className="space-y-5">
+      <TermViewTracker termId={term.id} />
       {/* 面包屑 */}
       <nav aria-label="面包屑" className="flex flex-wrap items-center gap-1.5 text-xs text-slate-400">
         <Link href="/search" className="font-medium text-slate-500 transition hover:text-[#0e2a5e]">
@@ -79,6 +84,13 @@ export default async function GlossaryTermPage({ params }: { params: Params }) {
             {category.label}
           </span>
           <span className="text-xs text-slate-400">{category.zh}</span>
+          <span
+            title={`术语成熟度：${level.label} · ${level.zh}`}
+            className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-[11px] font-bold tracking-wide ring-1 ${level.tint}`}
+          >
+            {level.label}
+            <span className="ml-1 font-normal opacity-70">{level.zh}</span>
+          </span>
           {term.jurisdiction.map((j) => (
             <Link
               key={j}
@@ -89,8 +101,14 @@ export default async function GlossaryTermPage({ params }: { params: Params }) {
             </Link>
           ))}
           <span className="ml-auto flex items-center gap-2">
-            <span className="rounded-full bg-slate-100 px-2.5 py-1 text-[11px] font-medium text-slate-500">
-              出现于 {relations.lessons.length} 讲课程 · {relations.cases.length} 个案例
+            <span
+              className={`rounded-full px-2.5 py-1 text-[11px] font-medium ${
+                isIsolated ? "bg-amber-50 text-amber-700 ring-1 ring-amber-200" : "bg-slate-100 text-slate-500"
+              }`}
+            >
+              {isIsolated
+                ? "孤立术语 · 暂无课程 / 案例关联"
+                : `出现于 ${relations.lessons.length} 讲课程 · ${relations.cases.length} 个案例`}
             </span>
             <TermFavoriteButton termId={term.id} />
           </span>
@@ -132,6 +150,13 @@ export default async function GlossaryTermPage({ params }: { params: Params }) {
           )}
         </div>
       </header>
+
+      {isIsolated && (
+        <p className="rounded-xl border border-amber-200 bg-amber-50/70 px-4 py-3 text-xs leading-relaxed text-amber-800">
+          <b>该术语尚未进入知识网络</b>：课程正文与案例正文都没有引用它，因此没有关联课程 / 关联案例。
+          可在「知识工坊 → 健康度」查看全部孤立术语，优先在课程或案例中引入这些概念。
+        </p>
+      )}
 
       <div className="grid grid-cols-1 gap-5 lg:grid-cols-[minmax(0,1fr)_340px]">
         {/* 左列 */}
@@ -313,6 +338,12 @@ export default async function GlossaryTermPage({ params }: { params: Params }) {
               <div className="flex justify-between gap-3">
                 <dt className="text-slate-400">分类</dt>
                 <dd className="text-slate-600">{category.label}</dd>
+              </div>
+              <div className="flex justify-between gap-3">
+                <dt className="text-slate-400">等级</dt>
+                <dd className="text-slate-600">
+                  {level.label} · {level.zh}
+                </dd>
               </div>
               <div className="flex justify-between gap-3">
                 <dt className="text-slate-400">属地</dt>

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { GLOSSARY_BUILTIN_COUNT, GLOSSARY_TERMS } from "@/lib/glossary";
+import { wikiHealthSummary } from "@/lib/glossary-usage";
 import { IMPORTED_TERMS } from "@/data/glossary";
 import { scanMissingTerms } from "@/lib/missing-terms";
 import WikiLoader from "@/components/wiki/WikiLoader";
@@ -8,12 +9,13 @@ import WikiLoader from "@/components/wiki/WikiLoader";
 export const metadata: Metadata = {
   title: "知识工坊",
   description:
-    "Fund Admin Wiki 术语建设后台：CSV / Excel / JSON 批量导入、待补充术语池（Missing Terms）与导出落盘，支撑术语库扩展至 500~1000 条。",
+    "Fund Admin Wiki 术语建设后台：Wiki 健康度 Dashboard（覆盖率 / 孤立术语 / 热门术语）、CSV / Excel / JSON 批量导入、待补充术语池（Missing Terms）与导出落盘。",
 };
 
-/** 知识工坊（术语建设后台；服务端完成语料扫描，客户端负责暂存与导出） */
+/** 知识工坊（术语建设后台；服务端完成健康度统计与语料扫描，客户端负责暂存与导出） */
 export default function WikiPage() {
   const missing = scanMissingTerms(150);
+  const health = wikiHealthSummary();
   const existingLabels = GLOSSARY_TERMS.map((t) => ({ id: t.id, term: t.term, zh: t.zh }));
 
   return (
@@ -29,6 +31,7 @@ export default function WikiPage() {
       </nav>
       <WikiLoader
         missing={missing}
+        health={health}
         existingIds={GLOSSARY_TERMS.map((t) => t.id)}
         existingLabels={existingLabels}
         builtinCount={GLOSSARY_BUILTIN_COUNT}

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   getGlossaryCategory,
   getTermSource,
@@ -9,6 +9,7 @@ import {
   termBrief,
   type GlossaryTerm,
 } from "@/lib/glossary";
+import { recordTermEvents } from "@/lib/wiki-metrics";
 
 function escapeRegExp(s: string): string {
   return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -271,6 +272,26 @@ export default function SearchClient({ data }: { data: SearchData }) {
       total,
     };
   }, [kw, data]);
+
+  /** 检索命中的术语写入本机热度统计（防抖 700ms，供「热门术语 Top」） */
+  const topHitKey = useMemo(
+    () =>
+      (hits?.termHits ?? [])
+        .filter((h) => h.score >= DERIVE_MIN_SCORE)
+        .slice(0, 5)
+        .map((h) => h.term.id)
+        .join(","),
+    [hits]
+  );
+  const lastRecordedRef = useRef("");
+  useEffect(() => {
+    if (kw.length < 2 || !topHitKey || lastRecordedRef.current === topHitKey) return;
+    const timer = window.setTimeout(() => {
+      lastRecordedRef.current = topHitKey;
+      recordTermEvents(topHitKey.split(","), "search");
+    }, 700);
+    return () => window.clearTimeout(timer);
+  }, [kw, topHitKey]);
 
   /** 当前范围是否展示某结果组 */
   const show = (g: Exclude<Scope, "all">) => scope === "all" || scope === g;

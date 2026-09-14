@@ -10,6 +10,7 @@ export const TAX_TERMS: GlossaryTerm[] = [
     fullName: "Tax Residency",
     zh: "税务居民身份",
     category: "tax",
+    level: "core",
     jurisdiction: ["Global"],
     definition:
       "依各辖区国内法（居住天数、永久性住所、重要利益中心、注册地或实际管理机构等）判定的居民身份，与国籍、护照签发地并不等同。",
@@ -30,6 +31,7 @@ export const TAX_TERMS: GlossaryTerm[] = [
     fullName: "Withholding Tax",
     zh: "预扣税",
     category: "tax",
+    level: "core",
     jurisdiction: ["Global", "USA"],
     definition:
       "付款方在支付利息、股息、租金或服务费等款项时代扣代缴的税款。跨境支付中税率取决于收款方身份、协定待遇与是否完成 W-8/W-9 表格及申报合规。",
@@ -47,6 +49,7 @@ export const TAX_TERMS: GlossaryTerm[] = [
     fullName: "US Person",
     zh: "美国人士",
     category: "tax",
+    level: "core",
     jurisdiction: ["USA"],
     definition:
       "FATCA 语境下包括美国公民、绿卡持有人、满足实质居留测试的居民、美国境内设立或组织的实体及美国遗产/信托等，适用范围比「美国税务居民」更广。",
@@ -64,6 +67,7 @@ export const TAX_TERMS: GlossaryTerm[] = [
     fullName: "Effectively Connected Income",
     zh: "有效关联所得",
     category: "tax",
+    level: "expert",
     jurisdiction: ["USA"],
     definition:
       "非美国人在美国境内从事贸易或经营（USTB）而取得的、与该项经营活动有效关联的所得，通常按累进税率并在申报后征税，而非适用固定预扣税率。",
@@ -82,6 +86,7 @@ export const TAX_TERMS: GlossaryTerm[] = [
     fullName: "Unrelated Business Taxable Income",
     zh: "非相关营业应税所得",
     category: "tax",
+    level: "expert",
     jurisdiction: ["USA"],
     definition:
       "免税机构（如养老金、慈善基金、信托）通过杠杆或经常性经营活动取得的、与其免税目的无关的应税所得，须由该免税实体申报纳税。",
@@ -100,6 +105,7 @@ export const TAX_TERMS: GlossaryTerm[] = [
     fullName: "Controlled Foreign Corporation",
     zh: "受控外国公司",
     category: "tax",
+    level: "expert",
     jurisdiction: ["USA", "Global"],
     definition:
       "由本国税务居民（美国：美国股东合计持股超过 50%）控制的外国公司。美国股东须就 CFC 的「Subpart F 所得」或 GILTI 在当期纳税，即便未获分配。",
@@ -118,6 +124,7 @@ export const TAX_TERMS: GlossaryTerm[] = [
     fullName: "Economic Substance Requirements",
     zh: "经济实质要求",
     category: "tax",
+    level: "advanced",
     jurisdiction: ["Cayman", "BVI", "Global"],
     definition:
       "离岸辖区为回应欧盟/BEPS 要求而制定的规则：从事特定「相关活动」（如控股公司业务、基金管理业务、融资租赁、知识产权等）的实体，须在当地具备足够的实质（人员、场所、费用与核心创收活动）。",
@@ -137,6 +144,7 @@ export const TAX_TERMS: GlossaryTerm[] = [
     fullName: "Permanent Establishment",
     zh: "常设机构",
     category: "tax",
+    level: "expert",
     jurisdiction: ["Global"],
     definition:
       "依税收协定判断，非居民企业在他国境内因具有固定营业场所、依赖型代理人或习惯性订立合同等情形而被认定的应税存在，其归属于该常设机构的利润在该国征税。",
@@ -154,6 +162,7 @@ export const TAX_TERMS: GlossaryTerm[] = [
     fullName: "Transfer Pricing",
     zh: "转让定价",
     category: "tax",
+    level: "expert",
     jurisdiction: ["Global"],
     definition:
       "关联企业之间交易（如管理费、服务费、特许权使用费、利息）的定价规则：须按独立交易原则（Arm's Length Principle）确定，并留存同期资料证明定价合理。",
@@ -172,6 +181,7 @@ export const TAX_TERMS: GlossaryTerm[] = [
     fullName: "Stamp Duty",
     zh: "印花税",
     category: "tax",
+    level: "core",
     jurisdiction: ["Hong Kong", "BVI", "Singapore", "Global"],
     definition:
       "对特定法律文书或交易（股份转让、物业买卖、租赁等）按交易金额或固定额征收的税种，通常由文书签署或过户环节触发。",
@@ -190,6 +200,7 @@ export const TAX_TERMS: GlossaryTerm[] = [
     fullName: "Double Taxation Agreement / Treaty",
     zh: "税收协定",
     category: "tax",
+    level: "advanced",
     jurisdiction: ["Global", "Hong Kong", "Singapore"],
     definition:
       "两个税收辖区之间为避免双重征税与防止偷漏税而签订的协定，通常就居民身份判定、常设机构、股息/利息/特许权使用费预扣税率、情报交换等事项作出约定。",

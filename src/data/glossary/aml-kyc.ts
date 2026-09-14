@@ -10,6 +10,7 @@ export const AML_KYC_TERMS: GlossaryTerm[] = [
     fullName: "Anti-Money Laundering",
     zh: "反洗钱",
     category: "aml-kyc",
+    level: "core",
     jurisdiction: ["Global"],
     definition:
       "为防范洗钱、恐怖融资及制裁违规而建立的制度与流程，包括客户尽调、受益所有人识别、PEP/制裁筛查、可疑交易识别与报告、持续监控与员工培训。",
@@ -29,6 +30,7 @@ export const AML_KYC_TERMS: GlossaryTerm[] = [
     fullName: "Anti-Money Laundering / Combating the Financing of Terrorism",
     zh: "反洗钱与反恐怖融资",
     category: "aml-kyc",
+    level: "advanced",
     jurisdiction: ["Global"],
     definition:
       "监管框架中常合并表述的完整合规领域：AML 针对洗钱，CFT（反恐怖融资）针对为恐怖活动提供资金的行为，两者共享客户尽调、筛查与报告机制但风险维度不同。",
@@ -47,6 +49,7 @@ export const AML_KYC_TERMS: GlossaryTerm[] = [
     fullName: "Know Your Customer",
     zh: "了解你的客户",
     category: "aml-kyc",
+    level: "core",
     jurisdiction: ["Global"],
     definition:
       "在接纳投资人前收集并核实其身份、地址、受益所有人等信息，以识别并降低洗钱、制裁与欺诈风险的基础流程，是 CDD 的组成部分。",
@@ -69,6 +72,7 @@ export const AML_KYC_TERMS: GlossaryTerm[] = [
     fullName: "Customer Due Diligence",
     zh: "客户尽职调查",
     category: "aml-kyc",
+    level: "core",
     jurisdiction: ["Global"],
     definition:
       "在建立业务关系前对客户身份、受益所有人及业务背景进行的尽职调查，通常包含身份核验、UBO 穿透、PEP/制裁筛查与风险评级。风险较高或结构复杂的客户需升级为 EDD。",
@@ -89,6 +93,7 @@ export const AML_KYC_TERMS: GlossaryTerm[] = [
     fullName: "Enhanced Due Diligence",
     zh: "强化尽职调查",
     category: "aml-kyc",
+    level: "advanced",
     jurisdiction: ["Global"],
     definition:
       "适用于 PEP、制裁/负面媒体报道相关、复杂所有权结构或大额异常交易等高风险情形的加强核验措施：需额外核实财富与资金来源、取得高级管理层审批，必要时引入 AML Letter 或外部核实。",
@@ -109,6 +114,7 @@ export const AML_KYC_TERMS: GlossaryTerm[] = [
     fullName: "Ultimate Beneficial Owner",
     zh: "实际拥有人 / 受益所有人",
     category: "aml-kyc",
+    level: "core",
     jurisdiction: ["Global"],
     definition:
       "通过持股、表决或其他控制方式最终拥有或控制某法律主体的自然人。穿透规则通常以 25% 持股为常见阈值，需沿公司/合伙/信托链条向上穿透，识别结果纳入 KYC 档案与相关申报。",
@@ -132,6 +138,7 @@ export const AML_KYC_TERMS: GlossaryTerm[] = [
     fullName: "Source of Funds",
     zh: "资金来源",
     category: "aml-kyc",
+    level: "core",
     jurisdiction: ["Global"],
     definition:
       "投资人用于本次认购的资金具体来自何处，例如工资积蓄、出售资产所得、投资收益或借贷等。关注单笔资金从哪个账户、以何种方式、经何种路径到达基金账户。",
@@ -152,6 +159,7 @@ export const AML_KYC_TERMS: GlossaryTerm[] = [
     fullName: "Source of Wealth",
     zh: "财富来源",
     category: "aml-kyc",
+    level: "advanced",
     jurisdiction: ["Global"],
     definition:
       "投资人整体财富如何积累形成，如经营企业、职业收入、继承、投资收益等。SOF 回答「这笔钱从哪来」，SOW 回答「这些钱怎么积累的」。",
@@ -171,6 +179,7 @@ export const AML_KYC_TERMS: GlossaryTerm[] = [
     fullName: "Identity Document",
     zh: "身份证明文件",
     category: "aml-kyc",
+    level: "core",
     jurisdiction: ["Global", "Cayman", "BVI", "Hong Kong", "Singapore"],
     definition:
       "用于核实自然人真实身份的官方证件，常见为护照、政府签发的身份证或居民身份证。不同司法辖区对可接受证件类型与有效期要求不同。",
@@ -194,6 +203,7 @@ export const AML_KYC_TERMS: GlossaryTerm[] = [
     fullName: "Address Proof",
     zh: "地址证明",
     category: "aml-kyc",
+    level: "core",
     jurisdiction: ["Global"],
     definition:
       "核实投资人居住地或注册地址的文件，常见为三个月内的银行对账单、水电费账单、政府信函等。对机构投资人，注册地址通常以注册证书或良好存续证明体现。",
@@ -214,6 +224,7 @@ export const AML_KYC_TERMS: GlossaryTerm[] = [
     fullName: "Certified Copy",
     zh: "经核证副本",
     category: "aml-kyc",
+    level: "core",
     jurisdiction: ["Global"],
     definition:
       "由律师、会计师、公证人或合资格专业人士见证核验、确认与原件一致的证件或文件副本。核证须注明见证人身份/执业资格、日期并签名盖章。",
@@ -237,6 +248,7 @@ export const AML_KYC_TERMS: GlossaryTerm[] = [
     fullName: "AML Letter / AML Confirmation Letter",
     zh: "AML 确认函",
     category: "aml-kyc",
+    level: "core",
     jurisdiction: ["BVI", "Cayman", "Global"],
     definition:
       "由持牌律师、基金行政管理人或合资格机构出具、确认某法律主体及其控制链条不存在 AML 相关不利情形的信函，通常载明已完成的尽调范围与承诺条款。",
@@ -261,6 +273,7 @@ export const AML_KYC_TERMS: GlossaryTerm[] = [
     fullName: "Reliance on Third Party",
     zh: "依赖第三方尽调",
     category: "aml-kyc",
+    level: "advanced",
     jurisdiction: ["Global", "Cayman", "BVI"],
     definition:
       "在符合法定条件的前提下，采纳第三方（如介绍人、持牌机构、集团内合规部门）已完成的客户尽调结果，以替代自身重复收集资料。监管通常要求第三方属受监管主体、资料可即时提供且责任仍由本机构承担。",
@@ -280,6 +293,7 @@ export const AML_KYC_TERMS: GlossaryTerm[] = [
     fullName: "Introducer",
     zh: "介绍人",
     category: "aml-kyc",
+    level: "advanced",
     jurisdiction: ["Global"],
     definition:
       "把投资人引荐给基金或管理人的第三方，可能同时协助收集 KYC 资料。介绍人的角色与法律责任取决于协议安排：是否承担尽调义务、是否收取介绍费均须明确。",
@@ -298,6 +312,7 @@ export const AML_KYC_TERMS: GlossaryTerm[] = [
     fullName: "Politically Exposed Person",
     zh: "政治公众人物",
     category: "aml-kyc",
+    level: "core",
     jurisdiction: ["Global"],
     definition:
       "现任或曾任重要公职的人员及其家庭成员、密切关联人，因职权易涉腐败与洗钱风险。PEP 通常触发 EDD、高级管理层审批与持续监控。",
@@ -318,6 +333,7 @@ export const AML_KYC_TERMS: GlossaryTerm[] = [
     fullName: "Sanctions Screening",
     zh: "制裁名单筛查",
     category: "aml-kyc",
+    level: "core",
     jurisdiction: ["Global"],
     definition:
       "将投资人及其受益所有人、关联方与联合国、OFAC、EU、属地主管部门等发布的制裁名单比对，识别被制裁主体、受制裁行业或禁运情形。",
@@ -341,6 +357,7 @@ export const AML_KYC_TERMS: GlossaryTerm[] = [
     fullName: "Adverse Media Screening",
     zh: "负面媒体报道审查",
     category: "aml-kyc",
+    level: "advanced",
     jurisdiction: ["Global"],
     definition:
       "通过权威媒体与公开信息源检索客户是否存在涉洗钱、欺诈、制裁、腐败等负面报道，作为风险评级与 EDD 触发的参考依据。",
@@ -361,6 +378,7 @@ export const AML_KYC_TERMS: GlossaryTerm[] = [
     fullName: "Money Laundering Reporting Officer",
     zh: "洗钱申报官",
     category: "aml-kyc",
+    level: "advanced",
     jurisdiction: ["Global", "Cayman", "BVI"],
     definition:
       "机构指定的反洗钱负责人，负责接收内部可疑交易线索、独立评估并决定是否向主管机关提交 STR，同时维护反洗钱制度与员工培训。",
@@ -380,6 +398,7 @@ export const AML_KYC_TERMS: GlossaryTerm[] = [
     fullName: "Suspicious Transaction Report",
     zh: "可疑交易报告",
     category: "aml-kyc",
+    level: "expert",
     jurisdiction: ["Global", "Cayman", "BVI"],
     definition:
       "发现可疑交易或行为后，由 MLRO 依属地规则向金融情报机构/主管机关提交的报告，属受保护信息，通常不得向被报告方披露。",
@@ -399,6 +418,7 @@ export const AML_KYC_TERMS: GlossaryTerm[] = [
     fullName: "Tipping Off",
     zh: "通风报信",
     category: "aml-kyc",
+    level: "expert",
     jurisdiction: ["Global"],
     definition:
       "向被怀疑或被报告对象（或其关联人）透露已提交或拟提交 STR 的行为，属地法规通常将其列为独立违法行为，无论主观意图如何。",
@@ -417,6 +437,7 @@ export const AML_KYC_TERMS: GlossaryTerm[] = [
     fullName: "Risk-Based Approach",
     zh: "风险为本方法",
     category: "aml-kyc",
+    level: "core",
     jurisdiction: ["Global"],
     definition:
       "先评估客户、地域、产品与渠道风险，再对高风险客户投入更多尽调与监控资源、对低风险客户避免过度负担的 AML/CDD 制度设计原则。",
@@ -437,6 +458,7 @@ export const AML_KYC_TERMS: GlossaryTerm[] = [
     fullName: "Customer Risk Rating",
     zh: "客户风险评级",
     category: "aml-kyc",
+    level: "core",
     jurisdiction: ["Global"],
     definition:
       "依据客户身份、属地、职业/行业、资金来源、产品与渠道等维度对客户进行低/中/高风险评级，评级结果决定尽调深度、审批层级与复核频率。",
@@ -455,6 +477,7 @@ export const AML_KYC_TERMS: GlossaryTerm[] = [
     fullName: "Ongoing Monitoring",
     zh: "持续监控",
     category: "aml-kyc",
+    level: "core",
     jurisdiction: ["Global"],
     definition:
       "业务关系存续期间持续审查客户交易与活动，确保与已识别的客户画像、业务性质与风险状况保持一致，并及时更新客户资料与风险评级。",
@@ -473,6 +496,7 @@ export const AML_KYC_TERMS: GlossaryTerm[] = [
     fullName: "Transaction Monitoring",
     zh: "交易监控",
     category: "aml-kyc",
+    level: "expert",
     jurisdiction: ["Global"],
     definition:
       "对投资人认购、赎回、划付等交易活动进行系统化或人工审查，识别与客户画像不符的异常模式（如频繁大额、来源突变、与高风险地区往来）。",
@@ -491,6 +515,7 @@ export const AML_KYC_TERMS: GlossaryTerm[] = [
     fullName: "Periodic Review",
     zh: "定期复核",
     category: "aml-kyc",
+    level: "core",
     jurisdiction: ["Global"],
     definition:
       "按客户风险等级设定的周期（高风险通常每年、中风险两至三年、低风险三至五年）重新核验客户身份、UBO、地址与风险状况，并更新 KYC 档案。",
@@ -510,6 +535,7 @@ export const AML_KYC_TERMS: GlossaryTerm[] = [
     fullName: "Trigger Event",
     zh: "触发事件",
     category: "aml-kyc",
+    level: "advanced",
     jurisdiction: ["Global"],
     definition:
       "在定期复核之外导致必须重新尽调的特定事件，例如受益人/控制权变更、权益转让、大额追加投资、地址或身份变更、制裁名单更新命中、负面媒体报道等。",
@@ -529,6 +555,7 @@ export const AML_KYC_TERMS: GlossaryTerm[] = [
     fullName: "Financial Action Task Force",
     zh: "金融行动特别工作组",
     category: "aml-kyc",
+    level: "advanced",
     jurisdiction: ["Global"],
     definition:
       "制定全球反洗钱与反恐怖融资标准的政府间组织，其 40 项建议是各国 AML/CFT 立法的基础，并通过互评估与「灰名单/黑名单」（加强监控与高风险辖区名单）影响跨境业务风险判断。",

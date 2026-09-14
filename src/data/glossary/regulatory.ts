@@ -10,6 +10,7 @@ export const REGULATORY_TERMS: GlossaryTerm[] = [
     fullName: "Monetary Authority of Singapore",
     zh: "新加坡金融管理局",
     category: "regulatory",
+    level: "core",
     jurisdiction: ["Singapore"],
     definition:
       "新加坡的中央银行与金融监管机构，负责基金管理牌照（CMS Licence）、VCC 架构的监管与基金行业指引，并发布反洗钱与税务合规要求。",
@@ -28,6 +29,7 @@ export const REGULATORY_TERMS: GlossaryTerm[] = [
     fullName: "Securities and Futures Commission",
     zh: "香港证券及期货事务监察委员会",
     category: "regulatory",
+    level: "core",
     jurisdiction: ["Hong Kong"],
     definition:
       "香港证券与期货市场的法定监管机构，负责基金管理与资管活动牌照（第 4/9 类等受规管活动）、基金销售与私募基金备案，并发布 AML/CFT 指引。",
@@ -46,6 +48,7 @@ export const REGULATORY_TERMS: GlossaryTerm[] = [
     fullName: "SFC Type 9 Licence (Asset Management)",
     zh: "第 9 类受规管活动牌照（提供资产管理）",
     category: "regulatory",
+    level: "advanced",
     jurisdiction: ["Hong Kong"],
     definition:
       "香港《证券及期货条例》下「提供资产管理」受规管活动牌照，持牌人可就证券或期货合约提供管理服务，是管理香港私募基金最常用的牌照类别（另有第 4 类「就证券提供意见」常与之并行申请）。",
@@ -63,6 +66,7 @@ export const REGULATORY_TERMS: GlossaryTerm[] = [
     fullName: "Cayman Islands Monetary Authority",
     zh: "开曼群岛金融管理局",
     category: "regulatory",
+    level: "core",
     jurisdiction: ["Cayman"],
     definition:
       "开曼的金融监管机构，负责基金注册与监管（含 Mutual Funds、Private Funds、SPC）、行政管理人/审计师等受监管主体监管，并发布 AML 与公司治理指引。",
@@ -82,6 +86,7 @@ export const REGULATORY_TERMS: GlossaryTerm[] = [
     fullName: "Financial Services Commission",
     zh: "金融服务委员会（BVI）",
     category: "regulatory",
+    level: "advanced",
     jurisdiction: ["BVI"],
     definition:
       "英属维尔京群岛的金融服务监管机构，负责公司注册、基金与持牌主体监管，发布反洗钱与基金相关法规与指引。",
@@ -99,6 +104,7 @@ export const REGULATORY_TERMS: GlossaryTerm[] = [
     fullName: "U.S. Securities and Exchange Commission",
     zh: "美国证券交易委员会",
     category: "regulatory",
+    level: "expert",
     jurisdiction: ["USA"],
     definition:
       "美国证券市场的联邦监管机构，负责证券发行与投资顾问（Investment Adviser）注册、私募发行豁免（Reg D 等）与基金监管。",
@@ -116,6 +122,7 @@ export const REGULATORY_TERMS: GlossaryTerm[] = [
     fullName: "Alternative Investment Fund Managers Directive",
     zh: "另类投资基金管理人指令",
     category: "regulatory",
+    level: "expert",
     jurisdiction: ["EU", "UK"],
     definition:
       "欧盟对另类投资基金管理人的监管框架（英国脱欧后由 UK AIFMD 对应规则承接），涵盖授权、资本要求、薪酬政策、托管、杠杆限制与向欧盟投资人营销的通行证/国别私募配售制度。",
@@ -134,6 +141,7 @@ export const REGULATORY_TERMS: GlossaryTerm[] = [
     fullName: "Licensing",
     zh: "牌照 / 许可",
     category: "regulatory",
+    level: "core",
     jurisdiction: ["Global"],
     definition:
       "从事受监管活动（资产管理、信托服务、公司服务、支付、基金行政等）须事先取得的监管许可。牌照决定主体可从事的业务范围、适用规则与持续性合规义务。",
@@ -152,6 +160,7 @@ export const REGULATORY_TERMS: GlossaryTerm[] = [
     fullName: "Private Fund",
     zh: "私募基金（受监管类别）",
     category: "regulatory",
+    level: "core",
     jurisdiction: ["Cayman", "BVI", "Global"],
     definition:
       "开曼《Private Funds Act》定义的私募基金：以非公开方式发行不可赎回的投资权益、由管理人管理、主要目的为投资获利，须向 CIMA 注册并履行年度申报与审计义务；BVI 亦有对应的私募基金制度。",
@@ -171,6 +180,7 @@ export const REGULATORY_TERMS: GlossaryTerm[] = [
     fullName: "Registered Fund",
     zh: "注册基金",
     category: "regulatory",
+    level: "advanced",
     jurisdiction: ["Cayman", "BVI"],
     definition:
       "已依当地基金法规向监管机构完成注册备案的基金（如开曼 Private Funds/Mutual Funds 注册、BVI 基金注册）。注册状态通常可通过监管机构公开名录查询。",
@@ -188,6 +198,7 @@ export const REGULATORY_TERMS: GlossaryTerm[] = [
     fullName: "Professional Fund",
     zh: "专业基金（BVI）",
     category: "regulatory",
+    level: "expert",
     jurisdiction: ["BVI"],
     definition:
       "BVI《证券与投资业务法》下的基金类别：向「专业投资人」发行，投资人须满足专业资格门槛（如最低初始投资额或资产/经验标准），相对受认可基金（Recognised Fund）适用较轻的监管与申报要求。",
@@ -205,6 +216,7 @@ export const REGULATORY_TERMS: GlossaryTerm[] = [
     fullName: "Regulatory Reporting",
     zh: "监管申报",
     category: "regulatory",
+    level: "core",
     jurisdiction: ["Global"],
     definition:
       "向监管机构按期提交的各类申报，包括基金年度申报、财务与审计报表、经济实质申报、AEOI 申报、变更备案等，通常设有明确时限与格式要求。",

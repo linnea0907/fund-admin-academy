@@ -10,6 +10,7 @@ export const GOVERNANCE_TERMS: GlossaryTerm[] = [
     fullName: "Trustee",
     zh: "受托人",
     category: "governance",
+    level: "core",
     jurisdiction: ["BVI", "Cayman", "Hong Kong", "Global"],
     definition:
       "依信托契约为受益人持有并管理信托财产的主体，负有忠实与谨慎的受托义务。当受托人代表信托认购基金时，认购主体通常体现为「某某作为受托人（as trustee for 某信托）」。",
@@ -33,6 +34,7 @@ export const GOVERNANCE_TERMS: GlossaryTerm[] = [
     fullName: "Settlor",
     zh: "委托人（信托设立人）",
     category: "governance",
+    level: "advanced",
     jurisdiction: ["BVI", "Cayman", "Global"],
     definition:
       "设立信托并将财产转移给受托人的主体。委托人保留权利的范围（如撤换受托人、变更受益人）直接决定信托是否构成「保留权利信托」，进而影响穿透识别与税务判定。",
@@ -51,6 +53,7 @@ export const GOVERNANCE_TERMS: GlossaryTerm[] = [
     fullName: "Protector",
     zh: "保护人",
     category: "governance",
+    level: "advanced",
     jurisdiction: ["BVI", "Cayman", "Global"],
     definition:
       "信托契据中设立的监督角色，通常享有撤换/增补受托人、批准重大变更（如分配、增加受益人）等权力，但不参与日常信托管理，用以制衡受托人。",
@@ -70,6 +73,7 @@ export const GOVERNANCE_TERMS: GlossaryTerm[] = [
     fullName: "Enforcer",
     zh: "信托执行人",
     category: "governance",
+    level: "expert",
     jurisdiction: ["BVI", "Cayman", "Other"],
     definition:
       "在目的信托（Purpose Trust）中依法须委任的角色，负责确保受托人按信托目的行事，并有权对受托人提起诉讼或要求其纠正，以弥补目的信托缺少受益人的监督缺口。",
@@ -88,6 +92,7 @@ export const GOVERNANCE_TERMS: GlossaryTerm[] = [
     fullName: "Beneficiary",
     zh: "受益人",
     category: "governance",
+    level: "core",
     jurisdiction: ["Global"],
     definition:
       "依信托契据、基金会章程或其他安排享有财产或收益权益的主体，可以是自然人、公司或慈善机构。任意信托（Discretionary Trust）下受益人通常为一类人而非固定个体。",
@@ -107,6 +112,7 @@ export const GOVERNANCE_TERMS: GlossaryTerm[] = [
     fullName: "Board of Directors",
     zh: "董事会",
     category: "governance",
+    level: "core",
     jurisdiction: ["Cayman", "BVI", "Singapore", "Global"],
     definition:
       "公司型基金/实体的法定决策机构，负责接纳投资人、批准发行股份、授权签署、批准账户开立与年费申报等事项，其决定以董事会决议（Board Resolution）形式留存。",
@@ -126,6 +132,7 @@ export const GOVERNANCE_TERMS: GlossaryTerm[] = [
     fullName: "Corporate Director",
     zh: "法人董事",
     category: "governance",
+    level: "advanced",
     jurisdiction: ["Cayman", "BVI", "Singapore"],
     definition:
       "以公司身份担任另一公司董事的安排：部分辖区允许法人担任董事，须由其授权人士代表出席与表决；部分辖区（如开曼自 2025 年起）对法人董事设有额外登记与持牌要求。",
@@ -144,6 +151,7 @@ export const GOVERNANCE_TERMS: GlossaryTerm[] = [
     fullName: "Fiduciary Duty",
     zh: "受托义务",
     category: "governance",
+    level: "advanced",
     jurisdiction: ["Global"],
     definition:
       "受托人、董事与管理人对受益人/投资人负有的忠实义务（利益冲突时以受益人利益为先）与谨慎义务（以合理技能与勤勉行事）。",
@@ -162,6 +170,7 @@ export const GOVERNANCE_TERMS: GlossaryTerm[] = [
     fullName: "Investment Manager",
     zh: "投资管理人",
     category: "governance",
+    level: "core",
     jurisdiction: ["Global"],
     definition:
       "依据投资管理协议（IMA）及授权范围对基金资产行使投资裁量权并向基金收取管理费的主体。在合伙结构中其角色与 GP 可以分离：GP 负责治理与对外责任，Manager 专注投资运营。",
@@ -181,6 +190,7 @@ export const GOVERNANCE_TERMS: GlossaryTerm[] = [
     fullName: "Investment Advisor",
     zh: "投资顾问",
     category: "governance",
+    level: "advanced",
     jurisdiction: ["Global"],
     definition:
       "向基金或投资管理人提供投资建议但通常不享有投资裁量权的主体，其报酬安排与授权范围须在顾问协议中明确，与 Investment Manager 的裁量职责相区分。",
@@ -199,6 +209,7 @@ export const GOVERNANCE_TERMS: GlossaryTerm[] = [
     fullName: "Auditor",
     zh: "审计师",
     category: "governance",
+    level: "core",
     jurisdiction: ["Cayman", "BVI", "Singapore", "Hong Kong"],
     definition:
       "依属地法规与基金文件对基金财务报表进行独立审计并出具意见的会计师事务所。开曼与 BVI 等辖区要求受监管基金按年完成审计并提交财务报表。",
@@ -217,6 +228,7 @@ export const GOVERNANCE_TERMS: GlossaryTerm[] = [
     fullName: "Conflicts of Interest",
     zh: "利益冲突",
     category: "governance",
+    level: "advanced",
     jurisdiction: ["Global"],
     definition:
       "基金关联方之间因角色重叠产生的利益冲突情形，例如管理人与 GP 实控人相同、关联方提供服务并收取费用、共同投资中基金与投资人分配不均等。",
