@@ -1,0 +1,7 @@
+# 统一行尾：仓库内文本文件一律 LF
+#
+# 背景：Windows 默认 core.autocrlf=true，检出时会写成 CRLF。
+# 任何基于源码文本做解析的脚本（scripts/check-glossary.mjs、scripts/*.mjs 等）
+# 都可能因行尾不同而出现平台相关差异（曾导致 prebuild 校验在 CRLF 检出时假报断链）。
+# 这里把工作区行尾固定为 LF，与仓库 blob 保持一致。
+* text=auto eol=lf

@@ -38,6 +38,15 @@ const isAscii = (s) => /^[\x20-\x7E]+$/.test(s);
 
 /* ---------------- 解析 ---------------- */
 
+/**
+ * 读取源码并把行尾统一为 LF。
+ * Windows 上 core.autocrlf=true 会把检出文件写成 CRLF，若直接按 `\n` 切分，
+ * 术语块会整体解析不到（假报"引用不存在"）。此处统一归一，保证校验与平台无关。
+ */
+function readSource(file) {
+  return fs.readFileSync(file, "utf8").replace(/\r\n?/g, "\n");
+}
+
 function splitBlocks(src) {
   return src.split(/\n  \{\n/).slice(1);
 }
@@ -63,11 +72,11 @@ function arr(block, key) {
 function loadTerms() {
   const files = fs
     .readdirSync(GLOSSARY_DIR)
-    .filter((f) => f.endsWith(".ts") && f !== "index.ts" && f !== "imported.ts");
+      .filter((f) => f.endsWith(".ts") && f !== "index.ts" && f !== "imported.ts");
 
   const terms = [];
   for (const file of files) {
-    const src = fs.readFileSync(path.join(GLOSSARY_DIR, file), "utf8");
+    const src = readSource(path.join(GLOSSARY_DIR, file));
     for (const block of splitBlocks(src)) {
       const id = str(block, "id");
       if (!id) continue;
@@ -110,7 +119,7 @@ function loadCourseIds() {
   const ids = new Set();
   for (const file of LESSON_FILES) {
     if (!fs.existsSync(file)) continue;
-    const src = fs.readFileSync(file, "utf8");
+    const src = readSource(file);
     for (const m of src.matchAll(/^\s{2,4}id:\s*"([^"]+)"/gm)) {
       if (/^E?\d{2}$/.test(m[1])) ids.add(m[1]);
     }
