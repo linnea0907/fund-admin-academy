@@ -15,6 +15,8 @@ import { usePathname } from "next/navigation";
 import {
   getGlossaryCategory,
   getTerm,
+  getTermSource,
+  termBrief,
   type GlossaryUsageMap,
 } from "@/lib/glossary";
 
@@ -121,7 +123,7 @@ function TooltipCard({
         <div className="min-w-0">
           <span className={categoryChipCls(term.category)}>{category.label}</span>
           <p className="mt-1.5 text-sm font-bold leading-tight text-slate-800">
-            {term.en}
+            {term.term}
             <span className="ml-1.5 font-normal text-slate-400">{term.zh}</span>
           </p>
         </div>
@@ -137,7 +139,7 @@ function TooltipCard({
         </button>
       </div>
 
-      <p className="mt-2 text-[13px] leading-relaxed text-slate-600">{term.brief}</p>
+      <p className="mt-2 text-[13px] leading-relaxed text-slate-600">{termBrief(term)}</p>
 
       {term.related.length > 0 && (
         <div className="mt-2.5 border-t border-slate-100 pt-2">
@@ -153,7 +155,7 @@ function TooltipCard({
                   onClick={() => onPickTerm(rid)}
                   className="rounded-full bg-slate-100 px-2 py-0.5 text-[11px] font-medium text-slate-600 transition hover:bg-[#0e2a5e] hover:text-white"
                 >
-                  {rt.en}
+                  {rt.term}
                 </button>
               );
             })}
@@ -204,8 +206,18 @@ function DrawerContent({
               <span className={categoryChipCls(term.category)}>{category.label}</span>
               <span className="text-[11px] text-slate-400">{category.zh}</span>
             </div>
-            <h2 className="mt-2 text-lg font-bold leading-snug text-slate-800">{term.en}</h2>
+            <h2 className="mt-2 text-lg font-bold leading-snug text-slate-800">{term.term}</h2>
+            {term.fullName && term.fullName !== term.term && (
+              <p className="mt-0.5 text-[11px] text-slate-400">{term.fullName}</p>
+            )}
             <p className="mt-0.5 text-sm text-slate-500">{term.zh}</p>
+            <div className="mt-1.5 flex flex-wrap gap-1.5">
+              {term.jurisdiction.map((j) => (
+                <span key={j} className="rounded bg-slate-50 px-1.5 py-0.5 text-[10px] text-slate-500 ring-1 ring-slate-100">
+                  📍 {j}
+                </span>
+              ))}
+            </div>
           </div>
           <button
             type="button"
@@ -228,25 +240,76 @@ function DrawerContent({
             <span className="h-1 w-1 rounded-full bg-[#0e2a5e]" />
             定义
           </h3>
-          <p className="mt-1.5 text-[13px] font-medium leading-relaxed text-[#0e2a5e]/90">{term.brief}</p>
+          <p className="mt-1.5 text-[13px] font-medium leading-relaxed text-[#0e2a5e]/90">{termBrief(term)}</p>
           <p className="mt-2 text-[13px] leading-relaxed text-slate-600">{term.definition}</p>
         </section>
 
+        {/* 为什么重要 */}
+        {term.whyImportant && (
+          <section>
+            <h3 className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-[#0e2a5e]/70">
+              <span className="h-1 w-1 rounded-full bg-[#0e2a5e]" />
+              为什么重要
+            </h3>
+            <p className="mt-1.5 text-[13px] leading-relaxed text-slate-600">{term.whyImportant}</p>
+          </section>
+        )}
+
+        {/* 实务场景 */}
+        {term.scenario.length > 0 && (
+          <section>
+            <h3 className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-slate-400">
+              <span className="h-1 w-1 rounded-full bg-[#0e2a5e]" />
+              Fund Admin 实务场景
+            </h3>
+            <div className="mt-2 flex flex-wrap gap-1.5">
+              {term.scenario.map((s) => (
+                <span
+                  key={s}
+                  className="rounded-full border border-slate-200 bg-slate-50/60 px-2.5 py-1 text-[11px] font-medium text-slate-600"
+                >
+                  {s}
+                </span>
+              ))}
+            </div>
+          </section>
+        )}
+
         {/* 常见误区 */}
-        {term.commonMistakes.length > 0 && (
+        {(term.commonMistakes ?? []).length > 0 && (
           <section>
             <h3 className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-amber-600/80">
               <span className="h-1 w-1 rounded-full bg-amber-400" />
               常见误区
             </h3>
             <ul className="mt-2 space-y-1.5">
-              {term.commonMistakes.map((mk, i) => (
+              {(term.commonMistakes ?? []).map((mk, i) => (
                 <li key={i} className="flex items-start gap-2 rounded-lg bg-amber-50/70 px-3 py-2 text-[13px] leading-relaxed text-amber-900">
                   <span className="mt-px text-amber-500">✕</span>
                   {mk}
                 </li>
               ))}
             </ul>
+          </section>
+        )}
+
+        {/* 别名 */}
+        {term.aliases.length > 0 && (
+          <section>
+            <h3 className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-slate-400">
+              <span className="h-1 w-1 rounded-full bg-[#0e2a5e]" />
+              别名（Alias）
+            </h3>
+            <div className="mt-2 flex flex-wrap gap-1.5">
+              {term.aliases.map((a) => (
+                <span
+                  key={a}
+                  className="rounded-full bg-slate-50 px-2.5 py-1 text-[11px] text-slate-500 ring-1 ring-slate-100"
+                >
+                  {a}
+                </span>
+              ))}
+            </div>
           </section>
         )}
 
@@ -268,9 +331,34 @@ function DrawerContent({
                     onClick={() => onPickTerm(rid)}
                     className="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-medium text-slate-600 transition hover:border-[#0e2a5e] hover:bg-[#0e2a5e] hover:text-white"
                   >
-                    {rt.en}
+                    {rt.term}
                     <span className="ml-1 font-normal opacity-70">{rt.zh}</span>
                   </button>
+                );
+              })}
+            </div>
+          </section>
+        )}
+
+        {/* 来源 */}
+        {term.source.length > 0 && (
+          <section>
+            <h3 className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-slate-400">
+              <span className="h-1 w-1 rounded-full bg-[#0e2a5e]" />
+              来源（Source）
+            </h3>
+            <div className="mt-2 flex flex-wrap gap-1.5">
+              {term.source.map((s) => {
+                const def = getTermSource(s);
+                return (
+                  <span
+                    key={s}
+                    title={def?.nature}
+                    className="rounded-full bg-[#0e2a5e]/5 px-2.5 py-1 text-[11px] font-medium text-[#0e2a5e]"
+                  >
+                    {def?.label ?? s}
+                    {def && <span className="ml-1 text-[10px] text-slate-400">{def.nature}</span>}
+                  </span>
                 );
               })}
             </div>
@@ -569,7 +657,7 @@ export default function GlossaryProvider({ children }: { children: ReactNode }) 
           <aside
             role="dialog"
             aria-modal="true"
-            aria-label={`术语：${drawerTerm.en}`}
+            aria-label={`术语：${drawerTerm.term}`}
             className="glossary-drawer-panel absolute inset-y-0 right-0 flex w-[420px] max-w-[94vw] flex-col bg-white shadow-2xl"
           >
             <DrawerContent

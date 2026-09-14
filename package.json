@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "gen:cases": "node scripts/build-case-index.mjs",
-    "prebuild": "npm run gen:cases",
+    "gen:glossary": "node scripts/build-glossary-import.mjs",
+    "prebuild": "npm run gen:cases && npm run gen:glossary",
     "build": "next build",
     "start": "next start",
     "lint": "eslint"

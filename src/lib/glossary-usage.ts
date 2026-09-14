@@ -17,6 +17,8 @@ import {
   GLOSSARY_TERMS,
   findTermMatches,
   type GlossaryUsageMap,
+  type TermCaseRef,
+  type TermLessonRef,
   type TermUsage,
 } from "@/lib/glossary";
 import { caseSlug, listCaseIds, readCase } from "@/lib/cases";
@@ -114,4 +116,82 @@ export function getTermUsage(termId: string): TermUsage {
 /** 汇总计数（供 /glossary 列表行）：某术语出现的课程数 / 案例数 */
 export function termUsageCounts(usage: TermUsage): { lessons: number; cases: number } {
   return { lessons: usage.lessons.length, cases: usage.cases.length };
+}
+
+/* ================================================================
+ * V1.14.0 关联关系（Related Courses / Related Cases）
+ *   自动扫描（使用索引） ∪ 人工指定（术语数据的 courses / cases 字段）
+ * ================================================================ */
+
+export interface TermRelations {
+  /** 关联课程（自动命中 + 人工指定，按课程顺序） */
+  lessons: TermLessonRef[];
+  /** 关联案例（自动命中 + 人工指定，按案例编号） */
+  cases: TermCaseRef[];
+  /** 人工指定的课程 id（用于「指定」标记） */
+  manualCourses: string[];
+  /** 人工指定的案例 id */
+  manualCases: string[];
+}
+
+function manualLessonRef(lessonId: string): TermLessonRef | null {
+  const l = orderedAllLessons.find((x) => x.id === lessonId);
+  if (!l) return null;
+  return { id: l.id, slug: l.slug, title: l.title, modules: [] };
+}
+
+function manualCaseRef(caseId: string): TermCaseRef | null {
+  const c = readCase(caseId);
+  if (!c) return null;
+  return { id: caseId, slug: caseSlug(caseId), title: c.title };
+}
+
+let relationsCache: Record<string, TermRelations> | null = null;
+
+/** 全部术语的关联关系（自动 + 人工合并；进程内缓存） */
+export function buildTermRelations(): Record<string, TermRelations> {
+  if (relationsCache) return relationsCache;
+  const usage = buildGlossaryUsage();
+  const out: Record<string, TermRelations> = {};
+
+  for (const t of GLOSSARY_TERMS) {
+    const u = usage[t.id] ?? { lessons: [], cases: [] };
+    const lessons: TermLessonRef[] = [...u.lessons];
+    const manualCourses: string[] = [];
+    for (const lid of t.courses ?? []) {
+      if (lessons.some((l) => l.id === lid)) continue;
+      const ref = manualLessonRef(lid);
+      if (ref) {
+        lessons.push(ref);
+        manualCourses.push(lid);
+      }
+    }
+    const cases: TermCaseRef[] = [...u.cases];
+    const manualCases: string[] = [];
+    for (const cid of t.cases ?? []) {
+      if (cases.some((c) => c.id === cid)) continue;
+      const ref = manualCaseRef(cid);
+      if (ref) {
+        cases.push(ref);
+        manualCases.push(cid);
+      }
+    }
+    cases.sort((a, b) => a.id.localeCompare(b.id, undefined, { numeric: true }));
+    out[t.id] = { lessons, cases, manualCourses, manualCases };
+  }
+
+  relationsCache = out;
+  return relationsCache;
+}
+
+/** 单个术语的关联关系 */
+export function getTermRelations(termId: string): TermRelations {
+  return (
+    buildTermRelations()[termId] ?? {
+      lessons: [],
+      cases: [],
+      manualCourses: [],
+      manualCases: [],
+    }
+  );
 }

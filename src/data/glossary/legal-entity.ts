@@ -1,0 +1,208 @@
+/**
+ * Fund Admin Wiki — 术语内容 · Legal Entity（法律实体）
+ */
+import type { GlossaryTerm } from "@/types/glossary";
+
+export const LEGAL_ENTITY_TERMS: GlossaryTerm[] = [
+  {
+    id: "exempted-company",
+    term: "Exempted Company",
+    fullName: "Exempted Company",
+    zh: "豁免公司（开曼）",
+    category: "legal-entity",
+    jurisdiction: ["Cayman"],
+    definition:
+      "开曼最常见的离岸公司形态，主要在原属地以外经营业务，可向政府申请 20 年（可续）的免税承诺（Tax Undertaking），并须维持注册办事处与注册代理、每年申报年费与董事/股东资料。",
+    whyImportant:
+      "开曼基金、SPC、GP 实体与持股公司多以豁免公司形式设立；Fund Admin 与公司秘书须按年履行申报义务，逾期会产生罚款与不良记录。",
+    scenario: ["Fund Setup", "Regulatory Filing", "Fund Governance"],
+    aliases: ["Exempted Company", "开曼豁免公司"],
+    related: ["spc", "registered-office", "registered-agent", "certificate-of-good-standing"],
+    source: ["blue-book", "ics"],
+    tags: ["Cayman", "公司载体", "年费申报"],
+    brief: "开曼最常用的离岸公司形态，须维持注册代理与年度申报。",
+  },
+  {
+    id: "llc",
+    term: "LLC",
+    fullName: "Limited Liability Company",
+    zh: "有限责任公司",
+    category: "legal-entity",
+    jurisdiction: ["Cayman", "BVI", "USA", "Global"],
+    definition:
+      "股东以出资额为限承担责任的法人实体，可以设董事与股东，也可以采用管理成员制。开曼 LLC 兼具公司法人资格与合伙的税务穿透特性。",
+    whyImportant:
+      "LLC 常被用作 GP 实体、管理公司或共同投资载体；其成员权益（Membership Interest）转让与登记规则不同于股份公司，名册与决议应据其章程/经营协议处理。",
+    scenario: ["Fund Setup", "Investor Onboarding", "Fund Governance"],
+    aliases: ["Limited Liability Company", "有限责任公司", "開曼 LLC"],
+    related: ["exempted-company", "gp", "spv", "register-of-members"],
+    source: ["blue-book", "ics"],
+    tags: ["法人", "责任有限", "GP 实体"],
+    brief: "股东有限责任的法人实体，常作 GP 或共同投资载体。",
+  },
+  {
+    id: "pcc",
+    term: "PCC",
+    fullName: "Protected Cell Company",
+    zh: "受保护单元公司",
+    category: "legal-entity",
+    jurisdiction: ["BVI"],
+    definition:
+      "BVI《公司法》下的公司形态：公司在同一法人内设一个核心（Core）与多个受保护单元（Cell），各单元资产与负债受法定隔离保护，单元间互不牵连。",
+    whyImportant:
+      "BVI 版的「伞形载体」，常用于保险与投资基金架构；Fund Admin 须按单元分别开户、核算与登记，并在合同中明确单元身份。",
+    scenario: ["Fund Setup", "Fund Operations"],
+    aliases: ["Protected Cell Company", "受保护单元公司", "BVI PCC"],
+    related: ["spc", "segregated-portfolio", "sub-fund", "vcc"],
+    source: ["blue-book"],
+    tags: ["BVI", "伞形载体", "资产隔离"],
+    brief: "BVI 法定资产隔离公司，核心之外可设多个受保护单元。",
+  },
+  {
+    id: "nominee",
+    term: "Nominee",
+    fullName: "Nominee",
+    zh: "代名人",
+    category: "legal-entity",
+    jurisdiction: ["Global", "BVI", "Cayman"],
+    definition:
+      "受他人委托、以自己名义持有股份、权益或资产，但实际权益与风险归委托人（实益拥有人）的主体。代名安排常见于隐私保护、代持股权与信托持股场景。",
+    whyImportant:
+      "代名持股是 AML 穿透的关键节点：Fund Admin 与合规不能止步于名义持有人，须取得代名安排文件并识别背后实益拥有人（UBO），否则构成重大合规缺口。",
+    scenario: ["Investor Onboarding", "Periodic Review", "Transfer"],
+    aliases: ["代名人", "名义持有人", "Nominee Holder"],
+    related: ["nominee-shareholder", "nominee-director", "ubo", "dma", "aml-letter"],
+    source: ["ics", "blue-book"],
+    tags: ["代持", "UBO 穿透", "名义持有"],
+    brief: "以自己名义为他人持有权益的中间主体，须穿透识别实益人。",
+    commonMistakes: ["接受代名持股而不追问实益拥有人与代名依据"],
+  },
+  {
+    id: "nominee-shareholder",
+    term: "Nominee Shareholder",
+    fullName: "Nominee Shareholder",
+    zh: "名义股东",
+    category: "legal-entity",
+    jurisdiction: ["Global", "BVI", "Cayman"],
+    definition:
+      "名义上登记于股东名册、实际权益归属于委托人的持股主体，通常由公司服务商或受托关联公司担任，并以代名协议（Nominee Agreement）明确权利义务。",
+    whyImportant:
+      "股东名册登记的股东与实益持有人不一致时，Fund Admin 须以代名协议对照识别，并在 AEOI 控权人（Controlling Person）判定中按实益人处理。",
+    scenario: ["Investor Onboarding", "Periodic Review"],
+    aliases: ["Nominee Shareholder", "名义股东", "代名股东"],
+    related: ["nominee", "nominee-director", "register-of-members", "ubo", "controlling-person"],
+    source: ["ics", "blue-book"],
+    tags: ["代持", "股东名册", "AEOI"],
+    brief: "登记在册但权益归他人的股东，须以代名协议识别实益人。",
+  },
+  {
+    id: "nominee-director",
+    term: "Nominee Director",
+    fullName: "Nominee Director",
+    zh: "名义董事",
+    category: "legal-entity",
+    jurisdiction: ["Global", "BVI", "Cayman"],
+    definition:
+      "由公司服务商指派、名义上担任董事、实际按委托人指示行事的董事，须遵守当地关于名义董事登记与披露的法定要求。",
+    whyImportant:
+      "名义董事仍是法定责任人：Fund Admin 在核对决议与授权签署时，须确认名义董事的委任文件与其获授指示范围。",
+    scenario: ["Fund Governance", "Fund Setup"],
+    aliases: ["Nominee Director", "名义董事", "代名董事"],
+    related: ["board-of-directors", "corporate-director", "corporate-services-provider", "nominee"],
+    source: ["blue-book", "ics"],
+    tags: ["董事", "委任", "公司服务"],
+    brief: "按委托人指示行事的挂名董事，仍是法定责任人。",
+  },
+  {
+    id: "registered-office",
+    term: "Registered Office",
+    fullName: "Registered Office",
+    zh: "注册办事处",
+    category: "legal-entity",
+    jurisdiction: ["Cayman", "BVI", "Hong Kong", "Global"],
+    definition:
+      "法律要求公司在其注册地维持的官方地址，用于接收政府与法律文书送达、存放法定登记册。离岸公司通常由注册代理提供注册办事处服务。",
+    whyImportant:
+      "注册办事处是法定文书送达地址，其变更属于须备案事项；Fund Admin 出具的 KYC 地址证明与公司注册地址须能相互对应。",
+    scenario: ["Fund Setup", "Regulatory Filing", "Investor Onboarding"],
+    aliases: ["Registered Office", "注册地址", "注册办事处地址"],
+    related: ["registered-agent", "corporate-services-provider", "certificate-of-good-standing"],
+    source: ["blue-book", "ics"],
+    tags: ["注册地", "送达", "备案"],
+    brief: "公司注册地须维持的官方地址，用于接收法律文书。",
+  },
+  {
+    id: "registered-agent",
+    term: "Registered Agent",
+    fullName: "Registered Agent",
+    zh: "注册代理",
+    category: "legal-entity",
+    jurisdiction: ["Cayman", "BVI"],
+    definition:
+      "在离岸辖区持牌、为本地注册公司提供注册办事处、法定登记册保管与政府申报服务的中介机构。开曼豁免公司与 BVI 公司必须持续委任注册代理。",
+    whyImportant:
+      "注册代理是 Fund Admin 与公司注册处之间的常规通道：董事/股东变更、年费申报、良好存续证明的取得通常都经注册代理办理。",
+    scenario: ["Fund Setup", "Regulatory Filing", "Investor Onboarding"],
+    aliases: ["Registered Agent", "注册代理人"],
+    related: ["registered-office", "corporate-services-provider", "certificate-of-good-standing", "exempted-company"],
+    source: ["blue-book", "ics"],
+    tags: ["持牌中介", "申报", "离岸"],
+    brief: "离岸辖区持牌、负责公司注册与申报服务的中介机构。",
+  },
+  {
+    id: "corporate-services-provider",
+    term: "Corporate Services Provider",
+    fullName: "Corporate Services Provider",
+    zh: "公司服务提供商",
+    category: "legal-entity",
+    jurisdiction: ["Hong Kong", "Cayman", "BVI", "Global"],
+    definition:
+      "为基金及基金实体提供公司秘书、董事委派、注册代理对接、法定登记册维护、董事会支持等行政服务的机构，常同时承担 AML 合规的客户尽调职责。",
+    whyImportant:
+      "CSP 与 Fund Administrator 职责常被混同：前者偏公司治理与法定登记，后者偏投资人接纳、名册、NAV 与合规执行；文件签署与责任边界须依协议明确。",
+    scenario: ["Fund Setup", "Fund Governance", "Regulatory Filing"],
+    aliases: ["CSP", "公司服务提供商", "公司秘书服务"],
+    related: ["registered-agent", "fund-administrator", "board-of-directors", "nominee-director"],
+    source: ["ics", "blue-book"],
+    tags: ["公司秘书", "职责边界", "治理服务"],
+    brief: "提供公司秘书、董事委派与法定登记服务的机构。",
+    commonMistakes: ["把 CSP 与 Fund Administrator 的职责混同，导致签字与责任错配"],
+  },
+  {
+    id: "certificate-of-good-standing",
+    term: "Certificate of Good Standing",
+    fullName: "Certificate of Good Standing",
+    zh: "良好存续证明",
+    category: "legal-entity",
+    jurisdiction: ["Cayman", "BVI", "Hong Kong", "Global"],
+    definition:
+      "由公司注册处出具的证明文件，确认公司依法设立、已缴清规费且处于正常存续状态，通常注明公司名称、编号、设立日期与出具时间。",
+    whyImportant:
+      "机构投资人开户与认购的标准 KYC 文件；通常要求出具日期在三个月内（部分属地要求六个月内），过期或被撤销状态会直接导致资料被退回。",
+    scenario: ["Investor Onboarding", "Periodic Review", "Fund Setup"],
+    aliases: ["Good Standing Certificate", "良好存续证明", "存续证明", "Certificate of Incumbency"],
+    related: ["registered-agent", "exempted-company", "identity-document", "certified-copy"],
+    source: ["ics"],
+    tags: ["KYC 文件", "有效期", "机构投资人"],
+    brief: "注册处出具、证明公司正常存续的文件，常有有效期要求。",
+    commonMistakes: ["接受过期或摘录件代替正式 Good Standing（须核出具日期与来源）"],
+  },
+  {
+    id: "register-of-members",
+    term: "Register of Members",
+    fullName: "Register of Members",
+    zh: "成员名册（法定登记册）",
+    category: "legal-entity",
+    jurisdiction: ["Cayman", "BVI", "Hong Kong", "Global"],
+    definition:
+      "公司依法须在注册办事处或指定地点维护的股东/成员登记册，记载成员名称、持股数量与类别、入股与退股日期等，是股东资格的法定证据。",
+    whyImportant:
+      "成员名册与 Fund Admin 维护的投资人名册（Investor Register）互为印证：涉及权益转让、赎回与代持安排时，两份记录的同步是完成法律交收的前提。",
+    scenario: ["Transfer", "Fund Governance", "Investor Onboarding"],
+    aliases: ["Register of Members", "股东名册", "成员登记册"],
+    related: ["investor-register", "transfer", "nominee-shareholder", "registered-agent"],
+    source: ["blue-book", "ics"],
+    tags: ["法定登记册", "股东资格", "转让"],
+    brief: "法定的股东/成员登记册，是股东资格的直接证据。",
+  },
+];

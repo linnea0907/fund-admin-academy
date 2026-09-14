@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { orderedAllLessons } from "@/lib/ordering";
 import { caseSlug, listCaseMetas, readCase } from "@/lib/cases";
 import { getCaseModule } from "@/lib/case-modules";
-import { GLOSSARY_TERMS, getGlossaryCategory } from "@/lib/glossary";
+import { GLOSSARY_TERMS, GLOSSARY_BUILTIN_COUNT } from "@/lib/glossary";
+import { buildTermRelations } from "@/lib/glossary-usage";
 import { SKILL_DEFS } from "@/lib/skill-defs";
 import SearchClient, {
   type SearchCase,
@@ -10,15 +11,16 @@ import SearchClient, {
   type SearchLesson,
   type SearchSop,
   type SearchTemplate,
-  type SearchTerm,
+  type SearchTermRelations,
 } from "@/components/search/SearchClient";
 
 export const metadata: Metadata = {
   title: "知识检索",
   description:
-    "知识检索（原术语库 / 技能中心 / 搜索合并）：术语 / SOP 依据 / Checklist / 邮件模板 + 全站课程与案例统一检索，原数据与页面全部保留。",
+    "Fund Admin Wiki 知识检索：Terms（术语）· Knowledge Notes（SOP 依据 / Checklist / 邮件模板）· Cases（案例）· Courses（课程）统一检索，一次搜索直达术语、关联案例与关联课程。",
 };
 
+/** Fund Admin Wiki · 知识检索（统一结果页：Terms / Knowledge Notes / Cases / Courses） */
 export default function SearchPage() {
   const caseMetas = listCaseMetas();
 
@@ -46,18 +48,22 @@ export default function SearchPage() {
     topics: c.topics,
   }));
 
-  // 术语（单一数据源）
-  const terms: SearchTerm[] = GLOSSARY_TERMS.map((t) => ({
-    id: t.id,
-    en: t.en,
-    zh: t.zh,
-    brief: t.brief,
-    definition: t.definition,
-    aliases: t.aliases ?? [],
-    category: getGlossaryCategory(t.category).label,
-  }));
+  // 术语（单一数据源，含导入层）→ 客户端可直接复用同一评分函数
+  const terms = GLOSSARY_TERMS;
 
-  // V1.12.2 SOP / 邮件模板 索引：已导入案例的「ICS SOP 依据」与「客户沟通示例」小节
+  // 术语 → 关联课程 / 关联案例（自动扫描 ∪ 人工指定）
+  const relations = buildTermRelations();
+  const termRelations: Record<string, SearchTermRelations> = {};
+  for (const t of GLOSSARY_TERMS) {
+    const r = relations[t.id];
+    if (!r) continue;
+    termRelations[t.id] = {
+      courses: r.lessons.map((l) => ({ id: l.id, slug: l.slug, title: l.title })),
+      cases: r.cases.map((c) => ({ id: c.id, slug: c.slug, title: c.title })),
+    };
+  }
+
+  // SOP / 邮件模板 索引：已导入案例的「ICS SOP 依据」与「客户沟通示例」小节
   const sops: SearchSop[] = [];
   const templates: SearchTemplate[] = [];
   for (const m of caseMetas) {
@@ -71,7 +77,7 @@ export default function SearchPage() {
       templates.push({ caseId: m.id, slug: caseSlug(m.id), caseTitle: m.title, text: email });
   }
 
-  // V1.12.2 Checklist 索引：课程 Admin Checklist 操作清单条目
+  // Checklist 索引：课程 Admin Checklist 操作清单条目
   const checklists: SearchChecklist[] = orderedAllLessons.flatMap((l) =>
     (l.checklist ?? []).map((text) => ({
       lessonId: l.id,
@@ -87,16 +93,24 @@ export default function SearchPage() {
         lessons,
         cases,
         terms,
+        termRelations,
         sops,
         templates,
         checklists,
         counts: {
           terms: GLOSSARY_TERMS.length,
+          termsBuiltin: GLOSSARY_BUILTIN_COUNT,
+          termsUsed: Object.values(termRelations).filter(
+            (r) => r.courses.length > 0 || r.cases.length > 0
+          ).length,
           skills: SKILL_DEFS.length,
           lessonsRequired: lessons.filter((l) => !l.id.startsWith("E")).length,
           lessonsTotal: lessons.length,
           cases: caseMetas.length,
           casesReady: caseMetas.filter((c) => c.ready).length,
+          sops: sops.length,
+          templates: templates.length,
+          checklists: checklists.length,
         },
       }}
     />

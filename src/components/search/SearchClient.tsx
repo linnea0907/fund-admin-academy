@@ -2,6 +2,13 @@
 
 import Link from "next/link";
 import { useMemo, useRef, useState } from "react";
+import {
+  getGlossaryCategory,
+  getTermSource,
+  searchTerms,
+  termBrief,
+  type GlossaryTerm,
+} from "@/lib/glossary";
 
 function escapeRegExp(s: string): string {
   return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -63,17 +70,19 @@ export interface SearchCase {
   topics: string[];
 }
 
-export interface SearchTerm {
+/** 术语关联内容（课程 / 案例）引用 */
+export interface SearchRef {
   id: string;
-  en: string;
-  zh: string;
-  brief: string;
-  definition: string;
-  aliases: string[];
-  category: string;
+  slug: string;
+  title: string;
 }
 
-/** V1.12.2：案例「ICS SOP 依据」小节（SOP 检索源） */
+export interface SearchTermRelations {
+  courses: SearchRef[];
+  cases: SearchRef[];
+}
+
+/** 案例「ICS SOP 依据」小节（SOP 检索源） */
 export interface SearchSop {
   caseId: string;
   slug: string;
@@ -81,7 +90,7 @@ export interface SearchSop {
   text: string;
 }
 
-/** V1.12.2：案例「客户沟通示例」小节（邮件模板检索源） */
+/** 案例「客户沟通示例」小节（邮件模板检索源） */
 export interface SearchTemplate {
   caseId: string;
   slug: string;
@@ -89,7 +98,7 @@ export interface SearchTemplate {
   text: string;
 }
 
-/** V1.12.2：课程 Admin Checklist 条目（Checklist 检索源） */
+/** 课程 Admin Checklist 条目（Checklist 检索源） */
 export interface SearchChecklist {
   lessonId: string;
   lessonSlug: string;
@@ -99,17 +108,23 @@ export interface SearchChecklist {
 
 export interface SearchCounts {
   terms: number;
+  termsBuiltin: number;
+  termsUsed: number;
   skills: number;
   lessonsRequired: number;
   lessonsTotal: number;
   cases: number;
   casesReady: number;
+  sops: number;
+  templates: number;
+  checklists: number;
 }
 
 interface SearchData {
   lessons: SearchLesson[];
   cases: SearchCase[];
-  terms: SearchTerm[];
+  terms: GlossaryTerm[];
+  termRelations: Record<string, SearchTermRelations>;
   sops: SearchSop[];
   templates: SearchTemplate[];
   checklists: SearchChecklist[];
@@ -126,20 +141,41 @@ interface ModuleHit {
   module: { id: string; title: string };
 }
 
-/** V1.12.2 检索范围（Lu：术语 / SOP / 模板 / 全站知识 + 课程案例/Checklist） */
-type Scope = "all" | "term" | "course" | "case" | "sop" | "template" | "checklist";
+interface TermHit {
+  term: GlossaryTerm;
+  score: number;
+  fields: string[];
+}
+
+/** 检索范围（Terms / Cases / Courses 为一级；Knowledge Notes 三类为二级） */
+type Scope = "all" | "term" | "case" | "course" | "sop" | "template" | "checklist";
 
 const SCOPES: { key: Scope; label: string }[] = [
   { key: "all", label: "全部" },
-  { key: "term", label: "术语" },
+  { key: "term", label: "Terms 术语" },
+  { key: "case", label: "Cases 案例" },
+  { key: "course", label: "Courses 课程" },
   { key: "sop", label: "SOP 依据" },
   { key: "template", label: "邮件模板" },
   { key: "checklist", label: "Checklist" },
-  { key: "course", label: "课程" },
-  { key: "case", label: "案例" },
 ];
 
-const SUGGESTIONS = ["AML Letter", "Capital Call", "UBO", "Trust", "CRS", "NAV", "FATCA", "Side Letter"];
+const SUGGESTIONS = [
+  "VCC",
+  "PTC",
+  "AML Letter",
+  "CRS",
+  "DMA",
+  "SPC",
+  "Source of Wealth",
+  "Side Letter",
+  "Waterfall",
+  "可变资本公司",
+];
+
+/** 由术语派生关联内容时，仅取「名称级命中」的术语（score ≥ 70） */
+const DERIVE_MIN_SCORE = 70;
+const DERIVE_MAX = 12;
 
 export default function SearchClient({ data }: { data: SearchData }) {
   const [keyword, setKeyword] = useState("");
@@ -151,13 +187,29 @@ export default function SearchClient({ data }: { data: SearchData }) {
     if (!kw) return null;
     const lower = kw.toLowerCase();
 
-    // 术语：中英文名 / 别名 / 一句话 / 定义 / 类别
-    const termHits = data.terms.filter((t) =>
-      [t.en, t.zh, t.brief, t.definition, t.category, ...t.aliases]
-        .join("\n")
-        .toLowerCase()
-        .includes(lower)
-    );
+    // Terms：缩写 / 全称 / 中文名 / 别名 / 定义 / 重要性 / 场景 / 标签 / 来源
+    const termHits: TermHit[] = searchTerms(data.terms, kw);
+
+    // 术语派生内容：术语命中时联出它的关联案例 / 关联课程（V1.14.0 统一结果页）
+    const derivedCaseIds = new Set<string>();
+    const derivedCourseIds = new Set<string>();
+    const derivedCases: { ref: SearchRef; from: string }[] = [];
+    const derivedCourses: { ref: SearchRef; from: string }[] = [];
+    for (const h of termHits) {
+      if (h.score < DERIVE_MIN_SCORE) continue;
+      const rel = data.termRelations[h.term.id];
+      if (!rel) continue;
+      for (const c of rel.cases) {
+        if (derivedCaseIds.has(c.id) || derivedCases.length >= DERIVE_MAX) continue;
+        derivedCaseIds.add(c.id);
+        derivedCases.push({ ref: c, from: h.term.term });
+      }
+      for (const l of rel.courses) {
+        if (derivedCourseIds.has(l.id) || derivedCourses.length >= DERIVE_MAX) continue;
+        derivedCourseIds.add(l.id);
+        derivedCourses.push({ ref: l, from: h.term.term });
+      }
+    }
 
     // 课程：标题 / 简介；模块：标题
     const lessonHits: LessonHit[] = [];
@@ -173,21 +225,32 @@ export default function SearchClient({ data }: { data: SearchData }) {
       }
     }
 
-    // 案例：标题 / 模块 / 标签 / 技能 / V1.13.1 分类字段（jurisdiction/businessArea/entityType/topics）
+    // 案例：标题 / 模块 / 标签 / 技能 / 分类字段
     const caseHits = data.cases.filter((c) =>
-      [c.title, c.module, ...c.tags, ...c.skills, ...c.jurisdiction, c.businessArea, c.entityType, ...c.topics]
+      [
+        c.title,
+        c.module,
+        ...c.tags,
+        ...c.skills,
+        ...c.jurisdiction,
+        c.businessArea,
+        c.entityType,
+        ...c.topics,
+      ]
         .join("\n")
         .toLowerCase()
         .includes(lower)
     );
 
-    // V1.12.2 新增三类知识源
+    // Knowledge Notes 三类
     const sopHits = data.sops.filter((s) => s.text.toLowerCase().includes(lower));
     const templateHits = data.templates.filter((t) => t.text.toLowerCase().includes(lower));
     const checklistHits = data.checklists.filter((c) => c.text.toLowerCase().includes(lower));
 
     const total =
       termHits.length +
+      derivedCases.length +
+      derivedCourses.length +
       lessonHits.length +
       moduleHits.length +
       caseHits.length +
@@ -197,6 +260,8 @@ export default function SearchClient({ data }: { data: SearchData }) {
 
     return {
       termHits,
+      derivedCases,
+      derivedCourses,
       lessonHits,
       moduleHits,
       caseHits,
@@ -210,15 +275,22 @@ export default function SearchClient({ data }: { data: SearchData }) {
   /** 当前范围是否展示某结果组 */
   const show = (g: Exclude<Scope, "all">) => scope === "all" || scope === g;
 
+  const scopeLabel = SCOPES.find((s) => s.key === scope)?.label ?? "";
+
   return (
     <div className="space-y-6">
       {/* ===== 标题 ===== */}
       <header>
-        <h1 className="text-xl font-bold text-slate-800 sm:text-2xl">知识检索</h1>
+        <div className="flex flex-wrap items-center gap-3">
+          <h1 className="text-xl font-bold text-slate-800 sm:text-2xl">知识检索</h1>
+          <span className="rounded-full bg-[#0e2a5e]/5 px-3 py-1 text-xs font-semibold text-[#0e2a5e]">
+            Fund Admin Wiki
+          </span>
+        </div>
         <p className="mt-1.5 text-sm text-slate-500">
-          统一检索 <b className="text-[#0e2a5e]">术语 · SOP 依据 · Checklist · 邮件模板</b>
-          ，并覆盖课程、模块与案例全站知识
-          （模糊匹配 · 不区分大小写）
+          一次搜索直达 <b className="text-[#0e2a5e]">Terms 术语 · Cases 案例 · Courses 课程</b>
+          ，并覆盖 Knowledge Notes（SOP 依据 / Checklist / 邮件模板）；
+          命中术语时自动联出它的关联案例与关联课程（模糊匹配 · 不区分大小写）
         </p>
       </header>
 
@@ -240,7 +312,7 @@ export default function SearchClient({ data }: { data: SearchData }) {
             type="search"
             value={keyword}
             onChange={(e) => setKeyword(e.target.value)}
-            placeholder="全站知识搜索：输入关键词，例如 AML Letter / Cayman / 地址证明 / capital call 催缴邮件"
+            placeholder="搜索术语 / 案例 / 课程：输入缩写、全称或中文名，例如 VCC · PTC · AML Letter · 可变资本公司"
             aria-label="知识检索关键词"
             className="w-full rounded-xl border border-slate-300 bg-white py-3 pl-11 pr-4 text-[15px] text-slate-800 shadow-sm outline-none transition placeholder:text-slate-400 focus:border-[#0e2a5e] focus:ring-2 focus:ring-[#0e2a5e]/15"
           />
@@ -286,57 +358,63 @@ export default function SearchClient({ data }: { data: SearchData }) {
         </div>
       </div>
 
-      {/* ===== 空闲态：知识目录（合并后的统一入口） ===== */}
+      {/* ===== 空闲态：知识检索四级结构 ===== */}
       {!kw ? (
         <>
-          <section className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <section className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
             <DirCard
               href="/glossary"
-              badge="术语"
+              badge="Terms"
               badgeCls="bg-[#0e2a5e]/10 text-[#0e2a5e]"
-              title="术语库"
-              desc="Fund Admin 高频术语：中英对照 · 定义 · 误区 · 关联"
-              meta={`${data.counts.terms} 个术语 · 5 大类`}
+              title="Fund Admin Wiki"
+              desc="术语层：缩写 / 全称 / 中文名互搜，定义 · 重要性 · 实务场景 · 关联案例与课程"
+              meta={`${data.counts.terms} 条术语（内置 ${data.counts.termsBuiltin}）· 8 大类`}
             />
             <DirCard
-              href="/skills"
-              badge="能力"
+              href="/search"
+              badge="Knowledge Notes"
               badgeCls="bg-emerald-100 text-emerald-700"
-              title="技能中心"
-              desc="能力地图：技能定义 · 案例覆盖 · 完成进度"
-              meta={`${data.counts.skills} 项受控技能`}
-            />
-            <DirCard
-              href="/courses"
-              badge="课程"
-              badgeCls="bg-amber-100 text-amber-700"
-              title="课程中心"
-              desc="境外私募基金六讲必修 + 选修专题，模块化学习"
-              meta={`${data.counts.lessonsRequired} 讲必修 · ${data.counts.lessonsTotal} 讲全部`}
+              title="知识卡片"
+              desc="SOP 依据 · Admin Checklist · 客户沟通邮件模板，散落于案例与课程正文"
+              meta={`SOP ${data.counts.sops} · 模板 ${data.counts.templates} · Checklist ${data.counts.checklists}`}
             />
             <DirCard
               href="/cases"
-              badge="案例"
+              badge="Cases"
               badgeCls="bg-blue-100 text-blue-700"
               title="案例库"
               desc="Real Fund Admin Cases · 答案以 ICS 内部 SOP 为准"
               meta={`${data.counts.cases} 个案例 · 已导入 ${data.counts.casesReady} 个`}
             />
+            <DirCard
+              href="/courses"
+              badge="Courses"
+              badgeCls="bg-amber-100 text-amber-700"
+              title="课程中心"
+              desc="境外私募基金必修 + 选修专题，模块化学习"
+              meta={`${data.counts.lessonsRequired} 讲必修 · ${data.counts.lessonsTotal} 讲全部`}
+            />
           </section>
 
-          {/* 知识沉淀内容谱系 */}
           <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-            <h2 className="text-sm font-bold text-slate-800">知识沉淀内容</h2>
+            <h2 className="text-sm font-bold text-slate-800">知识检索长期结构</h2>
             <p className="mt-1 text-xs leading-relaxed text-slate-400">
-              术语库、技能中心与全站搜索已合并为本页统一检索；原页面与数据全部保留。
+              知识检索是 Fund Admin Academy 的核心入口，统一承载以下四层知识；原文页面与数据全部保留。
             </p>
             <div className="mt-3 flex flex-wrap gap-2">
-              <Cat chip="术语 Glossary" note="悬停速览 · 点击展开释义" href="/glossary" />
-              <Cat chip="SOP 依据" note="散落于各案例正文，可在上方直接检索" />
-              <Cat chip="Checklist" note="六讲课程操作清单" />
-              <Cat chip="邮件模板" note="案例「客户沟通示例」片段" />
-              <Cat chip="实务指引" note="课程风险提示与操作指引（全站检索可达）" />
-              <Cat chip="工作技巧" note="案例 Takeaway / 常见错误（全站检索可达）" />
+              <Cat chip="Terms 术语" note={`${data.counts.terms} 条 · 悬停速览 · 点击展开释义`} href="/glossary" />
+              <Cat chip="Knowledge Notes 知识卡片" note="SOP 依据 / Checklist / 邮件模板，可在上方直接检索" />
+              <Cat chip="Cases 案例" note={`${data.counts.cases} 个 Fund Admin 实务案例`} href="/cases" />
+              <Cat chip="Courses 课程" note={`${data.counts.lessonsTotal} 讲课程与模块`} href="/courses" />
+            </div>
+            <div className="mt-3 flex flex-wrap items-center gap-2 border-t border-slate-100 pt-3">
+              <span className="text-xs text-slate-400">相关入口</span>
+              <Cat chip="技能中心" note={`${data.counts.skills} 项受控技能与案例覆盖`} href="/skills" />
+              <Cat chip="知识工坊" note="批量导入术语 · 待补充术语池" href="/wiki" />
+              <Cat
+                chip="术语覆盖"
+                note={`${data.counts.termsUsed} / ${data.counts.terms} 条已在课程或案例中出现`}
+              />
             </div>
           </section>
         </>
@@ -345,193 +423,218 @@ export default function SearchClient({ data }: { data: SearchData }) {
         <div className="rounded-2xl border border-dashed border-slate-200 bg-white px-6 py-12 text-center">
           <p className="text-sm font-medium text-slate-600">没有找到与「{keyword}」相关的内容</p>
           <p className="mt-1 text-xs text-slate-400">
-            换个关键词试试，例如 AML Letter、Capital Call、Trust、地址证明
+            换个关键词试试，例如 VCC、PTC、AML Letter、CRS、Waterfall、可变资本公司
           </p>
+          <Link
+            href="/wiki"
+            className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-[#0e2a5e]/5 px-3 py-1.5 text-xs font-semibold text-[#0e2a5e] transition hover:bg-[#0e2a5e]/10"
+          >
+            该术语尚未录入？前往知识工坊待补充池 →
+          </Link>
         </div>
       ) : (
         /* ===== 分组结果 ===== */
         <div className="space-y-6">
-          {(() => {
-            const scopeLabel = SCOPES.find((s) => s.key === scope)?.label ?? "";
-            const filteredTotal =
-              scope === "all"
-                ? hits.total
-                : scope === "term"
-                  ? hits.termHits.length
-                  : scope === "course"
-                    ? hits.lessonHits.length + hits.moduleHits.length
-                    : scope === "case"
-                      ? hits.caseHits.length
-                      : scope === "sop"
-                        ? hits.sopHits.length
-                        : scope === "template"
-                          ? hits.templateHits.length
-                          : hits.checklistHits.length;
-            return (
-              <p className="text-xs text-slate-400">
-                {scope === "all" ? (
-                  <>
-                    找到 {hits.total} 项结果（术语 {hits.termHits.length} · SOP {hits.sopHits.length}{" "}
-                    · 模板 {hits.templateHits.length} · Checklist {hits.checklistHits.length} ·
-                    课程 {hits.lessonHits.length} · 模块 {hits.moduleHits.length} · 案例{" "}
-                    {hits.caseHits.length}），范围「
-                    <span className="font-semibold text-[#0e2a5e]">{scopeLabel}</span>」，关键词「
-                    <span className="font-semibold text-[#0e2a5e]">{keyword}</span>」
-                  </>
-                ) : (
-                  <>
-                    找到 {filteredTotal} 项结果，范围「
-                    <span className="font-semibold text-[#0e2a5e]">{scopeLabel}</span>」，关键词「
-                    <span className="font-semibold text-[#0e2a5e]">{keyword}</span>」
-                    <button
-                      type="button"
-                      onClick={() => setScope("all")}
-                      className="ml-2 rounded-full bg-[#0e2a5e]/5 px-2 py-0.5 text-[11px] font-medium text-[#0e2a5e] transition hover:bg-[#0e2a5e]/10"
-                    >
-                      查看全部
-                    </button>
-                  </>
-                )}
-              </p>
-            );
-          })()}
+          <p className="text-xs text-slate-400">
+            {scope === "all" ? (
+              <>
+                找到 {hits.total} 项结果（Terms {hits.termHits.length} · 术语派生{" "}
+                {hits.derivedCases.length + hits.derivedCourses.length} · Cases {hits.caseHits.length}{" "}
+                · Courses {hits.lessonHits.length + hits.moduleHits.length} · SOP {hits.sopHits.length}{" "}
+                · 模板 {hits.templateHits.length} · Checklist {hits.checklistHits.length}），关键词「
+                <span className="font-semibold text-[#0e2a5e]">{keyword}</span>」
+              </>
+            ) : (
+              <>
+                范围「<span className="font-semibold text-[#0e2a5e]">{scopeLabel}</span>」，关键词「
+                <span className="font-semibold text-[#0e2a5e]">{keyword}</span>」
+                <button
+                  type="button"
+                  onClick={() => setScope("all")}
+                  className="ml-2 rounded-full bg-[#0e2a5e]/5 px-2 py-0.5 text-[11px] font-medium text-[#0e2a5e] transition hover:bg-[#0e2a5e]/10"
+                >
+                  查看全部
+                </button>
+              </>
+            )}
+          </p>
 
-          {/* 术语 */}
+          {/* ===== Terms ===== */}
           {show("term") && hits.termHits.length > 0 && (
             <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-              <h2 className="flex items-center gap-2 text-sm font-bold text-slate-800">
-                术语（{hits.termHits.length}）
+              <h2 className="flex flex-wrap items-center gap-2 text-sm font-bold text-slate-800">
+                Terms 术语（{hits.termHits.length}）
                 <span className="rounded bg-[#0e2a5e]/5 px-1.5 py-0.5 text-[10px] font-semibold text-[#0e2a5e]">
-                  悬停即查 · 点击展开
+                  Fund Admin Wiki
                 </span>
               </h2>
               <ul className="mt-3 space-y-2">
-                {hits.termHits.map((t) => (
-                  <li key={t.id}>
-                    <Link
-                      href={`/glossary/${t.id}`}
-                      className="group flex items-start gap-3 rounded-xl border border-slate-100 px-3 py-3 transition hover:border-blue-200 hover:bg-blue-50/40"
-                    >
-                      <span className="mt-0.5 shrink-0 rounded bg-slate-100 px-1.5 py-0.5 text-[10px] font-bold text-slate-500">
-                        {t.category}
-                      </span>
-                      <span className="min-w-0 flex-1">
-                        <span className="block text-sm font-semibold text-slate-700 group-hover:text-[#0e2a5e]">
-                          <Highlight text={`${t.en} · ${t.zh}`} keyword={kw} />
+                {hits.termHits.slice(0, 40).map((h) => {
+                  const t = h.term;
+                  const c = getGlossaryCategory(t.category);
+                  const rel = data.termRelations[t.id];
+                  return (
+                    <li key={t.id}>
+                      <Link
+                        href={`/glossary/${t.id}`}
+                        className="group flex items-start gap-3 rounded-xl border border-slate-100 px-3 py-3 transition hover:border-blue-200 hover:bg-blue-50/40"
+                      >
+                        <span
+                          className={`mt-0.5 shrink-0 rounded-full px-2 py-0.5 text-[10px] font-bold ring-1 ${c.tint}`}
+                        >
+                          {c.label}
                         </span>
-                        <span className="mt-0.5 block text-xs leading-relaxed text-slate-400">
-                          <Highlight text={t.brief} keyword={kw} />
+                        <span className="min-w-0 flex-1">
+                          <span className="block text-sm font-semibold text-slate-700 group-hover:text-[#0e2a5e]">
+                            <Highlight text={`${t.term} · ${t.zh}`} keyword={kw} />
+                            {t.fullName && t.fullName !== t.term && (
+                              <span className="ml-2 text-[11px] font-normal text-slate-400">
+                                {t.fullName}
+                              </span>
+                            )}
+                          </span>
+                          <span className="mt-0.5 block text-xs leading-relaxed text-slate-400">
+                            <Highlight text={termBrief(t)} keyword={kw} />
+                          </span>
+                          <span className="mt-1 flex flex-wrap items-center gap-1.5 text-[10px] text-slate-400">
+                            {h.fields.length > 0 && (
+                              <span className="rounded bg-emerald-50 px-1.5 py-0.5 text-emerald-600">
+                                命中 {h.fields.slice(0, 3).join("/")}
+                              </span>
+                            )}
+                            {t.jurisdiction.slice(0, 2).map((j) => (
+                              <span key={j} className="rounded bg-slate-50 px-1.5 py-0.5 ring-1 ring-slate-100">
+                                📍 {j}
+                              </span>
+                            ))}
+                            {t.source.slice(0, 2).map((s) => (
+                              <span key={s} className="rounded bg-[#0e2a5e]/5 px-1.5 py-0.5 text-[#0e2a5e]">
+                                {getTermSource(s)?.label ?? s}
+                              </span>
+                            ))}
+                            {rel && (rel.cases.length > 0 || rel.courses.length > 0) && (
+                              <span className="rounded bg-slate-100 px-1.5 py-0.5">
+                                关联 {rel.courses.length} 课程 · {rel.cases.length} 案例
+                              </span>
+                            )}
+                          </span>
                         </span>
-                      </span>
-                      <span className="mt-0.5 shrink-0 text-xs font-semibold text-[#0e2a5e]/60">
-                        查看术语 →
-                      </span>
-                    </Link>
-                  </li>
-                ))}
+                        <span className="mt-0.5 shrink-0 text-xs font-semibold text-[#0e2a5e]/60">
+                          查看术语 →
+                        </span>
+                      </Link>
+                    </li>
+                  );
+                })}
               </ul>
+              {hits.termHits.length > 40 && (
+                <p className="mt-3 text-center text-xs text-slate-400">
+                  仅展示前 40 条，请细化关键词或前往{" "}
+                  <Link href="/glossary" className="font-semibold text-[#0e2a5e] hover:underline">
+                    Fund Admin Wiki
+                  </Link>{" "}
+                  查看全部
+                </p>
+              )}
             </section>
           )}
 
-          {/* SOP 依据 */}
-          {show("sop") && hits.sopHits.length > 0 && (
-            <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-              <h2 className="flex items-center gap-2 text-sm font-bold text-slate-800">
-                SOP 依据（{hits.sopHits.length}）
-                <span className="rounded bg-amber-100 px-1.5 py-0.5 text-[10px] font-semibold text-amber-700">
-                  来自案例「ICS SOP 依据」小节
+          {/* ===== 术语派生内容（Cases / Courses） ===== */}
+          {show("term") && (hits.derivedCases.length > 0 || hits.derivedCourses.length > 0) && (
+            <section className="rounded-2xl border border-blue-100 bg-blue-50/30 p-5">
+              <h2 className="flex flex-wrap items-center gap-2 text-sm font-bold text-slate-800">
+                术语关联内容（{hits.derivedCases.length + hits.derivedCourses.length}）
+                <span className="rounded bg-blue-100 px-1.5 py-0.5 text-[10px] font-semibold text-blue-700">
+                  由命中的术语自动联出 · 避免反复切换模块
                 </span>
               </h2>
-              <ul className="mt-3 space-y-2">
-                {hits.sopHits.map((s) => (
-                  <li key={s.caseId}>
-                    <Link
-                      href={`/cases/${s.slug}`}
-                      className="group flex items-start gap-3 rounded-xl border border-slate-100 px-3 py-3 transition hover:border-blue-200 hover:bg-blue-50/40"
-                    >
-                      <span className="mt-0.5 shrink-0 rounded bg-slate-100 px-1.5 py-0.5 text-[10px] font-bold text-slate-500">
-                        {s.caseId}
-                      </span>
-                      <span className="min-w-0 flex-1">
-                        <span className="block text-sm font-semibold text-slate-700 group-hover:text-[#0e2a5e]">
-                          {s.caseTitle}
-                        </span>
-                        <span className="mt-0.5 block text-xs leading-relaxed text-slate-400">
-                          <Highlight text={snippet(s.text, kw)} keyword={kw} />
-                        </span>
-                      </span>
-                      <span className="mt-0.5 shrink-0 text-xs font-semibold text-[#0e2a5e]/60">
-                        查看案例 →
-                      </span>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
+              <div className="mt-3 grid grid-cols-1 gap-4 md:grid-cols-2">
+                {hits.derivedCourses.length > 0 && (
+                  <div>
+                    <p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">
+                      关联课程（{hits.derivedCourses.length}）
+                    </p>
+                    <ul className="mt-2 space-y-1.5">
+                      {hits.derivedCourses.map(({ ref, from }) => (
+                        <li key={ref.id}>
+                          <Link
+                            href={`/courses/${ref.slug}`}
+                            className="group flex items-center gap-2 rounded-xl border border-slate-100 bg-white px-3 py-2 transition hover:border-blue-200"
+                          >
+                            <span className="shrink-0 rounded bg-[#0e2a5e] px-1.5 py-px text-[10px] font-bold text-white">
+                              {ref.id}
+                            </span>
+                            <span className="truncate text-sm text-slate-600 group-hover:text-[#0e2a5e]">
+                              {ref.title}
+                            </span>
+                            <span className="ml-auto shrink-0 text-[10px] text-slate-400">via {from}</span>
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                {hits.derivedCases.length > 0 && (
+                  <div>
+                    <p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">
+                      关联案例（{hits.derivedCases.length}）
+                    </p>
+                    <ul className="mt-2 space-y-1.5">
+                      {hits.derivedCases.map(({ ref, from }) => (
+                        <li key={ref.id}>
+                          <Link
+                            href={`/cases/${ref.slug}`}
+                            className="group flex items-center gap-2 rounded-xl border border-slate-100 bg-white px-3 py-2 transition hover:border-blue-200"
+                          >
+                            <span className="shrink-0 rounded bg-slate-100 px-1.5 py-px text-[10px] font-bold text-slate-500">
+                              {ref.id}
+                            </span>
+                            <span className="truncate text-sm text-slate-600 group-hover:text-[#0e2a5e]">
+                              {ref.title}
+                            </span>
+                            <span className="ml-auto shrink-0 text-[10px] text-slate-400">via {from}</span>
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
             </section>
           )}
 
-          {/* 邮件模板 */}
-          {show("template") && hits.templateHits.length > 0 && (
+          {/* ===== Cases ===== */}
+          {show("case") && hits.caseHits.length > 0 && (
             <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-              <h2 className="flex items-center gap-2 text-sm font-bold text-slate-800">
-                邮件模板（{hits.templateHits.length}）
-                <span className="rounded bg-sky-100 px-1.5 py-0.5 text-[10px] font-semibold text-sky-700">
-                  来自案例「客户沟通示例」小节
-                </span>
-              </h2>
+              <h2 className="text-sm font-bold text-slate-800">Cases 案例（{hits.caseHits.length}）</h2>
               <ul className="mt-3 space-y-2">
-                {hits.templateHits.map((t) => (
-                  <li key={t.caseId}>
+                {hits.caseHits.map((c) => (
+                  <li key={c.id}>
                     <Link
-                      href={`/cases/${t.slug}`}
+                      href={`/cases/${c.slug}`}
                       className="group flex items-start gap-3 rounded-xl border border-slate-100 px-3 py-3 transition hover:border-blue-200 hover:bg-blue-50/40"
                     >
-                      <span className="mt-0.5 shrink-0 rounded bg-slate-100 px-1.5 py-0.5 text-[10px] font-bold text-slate-500">
-                        {t.caseId}
+                      <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#0e2a5e]/10 text-[10px] font-bold text-[#0e2a5e]">
+                        {c.id.replace("Case-", "C")}
                       </span>
                       <span className="min-w-0 flex-1">
-                        <span className="block text-sm font-semibold text-slate-700 group-hover:text-[#0e2a5e]">
-                          {t.caseTitle}
+                        <span className="flex items-center gap-2">
+                          {!c.ready && (
+                            <span className="shrink-0 rounded bg-amber-100 px-1.5 py-0.5 text-[10px] font-semibold text-amber-700">
+                              待导入
+                            </span>
+                          )}
+                          <span className="block truncate text-sm font-semibold text-slate-700 group-hover:text-[#0e2a5e]">
+                            <Highlight text={c.title} keyword={kw} />
+                          </span>
                         </span>
-                        <span className="mt-0.5 block text-xs leading-relaxed text-slate-400">
-                          <Highlight text={snippet(t.text, kw)} keyword={kw} />
-                        </span>
-                      </span>
-                      <span className="mt-0.5 shrink-0 text-xs font-semibold text-[#0e2a5e]/60">
-                        查看模板 →
-                      </span>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </section>
-          )}
-
-          {/* Checklist */}
-          {show("checklist") && hits.checklistHits.length > 0 && (
-            <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-              <h2 className="flex items-center gap-2 text-sm font-bold text-slate-800">
-                Admin Checklist（{hits.checklistHits.length}）
-                <span className="rounded bg-emerald-100 px-1.5 py-0.5 text-[10px] font-semibold text-emerald-700">
-                  课程操作清单
-                </span>
-              </h2>
-              <ul className="mt-3 space-y-2">
-                {hits.checklistHits.map((c) => (
-                  <li key={`${c.lessonId}/${c.text}`}>
-                    <Link
-                      href={`/courses/${c.lessonSlug}`}
-                      className="group flex items-start gap-3 rounded-xl border border-slate-100 px-3 py-3 transition hover:border-blue-200 hover:bg-blue-50/40"
-                    >
-                      <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#0e2a5e] text-xs font-bold text-white">
-                        {c.lessonId}
-                      </span>
-                      <span className="min-w-0 flex-1">
-                        <span className="block text-sm font-semibold text-slate-700 group-hover:text-[#0e2a5e]">
-                          {c.lessonTitle}
-                        </span>
-                        <span className="mt-0.5 block text-xs leading-relaxed text-slate-400">
-                          <Highlight text={c.text} keyword={kw} />
+                        <span className="mt-0.5 block truncate text-xs text-slate-400">
+                          {c.module}
+                          {c.jurisdiction.length > 0 && (
+                            <> · {c.jurisdiction.map((j) => `📍 ${j}`).join(" + ")}</>
+                          )}
+                          {c.businessArea && <> · {c.businessArea}</>}
+                          {c.tags.length > 0 && <> · #{c.tags.join(" · #")}</>}
                         </span>
                       </span>
                       <span className="mt-0.5 shrink-0 text-slate-300 transition group-hover:text-[#0e2a5e]">
@@ -544,10 +647,10 @@ export default function SearchClient({ data }: { data: SearchData }) {
             </section>
           )}
 
-          {/* 课程 */}
+          {/* ===== Courses（课程） ===== */}
           {show("course") && hits.lessonHits.length > 0 && (
             <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-              <h2 className="text-sm font-bold text-slate-800">课程（{hits.lessonHits.length}）</h2>
+              <h2 className="text-sm font-bold text-slate-800">Courses 课程（{hits.lessonHits.length}）</h2>
               <ul className="mt-3 space-y-2">
                 {hits.lessonHits.map(({ lesson, field }) => (
                   <li key={lesson.id}>
@@ -590,7 +693,7 @@ export default function SearchClient({ data }: { data: SearchData }) {
             </section>
           )}
 
-          {/* 模块 */}
+          {/* ===== Courses（模块） ===== */}
           {show("course") && hits.moduleHits.length > 0 && (
             <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
               <h2 className="text-sm font-bold text-slate-800">模块（{hits.moduleHits.length}）</h2>
@@ -621,41 +724,105 @@ export default function SearchClient({ data }: { data: SearchData }) {
             </section>
           )}
 
-          {/* 案例 */}
-          {show("case") && hits.caseHits.length > 0 && (
+          {/* ===== Knowledge Notes · SOP 依据 ===== */}
+          {show("sop") && hits.sopHits.length > 0 && (
             <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-              <h2 className="text-sm font-bold text-slate-800">案例（{hits.caseHits.length}）</h2>
+              <h2 className="flex items-center gap-2 text-sm font-bold text-slate-800">
+                SOP 依据（{hits.sopHits.length}）
+                <span className="rounded bg-amber-100 px-1.5 py-0.5 text-[10px] font-semibold text-amber-700">
+                  Knowledge Notes · 来自案例「ICS SOP 依据」小节
+                </span>
+              </h2>
               <ul className="mt-3 space-y-2">
-                {hits.caseHits.map((c) => (
-                  <li key={c.id}>
+                {hits.sopHits.map((s) => (
+                  <li key={s.caseId}>
                     <Link
-                      href={`/cases/${c.slug}`}
+                      href={`/cases/${s.slug}`}
                       className="group flex items-start gap-3 rounded-xl border border-slate-100 px-3 py-3 transition hover:border-blue-200 hover:bg-blue-50/40"
                     >
-                      <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#0e2a5e]/10 text-[10px] font-bold text-[#0e2a5e]">
-                        {c.id.replace("Case-", "C")}
+                      <span className="mt-0.5 shrink-0 rounded bg-slate-100 px-1.5 py-0.5 text-[10px] font-bold text-slate-500">
+                        {s.caseId}
                       </span>
                       <span className="min-w-0 flex-1">
-                        <span className="flex items-center gap-2">
-                          {!c.ready && (
-                            <span className="shrink-0 rounded bg-amber-100 px-1.5 py-0.5 text-[10px] font-semibold text-amber-700">
-                              待导入
-                            </span>
-                          )}
-                          <span className="block truncate text-sm font-semibold text-slate-700 group-hover:text-[#0e2a5e]">
-                            <Highlight text={c.title} keyword={kw} />
-                          </span>
+                        <span className="block text-sm font-semibold text-slate-700 group-hover:text-[#0e2a5e]">
+                          {s.caseTitle}
                         </span>
-                        <span className="mt-0.5 block truncate text-xs text-slate-400">
-                          {c.module}
-                          {c.jurisdiction.length > 0 && (
-                            <>
-                              {" "}
-                              · {c.jurisdiction.map((j) => `📍 ${j}`).join(" + ")}
-                            </>
-                          )}
-                          {c.businessArea && <> · {c.businessArea}</>}
-                          {c.tags.length > 0 && <> · #{c.tags.join(" · #")}</>}
+                        <span className="mt-0.5 block text-xs leading-relaxed text-slate-400">
+                          <Highlight text={snippet(s.text, kw)} keyword={kw} />
+                        </span>
+                      </span>
+                      <span className="mt-0.5 shrink-0 text-xs font-semibold text-[#0e2a5e]/60">
+                        查看案例 →
+                      </span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
+
+          {/* ===== Knowledge Notes · 邮件模板 ===== */}
+          {show("template") && hits.templateHits.length > 0 && (
+            <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+              <h2 className="flex items-center gap-2 text-sm font-bold text-slate-800">
+                邮件模板（{hits.templateHits.length}）
+                <span className="rounded bg-sky-100 px-1.5 py-0.5 text-[10px] font-semibold text-sky-700">
+                  Knowledge Notes · 来自案例「客户沟通示例」小节
+                </span>
+              </h2>
+              <ul className="mt-3 space-y-2">
+                {hits.templateHits.map((t) => (
+                  <li key={t.caseId}>
+                    <Link
+                      href={`/cases/${t.slug}`}
+                      className="group flex items-start gap-3 rounded-xl border border-slate-100 px-3 py-3 transition hover:border-blue-200 hover:bg-blue-50/40"
+                    >
+                      <span className="mt-0.5 shrink-0 rounded bg-slate-100 px-1.5 py-0.5 text-[10px] font-bold text-slate-500">
+                        {t.caseId}
+                      </span>
+                      <span className="min-w-0 flex-1">
+                        <span className="block text-sm font-semibold text-slate-700 group-hover:text-[#0e2a5e]">
+                          {t.caseTitle}
+                        </span>
+                        <span className="mt-0.5 block text-xs leading-relaxed text-slate-400">
+                          <Highlight text={snippet(t.text, kw)} keyword={kw} />
+                        </span>
+                      </span>
+                      <span className="mt-0.5 shrink-0 text-xs font-semibold text-[#0e2a5e]/60">
+                        查看模板 →
+                      </span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
+
+          {/* ===== Knowledge Notes · Checklist ===== */}
+          {show("checklist") && hits.checklistHits.length > 0 && (
+            <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+              <h2 className="flex items-center gap-2 text-sm font-bold text-slate-800">
+                Admin Checklist（{hits.checklistHits.length}）
+                <span className="rounded bg-emerald-100 px-1.5 py-0.5 text-[10px] font-semibold text-emerald-700">
+                  Knowledge Notes · 课程操作清单
+                </span>
+              </h2>
+              <ul className="mt-3 space-y-2">
+                {hits.checklistHits.map((c) => (
+                  <li key={`${c.lessonId}/${c.text}`}>
+                    <Link
+                      href={`/courses/${c.lessonSlug}`}
+                      className="group flex items-start gap-3 rounded-xl border border-slate-100 px-3 py-3 transition hover:border-blue-200 hover:bg-blue-50/40"
+                    >
+                      <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#0e2a5e] text-xs font-bold text-white">
+                        {c.lessonId}
+                      </span>
+                      <span className="min-w-0 flex-1">
+                        <span className="block text-sm font-semibold text-slate-700 group-hover:text-[#0e2a5e]">
+                          {c.lessonTitle}
+                        </span>
+                        <span className="mt-0.5 block text-xs leading-relaxed text-slate-400">
+                          <Highlight text={c.text} keyword={kw} />
                         </span>
                       </span>
                       <span className="mt-0.5 shrink-0 text-slate-300 transition group-hover:text-[#0e2a5e]">
@@ -695,9 +862,7 @@ function DirCard({
       href={href}
       className="group rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:border-blue-200 hover:shadow-md"
     >
-      <span
-        className={`inline-flex rounded-full px-2 py-0.5 text-[10px] font-bold ${badgeCls}`}
-      >
+      <span className={`inline-flex rounded-full px-2 py-0.5 text-[10px] font-bold ${badgeCls}`}>
         {badge}
       </span>
       <p className="mt-2 text-[15px] font-bold text-slate-800 group-hover:text-[#0e2a5e]">

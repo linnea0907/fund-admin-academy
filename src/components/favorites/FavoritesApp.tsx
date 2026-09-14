@@ -205,7 +205,7 @@ function FavoritesPanel({
           category: "术语",
           tag: "术语",
           href: `/glossary/${t.id}`,
-          title: `${t.en} · ${t.zh}`,
+          title: `${t.term} · ${t.zh}`,
           subtitle: t.brief,
           remove: () => toggleFavorite({ type: "term", termId: t.id }),
         });
