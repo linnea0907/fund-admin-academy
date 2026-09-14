@@ -97,9 +97,10 @@ function sortZh(vals: string[]): string[] {
   return Array.from(vals).sort((a, b) => a.localeCompare(b, "zh-Hans-CN"));
 }
 
-/** 案例库目录（V1.8.2 筛选区重构）：
- *  首屏行顺序固定 模块 → 业务领域 → 技能（默认折叠，点击「展开技能（N）」）→ 难度；
- *  状态与标签收纳进默认折叠的「高级筛选」。全部维度写回 URL，可分享可回退。
+/** 案例库目录（V1.13.2 筛选分层）：
+ *  默认仅展示高频维度：属地 / 主题（Jurisdiction First）；
+ *  其余维度收纳进默认折叠的「高级筛选」：模块 → 业务(含域内技能) → 难度 → 实体 → 状态 → 标签。
+ *  深链带任一高级条件时自动展开以高亮所选；全部维度写回 URL，可分享可回退。
  *  业务域维持 5 类（KYC & Onboarding / AML & Compliance / Fund Structure /
  *  Fund Documents / Client Communication，结构与名称本轮不动）。 */
 export default function CaseLibrary({ cases }: { cases: CaseMeta[] }) {
@@ -109,9 +110,16 @@ export default function CaseLibrary({ cases }: { cases: CaseMeta[] }) {
   const sp = useSearchParams();
   const raw = readFilters(sp);
 
-  // 深链带高级条件（状态/标签）时默认展开高级筛选
+  // V1.13.2 深链带任一高级条件（模块/业务/技能/难度/实体/状态/标签）时自动展开以高亮所选
   const [showAdvanced, setShowAdvanced] = useState(
-    () => raw.status !== "all" || raw.tag !== null
+    () =>
+      raw.status !== "all" ||
+      raw.tag !== null ||
+      raw.mod !== null ||
+      raw.area !== null ||
+      raw.skill !== null ||
+      raw.level !== null ||
+      raw.entity !== null
   );
   // 技能行折叠控制：默认收起；深链已带 skill 时默认展开以高亮所选
   const [showSkills, setShowSkills] = useState(() => raw.skill !== null);
@@ -255,6 +263,17 @@ export default function CaseLibrary({ cases }: { cases: CaseMeta[] }) {
     raw.entity !== null ||
     raw.topic !== null;
 
+  // V1.13.2 「高级筛选」区内激活条件计数（驱动折叠按钮高亮/徽标；不参与过滤）
+  const advancedActiveCount =
+    (shownModule !== null ? 1 : 0) +
+    (areaDef !== null ? 1 : 0) +
+    (shownSkill !== null ? 1 : 0) +
+    (shownLevel !== null ? 1 : 0) +
+    (raw.entity !== null ? 1 : 0) +
+    (statusActive ? 1 : 0) +
+    (shownTag !== null ? 1 : 0);
+  const advancedActive = advancedActiveCount > 0;
+
   const statusLabel = (k: CaseStatusKey) =>
     STATUS_OPTIONS.find((o) => o.key === k)?.label ?? "";
 
@@ -347,168 +366,7 @@ export default function CaseLibrary({ cases }: { cases: CaseMeta[] }) {
           })}
         </div>
 
-        {/* 行 2 · 模块（一级分类 Module 1~5） */}
-        <div className="flex flex-wrap items-center gap-1.5">
-          <span className={ROW_LABEL}>模块</span>
-          <button
-            type="button"
-            onClick={() => setModule(null)}
-            className={chip(shownModule === null)}
-            title="查看全部模块"
-          >
-            全部
-          </button>
-          {CASE_MODULES.map((m) => {
-            const active = shownModule === m.id;
-            return (
-              <button
-                key={m.id}
-                type="button"
-                title={`${m.title} · ${m.zh}`}
-                onClick={() => setModule(active ? null : m.id)}
-                className={chip(active)}
-              >
-                {moduleChipLabel(m.id, m.zh)}
-                <span className={active ? "text-blue-200" : "text-slate-400"}>
-                  {" "}
-                  {moduleCounts.get(m.id) ?? 0}
-                </span>
-              </button>
-            );
-          })}
-        </div>
-
-        {/* 行 2 · 业务领域（合并后 5 类） */}
-        <div className="flex flex-wrap items-center gap-1.5">
-          <span className={ROW_LABEL}>业务</span>
-          <button
-            type="button"
-            onClick={() => setArea(null)}
-            className={chip(areaDef === null)}
-            title="查看全部业务领域"
-          >
-            全部
-          </button>
-          {CASE_DOMAINS.map((d) => {
-            const active = areaDef?.id === d.id;
-            return (
-              <button
-                key={d.id}
-                type="button"
-                title={`${d.label} · ${d.zh} · ${domainCounts.get(d.id) ?? 0} 例`}
-                onClick={() => setArea(active ? null : d.id)}
-                className={chip(active)}
-              >
-                {d.label}
-                <span className={active ? "text-blue-200" : "text-slate-400"}>
-                  {" "}
-                  {domainCounts.get(d.id) ?? 0}
-                </span>
-              </button>
-            );
-          })}
-        </div>
-
-        {/* 行 3 · 技能（选中业务域后出现，默认折叠为「展开技能（N）」） */}
-        {areaDef && (
-          <div className="flex flex-wrap items-center gap-1.5">
-            <span className={ROW_LABEL}>技能</span>
-            {!showSkills ? (
-              <button
-                type="button"
-                onClick={() => setShowSkills(true)}
-                className={SKILL_TOGGLE}
-                title={`展开 ${areaDef.label} 的 ${areaDef.skills.length} 项技能`}
-                aria-expanded={false}
-              >
-                ▸ 展开技能（{areaDef.skills.length}）
-              </button>
-            ) : (
-              <>
-                <button
-                  type="button"
-                  onClick={() => setSkill(null)}
-                  className={chip(shownSkill === null)}
-                >
-                  本域全部
-                </button>
-                {areaDef.skills.map((s) => {
-                  const active = shownSkill === s;
-                  return (
-                    <button
-                      key={s}
-                      type="button"
-                      title={`${areaDef.label} · ${s}`}
-                      onClick={() => setSkill(active ? null : s)}
-                      className={chip(active)}
-                    >
-                      {s}
-                    </button>
-                  );
-                })}
-                <button
-                  type="button"
-                  onClick={() => setShowSkills(false)}
-                  className={SKILL_TOGGLE}
-                  aria-expanded={true}
-                >
-                  ▾ 收起
-                </button>
-              </>
-            )}
-          </div>
-        )}
-
-        {/* 行 4 · 难度（归一：基础 / 进阶 / 高级） */}
-        <div className="flex flex-wrap items-center gap-1.5">
-          <span className={ROW_LABEL}>难度</span>
-          {LEVEL_OPTIONS.map((o) => {
-            const active = shownLevel === o.key;
-            return (
-              <button
-                key={o.key ?? "all"}
-                type="button"
-                onClick={() => update({ level: active ? null : o.key })}
-                className={chip(active)}
-              >
-                {o.label}
-              </button>
-            );
-          })}
-        </div>
-
-        {/* 行 5 · 实体类型（V1.13.1） */}
-        <div className="flex flex-wrap items-center gap-1.5">
-          <span className={ROW_LABEL}>实体</span>
-          <button
-            type="button"
-            onClick={() => setEntity(null)}
-            className={chip(raw.entity === null)}
-            title="查看全部实体类型"
-          >
-            👤 全部
-          </button>
-          {CASE_ENTITY_TYPES.map((e) => {
-            const active = raw.entity === e;
-            return (
-              <button
-                key={e}
-                type="button"
-                title={`实体类型：${e}（${entityCounts.get(e) ?? 0} 例）`}
-                onClick={() => setEntity(active ? null : e)}
-                className={chip(active)}
-              >
-                {e}
-                <span className={active ? "text-blue-200" : "text-slate-400"}>
-                  {" "}
-                  {entityCounts.get(e) ?? 0}
-                </span>
-              </button>
-            );
-          })}
-        </div>
-
-        {/* 行 6 · 知识主题（V1.13.1） */}
+        {/* 行 2 · 知识主题（V1.13.1 高频维度 · 默认展示） */}
         <div className="flex flex-wrap items-center gap-1.5">
           <span className={ROW_LABEL}>主题</span>
           <button
@@ -541,26 +399,21 @@ export default function CaseLibrary({ cases }: { cases: CaseMeta[] }) {
           })}
         </div>
 
-        {/* 高级筛选（状态 + 标签，默认折叠） */}
+        {/* 高级筛选（V1.13.2 默认折叠）：模块 / 业务(含技能) / 难度 / 实体 / 状态 / 标签 */}
         <div className="rounded-xl border border-slate-100 bg-slate-50/50">
           <button
             type="button"
             onClick={() => setShowAdvanced((v) => !v)}
             className={`flex w-full items-center justify-between px-3.5 py-2 text-xs font-semibold transition hover:text-[#0e2a5e] ${
-              hasActive ? "text-[#0e2a5e]" : "text-slate-600"
+              advancedActive ? "text-[#0e2a5e]" : "text-slate-600"
             }`}
             aria-expanded={showAdvanced}
           >
             <span className="flex items-center gap-2">
               高级筛选
-              {statusActive && (
+              {advancedActive && (
                 <span className="rounded-full bg-blue-100 px-2 py-0.5 text-[11px] font-semibold text-[#0e2a5e]">
-                  {statusLabel(raw.status)}
-                </span>
-              )}
-              {shownTag && (
-                <span className="rounded-full bg-amber-100 px-2 py-0.5 text-[11px] font-semibold text-amber-700">
-                  已选 #{shownTag}
+                  已选 {advancedActiveCount} 项
                 </span>
               )}
             </span>
@@ -568,8 +421,169 @@ export default function CaseLibrary({ cases }: { cases: CaseMeta[] }) {
           </button>
           {showAdvanced && (
             <div className="space-y-3.5 border-t border-slate-100 px-3.5 pb-4 pt-3">
+              {/* 分类 · 模块（M1~M5） */}
+              <div className="flex flex-wrap items-center gap-1.5">
+                <span className={ROW_LABEL}>模块</span>
+                <button
+                  type="button"
+                  onClick={() => setModule(null)}
+                  className={chip(shownModule === null)}
+                  title="查看全部模块"
+                >
+                  全部
+                </button>
+                {CASE_MODULES.map((m) => {
+                  const active = shownModule === m.id;
+                  return (
+                    <button
+                      key={m.id}
+                      type="button"
+                      title={`${m.title} · ${m.zh}`}
+                      onClick={() => setModule(active ? null : m.id)}
+                      className={chip(active)}
+                    >
+                      {moduleChipLabel(m.id, m.zh)}
+                      <span className={active ? "text-blue-200" : "text-slate-400"}>
+                        {" "}
+                        {moduleCounts.get(m.id) ?? 0}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* 分类 · 业务领域（合并后 5 类） */}
+              <div className="flex flex-wrap items-center gap-1.5">
+                <span className={ROW_LABEL}>业务</span>
+                <button
+                  type="button"
+                  onClick={() => setArea(null)}
+                  className={chip(areaDef === null)}
+                  title="查看全部业务领域"
+                >
+                  全部
+                </button>
+                {CASE_DOMAINS.map((d) => {
+                  const active = areaDef?.id === d.id;
+                  return (
+                    <button
+                      key={d.id}
+                      type="button"
+                      title={`${d.label} · ${d.zh} · ${domainCounts.get(d.id) ?? 0} 例`}
+                      onClick={() => setArea(active ? null : d.id)}
+                      className={chip(active)}
+                    >
+                      {d.label}
+                      <span className={active ? "text-blue-200" : "text-slate-400"}>
+                        {" "}
+                        {domainCounts.get(d.id) ?? 0}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* 分类 · 技能（选中业务域后出现，默认折叠为「展开技能（N）」） */}
+              {areaDef && (
+                <div className="flex flex-wrap items-center gap-1.5">
+                  <span className={ROW_LABEL}>技能</span>
+                  {!showSkills ? (
+                    <button
+                      type="button"
+                      onClick={() => setShowSkills(true)}
+                      className={SKILL_TOGGLE}
+                      title={`展开 ${areaDef.label} 的 ${areaDef.skills.length} 项技能`}
+                      aria-expanded={false}
+                    >
+                      ▸ 展开技能（{areaDef.skills.length}）
+                    </button>
+                  ) : (
+                    <>
+                      <button
+                        type="button"
+                        onClick={() => setSkill(null)}
+                        className={chip(shownSkill === null)}
+                      >
+                        本域全部
+                      </button>
+                      {areaDef.skills.map((s) => {
+                        const active = shownSkill === s;
+                        return (
+                          <button
+                            key={s}
+                            type="button"
+                            title={`${areaDef.label} · ${s}`}
+                            onClick={() => setSkill(active ? null : s)}
+                            className={chip(active)}
+                          >
+                            {s}
+                          </button>
+                        );
+                      })}
+                      <button
+                        type="button"
+                        onClick={() => setShowSkills(false)}
+                        className={SKILL_TOGGLE}
+                        aria-expanded={true}
+                      >
+                        ▾ 收起
+                      </button>
+                    </>
+                  )}
+                </div>
+              )}
+
+              {/* 分类 · 难度（归一：基础 / 进阶 / 高级） */}
+              <div className="flex flex-wrap items-center gap-1.5">
+                <span className={ROW_LABEL}>难度</span>
+                {LEVEL_OPTIONS.map((o) => {
+                  const active = shownLevel === o.key;
+                  return (
+                    <button
+                      key={o.key ?? "all"}
+                      type="button"
+                      onClick={() => update({ level: active ? null : o.key })}
+                      className={chip(active)}
+                    >
+                      {o.label}
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* 分类 · 实体类型 */}
+              <div className="flex flex-wrap items-center gap-1.5">
+                <span className={ROW_LABEL}>实体</span>
+                <button
+                  type="button"
+                  onClick={() => setEntity(null)}
+                  className={chip(raw.entity === null)}
+                  title="查看全部实体类型"
+                >
+                  👤 全部
+                </button>
+                {CASE_ENTITY_TYPES.map((e) => {
+                  const active = raw.entity === e;
+                  return (
+                    <button
+                      key={e}
+                      type="button"
+                      title={`实体类型：${e}（${entityCounts.get(e) ?? 0} 例）`}
+                      onClick={() => setEntity(active ? null : e)}
+                      className={chip(active)}
+                    >
+                      {e}
+                      <span className={active ? "text-blue-200" : "text-slate-400"}>
+                        {" "}
+                        {entityCounts.get(e) ?? 0}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+
               {/* 状态 */}
-              <div>
+              <div className="border-t border-slate-100 pt-3.5">
                 <p className="mb-1.5 text-[11px] font-semibold tracking-wide text-slate-400">
                   状态 · 学习进度
                 </p>
@@ -721,7 +735,7 @@ export default function CaseLibrary({ cases }: { cases: CaseMeta[] }) {
             {!hasActive ? "暂无案例" : "没有符合当前筛选条件的案例"}
           </p>
           <p className="mt-1 text-xs text-slate-400">
-            可尝试清除部分筛选条件，或在「高级筛选」中调整状态与标签
+            可尝试清除部分筛选条件，或展开「高级筛选」调整更多条件
           </p>
         </div>
       ) : (
