@@ -686,7 +686,7 @@ export const AML_KYC_TERMS: GlossaryTerm[] = [
     level: "advanced",
     jurisdiction: ["Cayman"],
     definition:
-      "开曼 2026 年 9 月 18 日生效的 CIMA 规则之一，适用于受 CIMA 监管及监督的金融服务机构（含注册投资基金）；覆盖治理、风险为本方法、CDD、报告、记录、培训、外包与审计，核心是体系有效性与证据。",
+      "开曼 CIMA 就受其监管及监督的金融服务机构（含注册投资基金）发布的合规体系规则之一；覆盖治理、风险为本方法、CDD、报告、记录、培训、外包与审计，核心是体系有效性与证据。",
     whyImportant:
       "该规则具有法律效力，不能只当作指引：监管重点已从「有文件」转向「有效且可证明」——控制是否实际运行、董事是否有效监督、异常是否及时闭环、证据能否按基金提供。",
     scenario: ["Fund Governance", "Regulatory Filing", "Periodic Review"],
@@ -695,7 +695,7 @@ export const AML_KYC_TERMS: GlossaryTerm[] = [
     cases: ["Case-028"],
     source: ["cima"],
     tags: ["法律效力", "有效性", "证据链"],
-    brief: "CIMA 2026 新规：以体系有效性与证据为核心的合规计划要求。",
+    brief: "CIMA 合规体系规则：以体系有效性与证据为核心的合规计划要求。",
     commonMistakes: [
       "把它当作指引文件，按「已签字」而非「运行有效」举证",
       "认为完成政策审批即满足要求，忽视可检查的证据链",
