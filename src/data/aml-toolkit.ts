@@ -167,6 +167,8 @@ export const AML_TOOLKIT: AmlToolkitItem[] = [
         detail:
           "由合规（MLRO / DMLRO）静默核验全部身份要素：姓名全称与拼写变体、出生日期、国籍与居住地、证件号码、注册地或营业地址等。",
         note: "核验期间暂缓一切相关动作（含赎回、汇款、转账），不得先放行后核验。",
+        warning:
+          "⚠ Do not contact the investor if doing so may constitute tipping off. Potential matches should be verified using existing records and independent reliable information. —— 不得向投资者核实身份，以免构成通风报信（tipping off）；潜在命中只能通过既有记录与独立可靠信息核验。",
       },
       {
         title: "Escalate",

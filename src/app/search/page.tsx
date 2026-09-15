@@ -94,7 +94,7 @@ export default function SearchPage() {
   const toolkits: SearchToolkit[] = AML_TOOLKIT.map((t) => {
     const parts: string[] = [t.title, t.zh, t.summary, t.purpose];
     for (const s of t.sections ?? []) parts.push(s.zh, s.title, ...s.items);
-    for (const s of t.steps ?? []) parts.push(s.zh, s.title, s.detail, s.note ?? "");
+    for (const s of t.steps ?? []) parts.push(s.zh, s.title, s.detail, s.note ?? "", s.warning ?? "");
     for (const o of t.outcomes ?? []) parts.push(o.zh, o.title, o.detail);
     if (t.comparison) {
       parts.push(...t.comparison.columns);

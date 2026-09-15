@@ -230,3 +230,13 @@ Audit Coverage
 服务商证据只能支持结论，不能替代结论。
 
 董事会要的不是一份报告，而是一条能按基金追溯的**证据链**。
+
+## Key Takeaway
+
+> **Administrator-level evidence may support the audit work, but it cannot replace fund-level audit conclusions.**
+>
+> **Service-provider evidence supports the assessment, while sufficient and appropriate fund-level evidence remains required.**
+
+**中文对照**：管理人（Administrator）层面的证据可以支持审计工作，但不能替代**基金层面**的审计结论；服务商证据用于支持评估，而**充分且适当的基金层面证据**仍是必备要求。
+
+这是本次 AML 培训最重要的监管观点之一 —— **服务商证据可以支持、但不能替代基金层面的审计结论**。

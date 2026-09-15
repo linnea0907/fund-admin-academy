@@ -68,6 +68,8 @@ export interface ToolkitSopStep {
   detail: string;
   /** 补充要点（可选） */
   note?: string;
+  /** 醒目警示（可选）：渲染为高对比警示条，用于红线级禁止事项（如 Tipping Off） */
+  warning?: string;
 }
 
 /** SOP 分支结果（如 False Positive / True Match） */
