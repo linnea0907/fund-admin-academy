@@ -12,12 +12,15 @@ import SearchClient, {
   type SearchSop,
   type SearchTemplate,
   type SearchTermRelations,
+  type SearchToolkit,
 } from "@/components/search/SearchClient";
+import { AML_TOOLKIT } from "@/data/aml-toolkit";
+import { getToolkitKind } from "@/types/aml-toolkit";
 
 export const metadata: Metadata = {
   title: "知识检索",
   description:
-    "Fund Admin Wiki 知识检索：Terms（术语）· Knowledge Notes（SOP 依据 / Checklist / 邮件模板）· Cases（案例）· Courses（课程）统一检索，一次搜索直达术语、关联案例与关联课程。",
+    "Fund Admin Wiki 知识检索：Terms（术语）· AML 实务工具包（清单 / SOP / 对比）· Knowledge Notes（SOP 依据 / Checklist / 邮件模板）· Cases（案例）· Courses（课程）统一检索，一次搜索直达术语、工具、关联案例与关联课程。",
 };
 
 /** Fund Admin Wiki · 知识检索（统一结果页：Terms / Knowledge Notes / Cases / Courses） */
@@ -87,6 +90,29 @@ export default function SearchPage() {
     }))
   );
 
+  // AML 实务工具包（V1.15.0 一级分类）：全文展平进检索文本
+  const toolkits: SearchToolkit[] = AML_TOOLKIT.map((t) => {
+    const parts: string[] = [t.title, t.zh, t.summary, t.purpose];
+    for (const s of t.sections ?? []) parts.push(s.zh, s.title, ...s.items);
+    for (const s of t.steps ?? []) parts.push(s.zh, s.title, s.detail, s.note ?? "");
+    for (const o of t.outcomes ?? []) parts.push(o.zh, o.title, o.detail);
+    if (t.comparison) {
+      parts.push(...t.comparison.columns);
+      for (const r of t.comparison.rows) parts.push(r.label, ...r.cells);
+      parts.push(...(t.comparison.reminders ?? []));
+    }
+    parts.push(...(t.pitfalls ?? []), ...t.tags, ...(t.relatedTerms ?? []));
+    return {
+      id: t.id,
+      kind: t.kind,
+      kindLabel: getToolkitKind(t.kind).label,
+      title: t.title,
+      zh: t.zh,
+      summary: t.summary,
+      text: parts.filter(Boolean).join("\n"),
+    };
+  });
+
   return (
     <SearchClient
       data={{
@@ -97,6 +123,7 @@ export default function SearchPage() {
         sops,
         templates,
         checklists,
+        toolkits,
         counts: {
           terms: GLOSSARY_TERMS.length,
           termsBuiltin: GLOSSARY_BUILTIN_COUNT,
@@ -111,6 +138,7 @@ export default function SearchPage() {
           sops: sops.length,
           templates: templates.length,
           checklists: checklists.length,
+          toolkits: toolkits.length,
         },
       }}
     />

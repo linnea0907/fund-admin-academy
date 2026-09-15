@@ -77,6 +77,8 @@ export function entityTypeMeta(t: string): string {
 
 /* ================================================================
  * Topic · 知识主题（一个案例可关联多个；UI 主展示取首个）
+ * V1.15.0 新增 AML 实务 5 项：Screening / AML Audit / Outsourcing /
+ * EDD / Third Party Payment（配合 Cayman AML 案例）
  * ================================================================ */
 export const CASE_TOPICS = [
   "Identity Verification",
@@ -91,6 +93,11 @@ export const CASE_TOPICS = [
   "Tax Residency",
   "CRS",
   "FATCA",
+  "Screening",
+  "AML Audit",
+  "Outsourcing",
+  "EDD",
+  "Third Party Payment",
 ] as const;
 export type CaseTopic = (typeof CASE_TOPICS)[number];
 

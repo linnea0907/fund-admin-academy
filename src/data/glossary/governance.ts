@@ -241,4 +241,36 @@ export const GOVERNANCE_TERMS: GlossaryTerm[] = [
     tags: ["关联交易", "披露", "治理"],
     brief: "关联方角色重叠产生的冲突情形，须识别、披露与管理。",
   },
+  {
+    id: "governing-body",
+    term: "Governing Body",
+    fullName: "Governing Body",
+    zh: "治理机构",
+    category: "governance",
+    level: "advanced",
+    jurisdiction: ["Global", "Cayman", "BVI"],
+    definition:
+      "基金的最高治理与决策机构：公司形式为董事会，合伙形式为普通合伙人（GP），LLC 形式为其 LLC 协议确定的管理人或成员；负责批准 AML/CFT/CPF 政策并监督其有效运行。",
+    whyImportant:
+      "治理机构的最终责任不能外包——委任 AMLCO/MLRO 等人员不等于转移责任；治理机构须理解 ML/TF/PF/TFS 风险、配置合格人员与资源、审阅管理层与服务商汇报，并监督整改闭环。",
+    scenario: ["Fund Governance", "Regulatory Filing"],
+    aliases: ["Governing Body", "治理机构", "董事会"],
+    related: [
+      "board-of-directors",
+      "fiduciary-duty",
+      "corporate-director",
+      "amlco",
+      "effective-compliance-programme",
+      "fund-level-evidence",
+    ],
+    cases: ["Case-028"],
+    source: ["cima", "ics", "blue-book"],
+    tags: ["最终责任", "不可外包", "政策批准"],
+    brief: "基金最高治理机构（董事会 / GP / LLC 管理人），AML 最终责任不可外包。",
+    commonMistakes: [
+      "认为委任了 AMLCO 就转移了合规责任",
+      "把 ELP 的治理机构误认为董事会（应为普通合伙人）",
+      "只批准政策而不追踪整改是否闭环",
+    ],
+  },
 ];

@@ -107,6 +107,19 @@ export interface SearchChecklist {
   text: string;
 }
 
+/** AML 实务工具包条目（V1.15.0 一级分类「AML 实务工具包」检索源） */
+export interface SearchToolkit {
+  id: string;
+  /** checklist / sop / comparison */
+  kind: string;
+  kindLabel: string;
+  title: string;
+  zh: string;
+  summary: string;
+  /** 检索用长文本（purpose + 全部条目 + 步骤 + 表格 + 提醒 + 误区） */
+  text: string;
+}
+
 export interface SearchCounts {
   terms: number;
   termsBuiltin: number;
@@ -119,6 +132,7 @@ export interface SearchCounts {
   sops: number;
   templates: number;
   checklists: number;
+  toolkits: number;
 }
 
 interface SearchData {
@@ -129,6 +143,7 @@ interface SearchData {
   sops: SearchSop[];
   templates: SearchTemplate[];
   checklists: SearchChecklist[];
+  toolkits: SearchToolkit[];
   counts: SearchCounts;
 }
 
@@ -148,14 +163,23 @@ interface TermHit {
   fields: string[];
 }
 
-/** 检索范围（Terms / Cases / Courses 为一级；Knowledge Notes 三类为二级） */
-type Scope = "all" | "term" | "case" | "course" | "sop" | "template" | "checklist";
+/** 检索范围（Terms / Cases / Courses / AML 实务工具包 为一级；Knowledge Notes 三类为二级） */
+type Scope =
+  | "all"
+  | "term"
+  | "case"
+  | "course"
+  | "toolkit"
+  | "sop"
+  | "template"
+  | "checklist";
 
 const SCOPES: { key: Scope; label: string }[] = [
   { key: "all", label: "全部" },
   { key: "term", label: "Terms 术语" },
   { key: "case", label: "Cases 案例" },
   { key: "course", label: "Courses 课程" },
+  { key: "toolkit", label: "AML 实务工具包" },
   { key: "sop", label: "SOP 依据" },
   { key: "template", label: "邮件模板" },
   { key: "checklist", label: "Checklist" },
@@ -248,6 +272,14 @@ export default function SearchClient({ data }: { data: SearchData }) {
     const templateHits = data.templates.filter((t) => t.text.toLowerCase().includes(lower));
     const checklistHits = data.checklists.filter((c) => c.text.toLowerCase().includes(lower));
 
+    // AML 实务工具包（一级分类；标题 / 中文名 / 摘要 / 全文条目）
+    const toolkitHits = data.toolkits.filter((t) =>
+      [t.title, t.zh, t.summary, t.kindLabel, t.text]
+        .join("\n")
+        .toLowerCase()
+        .includes(lower)
+    );
+
     const total =
       termHits.length +
       derivedCases.length +
@@ -255,6 +287,7 @@ export default function SearchClient({ data }: { data: SearchData }) {
       lessonHits.length +
       moduleHits.length +
       caseHits.length +
+      toolkitHits.length +
       sopHits.length +
       templateHits.length +
       checklistHits.length;
@@ -266,6 +299,7 @@ export default function SearchClient({ data }: { data: SearchData }) {
       lessonHits,
       moduleHits,
       caseHits,
+      toolkitHits,
       sopHits,
       templateHits,
       checklistHits,
@@ -310,8 +344,8 @@ export default function SearchClient({ data }: { data: SearchData }) {
         </div>
         <p className="mt-1.5 text-sm text-slate-500">
           一次搜索直达 <b className="text-[#0e2a5e]">Terms 术语 · Cases 案例 · Courses 课程</b>
-          ，并覆盖 Knowledge Notes（SOP 依据 / Checklist / 邮件模板）；
-          命中术语时自动联出它的关联案例与关联课程（模糊匹配 · 不区分大小写）
+          ，并覆盖 <b className="text-[#0e2a5e]">AML 实务工具包</b>与 Knowledge Notes（SOP 依据 /
+          Checklist / 邮件模板）；命中术语时自动联出它的关联案例与关联课程（模糊匹配 · 不区分大小写）
         </p>
       </header>
 
@@ -382,7 +416,7 @@ export default function SearchClient({ data }: { data: SearchData }) {
       {/* ===== 空闲态：知识检索四级结构 ===== */}
       {!kw ? (
         <>
-          <section className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
+          <section className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-5">
             <DirCard
               href="/glossary"
               badge="Terms"
@@ -390,6 +424,14 @@ export default function SearchClient({ data }: { data: SearchData }) {
               title="Fund Admin Wiki"
               desc="术语层：缩写 / 全称 / 中文名互搜，定义 · 重要性 · 实务场景 · 关联案例与课程"
               meta={`${data.counts.terms} 条术语（内置 ${data.counts.termsBuiltin}）· 8 大类`}
+            />
+            <DirCard
+              href="/toolkit"
+              badge="AML 实务工具包"
+              badgeCls="bg-emerald-100 text-emerald-700"
+              title="实务工具包"
+              desc="清单 · SOP · 对比：董事会监督清单、外包监督清单、制裁命中处置流程、角色与尽调对照表"
+              meta={`${data.counts.toolkits} 个工具 · 可直接拿来用`}
             />
             <DirCard
               href="/search"
@@ -420,10 +462,11 @@ export default function SearchClient({ data }: { data: SearchData }) {
           <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
             <h2 className="text-sm font-bold text-slate-800">知识检索长期结构</h2>
             <p className="mt-1 text-xs leading-relaxed text-slate-400">
-              知识检索是 Fund Admin Academy 的核心入口，统一承载以下四层知识；原文页面与数据全部保留。
+              知识检索是 Fund Admin Academy 的核心入口，统一承载以下五层知识；原文页面与数据全部保留。
             </p>
             <div className="mt-3 flex flex-wrap gap-2">
               <Cat chip="Terms 术语" note={`${data.counts.terms} 条 · 悬停速览 · 点击展开释义`} href="/glossary" />
+              <Cat chip="AML 实务工具包" note={`${data.counts.toolkits} 个工具 · 清单 / SOP / 对比`} href="/toolkit" />
               <Cat chip="Knowledge Notes 知识卡片" note="SOP 依据 / Checklist / 邮件模板，可在上方直接检索" />
               <Cat chip="Cases 案例" note={`${data.counts.cases} 个 Fund Admin 实务案例`} href="/cases" />
               <Cat chip="Courses 课程" note={`${data.counts.lessonsTotal} 讲课程与模块`} href="/courses" />
@@ -461,8 +504,9 @@ export default function SearchClient({ data }: { data: SearchData }) {
               <>
                 找到 {hits.total} 项结果（Terms {hits.termHits.length} · 术语派生{" "}
                 {hits.derivedCases.length + hits.derivedCourses.length} · Cases {hits.caseHits.length}{" "}
-                · Courses {hits.lessonHits.length + hits.moduleHits.length} · SOP {hits.sopHits.length}{" "}
-                · 模板 {hits.templateHits.length} · Checklist {hits.checklistHits.length}），关键词「
+                · Courses {hits.lessonHits.length + hits.moduleHits.length} · 实务工具包{" "}
+                {hits.toolkitHits.length} · SOP {hits.sopHits.length} · 模板{" "}
+                {hits.templateHits.length} · Checklist {hits.checklistHits.length}），关键词「
                 <span className="font-semibold text-[#0e2a5e]">{keyword}</span>」
               </>
             ) : (
@@ -737,6 +781,43 @@ export default function SearchClient({ data }: { data: SearchData }) {
                       </span>
                       <span className="shrink-0 rounded-full bg-[#0e2a5e]/5 px-2.5 py-1 text-[11px] font-medium text-[#0e2a5e]">
                         查看模块 →
+                      </span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
+
+          {/* ===== AML 实务工具包（一级分类，V1.15.0） ===== */}
+          {show("toolkit") && hits.toolkitHits.length > 0 && (
+            <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+              <h2 className="flex flex-wrap items-center gap-2 text-sm font-bold text-slate-800">
+                AML 实务工具包（{hits.toolkitHits.length}）
+                <span className="rounded bg-emerald-100 px-1.5 py-0.5 text-[10px] font-semibold text-emerald-700">
+                  Toolkit · 清单 / SOP / 对比
+                </span>
+              </h2>
+              <ul className="mt-3 space-y-2">
+                {hits.toolkitHits.map((t) => (
+                  <li key={t.id}>
+                    <Link
+                      href={`/toolkit#${t.id}`}
+                      className="group flex items-start gap-3 rounded-xl border border-slate-100 px-3 py-3 transition hover:border-emerald-200 hover:bg-emerald-50/40"
+                    >
+                      <span className="mt-0.5 shrink-0 rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-bold text-emerald-700 ring-1 ring-emerald-200">
+                        {t.kindLabel}
+                      </span>
+                      <span className="min-w-0 flex-1">
+                        <span className="block text-sm font-semibold text-slate-700 group-hover:text-[#0e2a5e]">
+                          <Highlight text={`${t.zh} · ${t.title}`} keyword={kw} />
+                        </span>
+                        <span className="mt-0.5 block text-xs leading-relaxed text-slate-400">
+                          <Highlight text={t.summary} keyword={kw} />
+                        </span>
+                      </span>
+                      <span className="mt-0.5 shrink-0 text-xs font-semibold text-emerald-700/70">
+                        打开工具 →
                       </span>
                     </Link>
                   </li>

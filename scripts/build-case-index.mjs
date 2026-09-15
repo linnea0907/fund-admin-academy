@@ -22,7 +22,7 @@ const OUT = path.join(DIR, "index.json");
 const JURISDICTIONS = new Set(["Cayman", "BVI", "Hong Kong", "Singapore", "China", "USA", "UK", "UAE", "Other"]);
 const BUSINESS_AREAS = new Set(["Investor Onboarding", "Transfer", "Redemption", "Periodic Review", "AEOI / CRS / FATCA", "Fund Setup", "Fund Governance", "Fund Operations"]);
 const ENTITY_TYPES = new Set(["Individual", "Corporate", "Trust", "Partnership", "Fund"]);
-const TOPICS = new Set(["Identity Verification", "Address Proof", "UBO", "Trust", "PEP", "Adverse Media", "SOF", "SOW", "Sanctions", "Tax Residency", "CRS", "FATCA"]);
+const TOPICS = new Set(["Identity Verification", "Address Proof", "UBO", "Trust", "PEP", "Adverse Media", "SOF", "SOW", "Sanctions", "Tax Residency", "CRS", "FATCA", "Screening", "AML Audit", "Outsourcing", "EDD", "Third Party Payment"]);
 
 function stripComments(md) {
   return md.replace(/<!--[\s\S]*?-->/g, "");

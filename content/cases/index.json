@@ -1,9 +1,9 @@
 {
   "schema": "case-library-index",
   "version": 4,
-  "generatedAt": "2026-09-14T09:49:12.310Z",
-  "total": 26,
-  "ready": 10,
+  "generatedAt": "2026-09-15T09:22:07.917Z",
+  "total": 29,
+  "ready": 13,
   "cases": [
     {
       "id": "Case-001",
@@ -736,6 +736,104 @@
       "entityType": "Individual",
       "topics": [
         "Identity Verification"
+      ]
+    },
+    {
+      "id": "Case-027",
+      "file": "Case-027.md",
+      "title": "同名制裁命中——名单更新后投资者被筛出",
+      "level": "进阶",
+      "module": 5,
+      "tags": [
+        "AML",
+        "Sanctions",
+        "Screening",
+        "Cayman",
+        "Potential Match",
+        "Tipping Off",
+        "Redemption"
+      ],
+      "skills": [
+        "Sanctions Screening",
+        "Compliance Escalation",
+        "Identity Verification",
+        "Client Communication"
+      ],
+      "estimatedTime": 12,
+      "ready": true,
+      "jurisdiction": [
+        "Cayman"
+      ],
+      "businessArea": "Fund Operations",
+      "entityType": "Individual",
+      "topics": [
+        "Sanctions",
+        "Screening"
+      ]
+    },
+    {
+      "id": "Case-028",
+      "file": "Case-028.md",
+      "title": "AML Audit Coverage——集团审计能否覆盖本基金",
+      "level": "高级",
+      "module": 5,
+      "tags": [
+        "AML Audit",
+        "Administrator",
+        "Outsourcing",
+        "Cayman",
+        "Fund-Level Evidence",
+        "Audit Coverage"
+      ],
+      "skills": [
+        "Outsourcing Oversight",
+        "Evidence Assessment",
+        "Fund Governance Review",
+        "Compliance Escalation"
+      ],
+      "estimatedTime": 12,
+      "ready": true,
+      "jurisdiction": [
+        "Cayman"
+      ],
+      "businessArea": "Fund Governance",
+      "entityType": "Fund",
+      "topics": [
+        "AML Audit",
+        "Outsourcing"
+      ]
+    },
+    {
+      "id": "Case-029",
+      "file": "Case-029.md",
+      "title": "赎回前临时更改收款账户至第三方关联公司",
+      "level": "高级",
+      "module": 5,
+      "tags": [
+        "Redemption",
+        "EDD",
+        "Third Party Payment",
+        "SOF/SOW",
+        "Sanctions",
+        "Cayman"
+      ],
+      "skills": [
+        "Transaction Review",
+        "EDD Review",
+        "Compliance Escalation",
+        "Client Communication"
+      ],
+      "estimatedTime": 12,
+      "ready": true,
+      "jurisdiction": [
+        "Cayman"
+      ],
+      "businessArea": "Redemption",
+      "entityType": "Individual",
+      "topics": [
+        "EDD",
+        "Third Party Payment",
+        "Sanctions"
       ]
     }
   ]
