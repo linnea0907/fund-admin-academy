@@ -1,11 +1,14 @@
 /**
- * Fund Admin Academy — AML 实务工具包 · 内容（V1.15.0）
+ * Fund Admin Academy — 实务工具包 · 内容（V1.15.0；V1.15.2 增加业务分类）
  *
  * 来源：ICS 2026 Cayman 投资基金 AML/CFT/CPF 与制裁合规培训（董事与基金运营人员）。
  *
  * 收录原则：
  *   ✅ 收录 —— 可复用的清单、处置顺序、角色/流程对比
  *   ❌ 不收录 —— 法规时间线、生效日期、罚款金额、个别执法案例数字（时效性强，维护成本高）
+ *
+ * V1.15.2：跨域工具箱，每条工具带 `category`（6 类）与 `updated`（本工具内容修订月份，
+ * 与「不收录时效性内容」不冲突 —— 它描述的是工具自身的版本，而非任何法规时点）。
  */
 import type { AmlToolkitItem } from "@/types/aml-toolkit";
 
@@ -15,7 +18,9 @@ export const AML_TOOLKIT: AmlToolkitItem[] = [
    * ============================================================ */
   {
     id: "board-aml-oversight",
+    category: "aml",
     kind: "checklist",
+    updated: "2026-09",
     title: "Board AML Oversight Checklist",
     zh: "董事会 AML 监督清单",
     summary: "董事会每期监督会议逐条过一遍的七个问题，用来把「监督」落到可检查的证据上。",
@@ -76,7 +81,9 @@ export const AML_TOOLKIT: AmlToolkitItem[] = [
    * ============================================================ */
   {
     id: "outsourcing-oversight",
+    category: "aml",
     kind: "checklist",
+    updated: "2026-09",
     title: "Outsourcing Oversight Checklist",
     zh: "外包监督清单",
     summary: "四个部分：风险评估、能力评估、合同权利、持续监督。执行可委托，责任与可见性不能委托。",
@@ -143,7 +150,9 @@ export const AML_TOOLKIT: AmlToolkitItem[] = [
    * ============================================================ */
   {
     id: "sanctions-hit-sop",
+    category: "aml",
     kind: "sop",
+    updated: "2026-09",
     title: "Sanctions Hit SOP",
     zh: "制裁命中处置标准流程",
     summary: "潜在命中 → 核验 → 升级 → 冻结 / 限制 → 报告 → 记录。时间压力不能改变顺序。",
@@ -227,7 +236,9 @@ export const AML_TOOLKIT: AmlToolkitItem[] = [
    * ============================================================ */
   {
     id: "aml-roles-comparison",
+    category: "aml",
     kind: "comparison",
+    updated: "2026-09",
     title: "AMLCO / MLRO / DMLRO",
     zh: "AMLCO · MLRO · DMLRO 职责对比",
     summary: "三个角色分别管什么、能不能兼任、独立性要求，以及最常见的混淆点。",
@@ -297,7 +308,9 @@ export const AML_TOOLKIT: AmlToolkitItem[] = [
    * ============================================================ */
   {
     id: "cdd-edd-sdd-comparison",
+    category: "kyc",
     kind: "comparison",
+    updated: "2026-09",
     title: "CDD / EDD / SDD",
     zh: "CDD · EDD · SDD 对比",
     summary: "三种尽调强度的适用场景、必要要求与常见误区；制裁筛查对三者一律适用。",
@@ -364,12 +377,13 @@ export const AML_TOOLKIT: AmlToolkitItem[] = [
   },
 ];
 
-/** 按 kind 分组（保持 TOOLKIT_KINDS 的顺序） */
-export function toolkitByKind(): { kind: string; items: AmlToolkitItem[] }[] {
-  const order = ["checklist", "sop", "comparison"];
-  return order
-    .map((kind) => ({ kind, items: AML_TOOLKIT.filter((t) => t.kind === kind) }))
-    .filter((g) => g.items.length > 0);
+/** 各分类工具数（总览页 Hero 统计 / chips 计数；含 0 值） */
+export function toolkitCategoryCounts(): Record<string, number> {
+  const out: Record<string, number> = {};
+  for (const item of AML_TOOLKIT) {
+    out[item.category] = (out[item.category] ?? 0) + 1;
+  }
+  return out;
 }
 
 export function getToolkitItem(id: string): AmlToolkitItem | null {

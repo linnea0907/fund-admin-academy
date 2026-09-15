@@ -21,10 +21,23 @@ export interface FavoriteCaseRef {
   href: string;
 }
 
+/** 工具包引用（V1.15.2）：与服务端 /favorites 页面同形 */
+export interface FavoriteToolkitRef {
+  id: string;
+  zh: string;
+  title: string;
+  categoryLabel: string;
+  kindLabel: string;
+  summary: string;
+  href: string;
+}
+
 export default function FavoritesLoader({
   caseRefs,
+  toolkitRefs,
 }: {
   caseRefs: FavoriteCaseRef[];
+  toolkitRefs: FavoriteToolkitRef[];
 }) {
-  return <FavoritesAppInner caseRefs={caseRefs} />;
+  return <FavoritesAppInner caseRefs={caseRefs} toolkitRefs={toolkitRefs} />;
 }

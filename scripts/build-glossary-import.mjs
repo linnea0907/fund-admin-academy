@@ -8,7 +8,7 @@
  *   npm run build               # prebuild 自动执行
  *
  * 约定：
- * - imported.json 结构：{ version: 1, terms: GlossaryTerm[] }（由「知识工坊 /wiki」导出）
+ * - imported.json 结构：{ version: 1, terms: GlossaryTerm[] }（管理员手工维护的导入清单）
  * - 文件缺失 / 损坏 / 无 terms → 生成空数组文件（保证 import 永不失败）
  * - 字段缺失或枚举非法 → 归一为安全默认值并打印警告，不阻断构建
  * - id 与内置术语重复 → 跳过并警告（内置优先）
@@ -187,8 +187,8 @@ const out = `/**
  * Fund Admin Wiki — 批量导入层（自动生成，请勿手改）
  *
  * 由 \`scripts/build-glossary-import.mjs\` 从 \`content/glossary/imported.json\` 生成。
- * 导入术语请在「知识工坊（/wiki）」中上传后导出 JSON，落到 content/glossary/imported.json，
- * 再运行 \`npm run gen:glossary\`（或直接 build）。
+ * 导入术语请把 JSON 落到 content/glossary/imported.json（由管理员维护，
+ * 知识工坊上传界面已于 V1.15.2 下线），再运行 \`npm run gen:glossary\`（或直接 build）。
  *
  * 本次烘焙：${terms.length} 条导入术语
  * 源文件：${fs.existsSync(SRC_JSON) ? "content/glossary/imported.json" : "（不存在，输出空数组）"}

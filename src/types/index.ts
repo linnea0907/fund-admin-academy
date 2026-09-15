@@ -88,12 +88,14 @@ export interface Lesson {
   meta: LessonMeta;
 }
 
-/** 收藏对象：整课 / 课程内模块 / 案例 / 术语（V1.11 收藏夹支持三类资产） */
+/** 收藏对象：整课 / 课程内模块 / 案例 / 术语 / 实务工具（V1.11 收藏夹；
+ *  V1.15.2 新增工具包资产 —— 追加式扩展，旧数据无需迁移，读取时经 isValidFavorite 清洗） */
 export type Favorite =
   | { type: "lesson"; lessonId: string }
   | { type: "module"; lessonId: string; moduleId: string }
   | { type: "case"; caseId: string }
-  | { type: "term"; termId: string };
+  | { type: "term"; termId: string }
+  | { type: "toolkit"; toolkitId: string };
 
 /** 高亮/笔记定位状态（V1.12 三重定位恢复） */
 export type HLStatus = "active" | "partial" | "lost";

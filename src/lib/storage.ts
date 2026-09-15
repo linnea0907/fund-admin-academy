@@ -88,6 +88,8 @@ function isValidFavorite(f: unknown): f is Favorite {
   }
   if (fav.type === "case") return typeof fav.caseId === "string";
   if (fav.type === "term") return typeof fav.termId === "string";
+  // V1.15.2 工具包收藏（追加式扩展：旧数据里不存在该类型，不影响既有收藏）
+  if (fav.type === "toolkit") return typeof fav.toolkitId === "string";
   return false;
 }
 
@@ -119,6 +121,8 @@ export function favoriteKey(fav: Favorite): string {
       return `case:${fav.caseId}`;
     case "term":
       return `term:${fav.termId}`;
+    case "toolkit":
+      return `toolkit:${fav.toolkitId}`;
   }
 }
 

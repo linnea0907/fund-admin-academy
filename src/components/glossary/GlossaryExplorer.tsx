@@ -120,19 +120,12 @@ export default function GlossaryExplorer({
           </span>
         </div>
         <p className="mt-2 max-w-3xl text-sm leading-relaxed text-slate-500">
-          基金行政知识库术语层：统一结构涵盖 <b className="text-slate-600">缩写 / 全称 / 中文名 /
+          基金行政知识库术语库：统一结构涵盖 <b className="text-slate-600">缩写 / 全称 / 中文名 /
           分类 / 属地 / 等级 / 定义 / 重要性 / 实务场景 / 别名 / 来源 / 标签</b>，并自动汇集
           关联术语、关联案例与关联课程。支持缩写、全称、中文名互搜；
-          <b className="text-slate-600">{isolatedTotal}</b> 条术语尚未进入知识网络，可用「仅看孤立术语」定位。
+          <b className="text-slate-600">{isolatedTotal}</b> 条术语尚未进入知识网络，可用「仅看孤立术语」定位；
+          整体入网情况见上方「健康度 Dashboard」页签。
         </p>
-        <div className="mt-3 flex flex-wrap gap-2">
-          <Link
-            href="/wiki"
-            className="rounded-full bg-amber-300 px-3 py-1.5 text-xs font-bold text-[#0e2a5e] transition hover:bg-amber-200"
-          >
-            知识工坊 · 健康度 Dashboard →
-          </Link>
-        </div>
       </header>
 
       {/* 搜索 */}
@@ -304,7 +297,7 @@ export default function GlossaryExplorer({
         <div className="rounded-2xl border border-dashed border-slate-200 bg-white px-6 py-14 text-center">
           <p className="text-sm font-medium text-slate-600">没有找到匹配的术语</p>
           <p className="mt-1 text-xs text-slate-400">
-            换个关键词或清除筛选试试；缺失的核心术语可在「知识工坊」待补充池中一键创建
+            换个关键词或清除筛选试试；也可在「健康度 Dashboard」页签查看知识网络里还缺哪些关联
           </p>
         </div>
       ) : (

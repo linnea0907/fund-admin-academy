@@ -11,7 +11,7 @@ import {
 } from "@/lib/glossary";
 import { getTermRelations } from "@/lib/glossary-usage";
 import TermFavoriteButton from "@/components/favorites/TermFavoriteButton";
-import TermViewTracker from "@/components/wiki/TermViewTracker";
+import TermViewTracker from "@/components/glossary/TermViewTracker";
 
 type Params = Promise<{ id: string }>;
 
@@ -154,7 +154,7 @@ export default async function GlossaryTermPage({ params }: { params: Params }) {
       {isIsolated && (
         <p className="rounded-xl border border-amber-200 bg-amber-50/70 px-4 py-3 text-xs leading-relaxed text-amber-800">
           <b>该术语尚未进入知识网络</b>：课程正文与案例正文都没有引用它，因此没有关联课程 / 关联案例。
-          可在「知识工坊 → 健康度」查看全部孤立术语，优先在课程或案例中引入这些概念。
+          可在术语库「健康度 Dashboard」页签查看全部孤立术语，优先在课程或案例中引入这些概念。
         </p>
       )}
 

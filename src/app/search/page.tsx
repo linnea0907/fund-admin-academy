@@ -15,12 +15,12 @@ import SearchClient, {
   type SearchToolkit,
 } from "@/components/search/SearchClient";
 import { AML_TOOLKIT } from "@/data/aml-toolkit";
-import { getToolkitKind } from "@/types/aml-toolkit";
+import { getToolkitCategory, getToolkitKind } from "@/types/aml-toolkit";
 
 export const metadata: Metadata = {
   title: "知识检索",
   description:
-    "Fund Admin Wiki 知识检索：Terms（术语）· AML 实务工具包（清单 / SOP / 对比）· Knowledge Notes（SOP 依据 / Checklist / 邮件模板）· Cases（案例）· Courses（课程）统一检索，一次搜索直达术语、工具、关联案例与关联课程。",
+    "Fund Admin Wiki 知识检索：Terms（术语）· 实务工具包（清单 / SOP / 对比）· Knowledge Notes（SOP 依据 / Checklist / 邮件模板）· Cases（案例）· Courses（课程）统一检索，一次搜索直达术语、工具、关联案例与关联课程。",
 };
 
 /** Fund Admin Wiki · 知识检索（统一结果页：Terms / Knowledge Notes / Cases / Courses） */
@@ -90,9 +90,9 @@ export default function SearchPage() {
     }))
   );
 
-  // AML 实务工具包（V1.15.0 一级分类）：全文展平进检索文本
+  // 实务工具包（V1.15.0 一级分类；V1.15.2 加业务分类）：全文展平进检索文本
   const toolkits: SearchToolkit[] = AML_TOOLKIT.map((t) => {
-    const parts: string[] = [t.title, t.zh, t.summary, t.purpose];
+    const parts: string[] = [t.title, t.zh, t.summary, t.purpose, t.updated];
     for (const s of t.sections ?? []) parts.push(s.zh, s.title, ...s.items);
     for (const s of t.steps ?? []) parts.push(s.zh, s.title, s.detail, s.note ?? "", s.warning ?? "");
     for (const o of t.outcomes ?? []) parts.push(o.zh, o.title, o.detail);
@@ -106,6 +106,7 @@ export default function SearchPage() {
       id: t.id,
       kind: t.kind,
       kindLabel: getToolkitKind(t.kind).label,
+      categoryLabel: getToolkitCategory(t.category).zh,
       title: t.title,
       zh: t.zh,
       summary: t.summary,

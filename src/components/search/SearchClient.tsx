@@ -107,12 +107,14 @@ export interface SearchChecklist {
   text: string;
 }
 
-/** AML 实务工具包条目（V1.15.0 一级分类「AML 实务工具包」检索源） */
+/** 实务工具包条目（V1.15.0 一级分类；V1.15.2 更名「实务工具包」并加业务分类） */
 export interface SearchToolkit {
   id: string;
   /** checklist / sop / comparison */
   kind: string;
   kindLabel: string;
+  /** 业务分类中文名（KYC 工具 / AML 工具 / …） */
+  categoryLabel: string;
   title: string;
   zh: string;
   summary: string;
@@ -163,7 +165,7 @@ interface TermHit {
   fields: string[];
 }
 
-/** 检索范围（Terms / Cases / Courses / AML 实务工具包 为一级；Knowledge Notes 三类为二级） */
+/** 检索范围（Terms / Cases / Courses / 实务工具包 为一级；Knowledge Notes 三类为二级） */
 type Scope =
   | "all"
   | "term"
@@ -179,7 +181,7 @@ const SCOPES: { key: Scope; label: string }[] = [
   { key: "term", label: "Terms 术语" },
   { key: "case", label: "Cases 案例" },
   { key: "course", label: "Courses 课程" },
-  { key: "toolkit", label: "AML 实务工具包" },
+  { key: "toolkit", label: "实务工具包" },
   { key: "sop", label: "SOP 依据" },
   { key: "template", label: "邮件模板" },
   { key: "checklist", label: "Checklist" },
@@ -272,9 +274,9 @@ export default function SearchClient({ data }: { data: SearchData }) {
     const templateHits = data.templates.filter((t) => t.text.toLowerCase().includes(lower));
     const checklistHits = data.checklists.filter((c) => c.text.toLowerCase().includes(lower));
 
-    // AML 实务工具包（一级分类；标题 / 中文名 / 摘要 / 全文条目）
+    // 实务工具包（一级分类；标题 / 中文名 / 摘要 / 形态 / 业务分类 / 全文条目）
     const toolkitHits = data.toolkits.filter((t) =>
-      [t.title, t.zh, t.summary, t.kindLabel, t.text]
+      [t.title, t.zh, t.summary, t.kindLabel, t.categoryLabel, t.text]
         .join("\n")
         .toLowerCase()
         .includes(lower)
@@ -344,7 +346,7 @@ export default function SearchClient({ data }: { data: SearchData }) {
         </div>
         <p className="mt-1.5 text-sm text-slate-500">
           一次搜索直达 <b className="text-[#0e2a5e]">Terms 术语 · Cases 案例 · Courses 课程</b>
-          ，并覆盖 <b className="text-[#0e2a5e]">AML 实务工具包</b>与 Knowledge Notes（SOP 依据 /
+          ，并覆盖 <b className="text-[#0e2a5e]">实务工具包</b>与 Knowledge Notes（SOP 依据 /
           Checklist / 邮件模板）；命中术语时自动联出它的关联案例与关联课程（模糊匹配 · 不区分大小写）
         </p>
       </header>
@@ -427,11 +429,11 @@ export default function SearchClient({ data }: { data: SearchData }) {
             />
             <DirCard
               href="/toolkit"
-              badge="AML 实务工具包"
+              badge="Toolkit"
               badgeCls="bg-emerald-100 text-emerald-700"
               title="实务工具包"
               desc="清单 · SOP · 对比：董事会监督清单、外包监督清单、制裁命中处置流程、角色与尽调对照表"
-              meta={`${data.counts.toolkits} 个工具 · 可直接拿来用`}
+              meta={`${data.counts.toolkits} 个工具 · 6 类知识域`}
             />
             <DirCard
               href="/search"
@@ -466,7 +468,7 @@ export default function SearchClient({ data }: { data: SearchData }) {
             </p>
             <div className="mt-3 flex flex-wrap gap-2">
               <Cat chip="Terms 术语" note={`${data.counts.terms} 条 · 悬停速览 · 点击展开释义`} href="/glossary" />
-              <Cat chip="AML 实务工具包" note={`${data.counts.toolkits} 个工具 · 清单 / SOP / 对比`} href="/toolkit" />
+              <Cat chip="实务工具包" note={`${data.counts.toolkits} 个工具 · 清单 / SOP / 对比`} href="/toolkit" />
               <Cat chip="Knowledge Notes 知识卡片" note="SOP 依据 / Checklist / 邮件模板，可在上方直接检索" />
               <Cat chip="Cases 案例" note={`${data.counts.cases} 个 Fund Admin 实务案例`} href="/cases" />
               <Cat chip="Courses 课程" note={`${data.counts.lessonsTotal} 讲课程与模块`} href="/courses" />
@@ -474,7 +476,6 @@ export default function SearchClient({ data }: { data: SearchData }) {
             <div className="mt-3 flex flex-wrap items-center gap-2 border-t border-slate-100 pt-3">
               <span className="text-xs text-slate-400">相关入口</span>
               <Cat chip="技能中心" note={`${data.counts.skills} 项受控技能与案例覆盖`} href="/skills" />
-              <Cat chip="知识工坊" note="批量导入术语 · 待补充术语池" href="/wiki" />
               <Cat
                 chip="术语覆盖"
                 note={`${data.counts.termsUsed} / ${data.counts.terms} 条已在课程或案例中出现`}
@@ -490,10 +491,10 @@ export default function SearchClient({ data }: { data: SearchData }) {
             换个关键词试试，例如 VCC、PTC、AML Letter、CRS、Waterfall、可变资本公司
           </p>
           <Link
-            href="/wiki"
+            href="/glossary"
             className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-[#0e2a5e]/5 px-3 py-1.5 text-xs font-semibold text-[#0e2a5e] transition hover:bg-[#0e2a5e]/10"
           >
-            该术语尚未录入？前往知识工坊待补充池 →
+            浏览术语库全部 {data.counts.terms} 条术语 →
           </Link>
         </div>
       ) : (
@@ -789,11 +790,11 @@ export default function SearchClient({ data }: { data: SearchData }) {
             </section>
           )}
 
-          {/* ===== AML 实务工具包（一级分类，V1.15.0） ===== */}
+          {/* ===== 实务工具包（一级分类，V1.15.0；V1.15.2 更名并拆出详情页） ===== */}
           {show("toolkit") && hits.toolkitHits.length > 0 && (
             <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
               <h2 className="flex flex-wrap items-center gap-2 text-sm font-bold text-slate-800">
-                AML 实务工具包（{hits.toolkitHits.length}）
+                实务工具包（{hits.toolkitHits.length}）
                 <span className="rounded bg-emerald-100 px-1.5 py-0.5 text-[10px] font-semibold text-emerald-700">
                   Toolkit · 清单 / SOP / 对比
                 </span>
@@ -802,7 +803,7 @@ export default function SearchClient({ data }: { data: SearchData }) {
                 {hits.toolkitHits.map((t) => (
                   <li key={t.id}>
                     <Link
-                      href={`/toolkit#${t.id}`}
+                      href={`/toolkit/${t.id}`}
                       className="group flex items-start gap-3 rounded-xl border border-slate-100 px-3 py-3 transition hover:border-emerald-200 hover:bg-emerald-50/40"
                     >
                       <span className="mt-0.5 shrink-0 rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-bold text-emerald-700 ring-1 ring-emerald-200">

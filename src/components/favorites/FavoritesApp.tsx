@@ -35,7 +35,24 @@ interface CaseRef {
   href: string;
 }
 
-export default function FavoritesApp({ caseRefs }: { caseRefs: CaseRef[] }) {
+/** 工具包引用（V1.15.2 收藏夹新增工具资产）：由服务端 /favorites 烘焙 */
+interface ToolkitRef {
+  id: string;
+  zh: string;
+  title: string;
+  categoryLabel: string;
+  kindLabel: string;
+  summary: string;
+  href: string;
+}
+
+export default function FavoritesApp({
+  caseRefs,
+  toolkitRefs,
+}: {
+  caseRefs: CaseRef[];
+  toolkitRefs: ToolkitRef[];
+}) {
   const { state } = useAcademy();
   const [tab, setTab] = useState<"fav" | "notes">("fav");
   const [notes, setNotes] = useState<StudyNote[]>(() => loadNotes());
@@ -80,6 +97,7 @@ export default function FavoritesApp({ caseRefs }: { caseRefs: CaseRef[] }) {
       {tab === "fav" ? (
         <FavoritesPanel
           caseRefs={caseRefs}
+          toolkitRefs={toolkitRefs}
           courseMap={courseMap}
           termMap={termMap}
         />
@@ -134,7 +152,7 @@ function TabButton({
 
 interface FavRowModel {
   key: string;
-  category: "课程" | "案例" | "术语";
+  category: "课程" | "案例" | "术语" | "工具包";
   /** 首行小字：整课 · 第 01 讲 / 模块 · xx / 案例 · Case-001 / 术语 */
   tag: string;
   href: string;
@@ -145,10 +163,12 @@ interface FavRowModel {
 
 function FavoritesPanel({
   caseRefs,
+  toolkitRefs,
   courseMap,
   termMap,
 }: {
   caseRefs: CaseRef[];
+  toolkitRefs: ToolkitRef[];
   courseMap: Map<string, (typeof courseAllLessons)[number]>;
   termMap: Map<string, (typeof GLOSSARY_TERMS)[number]>;
 }) {
@@ -209,10 +229,22 @@ function FavoritesPanel({
           subtitle: t.brief,
           remove: () => toggleFavorite({ type: "term", termId: t.id }),
         });
+      } else if (f.type === "toolkit") {
+        const k = toolkitRefs.find((x) => x.id === f.toolkitId);
+        if (!k) continue;
+        out.push({
+          key: `toolkit:${k.id}`,
+          category: "工具包",
+          tag: `${k.categoryLabel} · ${k.kindLabel}`,
+          href: k.href,
+          title: `${k.zh} · ${k.title}`,
+          subtitle: k.summary,
+          remove: () => toggleFavorite({ type: "toolkit", toolkitId: k.id }),
+        });
       }
     }
     return out;
-  }, [favs, caseRefs, courseMap, termMap, toggleFavorite]);
+  }, [favs, caseRefs, toolkitRefs, courseMap, termMap, toggleFavorite]);
 
   const kw = q.trim().toLowerCase();
   const filtered = kw
@@ -227,8 +259,8 @@ function FavoritesPanel({
         <p className="text-3xl">☆</p>
         <p className="mt-2 text-sm font-medium text-slate-600">收藏夹还是空的</p>
         <p className="mx-auto mt-1 max-w-md text-xs leading-relaxed text-slate-400">
-          在课程详情页点「收藏本课 / 模块星标」、案例详情页点「收藏」、术语详情页点「收藏术语」，
-          把重点内容收进个人资产中心，随时回来复习。
+          在课程详情页点「收藏本课 / 模块星标」、案例详情页点「收藏」、术语详情页点「收藏术语」、
+          实务工具包点「☆ 收藏工具」，把重点内容收进个人资产中心，随时回来复习。
         </p>
         <div className="mt-5 flex flex-wrap items-center justify-center gap-2 text-xs font-medium">
           <Link href="/courses" className="rounded-lg bg-[#0e2a5e] px-4 py-2 text-white transition hover:bg-blue-900">
@@ -239,6 +271,9 @@ function FavoritesPanel({
           </Link>
           <Link href="/glossary" className="rounded-lg border border-slate-200 px-4 py-2 text-slate-600 transition hover:border-blue-300 hover:text-[#0e2a5e]">
             去术语库
+          </Link>
+          <Link href="/toolkit" className="rounded-lg border border-slate-200 px-4 py-2 text-slate-600 transition hover:border-blue-300 hover:text-[#0e2a5e]">
+            去实务工具包
           </Link>
         </div>
       </div>
@@ -252,7 +287,7 @@ function FavoritesPanel({
         <input
           value={q}
           onChange={(e) => setQ(e.target.value)}
-          placeholder="搜索收藏内容（课程 / 模块 / 案例 / 术语）"
+          placeholder="搜索收藏内容（课程 / 模块 / 案例 / 术语 / 工具包）"
           className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-700 outline-none transition placeholder:text-slate-300 focus:border-[#0e2a5e] focus:bg-white"
         />
       </div>
@@ -262,7 +297,7 @@ function FavoritesPanel({
           没有符合「{q.trim()}」的收藏
         </div>
       ) : (
-        (["课程", "案例", "术语"] as const).map((cat) => {
+        (["课程", "案例", "术语", "工具包"] as const).map((cat) => {
           const catRows = filtered.filter((r) => r.category === cat);
           if (catRows.length === 0) return null;
           return (
@@ -274,6 +309,7 @@ function FavoritesPanel({
                 {cat === "课程" && "收藏的课程"}
                 {cat === "案例" && "收藏的案例"}
                 {cat === "术语" && "收藏的术语"}
+                {cat === "工具包" && "收藏的工具"}
                 <span className="ml-2 text-xs font-normal text-slate-400">
                   {catRows.length}
                 </span>

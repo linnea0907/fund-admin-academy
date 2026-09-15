@@ -5,16 +5,36 @@ import { usePathname } from "next/navigation";
 import { useState, type ReactNode } from "react";
 import { siteConfig } from "@/lib/site-config";
 
-/** 一级导航（导航规范 V1.3 定稿：按使用频率 · 案例库→案例工坊、知识检索→知识工坊同一链路紧邻）
- *  V1.15.0：紧邻「知识检索」新增「实务工具包」（AML 实务工具包，属知识检索体系） */
-const NAV = [
+/** 一级导航（V1.15.2 导航重构：按「用户使用频率 + 学习流程」组织，不按功能开发顺序）
+ *
+ *  学习概览 → 课程中心 → 知识检索▾（案例库 / 术语库 / 实务工具包）→ 案例工坊 → 收藏夹 → 设置
+ *
+ *  设计要点：
+ *  - 「知识检索」是**统一知识入口**，案例库 / 术语库 / 实务工具包都是知识资产，收在同一层级下，
+ *    查资料只需要认一个入口；
+ *  - 一级条目由 9 项降为 6 项，层级化后更易理解；
+ *  - 「案例工坊」（/backlog，seed 录入台）属生产工具而非查资料入口，保留为独立一级条目；
+ *  - 「知识工坊」（/wiki）已于 V1.15.2 下线，其健康度看板迁入术语库页签。 */
+interface NavItem {
+  href: string;
+  label: string;
+  /** 子项（同一知识入口下的资产库） */
+  children?: { href: string; label: string }[];
+}
+
+const NAV: NavItem[] = [
   { href: "/", label: "学习概览" },
   { href: "/courses", label: "课程中心" },
-  { href: "/cases", label: "案例库" },
+  {
+    href: "/search",
+    label: "知识检索",
+    children: [
+      { href: "/cases", label: "案例库" },
+      { href: "/glossary", label: "术语库" },
+      { href: "/toolkit", label: "实务工具包" },
+    ],
+  },
   { href: "/backlog", label: "案例工坊" },
-  { href: "/search", label: "知识检索" },
-  { href: "/toolkit", label: "实务工具包" },
-  { href: "/wiki", label: "知识工坊" },
   { href: "/favorites", label: "收藏夹" },
   { href: "/settings", label: "设置" },
 ];
@@ -31,25 +51,69 @@ export default function AppShell({ children }: { children: ReactNode }) {
   const nav = (
     <nav className="flex flex-col gap-1">
       {NAV.map((item) => {
-        const active = isActive(pathname, item.href);
+        const children = item.children ?? [];
+        // 子路由激活时，父条目按「所属组高亮」处理，避免与子项同时出现两个选中态
+        const childActive = children.some((c) => isActive(pathname, c.href));
+        const selfActive = isActive(pathname, item.href) && !childActive;
+
         return (
-          <Link
-            key={item.href}
-            href={item.href}
-            onClick={() => setOpen(false)}
-            className={`flex items-center gap-3 rounded-lg px-3.5 py-2.5 text-sm font-medium transition ${
-              active
-                ? "bg-white/15 text-white"
-                : "text-blue-200/90 hover:bg-white/5 hover:text-white"
-            }`}
-          >
-            <span
-              className={`h-1.5 w-1.5 rounded-full ${
-                active ? "bg-amber-300" : "bg-blue-200/40"
+          <div key={item.href}>
+            <Link
+              href={item.href}
+              onClick={() => setOpen(false)}
+              aria-current={selfActive ? "page" : undefined}
+              className={`flex items-center gap-3 rounded-lg px-3.5 py-2.5 text-sm font-medium transition ${
+                selfActive || childActive
+                  ? "bg-white/15 text-white"
+                  : "text-blue-200/90 hover:bg-white/5 hover:text-white"
               }`}
-            />
-            {item.label}
-          </Link>
+            >
+              <span
+                className={`h-1.5 w-1.5 rounded-full ${
+                  selfActive || childActive ? "bg-amber-300" : "bg-blue-200/40"
+                }`}
+              />
+              {item.label}
+              {children.length > 0 && (
+                <span
+                  aria-hidden
+                  className={`ml-auto text-[10px] ${
+                    childActive ? "text-amber-300" : "text-blue-200/50"
+                  }`}
+                >
+                  {children.length}
+                </span>
+              )}
+            </Link>
+
+            {children.length > 0 && (
+              <div className="ml-[18px] mt-0.5 flex flex-col gap-0.5 border-l border-white/10 pl-2.5">
+                {children.map((c) => {
+                  const active = isActive(pathname, c.href);
+                  return (
+                    <Link
+                      key={c.href}
+                      href={c.href}
+                      onClick={() => setOpen(false)}
+                      aria-current={active ? "page" : undefined}
+                      className={`flex items-center gap-2 rounded-md px-3 py-1.5 text-[13px] transition ${
+                        active
+                          ? "bg-white/10 font-semibold text-white"
+                          : "text-blue-200/75 hover:bg-white/5 hover:text-white"
+                      }`}
+                    >
+                      <span
+                        className={`h-1 w-1 rounded-full ${
+                          active ? "bg-amber-300" : "bg-blue-200/40"
+                        }`}
+                      />
+                      {c.label}
+                    </Link>
+                  );
+                })}
+              </div>
+            )}
+          </div>
         );
       })}
     </nav>

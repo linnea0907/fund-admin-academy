@@ -95,8 +95,19 @@ function BreakdownTable({
   );
 }
 
-export default function WikiHealthPanel({ health }: { health: WikiHealthSummary }) {
-  // WikiApp 经 dynamic(ssr:false) 挂载 → 初始 render 只发生在客户端，可直接惰性读 localStorage
+/** 术语库 · 健康度 Dashboard（V1.14.1 随 /wiki 引入；V1.15.2 知识工坊下线后迁入术语库页签）
+ *
+ *  口径与 /glossary 列表、术语详情完全同源（buildWikiHealth / buildTermRelations），
+ *  双口径并存：merged（自动命中 ∪ 人工指定）与 auto（仅正文自动命中）。 */
+export default function GlossaryHealthPanel({
+  health,
+  onShowList,
+}: {
+  health: WikiHealthSummary;
+  /** 切回「术语列表」页签（用于「去列表筛孤立术语」入口） */
+  onShowList: () => void;
+}) {
+  // 本面板只在客户端页签展开时挂载 → 初始 render 即可惰性读 localStorage
   const [metrics, setMetrics] = useState<TermMetricsState>(() => loadTermMetrics());
   const [showAllIsolated, setShowAllIsolated] = useState(false);
 
@@ -212,12 +223,13 @@ export default function WikiHealthPanel({ health }: { health: WikiHealthSummary 
           <span className="rounded-full bg-amber-50 px-2.5 py-0.5 text-[11px] font-bold text-amber-700 ring-1 ring-amber-200">
             {health.isolated} 条
           </span>
-          <Link
-            href="/glossary"
+          <button
+            type="button"
+            onClick={onShowList}
             className="ml-auto rounded-full bg-slate-100 px-3 py-1.5 text-[11px] font-semibold text-slate-500 transition hover:bg-slate-200 hover:text-[#0e2a5e]"
           >
-            在 Fund Admin Wiki 中筛「仅看孤立术语」→
-          </Link>
+            去术语列表筛「仅看孤立术语」→
+          </button>
         </div>
         <p className="mt-1 text-xs text-slate-400">
           这些术语既未在课程正文出现、也未在案例正文出现，点开可查看详情并在内容侧引入。
