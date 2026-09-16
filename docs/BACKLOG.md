@@ -5,6 +5,35 @@
 
 ---
 
+## V1.15.4 候选（来源：V1.15.3 冒烟期发现的**既有**缺陷）
+
+> 登记时间：2026-09-16　｜　状态：**未开工**（V1.15.3 只交付 4 项 UI 优化，不含本项）
+> 定性：**不是 V1.15.3 引入的回归** —— 线上 v1.15.2 完全同样复现，属全局状态层的既有设计问题。
+
+### P2 首页 hydration mismatch（React error #418）
+
+**复现步骤**：任意打开一讲课程（如 `/courses/aml-kyc`）→ 回到首页 `/`。
+控制台报 `Minified React error #418`（Hydration failed because the server rendered HTML didn't match the client）。
+
+**根因**：`src/hooks/use-academy.tsx` 用 `useState(() => loadState())` —— 客户端**首帧**就按 localStorage 求值。
+首页 `src/app/page.tsx` 据此渲染「最近学习 / 学习进度 / 收藏统计」，
+而 SSG 出的 HTML 里这些是空态 → 客户端首帧带数据 → 两边 DOM 不一致 → React 放弃 hydration 并整树重渲染。
+
+**影响**：功能不坏（React 会回退为客户端渲染，页面照常可用），但：
+- 控制台持续报错，掩盖真实问题；
+- 放弃 hydration 后首屏多一次整树渲染，首屏开销变大；
+- 只要 localStorage 里有任何进度/收藏/最近记录，命中面不止首页。
+
+**建议修法（需单独版本 + 全量回归）**：
+1. Provider 首帧固定渲染 `defaultState()`，`useEffect` 中再 `setState(loadState())`；
+2. ⚠️ 必须同时给现有 `useEffect(() => saveState(state), [state])` 加「首帧跳过」守卫，
+   否则挂载瞬间会用空 state 覆盖用户已有数据（**数据丢失风险**，改动前务必先写回归用例）；
+3. 需要设计「hydrate 前的过渡态」（骨架屏 or 直接接受一帧空态），属 UI 决策。
+
+**涉及文件**：`src/hooks/use-academy.tsx`、`src/app/page.tsx`、`src/app/favorites/page.tsx`、各消费 `state` 的页面。
+
+---
+
 ## V1.16.0 Backlog（来源：V1.15.1 Copilot 验收意见附带的新增需求）
 
 > 登记时间：2026-09-15　｜　状态：**未开工**（V1.15.1 只交付内容修正，不含本组）
