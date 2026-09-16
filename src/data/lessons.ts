@@ -16,6 +16,7 @@ export const lessons: Lesson[] = [
     slug: "fund-lifecycle",
     title: "一只境外基金如何运转",
     subtitle: "投资者、治理主体、Manager 与 Fund Admin",
+    cams: ["B"],
     goal: [
       "能按载体类型区分角色称谓：GP/LP 主要用于有限合伙基金；公司型基金与单位信托使用不同称谓",
       "掌握一条判断链：法律载体 → 治理主体 → 投资管理 → 行政服务 → 授权文件 → 实际履职",
@@ -273,6 +274,7 @@ export const lessons: Lesson[] = [
     slug: "fund-structure",
     title: "基金结构全景",
     subtitle: "按组织形式、隔离结构、运作方式与监管分类四维拆解",
+    cams: ["B"],
     goal: [
       "从四个独立维度分析基金：组织形式、伞形/隔离结构、运作方式、监管分类，避免混层比较",
       "区分有限合伙、公司、LLC 与单位信托的组织形式差异",
@@ -738,6 +740,7 @@ export const lessons: Lesson[] = [
     slug: "aml-kyc",
     title: "AML 与投资者尽调",
     subtitle: "六步 CDD 框架：Identify / Verify / Understand / Screen / Risk-rate / Monitor",
+    cams: ["A", "B", "C"],
     goal: [
       "掌握六步 CDD 框架并能按序执行投资者尽调",
       "区分个人与机构投资者的尽调要素（UBO、控制人、监管/上市状态等）",
@@ -975,6 +978,7 @@ export const lessons: Lesson[] = [
     slug: "fatca-crs",
     title: "FATCA 与 CRS",
     subtitle: "四层框架：基金分类 → 注册与角色 → 投资者尽调 → 申报与工作底稿",
+    cams: ["C"],
     goal: [
       "用四层框架分析 FATCA/CRS：基金自身分类、注册及角色、投资者尽调、申报确认与工作底稿",
       "区分 FATCA 与 CRS 两套机制的触发逻辑与互换局限",

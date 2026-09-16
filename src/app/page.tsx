@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { orderedLessons } from "@/lib/ordering";
+import { camsMockExam } from "@/data/cams/mock-exam";
 import { siteConfig } from "@/lib/site-config";
 import { useAcademy } from "@/hooks/use-academy";
 import {
@@ -81,8 +82,8 @@ export default function HomePage() {
             </span>
           </div>
           <p className="mt-2 max-w-xl text-sm leading-relaxed text-blue-100">
-            课程编号体系：01 运转 → 02 结构 → 10 AML → 11/13 CAMS 补强 → 12 FATCA → 14 Cayman → 15 BVI。
-            学习进度与收藏保存在本机浏览器。
+            课程编号体系：01 运转 → 02 结构 → 10 AML → 11/13 CAMS 补强 → 12 FATCA → 14 Cayman → 15 BVI
+            → 16 CAMS 全真模拟。学习进度与收藏保存在本机浏览器。
           </p>
           {nextLesson && (
             <Link
@@ -138,7 +139,7 @@ export default function HomePage() {
           等核心知识。
         </p>
         <p className="mt-2 text-sm leading-relaxed text-slate-600">
-          建议先完成必修课程，再根据工作需要学习选修专题。
+          建议先完成必修课程，再根据工作需要学习选修专题；完成必修后以第 16 讲全真模拟检验掌握程度。
         </p>
         <p className="mt-3 border-t border-slate-100 pt-2.5 text-[11px] text-slate-400">
           仅供内部学习参考，不构成法律、税务或监管意见。
@@ -196,18 +197,17 @@ export default function HomePage() {
               </>
             ) : (
               <p className="mt-1 text-sm text-amber-800">
-                全部课程已完成 🎉 可前往收藏夹复习重点内容。
+                必修课程已全部完成 🎉 建议进行第 {camsMockExam.id} 讲 {camsMockExam.title}，
+                检验整体掌握程度。
               </p>
             )}
           </div>
-          {nextLesson && (
-            <Link
-              href={`/courses/${nextLesson.slug}`}
-              className="rounded-lg bg-amber-400 px-4 py-2 text-sm font-semibold text-amber-950 transition hover:bg-amber-300"
-            >
-              去学习 →
-            </Link>
-          )}
+          <Link
+            href={nextLesson ? `/courses/${nextLesson.slug}` : camsMockExam.href}
+            className="rounded-lg bg-amber-400 px-4 py-2 text-sm font-semibold text-amber-950 transition hover:bg-amber-300"
+          >
+            {nextLesson ? "去学习 →" : "进入模拟考试 →"}
+          </Link>
         </div>
       </section>
 
@@ -232,10 +232,10 @@ export default function HomePage() {
 
       {/* 学习路线 */}
       <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-wrap items-center justify-between gap-2">
           <h2 className="text-sm font-bold text-slate-800">学习路线</h2>
           <span className="text-xs text-slate-400">
-            共 {stat.totalLessons} 讲 · 按课程编号顺序
+            共 {stat.totalLessons} 讲 + 全真模拟 · 按课程编号顺序
           </span>
         </div>
         <ol className="mt-4 space-y-2">
@@ -283,6 +283,32 @@ export default function HomePage() {
               </li>
             );
           })}
+
+          {/* 第 16 讲：学习路径终点的 CAMS 全真模拟考试入口 */}
+          <li>
+            <Link
+              href={camsMockExam.href}
+              className="group flex items-center gap-3 rounded-xl border border-amber-200 bg-amber-50/50 px-3 py-2.5 transition hover:border-amber-300 hover:bg-amber-50"
+            >
+              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#0e2a5e] text-xs font-bold text-white">
+                {camsMockExam.id}
+              </span>
+              <span className="min-w-0 flex-1">
+                <span className="block truncate text-sm font-semibold text-slate-700 group-hover:text-[#0e2a5e]">
+                  第 {camsMockExam.id} 讲 · {camsMockExam.title}
+                </span>
+                <span className="block truncate text-xs text-slate-400">
+                  {camsMockExam.subtitle}
+                </span>
+              </span>
+              <span className="hidden shrink-0 rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-bold text-amber-700 sm:inline-flex">
+                全真模拟
+              </span>
+              <span className="shrink-0 text-slate-300 transition group-hover:text-[#0e2a5e]">
+                →
+              </span>
+            </Link>
+          </li>
         </ol>
       </section>
 
@@ -342,7 +368,7 @@ function suggestionText(
   if (percent === 0)
     return "从第 01 讲开始，先建立“一只境外基金如何运转”的全局框架，再沿学习路线逐讲推进。";
   if (percent === 100)
-    return "进度已满！建议输出型复习：把每讲风险提示整理成自己的检查清单，并关注 V2 规划中的进阶课程。";
+    return "进度已满！建议输出型复习：把每讲风险提示整理成自己的检查清单，并以第 16 讲 CAMS Full Mock Exam 检验掌握程度。";
   const base = `保持节奏：已完成 ${completedCourses} 门课程（${percent}%）。`;
   if (favs > 0)
     return `${base} 优先推进第 ${nextId} 讲，每周回看一次收藏内容巩固。`;

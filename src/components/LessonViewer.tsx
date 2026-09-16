@@ -17,6 +17,8 @@ import PracticalGuide from "@/components/PracticalGuide";
 import { CamsTags } from "@/components/CamsTag";
 import TermText from "@/components/glossary/TermText";
 import HighlightEngine from "@/components/reading/HighlightEngine";
+import { isElectiveId } from "@/data/lessons";
+import { camsMockExam } from "@/data/cams/mock-exam";
 
 interface LessonViewerProps {
   lesson: Lesson;
@@ -294,7 +296,7 @@ export default function LessonViewer({ lesson, prev, next }: LessonViewerProps) 
         ) : (
           <span />
         )}
-        {next && (
+        {next ? (
           <Link
             href={`/courses/${next.slug}`}
             className="rounded-2xl border border-slate-200 bg-white p-4 text-right transition hover:border-blue-300 hover:shadow-sm"
@@ -304,6 +306,21 @@ export default function LessonViewer({ lesson, prev, next }: LessonViewerProps) 
               {next.id} · {next.title}
             </p>
           </Link>
+        ) : (
+          /* 必修最后一讲（第 15 讲）之后不再是课程，而是学习路径终点：
+             第 16 讲 CAMS Full Mock Exam（考试入口卡片，见 data/cams/mock-exam.ts）。
+             选修课末讲保持空白 —— 选修不进入学习路线，也不引导考试。 */
+          !isElectiveId(lesson.id) && (
+            <Link
+              href={camsMockExam.href}
+              className="rounded-2xl border border-amber-200 bg-amber-50/60 p-4 text-right transition hover:border-amber-300 hover:shadow-sm"
+            >
+              <p className="text-xs text-amber-700/80">必修完成 · 下一步</p>
+              <p className="mt-1 text-sm font-semibold text-slate-700">
+                {camsMockExam.id} · {camsMockExam.title}
+              </p>
+            </Link>
+          )
         )}
       </nav>
     </div>

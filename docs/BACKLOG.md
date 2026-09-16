@@ -57,6 +57,55 @@
 
 ---
 
+## V1.16.1 已交付（来源：V1.16.0 验收意见）
+
+> 登记时间：2026-09-16　｜　状态：**已交付**
+> 范围：两项 P1 —— 补全 CAMS-B / CAMS-C 课程映射 · CAMS 模拟考试迁入课程中心。
+
+### 1. 补全 CAMS-B / CAMS-C 课程域映射（P1）
+
+**问题**：V1.16.0 上线后，课程中心顶部的 CAMS Domain 筛选只有 A / D 两域有结果，
+点击 CAMS-B 或 CAMS-C 时课程为空，用户会误以为内容缺失。
+
+**修法**：一门课程允许对应多个 CAMS Domain。映射调整为 ——
+
+| 课程 | 本次新增 | 原有 |
+|---|---|---|
+| 01 一只境外基金如何运转 | CAMS-B | — |
+| 02 基金结构全景 | CAMS-B | — |
+| 10 AML 与投资者尽调 | CAMS-A / B / C | — |
+| 11 AML Foundations | — | CAMS-A |
+| 12 FATCA 与 CRS | CAMS-C | — |
+| 13 AML Technology & Monitoring | — | CAMS-D |
+| 16 CAMS Full Mock Exam | A / B / C / D 全覆盖 | — |
+
+**验收实测**：CAMS-A → 2 门；CAMS-B → 3 门；CAMS-C → 2 门；CAMS-D → 1 门；
+四域筛选结果均附第 16 讲模拟考试入口，**无空分类**。
+
+### 2. CAMS 模拟考试迁入课程中心（P1）
+
+**问题**：原挂在「知识检索 → CAMS 模拟考试」，层级语义不成立 ——
+案例库 / 术语库 / 实务工具包属 Reference（查资料），模拟考试属 Learning Assessment（学习评估）。
+
+**修法**：
+- 新增第 16 讲 **CAMS Full Mock Exam**，位置排在必修区末尾（01…15 → 16），作为学习路径终点；
+- 卡片显示 `120 Questions / 3.5 Hours / Auto Scoring / Pass Mark 75`，整卡可点，直达既有 `/cams-exam`
+  （**未新建第二套考试系统**）；
+- 左侧导航「知识检索」只保留 案例库 / 术语库 / 实务工具包；
+- 首页「学习路线」末尾同步追加该节点；必修全部完成后的「下一步推荐」改为引导进入模拟考试。
+
+**架构决策（供 Copilot 复核）**：第 16 讲**不进 `Lesson` 数据层**（它没有内容模块、没有自测题），
+以独立数据 `src/data/cams/mock-exam.ts` + 独立卡片 `src/components/MockExamCard.tsx` 实现。
+理由：若塞进 Lesson，`totalProgress` 的分母会多出一门永远无法「完成」的课程
+（首页永远显示 `N/9 门完成`），并需要在 progress / CourseCard / LessonViewer / settings /
+search / favorites / `[slug]` 静态生成等 7 处加特例分支。视觉与功能上它仍是学习路径的最后一讲。
+
+### 明确不做（同 V1.16.0 边界）
+
+- ❌ CAMS 独立专区 / ❌ CAMS 案例标签 / ❌ 每日练习 / ❌ 50 题模拟 / ❌ 覆盖率仪表盘 / ❌ 第二套导航
+
+---
+
 ## V1.16.0 后续候选（CAMS 相关，暂未排期）
 
 ### 每日练习 / 50 题小测

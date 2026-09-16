@@ -3,14 +3,19 @@
 import { useCallback, useMemo, useState } from "react";
 import { orderedLessons, electiveLessonsOrdered } from "@/lib/ordering";
 import CourseCard from "@/components/CourseCard";
+import MockExamCard from "@/components/MockExamCard";
 import { CAMS_DOMAINS } from "@/types/cams";
 import type { CamsDomain } from "@/types/cams";
 
 /**
- * 课程中心（V1.16.0：新增 CAMS 域筛选器）
+ * 课程中心（V1.16.0：新增 CAMS 域筛选器；V1.16.1：必修区末端纳入第 16 讲全真模拟）
  *
  * 筛选器为「AND」语义：选中一个或多个 CAMS 域后，仅显示覆盖该域（任一命中）的课程。
  * 必修/选修分组内分别过滤；未选任何域时显示全部。
+ *
+ * 第 16 讲「CAMS Full Mock Exam」是**考试入口卡片**而非内容课程
+ * （见 data/cams/mock-exam.ts 的说明），它覆盖四个 Domain，因此在任何筛选条件下
+ * 都显示在必修区末尾 —— 保证任一 CAMS 域筛选都不会得到「空分类」体验。
  */
 export default function CoursesPage() {
   const [selected, setSelected] = useState<CamsDomain[]>([]);
@@ -49,7 +54,8 @@ export default function CoursesPage() {
       <header>
         <h1 className="text-xl font-bold text-slate-800 sm:text-2xl">课程中心</h1>
         <p className="mt-1.5 text-sm text-slate-500">
-          必修八讲（01/02/10/11/12/13/14/15）+ 选修课程（E01–E11）· 每讲含学习目标、模块内容、风险提示、思维导图与自测
+          必修八讲（01/02/10/11/12/13/14/15）→ 第 16 讲全真模拟 + 选修课程（E01–E11）·
+          每讲含学习目标、模块内容、风险提示、思维导图与自测
         </p>
       </header>
 
@@ -95,25 +101,26 @@ export default function CoursesPage() {
         </section>
       )}
 
-      {/* 必修课程 */}
+      {/* 必修课程（含第 16 讲考试入口） */}
       <section>
         <div className="mb-3 flex items-baseline gap-2">
           <h2 className="text-sm font-bold text-slate-800">必修课程</h2>
           <span className="text-xs text-slate-400">
-            共 {required.length} 门 · 学习主线
+            共 {required.length} 门 + 全真模拟 · 学习主线
           </span>
         </div>
-        {required.length === 0 ? (
-          <p className="rounded-xl border border-dashed border-slate-200 bg-slate-50 px-4 py-8 text-center text-sm text-slate-500">
-            没有符合所选 CAMS 域的必修课程
+        {required.length === 0 && (
+          <p className="mb-4 rounded-xl border border-dashed border-slate-200 bg-slate-50 px-4 py-6 text-center text-sm text-slate-500">
+            所选 CAMS 域下暂无内容课程，可直接进入下方全真模拟考试
           </p>
-        ) : (
-          <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
-            {required.map((lesson) => (
-              <CourseCard key={lesson.id} lesson={lesson} />
-            ))}
-          </div>
         )}
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
+          {required.map((lesson) => (
+            <CourseCard key={lesson.id} lesson={lesson} />
+          ))}
+          {/* 第 16 讲：学习路径终点的 CAMS 全真模拟考试入口 */}
+          <MockExamCard />
+        </div>
       </section>
 
       {/* 选修课程 */}

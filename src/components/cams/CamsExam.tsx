@@ -112,6 +112,16 @@ export default function CamsExam() {
   if (phase === "intro") {
     return (
       <div className="mx-auto max-w-3xl space-y-6">
+        {/* 面包屑：本页自 V1.16.1 起由课程中心第 16 讲进入，不再挂在左侧导航「知识检索」下 */}
+        <div className="flex flex-wrap items-center gap-2 text-xs text-slate-400">
+          <Link href="/courses" className="font-medium text-[#0e2a5e] hover:underline">
+            课程中心
+          </Link>
+          <span aria-hidden>›</span>
+          <span className="font-medium text-slate-600">
+            第 16 讲 · CAMS Full Mock Exam
+          </span>
+        </div>
         <header className="rounded-2xl bg-[#0e2a5e] px-6 py-7 text-white">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>

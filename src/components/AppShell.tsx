@@ -21,6 +21,12 @@ import { useUiPref } from "@/hooks/use-ui-pref";
  *  - 桌面侧栏支持**收起 / 展开**（收起后为窄图标栏，仅剩图标 + tooltip），状态持久化到 localStorage；
  *  - 每个一级条目补齐线性图标（收起态可辨识），移除原先右侧的「子项数量」数字
  *    （用户无法理解其含义，易误读为未读/待办，信息价值低）。
+ *
+ *  V1.16.1：
+ *  - 「CAMS 模拟考试」由「知识检索」子项**迁出**，改为课程中心第 16 讲
+ *    （学习路径终点，见 data/cams/mock-exam.ts 与 MockExamCard）。
+ *    理由：案例库 / 术语库 / 实务工具包属 Reference（查资料），
+ *    模拟考试属 Learning Assessment（学习评估），不应混在同一层级。
  */
 
 type NavIconName =
@@ -50,7 +56,6 @@ const NAV: NavItem[] = [
       { href: "/cases", label: "案例库" },
       { href: "/glossary", label: "术语库" },
       { href: "/toolkit", label: "实务工具包" },
-      { href: "/cams-exam", label: "CAMS 模拟考试" },
     ],
   },
   { href: "/backlog", label: "案例工坊", icon: "workshop" },
