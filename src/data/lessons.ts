@@ -508,6 +508,7 @@ export const lessons: Lesson[] = [
     slug: "cayman-framework",
     title: "Cayman 基金核心框架",
     subtitle: "从集合投资安排到注册与持续合规：一条判断链走完开曼基金",
+    cams: ["B", "D"],
     goal: [
       "掌握开曼基金判断链：集合投资安排 → 排除情形 → 可否按投资者意愿赎回 → Private Fund / Mutual Fund 框架 → 分主体判断 → 注册及持续合规",
       "理解 CIMA 注册、治理与持续合规模块及其边界",
@@ -740,7 +741,7 @@ export const lessons: Lesson[] = [
     slug: "aml-kyc",
     title: "AML 与投资者尽调",
     subtitle: "六步 CDD 框架：Identify / Verify / Understand / Screen / Risk-rate / Monitor",
-    cams: ["A", "B", "C"],
+    cams: ["A", "B", "C", "D"],
     goal: [
       "掌握六步 CDD 框架并能按序执行投资者尽调",
       "区分个人与机构投资者的尽调要素（UBO、控制人、监管/上市状态等）",
@@ -1214,6 +1215,7 @@ export const lessons: Lesson[] = [
     slug: "bvi-fund-manager",
     title: "BVI 基金与管理人",
     subtitle: "区分基金类别、Approved Manager 与 BVI 独特治理：不按名称下判断",
+    cams: ["B"],
     goal: [
       "区分 BVI Private Fund、Professional Fund 与 Private Investment Fund 等概念及其适用",
       "理解开放式安排进入 BVI 共同基金（Mutual Fund）体系分析，封闭式集合投资安排重点看 Private Investment Fund 制度",

@@ -82,8 +82,8 @@ export default function HomePage() {
             </span>
           </div>
           <p className="mt-2 max-w-xl text-sm leading-relaxed text-blue-100">
-            课程编号体系：01 运转 → 02 结构 → 10 AML → 11/13 CAMS 补强 → 12 FATCA → 14 Cayman → 15 BVI
-            → 16 CAMS 全真模拟。学习进度与收藏保存在本机浏览器。
+            课程编号体系：01 运转 → 02 结构 → 10 AML → 11 AML Foundations → 12 FATCA → 13 AML
+            Technology → 14 Cayman → 15 BVI → 16 CAMS 全真模拟。学习进度与收藏保存在本机浏览器。
           </p>
           {nextLesson && (
             <Link
@@ -131,7 +131,7 @@ export default function HomePage() {
             </p>
           </div>
           <span className="hidden shrink-0 rounded-full border border-slate-200 px-3 py-1 text-[11px] font-medium text-slate-400 sm:inline-flex">
-            必修 · 选修
+            必修 · 全真模拟 · 选修
           </span>
         </div>
         <p className="mt-3 text-sm leading-relaxed text-slate-600">
@@ -160,7 +160,7 @@ export default function HomePage() {
             />
           </div>
         </div>
-        <StatCard label="课程数" value={String(stat.totalLessons)} sub="编号 01/02/10/11/12/13/14/15" />
+        <StatCard label="课程数" value={String(stat.totalLessons)} sub="核心八讲 · 另有第 16 讲全真模拟" />
         <StatCard label="模块数" value={String(moduleCount)} sub="全部课程章节" />
         <StatCard label="风险提示数" value={String(riskCount)} sub="全部课程警示" />
         <StatCard label="自测题数" value={String(quizCount)} sub="全部课程题目" />
@@ -173,10 +173,10 @@ export default function HomePage() {
           <span className="text-xs text-slate-400">从课程数据自动统计 · 必修范围</span>
         </div>
         <div className="mt-3 grid grid-cols-2 gap-4 lg:grid-cols-4">
-          <StatCard label="Admin Checklist" value={String(manualStats.checklist)} sub="必修 6 课操作清单" />
-          <StatCard label="Common Mistakes" value={String(manualStats.commonMistakes)} sub="必修 6 课警示" />
-          <StatCard label="Documents To Check" value={String(manualStats.documents)} sub="必修 6 课文件清单" />
-          <StatCard label="Escalation Triggers" value={String(manualStats.escalations)} sub="必修 6 课升级点" />
+          <StatCard label="Admin Checklist" value={String(manualStats.checklist)} sub="必修八讲操作清单" />
+          <StatCard label="Common Mistakes" value={String(manualStats.commonMistakes)} sub="必修八讲警示" />
+          <StatCard label="Documents To Check" value={String(manualStats.documents)} sub="必修八讲文件清单" />
+          <StatCard label="Escalation Triggers" value={String(manualStats.escalations)} sub="必修八讲升级点" />
         </div>
       </section>
 

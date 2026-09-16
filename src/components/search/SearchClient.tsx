@@ -456,7 +456,7 @@ export default function SearchClient({ data }: { data: SearchData }) {
               badge="Courses"
               badgeCls="bg-amber-100 text-amber-700"
               title="课程中心"
-              desc="境外私募基金必修 + 选修专题，模块化学习"
+              desc="必修八讲 + 第 16 讲全真模拟 + 选修专题，模块化学习与考核"
               meta={`${data.counts.lessonsRequired} 讲必修 · ${data.counts.lessonsTotal} 讲全部`}
             />
           </section>
