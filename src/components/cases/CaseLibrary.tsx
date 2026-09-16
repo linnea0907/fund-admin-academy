@@ -124,6 +124,30 @@ export default function CaseLibrary({ cases }: { cases: CaseMeta[] }) {
   // 技能行折叠控制：默认收起；深链已带 skill 时默认展开以高亮所选
   const [showSkills, setShowSkills] = useState(() => raw.skill !== null);
 
+  /* V1.15.3 案例库搜索栏：输入即时过滤，与高级筛选 AND 叠加。
+     检索串优先用索引里的 searchText（元数据 + 正文英文词元），
+     索引过期/缺失时用元数据兜底，保证「搜得到」优先于「搜得全」。 */
+  const [query, setQuery] = useState("");
+  const q = query.trim().toLowerCase();
+  const haystack = useMemo(() => {
+    const m = new Map<string, string>();
+    for (const c of cases) {
+      const base = [
+        c.id,
+        c.title,
+        c.level,
+        c.businessArea,
+        c.entityType,
+        ...c.jurisdiction,
+        ...c.tags,
+        ...c.topics,
+        ...c.skills,
+      ].join(" ");
+      m.set(c.id, `${base} ${c.searchText ?? ""}`.toLowerCase());
+    }
+    return m;
+  }, [cases]);
+
   const doneIds = useMemo(
     () => new Set(state.completedCases.filter((c) => c.startsWith("Case-"))),
     [state.completedCases]
@@ -235,6 +259,8 @@ export default function CaseLibrary({ cases }: { cases: CaseMeta[] }) {
 
   /* ---------- 结果过滤 ---------- */
   const filtered = cases.filter((c) => {
+    // V1.15.3 搜索：标题 / 关键词 / 标签 / 编号（元数据 + 正文英文词元）
+    if (q && !(haystack.get(c.id) ?? "").includes(q)) return false;
     if (shownModule && c.module !== shownModule) return false;
     if (areaDef && !caseInDomain(c, areaDef)) return false;
     if (shownSkill && !c.skills.includes(shownSkill)) return false;
@@ -252,7 +278,9 @@ export default function CaseLibrary({ cases }: { cases: CaseMeta[] }) {
   });
 
   const statusActive = raw.status !== "all";
+  const queryActive = q !== "";
   const hasActive =
+    queryActive ||
     shownModule !== null ||
     areaDef !== null ||
     shownSkill !== null ||
@@ -330,6 +358,50 @@ export default function CaseLibrary({ cases }: { cases: CaseMeta[] }) {
               </span>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* 搜索栏（V1.15.3）—— 位于筛选器上方，输入即时过滤，与高级筛选叠加生效 */}
+      <section className="rounded-2xl border border-slate-200 bg-white px-4 py-3">
+        <div className="relative">
+          <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 20 20"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.7"
+              strokeLinecap="round"
+              aria-hidden
+            >
+              <circle cx="9" cy="9" r="5.2" />
+              <path d="M13 13l3.6 3.6" />
+            </svg>
+          </span>
+          <input
+            type="text"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            aria-label="搜索案例"
+            placeholder="搜索案例：编号 / 标题 / 关键词 / 标签（如 Case-027、UBO、AML Letter、PEP）"
+            className="w-full rounded-xl border border-slate-200 bg-slate-50 py-2.5 pl-9 pr-28 text-sm text-slate-700 transition placeholder:text-slate-400 focus:border-[#0e2a5e] focus:bg-white focus:outline-none"
+          />
+          {queryActive && (
+            <div className="absolute inset-y-0 right-3 flex items-center gap-1.5">
+              <span className="text-[11px] font-semibold text-slate-400">
+                {filtered.length} 例
+              </span>
+              <button
+                type="button"
+                onClick={() => setQuery("")}
+                aria-label="清空搜索"
+                className="rounded-full px-2 py-0.5 text-xs font-semibold text-slate-500 transition hover:bg-slate-100 hover:text-[#0e2a5e]"
+              >
+                清除
+              </button>
+            </div>
+          )}
         </div>
       </section>
 
@@ -648,6 +720,13 @@ export default function CaseLibrary({ cases }: { cases: CaseMeta[] }) {
             <span className="mr-1 font-semibold text-blue-900">
               {filtered.length} / {cases.length} 例
             </span>
+            {queryActive && (
+              <ActiveChip
+                label={`🔍 ${query.trim()}`}
+                onClear={() => setQuery("")}
+                tone="amber"
+              />
+            )}
             {shownModule && (
               <ActiveChip
                 label={`M${shownModule}`}
@@ -708,7 +787,9 @@ export default function CaseLibrary({ cases }: { cases: CaseMeta[] }) {
           </div>
           <button
             type="button"
-            onClick={() =>
+            onClick={() => {
+              // V1.15.3：搜索框也属于「当前筛选条件」，一并清空
+              setQuery("");
               update({
                 module: null,
                 area: null,
@@ -719,8 +800,8 @@ export default function CaseLibrary({ cases }: { cases: CaseMeta[] }) {
                 jurisdiction: null,
                 entity: null,
                 topic: null,
-              })
-            }
+              });
+            }}
             className="rounded-full bg-white px-3 py-1 text-xs font-semibold text-blue-700 ring-1 ring-blue-200 transition hover:bg-blue-100"
           >
             清除全部筛选
@@ -732,10 +813,16 @@ export default function CaseLibrary({ cases }: { cases: CaseMeta[] }) {
       {filtered.length === 0 ? (
         <div className="rounded-2xl border border-dashed border-slate-200 bg-white/60 p-12 text-center">
           <p className="text-sm font-semibold text-slate-500">
-            {!hasActive ? "暂无案例" : "没有符合当前筛选条件的案例"}
+            {!hasActive
+              ? "暂无案例"
+              : queryActive
+                ? `没有匹配「${query.trim()}」的案例`
+                : "没有符合当前筛选条件的案例"}
           </p>
           <p className="mt-1 text-xs text-slate-400">
-            可尝试清除部分筛选条件，或展开「高级筛选」调整更多条件
+            {queryActive
+              ? "可换个关键词（支持案例编号 / 标题 / 标签 / 主题），或清除搜索后查看全部"
+              : "可尝试清除部分筛选条件，或展开「高级筛选」调整更多条件"}
           </p>
         </div>
       ) : (

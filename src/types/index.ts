@@ -189,6 +189,9 @@ export interface CaseMeta {
   businessArea: string;
   entityType: string;
   topics: string[];
+  /** V1.15.3 案例库搜索栏检索串（元数据 + 正文拉丁词元，小写空格分隔，由脚本预生成）。
+   *  仅用于客户端即时过滤，不参与任何展示逻辑。 */
+  searchText?: string;
 }
 
 /** 本地持久化数据结构（Storage Key: fund-admin-academy-v1） */

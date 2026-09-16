@@ -1,7 +1,7 @@
 {
   "schema": "case-library-index",
-  "version": 4,
-  "generatedAt": "2026-09-15T10:48:20.623Z",
+  "version": 5,
+  "generatedAt": "2026-09-16T02:45:19.468Z",
   "total": 29,
   "ready": 13,
   "cases": [
@@ -35,7 +35,8 @@
       "entityType": "Individual",
       "topics": [
         "Identity Verification"
-      ]
+      ],
+      "searchText": "case-001 开曼基金投资人仅提供香港永久居民身份证 入门 cayman investor onboarding individual 开曼基金 个人投资人 身份证明 香港证件 hong kong id hkpr passport identity verification kyc review certification review client communication fund chan tai man dear admin team writing subscribe lived hong kong years hold valid moment permanent resident identity card please let know acceptable kyc closing signature page sof compliance guidance note aml/cdd bvi documents name subscription thank payment instruction refer requirements advised alone cannot accepted proof document does show nationality carry expiry date one following certified true copy required signed together mainland travel permit wet addition require outstanding complete file residential address utility credit statement issued within last months source funds confirmed email registered kindly provide above review confirm shares once best regards ics sop kyc/cdd q&a bvi/hk takeaway"
     },
     {
       "id": "Case-002",
@@ -66,7 +67,8 @@
       "entityType": "Individual",
       "topics": [
         "Address Proof"
-      ]
+      ],
+      "searchText": "case-002 客户提供移动账单作为 address proof 入门 hong kong investor onboarding individual 香港基金 个人投资人 住址证明 账单审核 mobile bill utility bill address proof kyc review address proof review certification review client communication fund lee yan kyc mobile bill compliance periodic review reference letter screening documents name address proof dear thank refer please advised phone cannot accepted residential does evidence shown place residence grateful could provide one following issued within last months utility electricity water gas credit card statement bank insurance company mpf trustee landline property management internet valid tenancy agreement financial institution accounting firm law licensed entity kindly above date complete feel free contact difficulty best regards admin team ics sop kyc/cdd q&a takeaway"
     },
     {
       "id": "Case-003",
@@ -95,7 +97,8 @@
       "entityType": "Individual",
       "topics": [
         "Identity Verification"
-      ]
+      ],
+      "searchText": "case-003 客户提供未核证版护照 入门 bvi investor onboarding individual bvi基金 个人投资人 核证 certification uncertified copy identity verification kyc review certification review wong siu ming certified true copy kyc compliance cpa screening ics usd documents fund name required dear thank confirm submitted acceptable type records however copies appreciate could arrange passport qualified certifier practising lawyer public accountant prefer team behalf fee applies meantime bank statement electronic original please simply reply provided version document kindly revert date finalise file let know questions best regards admin sop kyc/cdd takeaway"
     },
     {
       "id": "Case-004",
@@ -123,7 +126,8 @@
       "entityType": "Individual",
       "topics": [
         "Address Proof"
-      ]
+      ],
+      "searchText": "case-004 reference letter 作为住址证明 进阶 cayman investor onboarding individual 开曼基金 住址证明 reference letter 推荐信 address proof kyc review address proof review certification review cheung man reference letter kyc compliance a/b documents fund name dear thank provided regret current form cannot accepted proof residential address because issued personal capacity does bear letterhead seal law firm purposes professional institution accounting company instead either ask issue possible quicker process first send unsigned draft together signatory's business card qualification pre check arranging signature provide alternative utility credit statement within last months valid tenancy agreement kindly let know preference revert date best regards admin team ics sop kyc/cdd q&a takeaway"
     },
     {
       "id": "Case-005",
@@ -155,7 +159,8 @@
       "entityType": "Individual",
       "topics": [
         "Identity Verification"
-      ]
+      ],
+      "searchText": "case-005 新加坡蓝色身份证是否接受 进阶 cayman investor onboarding individual 开曼基金 新加坡 身份证明 属地差异 singapore ic blue ic nric identity verification kyc review regulatory analysis problem solving fund tan wei ming blue singapore permanent resident contains identity residential address believe single document covers requirements compliance bvi screening bvi/hk case kyc documents name proof dear thank subscription refer card please note alone cannot accepted evidences residence status rather nationality pink citizen acceptable kindly ask provide certified copy valid passport retained supporting shows current addition cards carry expiry date confirm email shown use alternatively statement issued within last months above complete review best regards admin team ics sop kyc/cdd q&a takeaway"
     },
     {
       "id": "Case-006",
@@ -182,7 +187,8 @@
       "entityType": "Corporate",
       "topics": [
         "UBO"
-      ]
+      ],
+      "searchText": "case-006 bvi公司投资开曼基金 入门 cayman investor onboarding corporate bvi company corporate chart ubo structure chart review ubo identification beneficial ownership analysis regulatory analysis ics sop takeaway"
     },
     {
       "id": "Case-007",
@@ -208,7 +214,8 @@
       "entityType": "Corporate",
       "topics": [
         "UBO"
-      ]
+      ],
+      "searchText": "case-007 多层spv穿透 进阶 cayman investor onboarding corporate spv multi-layer structure ubo structure chart review ubo identification beneficial ownership analysis ics sop takeaway"
     },
     {
       "id": "Case-008",
@@ -234,7 +241,8 @@
       "entityType": "Corporate",
       "topics": [
         "UBO"
-      ]
+      ],
+      "searchText": "case-008 上市公司持股架构 入门 cayman investor onboarding corporate listed company stock exchange ubo structure chart review ubo identification regulatory analysis ics sop takeaway"
     },
     {
       "id": "Case-009",
@@ -261,7 +269,8 @@
       "entityType": "Corporate",
       "topics": [
         "UBO"
-      ]
+      ],
+      "searchText": "case-009 国企架构识别 进阶 cayman investor onboarding corporate soe state-owned enterprise ubo structure chart review ubo identification beneficial ownership analysis regulatory analysis ics sop takeaway"
     },
     {
       "id": "Case-010",
@@ -289,7 +298,8 @@
       "topics": [
         "Trust",
         "UBO"
-      ]
+      ],
+      "searchText": "case-010 复杂trust架构 高级 cayman investor onboarding trust complex trust discretionary trust ubo structure chart review trust review beneficial ownership analysis ubo identification ics sop takeaway"
     },
     {
       "id": "Case-011",
@@ -315,7 +325,8 @@
       "entityType": "Fund",
       "topics": [
         "UBO"
-      ]
+      ],
+      "searchText": "case-011 持牌管理人出具aml letter 入门 bvi investor onboarding fund aml letter licensed manager ubo aml letter review regulatory analysis kyc review ics sop takeaway"
     },
     {
       "id": "Case-012",
@@ -346,7 +357,8 @@
       "entityType": "Fund",
       "topics": [
         "UBO"
-      ]
+      ],
+      "searchText": "case-012 fund admin 出具 aml letter 是否可以接受 l2 bvi investor onboarding fund aml letter licensed entity compliance review fund administrator vcc ubo aml letter review regulatory analysis risk assessment compliance escalation abc def kyc aml letter capital pte ltd manager mas xyz corp administrator transfer agent sec bank secrecy act bsa program aml/kyc ics sof cdd thank providing issued review note acts structure reliance purposes appreciate could instead provided regulated licensed entity responsible oversight investment alternatively full documentation cooperation sop takeaway"
     },
     {
       "id": "Case-013",
@@ -377,7 +389,8 @@
       "entityType": "Corporate",
       "topics": [
         "UBO"
-      ]
+      ],
+      "searchText": "case-013 discretionary managed account 下是否需要披露底层客户 ubo l2 bvi investor onboarding corporate aml letter discretionary account licensed entity licensed am sfc ubo aml letter review regulatory analysis risk assessment compliance escalation abc asset management limited discretionary managed account aml letter sof kyc cdd investment made through operated entity underlying client granted full authority respect decisions exercise voting rights relating ics aml/kyc step thank providing details structure based preliminary review understand exercises discretion complete please provide confirmation relevant licensing status ensure includes identified verified accordance applicable requirements upon completion assess whether reliance appropriate case sop investor onboarding takeaway"
     },
     {
       "id": "Case-014",
@@ -407,7 +420,8 @@
       "entityType": "Corporate",
       "topics": [
         "UBO"
-      ]
+      ],
+      "searchText": "case-014 aml letter 超过一年是否仍可接受 l2 other investor onboarding corporate aml letter compliance review existing client validity ubo aml letter review regulatory analysis risk assessment compliance escalation abc fund xyz capital limited ics aml letter asset management step kyc note issued one year ago investor previously completed onboarding relevant records remain available reviewing whether reliance existing remains appropriate please confirm material changes ownership control structure regulatory status entity since sop client reuse historical review takeaway"
     },
     {
       "id": "Case-015",
@@ -433,7 +447,8 @@
       "entityType": "Corporate",
       "topics": [
         "UBO"
-      ]
+      ],
+      "searchText": "case-015 aml letter缺少承诺条款 入门 bvi investor onboarding corporate aml letter missing covenant ubo aml letter review regulatory analysis client communication ics sop takeaway"
     },
     {
       "id": "Case-016",
@@ -461,7 +476,8 @@
       "topics": [
         "Identity Verification",
         "SOF"
-      ]
+      ],
+      "searchText": "case-016 个人投资人认购基金 入门 cayman investor onboarding individual individual investor subscription identity verification sof kyc review sof review closing readiness check ics sop takeaway"
     },
     {
       "id": "Case-017",
@@ -488,7 +504,8 @@
       "entityType": "Corporate",
       "topics": [
         "UBO"
-      ]
+      ],
+      "searchText": "case-017 公司投资人认购基金 入门 cayman investor onboarding corporate corporate investor company ubo kyc review beneficial ownership analysis closing readiness check ics sop takeaway"
     },
     {
       "id": "Case-018",
@@ -519,7 +536,8 @@
       "entityType": "Trust",
       "topics": [
         "Trust"
-      ]
+      ],
+      "searchText": "case-018 trustee代表两个trust认购时应收集哪些kyc资料 l2 bvi investor onboarding trust aml letter subscription review trustee trust structure trust review aml letter review risk assessment fund ics kyc subscription agreement xxx limited aml letter sof admin investor register following review documents note executed monies remitted trustee's account ensure consistency legal subscriber records suggest amending name reflect acting behalf relevant trusts providing letters covering underlying structures sop onboarding structure takeaway"
     },
     {
       "id": "Case-019",
@@ -546,7 +564,8 @@
       "entityType": "Fund",
       "topics": [
         "UBO"
-      ]
+      ],
+      "searchText": "case-019 持牌基金投资基金 进阶 cayman investor onboarding fund fund investor regulated fund ubo regulatory analysis beneficial ownership analysis fund structure analysis ics sop takeaway"
     },
     {
       "id": "Case-020",
@@ -573,7 +592,8 @@
       "entityType": "Corporate",
       "topics": [
         "SOF"
-      ]
+      ],
+      "searchText": "case-020 追加投资 入门 cayman investor onboarding corporate additional subscription top-up sof kyc review sof review closing readiness check ics sop takeaway"
     },
     {
       "id": "Case-021",
@@ -600,7 +620,8 @@
       "entityType": "Corporate",
       "topics": [
         "Identity Verification"
-      ]
+      ],
+      "searchText": "case-021 客户要求先closing后补kyc 入门 cayman investor onboarding corporate closing kyc identity verification compliance escalation client communication closing readiness check risk assessment ics sop takeaway"
     },
     {
       "id": "Case-022",
@@ -626,7 +647,8 @@
       "entityType": "Corporate",
       "topics": [
         "UBO"
-      ]
+      ],
+      "searchText": "case-022 客户拒绝披露ubo 入门 cayman investor onboarding corporate ubo disclosure refusal ubo compliance escalation ubo identification client communication ics sop takeaway"
     },
     {
       "id": "Case-023",
@@ -652,7 +674,8 @@
       "entityType": "Individual",
       "topics": [
         "PEP"
-      ]
+      ],
+      "searchText": "case-023 发现pep 进阶 cayman investor onboarding individual pep politically exposed compliance escalation pep screening risk assessment ics sop takeaway"
     },
     {
       "id": "Case-024",
@@ -679,7 +702,8 @@
       "entityType": "Individual",
       "topics": [
         "Adverse Media"
-      ]
+      ],
+      "searchText": "case-024 发现负面新闻 入门 cayman investor onboarding individual adverse media negative news compliance escalation adverse media review risk assessment client communication ics sop takeaway"
     },
     {
       "id": "Case-025",
@@ -706,7 +730,8 @@
       "entityType": "Individual",
       "topics": [
         "Sanctions"
-      ]
+      ],
+      "searchText": "case-025 高风险国家投资人 高级 cayman investor onboarding individual high-risk country fatf sanctions compliance escalation risk assessment regulatory analysis pep screening ics sop takeaway"
     },
     {
       "id": "Case-026",
@@ -736,7 +761,8 @@
       "entityType": "Individual",
       "topics": [
         "Identity Verification"
-      ]
+      ],
+      "searchText": "case-026 台湾身份证是否可以作为身份证明文件 l1 bvi cayman investor onboarding individual kyc identity document taiwan taiwan id national id identity verification kyc review regulatory analysis sof thank providing national identification card fund onboarding purposes document generally accepted please provide valid passport does indicate expiry date ics sop identity verification takeaway"
     },
     {
       "id": "Case-027",
@@ -769,7 +795,8 @@
       "topics": [
         "Sanctions",
         "Screening"
-      ]
+      ],
+      "searchText": "case-027 同名制裁命中——名单更新后投资者被筛出 进阶 cayman fund operations individual aml sanctions screening potential match tipping off redemption sanctions screening compliance escalation identity verification client communication potential match true false positive mlro dmlro tipping off verify restrict freeze report document fra crf sar cima tfs sdd text alert dear investor thank instruction request received currently standard review procedures unable confirm settlement date time revert soon completed please note provide further details process stage kind regards fund administration team ics sop takeaway"
     },
     {
       "id": "Case-028",
@@ -801,7 +828,8 @@
       "topics": [
         "AML Audit",
         "Outsourcing"
-      ]
+      ],
+      "searchText": "case-028 aml audit coverage——集团审计能否覆盖本基金 高级 cayman fund governance fund aml audit administrator outsourcing fund-level evidence audit coverage outsourcing oversight evidence assessment fund governance review compliance escalation aml aml/cft amlco cima faq cdd kpi mlro dmlro text dear thank sharing group audit report board reviewed notes testing covered group's european operations samples funds while happy rely level evidence supporting remains accountable obtaining sufficient appropriate fund's please provide following respect mapping scope risk profile investor base controls results sample files documentation evidencing key screening escalation monitoring operated practice during period list exceptions incidents remediation items arising status board's written basis determining cycle confirm independence function arrangements filed soon practicable kind regards directors ics sop coverage takeaway support work cannot replace conclusions service provider supports assessment required"
     },
     {
       "id": "Case-029",
@@ -834,7 +862,8 @@
         "EDD",
         "Third Party Payment",
         "Sanctions"
-      ]
+      ],
+      "searchText": "case-029 赎回前临时更改收款账户至第三方关联公司 高级 cayman redemption individual edd third party payment sof/sow sanctions transaction review edd review compliance escalation client communication abc holding ltd structuring ubo authorisation ownership kyc cdd rationale sof sow mlro dmlro internal sar tipping off text sdd dear investor thank instruction advising change settlement account proceeds remitted held third party standard procedures require complete enhanced verification payment released proceed please provide signed form together evidence authority signatory documentation evidencing control relationship shareholding structure register extract documentary destination bank confirmation letter statement reason original longer available made through note unable release until completed further details review process stage kind regards fund administration team ics sop takeaway"
     }
   ]
 }

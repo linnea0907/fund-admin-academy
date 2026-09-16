@@ -3,7 +3,8 @@ import { notFound } from "next/navigation";
 import { findLessonBySlug, lessons, electiveLessons, lessonLabel } from "@/data/lessons";
 import { lessonNeighbors } from "@/lib/ordering";
 import LessonViewer from "@/components/LessonViewer";
-import { DesktopToc, MobileToc } from "@/components/LessonToc";
+import LessonReader from "@/components/LessonReader";
+import { MobileToc } from "@/components/LessonToc";
 
 type Params = Promise<{ slug: string }>;
 
@@ -36,11 +37,10 @@ export default async function LessonPage({ params }: { params: Params }) {
     <div>
       {/* 移动端目录 chips */}
       <MobileToc lesson={lesson} />
-      <div className="lg:grid lg:grid-cols-[250px_minmax(0,1fr)] lg:items-start lg:gap-8">
-        {/* 桌面 sticky 目录 */}
-        <DesktopToc lesson={lesson} />
+      {/* 桌面：左侧 sticky 目录（可折叠）+ 正文 */}
+      <LessonReader lesson={lesson}>
         <LessonViewer lesson={lesson} prev={prev} next={next} />
-      </div>
+      </LessonReader>
     </div>
   );
 }

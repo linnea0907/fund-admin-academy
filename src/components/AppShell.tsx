@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState, type ReactNode } from "react";
+import { useState, type CSSProperties, type ReactNode } from "react";
 import { siteConfig } from "@/lib/site-config";
+import { useUiPref } from "@/hooks/use-ui-pref";
 
 /** 一级导航（V1.15.2 导航重构：按「用户使用频率 + 学习流程」组织，不按功能开发顺序）
  *
@@ -14,47 +15,140 @@ import { siteConfig } from "@/lib/site-config";
  *    查资料只需要认一个入口；
  *  - 一级条目由 9 项降为 6 项，层级化后更易理解；
  *  - 「案例工坊」（/backlog，seed 录入台）属生产工具而非查资料入口，保留为独立一级条目；
- *  - 「知识工坊」（/wiki）已于 V1.15.2 下线，其健康度看板迁入术语库页签。 */
+ *  - 「知识工坊」（/wiki）已于 V1.15.2 下线，其健康度看板迁入术语库页签。
+ *
+ *  V1.15.3：
+ *  - 桌面侧栏支持**收起 / 展开**（收起后为窄图标栏，仅剩图标 + tooltip），状态持久化到 localStorage；
+ *  - 每个一级条目补齐线性图标（收起态可辨识），移除原先右侧的「子项数量」数字
+ *    （用户无法理解其含义，易误读为未读/待办，信息价值低）。
+ */
+
+type NavIconName =
+  | "overview"
+  | "courses"
+  | "knowledge"
+  | "workshop"
+  | "favorites"
+  | "settings";
+
 interface NavItem {
   href: string;
   label: string;
+  icon: NavIconName;
   /** 子项（同一知识入口下的资产库） */
   children?: { href: string; label: string }[];
 }
 
 const NAV: NavItem[] = [
-  { href: "/", label: "学习概览" },
-  { href: "/courses", label: "课程中心" },
+  { href: "/", label: "学习概览", icon: "overview" },
+  { href: "/courses", label: "课程中心", icon: "courses" },
   {
     href: "/search",
     label: "知识检索",
+    icon: "knowledge",
     children: [
       { href: "/cases", label: "案例库" },
       { href: "/glossary", label: "术语库" },
       { href: "/toolkit", label: "实务工具包" },
     ],
   },
-  { href: "/backlog", label: "案例工坊" },
-  { href: "/favorites", label: "收藏夹" },
-  { href: "/settings", label: "设置" },
+  { href: "/backlog", label: "案例工坊", icon: "workshop" },
+  { href: "/favorites", label: "收藏夹", icon: "favorites" },
+  { href: "/settings", label: "设置", icon: "settings" },
 ];
+
+/** 桌面侧栏宽度（收起态需与 main 的 lg:ml-* 保持同值） */
+const RAIL_W = 72;
 
 function isActive(pathname: string, href: string): boolean {
   if (href === "/") return pathname === "/";
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
+/** 线性图标（描边继承 currentColor，fill 由 svg 根节点统一置 none） */
+const ICON_ATTRS = {
+  fill: "none",
+  stroke: "currentColor",
+  strokeWidth: 1.6,
+  strokeLinecap: "round",
+  strokeLinejoin: "round",
+} as const;
+
+function NavIcon({ name }: { name: NavIconName }) {
+  return (
+    <svg width="18" height="18" viewBox="0 0 20 20" aria-hidden {...ICON_ATTRS}>
+      {name === "overview" && (
+        <path d="M3 8.6 10 3.2l7 5.4V16a1 1 0 0 1-1 1h-3.6v-4.7h-4.8V17H4a1 1 0 0 1-1-1z" />
+      )}
+      {name === "courses" && (
+        <>
+          <path d="M10 5.4C8.4 4.2 6.5 3.7 4 3.7v11.4c2.5 0 4.4.5 6 1.7 1.6-1.2 3.5-1.7 6-1.7V3.7c-2.5 0-4.4.5-6 1.7z" />
+          <path d="M10 5.4v11.4" />
+        </>
+      )}
+      {name === "knowledge" && (
+        <>
+          <circle cx="9" cy="9" r="4.8" />
+          <path d="M12.6 12.6 17 17" />
+        </>
+      )}
+      {name === "workshop" && (
+        <>
+          <path d="M13.1 3.5a1.9 1.9 0 0 1 2.7 0l.7.7a1.9 1.9 0 0 1 0 2.7l-7.4 7.4-4.6 1.1 1.1-4.6z" />
+          <path d="M12 4.6l3.4 3.4" />
+        </>
+      )}
+      {name === "favorites" && (
+        <path d="M10 2.9l2.2 4.5 5 .7-3.6 3.5.9 5L10 14.2l-4.5 2.4.9-5L2.8 8.1l5-.7z" />
+      )}
+      {name === "settings" && (
+        <>
+          <circle cx="10" cy="10" r="2.6" />
+          <path d="M10 2.6v2.1M10 15.3v2.1M17.4 10h-2.1M4.7 10H2.6M15.2 4.8l-1.5 1.5M6.3 13.7l-1.5 1.5M15.2 15.2l-1.5-1.5M6.3 6.3 4.8 4.8" />
+        </>
+      )}
+    </svg>
+  );
+}
+
 export default function AppShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  /** 桌面侧栏收起态（刷新后保持，key: fund-admin-academy-ui-v1） */
+  const [collapsed, setCollapsed] = useUiPref("navCollapsed", false);
 
-  const nav = (
-    <nav className="flex flex-col gap-1">
+  /** rail = 窄图标栏（仅桌面收起态使用；移动端抽屉始终完整）
+   *  id 由调用方显式传入：桌面侧栏与移动抽屉同时存在，不能共用同一 id */
+  const buildNav = (rail: boolean, id: string) => (
+    <nav id={id} className="flex flex-col gap-1">
       {NAV.map((item) => {
         const children = item.children ?? [];
         // 子路由激活时，父条目按「所属组高亮」处理，避免与子项同时出现两个选中态
         const childActive = children.some((c) => isActive(pathname, c.href));
         const selfActive = isActive(pathname, item.href) && !childActive;
+        const parentActive = selfActive || childActive;
+
+        if (rail) {
+          return (
+            <Link
+              key={item.href}
+              href={item.href}
+              title={item.label}
+              aria-label={item.label}
+              aria-current={parentActive ? "page" : undefined}
+              className={`relative flex h-10 w-10 items-center justify-center rounded-lg transition ${
+                parentActive
+                  ? "bg-white/15 text-white"
+                  : "text-blue-200/75 hover:bg-white/5 hover:text-white"
+              }`}
+            >
+              {parentActive && (
+                <span className="absolute -left-1.5 top-1/2 h-5 w-[3px] -translate-y-1/2 rounded-full bg-amber-300" />
+              )}
+              <NavIcon name={item.icon} />
+            </Link>
+          );
+        }
 
         return (
           <div key={item.href}>
@@ -63,27 +157,19 @@ export default function AppShell({ children }: { children: ReactNode }) {
               onClick={() => setOpen(false)}
               aria-current={selfActive ? "page" : undefined}
               className={`flex items-center gap-3 rounded-lg px-3.5 py-2.5 text-sm font-medium transition ${
-                selfActive || childActive
+                parentActive
                   ? "bg-white/15 text-white"
                   : "text-blue-200/90 hover:bg-white/5 hover:text-white"
               }`}
             >
               <span
-                className={`h-1.5 w-1.5 rounded-full ${
-                  selfActive || childActive ? "bg-amber-300" : "bg-blue-200/40"
+                className={`flex h-4 w-4 shrink-0 items-center justify-center ${
+                  parentActive ? "text-amber-300" : "text-blue-200/50"
                 }`}
-              />
+              >
+                <NavIcon name={item.icon} />
+              </span>
               {item.label}
-              {children.length > 0 && (
-                <span
-                  aria-hidden
-                  className={`ml-auto text-[10px] ${
-                    childActive ? "text-amber-300" : "text-blue-200/50"
-                  }`}
-                >
-                  {children.length}
-                </span>
-              )}
             </Link>
 
             {children.length > 0 && (
@@ -139,21 +225,73 @@ export default function AppShell({ children }: { children: ReactNode }) {
     </div>
   );
 
+  /** 收起/展开 按钮（仅桌面侧栏顶部） */
+  const toggleButton = (
+    <button
+      type="button"
+      onClick={() => setCollapsed(!collapsed)}
+      aria-controls="app-desktop-nav"
+      aria-expanded={!collapsed}
+      aria-label={collapsed ? "展开总目录" : "收起总目录"}
+      title={collapsed ? "展开总目录" : "收起总目录"}
+      className="shrink-0 rounded-lg p-2 text-blue-200/75 transition hover:bg-white/10 hover:text-white"
+    >
+      <svg width="18" height="18" viewBox="0 0 20 20" aria-hidden {...ICON_ATTRS}>
+        <rect x="2.4" y="3.4" width="15.2" height="13.2" rx="2.2" />
+        <path d="M7.3 3.4v13.2" />
+        {collapsed ? (
+          <path d="M11.6 7.8l2.2 2.2-2.2 2.2" />
+        ) : (
+          <path d="M13.8 7.8l-2.2 2.2 2.2 2.2" />
+        )}
+      </svg>
+    </button>
+  );
+
   return (
-    <div className="min-h-screen bg-[#f4f6fa]">
-      {/* 桌面侧栏 */}
-      <aside className="fixed inset-y-0 left-0 z-30 hidden w-60 flex-col bg-[#0e2a5e] px-4 py-6 lg:flex">
-        <div className="px-2">{brand}</div>
-        <div className="mt-8">{nav}</div>
-        <div className="mt-auto rounded-xl bg-white/5 px-3.5 py-3 text-[11px] leading-relaxed text-blue-200/70">
-          学习数据保存在本机浏览器
-          <br />
-          （localStorage · {siteConfig.storageKey}）
-          <br />
-          <span className="text-blue-200/50">
-            {siteConfig.name} · {siteConfig.releaseStage} {siteConfig.version}
-          </span>
+    <div
+      className="min-h-screen bg-[#f4f6fa]"
+      /* 侧栏宽度单一来源：桌面侧栏 width 与主内容 lg:ml-* 共用该变量，避免两处写死后失配 */
+      style={{ "--sidebar-w": `${collapsed ? RAIL_W : 240}px` } as CSSProperties}
+    >
+      {/* 桌面侧栏（V1.15.3：可收起为窄图标栏） */}
+      <aside
+        className={`fixed inset-y-0 left-0 z-30 hidden flex-col bg-[#0e2a5e] py-6 transition-[width] duration-200 lg:flex ${
+          collapsed ? "px-3" : "px-4"
+        } lg:w-[var(--sidebar-w)]`}
+      >
+        <div
+          className={
+            collapsed
+              ? "flex flex-col items-center gap-3"
+              : "flex items-start justify-between gap-2 px-2"
+          }
+        >
+          {collapsed ? (
+            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-amber-300 text-sm font-black text-[#0e2a5e]">
+              FA
+            </div>
+          ) : (
+            brand
+          )}
+          {toggleButton}
         </div>
+
+        <div className={collapsed ? "mt-6 flex flex-col items-center gap-1" : "mt-8"}>
+          {buildNav(collapsed, "app-desktop-nav")}
+        </div>
+
+        {!collapsed && (
+          <div className="mt-auto rounded-xl bg-white/5 px-3.5 py-3 text-[11px] leading-relaxed text-blue-200/70">
+            学习数据保存在本机浏览器
+            <br />
+            （localStorage · {siteConfig.storageKey}）
+            <br />
+            <span className="text-blue-200/50">
+              {siteConfig.name} · {siteConfig.releaseStage} {siteConfig.version}
+            </span>
+          </div>
+        )}
       </aside>
 
       {/* 移动端顶栏 */}
@@ -192,13 +330,13 @@ export default function AppShell({ children }: { children: ReactNode }) {
                 </svg>
               </button>
             </div>
-            <div className="mt-8">{nav}</div>
+            <div className="mt-8">{buildNav(false, "app-mobile-nav")}</div>
           </div>
         </div>
       )}
 
-      {/* 主内容 */}
-      <main className="flex min-h-screen flex-col px-4 pb-16 pt-6 sm:px-6 lg:ml-60 lg:px-10 lg:pt-8">
+      {/* 主内容（左边距随侧栏宽度联动） */}
+      <main className="flex min-h-screen flex-col px-4 pb-16 pt-6 transition-[margin] duration-200 sm:px-6 lg:ml-[var(--sidebar-w)] lg:px-10 lg:pt-8">
         <div className="mx-auto w-full max-w-6xl flex-1">{children}</div>
 
         {/* 全站页脚（所有页面底部） */}

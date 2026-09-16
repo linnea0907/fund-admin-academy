@@ -76,6 +76,52 @@ function stripComments(md: string): string {
   return md.replace(/<!--[\s\S]*?-->/g, "");
 }
 
+/**
+ * 案例库搜索栏检索串（V1.15.3）
+ *
+ * ⚠️ 口径必须与 `scripts/build-case-index.mjs` 的 buildSearchText() 完全一致
+ *    （索引正常时走 JSON 里的 searchText；索引缺失/过期时走本函数兜底）。
+ *    两侧同改，否则「dev 直接改 md」与「跑过 gen:cases」会搜出不同结果。
+ */
+const SEARCH_STOP_WORDS = new Set([
+  "the", "and", "for", "with", "that", "this", "from", "are", "was", "were",
+  "has", "have", "had", "not", "but", "you", "your", "our", "their", "his",
+  "her", "its", "all", "any", "can", "may", "must", "should", "will", "would",
+  "shall", "been", "being", "into", "out", "about", "after", "before", "when",
+  "where", "which", "who", "whom", "what", "how", "why", "than", "then",
+  "there", "here", "they", "them", "these", "those", "such", "also", "only",
+  "more", "most", "other", "some", "each", "both", "over", "under", "between",
+  "per", "via", "yes", "nor", "own", "too", "very", "just", "same", "able",
+]);
+
+export function buildCaseSearchText(meta: CaseMeta, body: string): string {
+  const parts: string[] = [
+    meta.id,
+    meta.title,
+    meta.level,
+    ...meta.jurisdiction,
+    meta.businessArea,
+    meta.entityType,
+    ...meta.tags,
+    ...meta.topics,
+    ...meta.skills,
+  ];
+  for (const tok of body.match(/[A-Za-z][A-Za-z0-9&/']{2,}/g) ?? []) {
+    const t = tok.toLowerCase().replace(/[&/']+$/, "");
+    if (t.length >= 3 && !SEARCH_STOP_WORDS.has(t)) parts.push(t);
+  }
+  const seen = new Set<string>();
+  const out: string[] = [];
+  for (const p of parts) {
+    const v = String(p ?? "").trim().toLowerCase();
+    if (v && !seen.has(v)) {
+      seen.add(v);
+      out.push(v);
+    }
+  }
+  return out.join(" ");
+}
+
 /** 从文件名解析 Case id：Case-001.md → "Case-001" */
 export function caseIdFromFile(file: string): CaseId | null {
   const m = /^(Case-\d{3,})\.md$/i.exec(file);
@@ -232,6 +278,7 @@ export function listCaseMetas(): CaseMeta[] {
           businessArea?: unknown;
           entityType?: unknown;
           topics?: unknown;
+          searchText?: unknown;
         }>;
       };
       if (Array.isArray(idx.cases) && idx.cases.length > 0) {
@@ -252,6 +299,7 @@ export function listCaseMetas(): CaseMeta[] {
               businessArea: asBusinessArea(c.businessArea) ?? "Investor Onboarding",
               entityType: asEntityType(c.entityType) ?? "Other",
               topics: asTopics(c.topics),
+              searchText: normalizeStr(c.searchText) || undefined,
             };
           })
           .filter((x): x is CaseMeta => x !== null);
@@ -264,24 +312,30 @@ export function listCaseMetas(): CaseMeta[] {
   }
   // 回退：逐文件解析（与索引同逻辑）
   return listCaseIds()
-    .map((id) => {
+    .map((id): CaseMeta | null => {
       const c = readCase(id);
-      return c
-        ? {
-            id,
-            title: c.title,
-            level: c.level,
-            module: c.module,
-            tags: c.tags,
-            skills: c.skills,
-            estimatedTime: c.estimatedTime,
-            ready: c.ready,
-            jurisdiction: c.jurisdiction,
-            businessArea: c.businessArea,
-            entityType: c.entityType,
-            topics: c.topics,
-          }
-        : null;
+      if (!c) return null;
+      const meta: CaseMeta = {
+        id,
+        title: c.title,
+        level: c.level,
+        module: c.module,
+        tags: c.tags,
+        skills: c.skills,
+        estimatedTime: c.estimatedTime,
+        ready: c.ready,
+        jurisdiction: c.jurisdiction,
+        businessArea: c.businessArea,
+        entityType: c.entityType,
+        topics: c.topics,
+      };
+      return {
+        ...meta,
+        searchText: buildCaseSearchText(
+          meta,
+          Object.values(c.sections ?? {}).join("\n")
+        ),
+      };
     })
     .filter((x): x is CaseMeta => x !== null);
 }

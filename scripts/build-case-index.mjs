@@ -126,6 +126,57 @@ const normSingle = (v, allowed, fallback) => {
   return t && allowed.has(t) ? t : fallback;
 };
 
+/**
+ * 全文检索词元（V1.15.3 案例库搜索栏）
+ *
+ * 口径 = 元数据（编号 / 标题 / 难度 / 属地 / 实体 / 业务域 / 标签 / 主题 / 技能）
+ *      + 正文中的**拉丁词元**（小写去重、长度 ≥3、剔除常见英文停用词）。
+ * 中文正文不入索引（29 篇全文约 160KB，塞进 RSC payload 不划算）——
+ * 中文检索覆盖标题、标签、主题等元数据字段；英文缩写（SPC / UBO / AML / CRS / PEP 等）
+ * 由正文词元兜住。
+ *
+ * ⚠️ 与 src/lib/cases.ts 的 buildCaseSearchText() 必须保持同一口径（两处同步改）。
+ */
+const SEARCH_STOP_WORDS = new Set([
+  "the", "and", "for", "with", "that", "this", "from", "are", "was", "were",
+  "has", "have", "had", "not", "but", "you", "your", "our", "their", "his",
+  "her", "its", "all", "any", "can", "may", "must", "should", "will", "would",
+  "shall", "been", "being", "into", "out", "about", "after", "before", "when",
+  "where", "which", "who", "whom", "what", "how", "why", "than", "then",
+  "there", "here", "they", "them", "these", "those", "such", "also", "only",
+  "more", "most", "other", "some", "each", "both", "over", "under", "between",
+  "per", "via", "yes", "nor", "own", "too", "very", "just", "same", "able",
+]);
+
+/** 由元数据 + 正文生成 searchText（小写、空格分隔、去重） */
+function buildSearchText(meta, body) {
+  const parts = [
+    meta.id,
+    meta.title,
+    meta.level,
+    ...(meta.jurisdiction ?? []),
+    meta.businessArea,
+    meta.entityType,
+    ...(meta.tags ?? []),
+    ...(meta.topics ?? []),
+    ...(meta.skills ?? []),
+  ];
+  for (const tok of String(body ?? "").match(/[A-Za-z][A-Za-z0-9&/']{2,}/g) ?? []) {
+    const t = tok.toLowerCase().replace(/[&/']+$/, "");
+    if (t.length >= 3 && !SEARCH_STOP_WORDS.has(t)) parts.push(t);
+  }
+  const seen = new Set();
+  const out = [];
+  for (const p of parts) {
+    const v = String(p ?? "").trim().toLowerCase();
+    if (v && !seen.has(v)) {
+      seen.add(v);
+      out.push(v);
+    }
+  }
+  return out.join(" ");
+}
+
 const files = fs
   .readdirSync(DIR)
   .filter((f) => /^Case-\d{3,}\.md$/i.test(f))
@@ -141,7 +192,7 @@ const cases = files.map((file) => {
   const modNum = normModule(data.module);
   const sections = splitSections(content);
   const ready = title !== "" && modNum > 0 && Object.keys(sections).length > 0;
-  return {
+  const meta = {
     id: normStr(data.id) || file.replace(/\.md$/i, ""),
     file,
     title,
@@ -157,11 +208,12 @@ const cases = files.map((file) => {
     entityType: normSingle(data.entityType, ENTITY_TYPES, "Other"),
     topics: normList(data.topics, TOPICS),
   };
+  return { ...meta, searchText: buildSearchText(meta, stripComments(content)) };
 });
 
 const index = {
   schema: "case-library-index",
-  version: 4,
+  version: 5,
   generatedAt: new Date().toISOString(),
   total: cases.length,
   ready: cases.filter((c) => c.ready).length,
