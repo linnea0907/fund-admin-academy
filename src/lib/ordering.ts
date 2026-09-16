@@ -1,11 +1,12 @@
-import { lessons, electiveLessons, isElectiveId } from "@/data/lessons";
+import { lessons, electiveLessons, camsLessons, isElectiveId } from "@/data/lessons";
 import type { Lesson } from "@/types";
 
 /**
- * 必修课序列：按课程 id 数字序（V2 编号体系 01/02/10/12/14/15）。
+ * 必修课序列：按课程 id 数字序（V2 编号体系 01/02/10/11/12/13/14/15）。
+ * V1.16.0：新增第 11/13 讲（CAMS 补强课，见 camsLessons）并入必修序列，
  * 学习路线、必修导航统一使用本序列。
  */
-export const orderedLessons: Lesson[] = [...lessons].sort((a, b) =>
+export const orderedLessons: Lesson[] = [...lessons, ...camsLessons].sort((a, b) =>
   a.id.localeCompare(b.id, undefined, { numeric: true })
 );
 

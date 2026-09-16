@@ -3,6 +3,7 @@
 import Link from "next/link";
 import type { Lesson } from "@/types";
 import { useAcademy } from "@/hooks/use-academy";
+import { CamsTags } from "@/components/CamsTag";
 import {
   isLessonComplete,
   lessonDoneCount,
@@ -54,7 +55,13 @@ export default function CourseCard({
         </span>
       )}
 
-      <h3 className={`${elective ? "" : "mt-3"} text-base font-bold text-slate-800 group-hover:text-[#0e2a5e]`}>
+      {lesson.cams && lesson.cams.length > 0 && (
+        <div className="mt-2.5">
+          <CamsTags domains={lesson.cams} />
+        </div>
+      )}
+
+      <h3 className={`${elective || lesson.cams ? "" : "mt-3"} text-base font-bold text-slate-800 group-hover:text-[#0e2a5e]`}>
         {lesson.title}
       </h3>
       <p className="mt-1 line-clamp-2 text-sm leading-relaxed text-slate-500">

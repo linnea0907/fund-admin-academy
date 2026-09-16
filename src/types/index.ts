@@ -1,5 +1,7 @@
 /** Fund Admin Academy — 领域类型定义 */
 
+import type { CamsDomain } from "./cams";
+
 /** 课程自测题（单选） */
 export interface QuizQuestion {
   id: string;
@@ -86,6 +88,9 @@ export interface Lesson {
   escalationTriggers: string[];
   /** 内容元数据（数据治理） */
   meta: LessonMeta;
+  /** 本讲覆盖的 CAMS Domain（V1.16.0；空/缺省 = 未标注，不显示标签）
+   *  详见 src/types/cams.ts —— 只做「课程 ↔ 认证域」映射，不是第二套课程体系 */
+  cams?: CamsDomain[];
 }
 
 /** 收藏对象：整课 / 课程内模块 / 案例 / 术语 / 实务工具（V1.11 收藏夹；

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { findLessonBySlug, lessons, electiveLessons, lessonLabel } from "@/data/lessons";
+import { findLessonBySlug, allLessons, lessonLabel } from "@/data/lessons";
 import { lessonNeighbors } from "@/lib/ordering";
 import LessonViewer from "@/components/LessonViewer";
 import LessonReader from "@/components/LessonReader";
@@ -9,7 +9,7 @@ import { MobileToc } from "@/components/LessonToc";
 type Params = Promise<{ slug: string }>;
 
 function allLessonSlugs() {
-  return [...lessons, ...electiveLessons].map((l) => ({ slug: l.slug }));
+  return allLessons.map((l) => ({ slug: l.slug }));
 }
 
 export function generateStaticParams() {

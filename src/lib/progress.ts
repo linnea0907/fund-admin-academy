@@ -1,4 +1,4 @@
-import { lessons, totalLessons } from "@/data/lessons";
+import { orderedLessons } from "@/lib/ordering";
 import type { Lesson, StoredState } from "@/types";
 
 /** 模块完成 key：lessonId/moduleId */
@@ -41,7 +41,7 @@ export function totalProgress(state: StoredState): LessonProgressSummary {
   let done = 0;
   let total = 0;
   let completedLessons = 0;
-  for (const lesson of lessons) {
+  for (const lesson of orderedLessons) {
     total += lesson.modules.length;
     done += lessonDoneCount(state, lesson);
     if (isLessonComplete(state, lesson)) completedLessons += 1;
@@ -51,7 +51,7 @@ export function totalProgress(state: StoredState): LessonProgressSummary {
     total,
     percent: total === 0 ? 0 : Math.round((done / total) * 100),
     completedLessons,
-    totalLessons,
+    totalLessons: orderedLessons.length,
   };
 }
 

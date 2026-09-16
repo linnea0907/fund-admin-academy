@@ -81,7 +81,7 @@ export default function HomePage() {
             </span>
           </div>
           <p className="mt-2 max-w-xl text-sm leading-relaxed text-blue-100">
-            课程编号体系：01 运转 → 02 结构 → 10 AML → 12 FATCA → 14 Cayman → 15 BVI。
+            课程编号体系：01 运转 → 02 结构 → 10 AML → 11/13 CAMS 补强 → 12 FATCA → 14 Cayman → 15 BVI。
             学习进度与收藏保存在本机浏览器。
           </p>
           {nextLesson && (
@@ -159,7 +159,7 @@ export default function HomePage() {
             />
           </div>
         </div>
-        <StatCard label="课程数" value={String(stat.totalLessons)} sub="编号 01/02/10/12/14/15" />
+        <StatCard label="课程数" value={String(stat.totalLessons)} sub="编号 01/02/10/11/12/13/14/15" />
         <StatCard label="模块数" value={String(moduleCount)} sub="全部课程章节" />
         <StatCard label="风险提示数" value={String(riskCount)} sub="全部课程警示" />
         <StatCard label="自测题数" value={String(quizCount)} sub="全部课程题目" />

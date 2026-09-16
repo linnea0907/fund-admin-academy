@@ -1,5 +1,6 @@
 import type { Lesson } from "@/types";
 import { electiveLessons } from "./electives";
+import { camsLessons } from "./lessons-cams";
 
 /**
  * Fund Admin Academy — 课程数据（v2 内容升级版）
@@ -1454,18 +1455,22 @@ export const totalLessons = lessons.length;
 /* ===== 选修课程（E01-E11，独立数据文件；不影响必修） ===== */
 export { electiveLessons };
 
+/* ===== CAMS 补强课程（第 11/13 讲，V1.16.0；必修级，见 lessons-cams.ts） ===== */
+export { camsLessons };
+
 /** 是否选修：id 以 "E" 开头 */
 export function isElectiveId(id: string): boolean {
   return /^E\d+$/.test(id);
 }
 
-/** 全部课程（必修 + 选修） */
-export const allLessons: Lesson[] = [...lessons, ...electiveLessons];
+/** 全部课程（必修 + CAMS 补强 + 选修） */
+export const allLessons: Lesson[] = [...lessons, ...camsLessons, ...electiveLessons];
 
-/** 在必修与选修中按 slug 查找（详情页/静态生成用） */
+/** 在必修、CAMS 补强与选修中按 slug 查找（详情页/静态生成用） */
 export function findLessonBySlug(slug: string): Lesson | undefined {
   return (
     lessons.find((l) => l.slug === slug) ??
+    camsLessons.find((l) => l.slug === slug) ??
     electiveLessons.find((l) => l.slug === slug)
   );
 }

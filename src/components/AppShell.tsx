@@ -50,6 +50,7 @@ const NAV: NavItem[] = [
       { href: "/cases", label: "案例库" },
       { href: "/glossary", label: "术语库" },
       { href: "/toolkit", label: "实务工具包" },
+      { href: "/cams-exam", label: "CAMS 模拟考试" },
     ],
   },
   { href: "/backlog", label: "案例工坊", icon: "workshop" },

@@ -14,6 +14,7 @@ import MindMap from "@/components/MindMap";
 import QuizPanel from "@/components/QuizPanel";
 import Disclaimer from "@/components/Disclaimer";
 import PracticalGuide from "@/components/PracticalGuide";
+import { CamsTags } from "@/components/CamsTag";
 import TermText from "@/components/glossary/TermText";
 import HighlightEngine from "@/components/reading/HighlightEngine";
 
@@ -81,6 +82,12 @@ export default function LessonViewer({ lesson, prev, next }: LessonViewerProps) 
           <p className="mt-2 max-w-2xl text-sm leading-relaxed text-blue-100 sm:text-[15px]">
             {lesson.subtitle}
           </p>
+
+          {lesson.cams && lesson.cams.length > 0 && (
+            <div className="mt-3">
+              <CamsTags domains={lesson.cams} size="md" />
+            </div>
+          )}
 
           <div className="mt-5 flex flex-wrap items-center gap-3">
             <button
