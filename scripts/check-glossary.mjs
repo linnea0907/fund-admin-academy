@@ -28,6 +28,7 @@ const GLOSSARY_DIR = path.join(ROOT, "src", "data", "glossary");
 const CASES_DIR = path.join(ROOT, "content", "cases");
 const LESSON_FILES = [
   path.join(ROOT, "src", "data", "lessons.ts"),
+  path.join(ROOT, "src", "data", "lessons-cams.ts"),
   path.join(ROOT, "src", "data", "electives-a.ts"),
   path.join(ROOT, "src", "data", "electives-b.ts"),
   path.join(ROOT, "src", "data", "electives-c.ts"),

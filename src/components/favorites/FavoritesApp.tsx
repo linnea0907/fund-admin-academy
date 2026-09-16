@@ -4,18 +4,22 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 import { useAcademy } from "@/hooks/use-academy";
 import { allLessons as courseAllLessons } from "@/data/lessons";
-import { orderedAllLessons } from "@/lib/ordering";
+import {
+  electiveLessonsOrdered,
+  orderedAllLessons,
+  orderedLessons,
+} from "@/lib/ordering";
 import { GLOSSARY_TERMS } from "@/lib/glossary";
 import {
   deleteNote,
+  groupNotesBySource,
   hlStatusMeta,
   loadNotes,
   matchNote,
-  noteCounts,
-  noteSourceLabel,
   noteTypeLabel,
   upsertNote,
 } from "@/lib/notes";
+import type { NoteGroupCourse } from "@/lib/notes";
 import { buildCourseBlocks, hasLocator, locateRecord } from "@/lib/reading";
 import type {
   HLStatus,
@@ -28,6 +32,24 @@ import type {
 /*  收藏夹 · 个人学习资产中心（V1.11）                                  */
 /*  顶部 Tab：[收藏内容] / [学习笔记]；本组件纯客户端（ssr:false 包装）  */
 /* ================================================================== */
+
+/**
+ * 学习笔记的归档课程序列（V1.17.0 知识分类）：
+ * 必修八讲（01/02/10/11/12/13/14/15，编号升序）→ 选修（E01–E11，编号升序）。
+ * 笔记由来源自动归档，用户无需手工分类。
+ */
+const NOTE_COURSES: NoteGroupCourse[] = [
+  ...orderedLessons.map((l) => ({
+    id: l.id,
+    title: l.title,
+    kind: "required" as const,
+  })),
+  ...electiveLessonsOrdered.map((l) => ({
+    id: l.id,
+    title: l.title,
+    kind: "elective" as const,
+  })),
+];
 
 interface CaseRef {
   id: string;
@@ -353,8 +375,6 @@ function FavRow({ row }: { row: FavRowModel }) {
 /*  Tab 2 · 学习笔记                                                   */
 /* ================================================================== */
 
-type SourceFilter = "all" | NoteSourceType;
-
 function NotesPanel({
   notes,
   setNotes,
@@ -367,21 +387,24 @@ function NotesPanel({
   courseMap: Map<string, (typeof courseAllLessons)[number]>;
 }) {
   const [q, setQ] = useState("");
-  const [filter, setFilter] = useState<SourceFilter>("all");
+  const [groupKey, setGroupKey] = useState<string>("all");
   const [editing, setEditing] = useState<StudyNote | null>(null);
   const [createOpen, setCreateOpen] = useState(false);
   const [msg, setMsg] = useState<string | null>(null);
 
-  const cnt = noteCounts(notes);
+  /**
+   * 知识分类分组（V1.17.0）：笔记按来源（课程 / 选修 / 案例）自动归档，
+   * 分组内容为「全部 → 必修编号升序 → 选修编号升序 → 案例 → 兜底」。
+   * 无笔记的分类不出现在筛选栏；某分类被删空时自动回落到「全部」。
+   */
+  const groups = useMemo(
+    () => groupNotesBySource(notes, NOTE_COURSES),
+    [notes]
+  );
+  const current = groups.find((g) => g.key === groupKey) ?? groups[0];
   const shown = useMemo(
-    () =>
-      notes
-        .filter((n) =>
-          filter === "all" ? true : n.sourceType === filter
-        )
-        .filter((n) => matchNote(n, q))
-        .sort((a, b) => b.updatedAt - a.updatedAt),
-    [notes, q, filter]
+    () => current.notes.filter((n) => matchNote(n, q)),
+    [current, q]
   );
 
   const flash = (text: string) => {
@@ -400,27 +423,28 @@ function NotesPanel({
     return m;
   }, [notes, courseMap]);
 
+  /**
+   * 定位状态（V1.17.0 起只在**异常**时提示）：
+   * 卡片上的「课程 / 高亮 / 正常」等系统属性标签已按验收意见移除
+   * （对复习知识无帮助）；异常态仍保留下方提示条，避免用户误以为高亮仍有效。
+   */
   const liveStatus = (
     n: StudyNote
-  ): { key: HLStatus; label: string; hint: string } | null => {
+  ): { key: HLStatus; hint: string } | null => {
     if (!hasLocator(n)) return null;
+    const meta = (s: HLStatus) => hlStatusMeta(s) ?? hlStatusMeta("active")!;
     if (n.sourceType === "course") {
       const blocks = courseBlocksByLesson.get(n.sourceId);
-      if (!blocks) {
-        return { key: "lost", label: "失效", hint: hlStatusMeta("lost")!.hint };
-      }
+      if (!blocks) return { key: "lost", hint: meta("lost").hint };
       const r = locateRecord(n, blocks);
-      const meta = hlStatusMeta(r.status) ?? hlStatusMeta("active")!;
-      return { key: r.status, label: meta.label, hint: meta.hint };
+      return { key: r.status, hint: meta(r.status).hint };
     }
     // 案例：无法在收藏夹读到 md 正文 → 用最近一次阅读恢复状态；整案下架才判失效
-    const exists = caseRefs.some((c) => c.id === n.sourceId);
-    if (!exists) {
-      return { key: "lost", label: "失效", hint: hlStatusMeta("lost")!.hint };
+    if (!caseRefs.some((c) => c.id === n.sourceId)) {
+      return { key: "lost", hint: meta("lost").hint };
     }
     const st: HLStatus = n.status ?? "active";
-    const meta = hlStatusMeta(st) ?? hlStatusMeta("active")!;
-    return { key: st, label: meta.label, hint: meta.hint };
+    return { key: st, hint: meta(st).hint };
   };
 
   const handleDelete = (n: StudyNote) => {
@@ -448,7 +472,7 @@ function NotesPanel({
       <div className="space-y-2.5 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <p className="text-xs text-slate-400">
-            自动汇总阅读时的高亮 / 划线 / 批注
+            自动汇总阅读时的高亮 / 划线 / 批注，并按课程自动归档
           </p>
           <button
             type="button"
@@ -468,24 +492,18 @@ function NotesPanel({
           className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-700 outline-none transition placeholder:text-slate-300 focus:border-[#0e2a5e] focus:bg-white"
         />
         <div className="flex flex-wrap items-center gap-1.5">
-          {(
-            [
-              ["all", `全部（${cnt.total}）`],
-              ["course", `课程（${cnt.course}）`],
-              ["case", `案例（${cnt.case}）`],
-            ] as [SourceFilter, string][]
-          ).map(([k, label]) => (
+          {groups.map((g) => (
             <button
-              key={k}
+              key={g.key}
               type="button"
-              onClick={() => setFilter(k)}
+              onClick={() => setGroupKey(g.key)}
               className={`rounded-full px-3 py-1 text-xs font-medium transition ${
-                filter === k
+                current.key === g.key
                   ? "bg-[#0e2a5e] text-white"
                   : "bg-slate-100 text-slate-500 hover:bg-slate-200"
               }`}
             >
-              {label}
+              {g.label}（{g.count}）
             </button>
           ))}
         </div>
@@ -571,56 +589,21 @@ function NoteCard({
   onDelete,
 }: {
   note: StudyNote;
-  status: { key: HLStatus; label: string; hint: string } | null;
+  status: { key: HLStatus; hint: string } | null;
   href: string | null;
   onEdit: () => void;
   onDelete: () => void;
 }) {
-  const stColor =
-    status?.key === "active"
-      ? "bg-emerald-50 text-emerald-700 ring-emerald-200"
-      : status?.key === "partial"
-        ? "bg-amber-50 text-amber-700 ring-amber-200"
-        : status?.key === "lost"
-          ? "bg-rose-50 text-rose-600 ring-rose-200"
-          : "";
   return (
     <li className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-      <div className="flex flex-wrap items-center gap-2">
-        <span
-          className={`rounded-full px-2 py-0.5 text-[10px] font-bold ring-1 ${
-            note.sourceType === "course"
-              ? "bg-sky-50 text-sky-700 ring-sky-200"
-              : "bg-violet-50 text-violet-700 ring-violet-200"
-          }`}
-        >
-          {noteSourceLabel(note.sourceType)}
-        </span>
-        <span
-          className={`rounded-full px-2 py-0.5 text-[10px] font-bold ring-1 ${
-            note.type === "highlight"
-              ? "bg-amber-50 text-amber-700 ring-amber-200"
-              : "bg-emerald-50 text-emerald-700 ring-emerald-200"
-          }`}
-        >
-          {noteTypeLabel(note.type)}
-        </span>
-        {status && (
-          <span
-            className={`rounded-full px-2 py-0.5 text-[10px] font-bold ring-1 ${stColor}`}
-            title={status.hint || undefined}
-          >
-            {status.label}
-          </span>
-        )}
-        <span className="ml-auto text-[11px] text-slate-400">
+      <div className="flex items-baseline justify-between gap-3">
+        <p className="min-w-0 text-[15px] font-semibold text-slate-800">
+          {note.sourceTitle}
+        </p>
+        <span className="shrink-0 text-[11px] text-slate-400">
           {fmtDate(note.createdAt)}
         </span>
       </div>
-
-      <p className="mt-2.5 text-[15px] font-semibold text-slate-800">
-        {note.sourceTitle}
-      </p>
 
       {note.selectedText && (
         <blockquote className="mt-2.5 rounded-lg border-l-2 border-amber-300 bg-amber-50/60 px-3.5 py-2.5">

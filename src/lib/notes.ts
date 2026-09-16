@@ -245,13 +245,102 @@ export function matchNote(n: StudyNote, kw: string): boolean {
   );
 }
 
-/** 按类型 / 来源类型计数（空态与统计共用） */
-export function noteCounts(notes: StudyNote[]) {
-  return {
-    total: notes.length,
-    course: notes.filter((n) => n.sourceType === "course").length,
-    case: notes.filter((n) => n.sourceType === "case").length,
-    highlight: notes.filter((n) => n.type === "highlight").length,
-    note: notes.filter((n) => n.type === "note").length,
+/* ================================================================
+ * V1.17.0 知识分类 · 按来源自动归档
+ *   收藏夹「学习笔记」顶部筛选由「系统属性」（课程 / 案例、高亮 / 正常）
+ *   改为「知识分类」（按课程编号归档）。用户复习时关心的是
+ *   「我在第几讲记了什么」，而非「这是高亮还是笔记」。
+ * ================================================================ */
+
+export interface NoteGroupCourse {
+  id: string;
+  title: string;
+  /** required = 必修八讲（01/02/10/11/12/13/14/15）；elective = 选修 E01–E11 */
+  kind: "required" | "elective";
+}
+
+export type NoteGroupKind = "all" | "required" | "elective" | "case" | "other";
+
+export interface NoteGroup {
+  /** `all` | `course:<课程id>` | `case` | `other:<来源id>` */
+  key: string;
+  kind: NoteGroupKind;
+  /** 展示名：全部 / `02 基金结构全景` / 案例 */
+  label: string;
+  count: number;
+  /** 组内笔记（最新在前） */
+  notes: StudyNote[];
+}
+
+/**
+ * 把笔记按来源归档成有序分组（收藏夹筛选栏数据源）：
+ *   全部 → 必修课（课程编号升序）→ 选修课（课程编号升序）→ 案例 → 兜底分组。
+ *
+ * - 只有「全部」恒存在；其余分组**仅在有笔记时出现**（不展示空分类）。
+ * - 组内排序：最新笔记在前（updatedAt 降序）。
+ * - 兜底分组用于课程已下线 / sourceId 无法匹配的笔记，保证记录始终可见、可删。
+ */
+export function groupNotesBySource(
+  notes: StudyNote[],
+  courses: NoteGroupCourse[]
+): NoteGroup[] {
+  const sorted = [...notes].sort((a, b) => b.updatedAt - a.updatedAt);
+  const known = new Set(courses.map((c) => c.id));
+
+  const byCourse = new Map<string, StudyNote[]>();
+  const orphan = new Map<string, StudyNote[]>();
+  const caseNotes: StudyNote[] = [];
+  const bucket = (map: Map<string, StudyNote[]>, key: string) => {
+    const list = map.get(key);
+    if (list) return list;
+    const created: StudyNote[] = [];
+    map.set(key, created);
+    return created;
   };
+  for (const n of sorted) {
+    if (n.sourceType === "case") {
+      caseNotes.push(n);
+      continue;
+    }
+    const target = known.has(n.sourceId) ? byCourse : orphan;
+    bucket(target, n.sourceId).push(n);
+  }
+
+  const out: NoteGroup[] = [
+    { key: "all", kind: "all", label: "全部", count: sorted.length, notes: sorted },
+  ];
+
+  for (const c of courses) {
+    const list = byCourse.get(c.id);
+    if (!list || list.length === 0) continue;
+    out.push({
+      key: `course:${c.id}`,
+      kind: c.kind,
+      label: `${c.id} ${c.title}`,
+      count: list.length,
+      notes: list,
+    });
+  }
+
+  if (caseNotes.length > 0) {
+    out.push({
+      key: "case",
+      kind: "case",
+      label: "案例",
+      count: caseNotes.length,
+      notes: caseNotes,
+    });
+  }
+
+  for (const [sourceId, list] of orphan) {
+    out.push({
+      key: `other:${sourceId}`,
+      kind: "other",
+      label: list[0].sourceTitle || sourceId || "未知来源",
+      count: list.length,
+      notes: list,
+    });
+  }
+
+  return out;
 }

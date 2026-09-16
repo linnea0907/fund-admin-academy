@@ -153,6 +153,53 @@ search / favorites / `[slug]` 静态生成等 7 处加特例分支。视觉与�
 
 ---
 
+## V1.17.0 已交付（来源：2026-09-16 Lu 直接下达）
+
+> 登记时间：2026-09-16　｜　状态：**已交付**
+> 范围：两项 P1 —— 学习笔记分类优化（系统属性 → 知识分类）· 术语库核心术语补充。
+
+### 1. 学习笔记分类优化（P1）
+
+**问题**：收藏夹「学习笔记」顶部按「课程 / 案例」筛选、卡片顶部标注「课程 / 高亮 / 正常」——
+均为**系统属性**，对复习知识没有帮助；用户真正需要的是「我在第几讲记了什么」。
+
+**修法**：
+
+| 项 | 调整 |
+|---|---|
+| 卡片标签 | 移除「课程 / 案例」「高亮 / 笔记」「正常」标签（异常态「部分匹配 / 失效」的提示条**保留**，避免误以为高亮仍有效） |
+| 顶部筛选 | 由「全部 / 课程 / 案例」改为「**全部 + 按课程归档**」，形如 `02 基金结构全景（5）` |
+| 归档规则 | 笔记产生于哪一讲即自动归入该讲，**无需用户手工分类** |
+| 排序 | 分类按课程编号升序（01→02→10→11→12→13→14→15→E01…）；组内最新笔记在前 |
+| 案例 / 选修 | 选修（E01–E11）与案例各自追加分类（**仅在有笔记时出现**，不显示空分类） |
+| 兜底 | 课程已下线 / sourceId 无法匹配的笔记单列一组，保证记录始终可见可删 |
+
+**数据口径**：不改 localStorage 结构（仍是 `fund-admin-academy-notes-v1`），**零迁移**。
+
+### 2. 术语库新增 6 条（P1）
+
+Lu 指定 2 条 + 因关联术语缺失而一并补建 4 条（构建闸门会拦截 `related` 断链）：
+
+| 术语 | id | 分类 | Level |
+|---|---|---|---|
+| Side Pocket 侧袋 | `side-pocket` | Fund Operations | Advanced |
+| Suspension of Redemption 暂停赎回 | `suspension-of-redemption` | Fund Operations | Advanced |
+| In-kind Distribution 实物分配 | `in-kind-distribution` | Fund Operations | Advanced |
+| Tax Transparent Entity 税务透明主体 | `tax-transparent-entity` | AEOI / FATCA / CRS | Core |
+| Account Holder 账户持有人 | `account-holder` | AEOI / FATCA / CRS | Core |
+| Partnership 合伙企业 | `partnership` | Fund Structure | Core |
+
+**顺带修复（既有闸门缺口）**：`scripts/check-glossary.mjs` 的 `LESSON_FILES` 未包含
+`src/data/lessons-cams.ts`（V1.16.0 新增该文件后未同步）→ 术语的 `courses` 若引用第 11/13 讲会被
+**误判为「无效课程引用」并阻断构建**。本次已补齐。
+
+### 明确不做 / 待定
+
+- ❌ 不改笔记本地存储结构、不做笔记云同步、不做笔记导出（本轮只做分类口径调整）
+- ⏳ 术语库扩容（100–150 核心术语）为验收方指定主线，本次先交付 2+4 条，继续扩容待排期
+
+---
+
 ## V1.16.0 后续候选（CAMS 相关，暂未排期）
 
 ### 每日练习 / 50 题小测
