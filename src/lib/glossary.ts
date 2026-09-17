@@ -5,9 +5,12 @@
  *   （含 `npm run gen:glossary` 从 `content/glossary/imported.json` 烘焙出来的 imported.ts）。
  *   本文件负责聚合 + 检索/标注引擎 + 使用索引类型。
  * - 纯数据 + 纯函数模块（无 fs / process 依赖），client / server 均可安全 import。
- * - 自动识别规则：`term` + `fullName`（纯 ASCII 时）+ `aliases`（纯 ASCII，避免中文子串误链）
- *   参与正文文本匹配；zh / brief / definition / whyImportant 等供 Tooltip、Drawer、
- *   详情页与搜索展示。**中文别名只参与搜索，不参与正文标注**（防中文子串误链）。
+ * - 自动识别规则（V1.19.0 起双通道）：
+ *   ① 英文通道：`term` + `fullName` + `aliases` 中为纯 ASCII 者，走词边界匹配；
+ *   ② 中文通道：`zh`（≥2 字）恒可 + 中文别名 ≥4 字（`CH_ALIAS_MIN_LEN`）——
+ *      4 字门槛用于压掉「管理人 / 开放式 / 分配」这类短通用词造成的过度链接。
+ *   两通道统一由 `termMatchTexts()` 产出，同时喂给正文标注与 `findTermMatches()`（关联/覆盖率）。
+ *   zh / brief / definition / whyImportant 等供 Drawer、详情页与搜索展示。
  * - 内容口径：Fund Admin 实务视角，与课程正文及案例库（ICS SOP）对齐。
  */
 
@@ -420,7 +423,7 @@ export interface RelatedTermRef {
   id: string;
   /** 英文术语名（chip 主标） */
   term: string;
-  /** 中文名（chip 副标 / tooltip） */
+  /** 中文名（chip 副标 / 列表行） */
   zh: string;
   /** 成熟度等级：core / advanced / expert（分组用） */
   level: TermLevel;

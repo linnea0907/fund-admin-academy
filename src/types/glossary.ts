@@ -211,7 +211,7 @@ export interface GlossaryTerm {
   source: TermSourceId[];
   /** Tags：自由标签（关键词检索） */
   tags: string[];
-  /** 一句话定义（Tooltip / 列表行展示） */
+  /** 一句话定义（Drawer / 列表行展示） */
   brief: string;
   /** 常见误区（可选，1~3 条） */
   commonMistakes?: string[];

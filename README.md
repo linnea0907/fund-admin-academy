@@ -78,12 +78,12 @@ scripts/
 
 ## 术语库如何维护（V1.9 Glossary）
 
-术语**单一数据源**：`src/lib/glossary.ts`（51 词 × 5 类）。字段：`id` / `en`（参与自动匹配）/ `zh` / `category`（kyc·aml·structure·documents·operations）/ `brief`（Tooltip 一句话）/ `definition` / `commonMistakes` / `related`（关联术语 id）/ `aliases`（英文别名参与匹配，**勿放中文**避免子串误链）。新增术语只需追加一个对象：
-- 课程 / 案例正文**自动标注**（英文词边界匹配，最长优先，code/pre/链接内不标注），无需改课程与案例文件；
-- 相关课程 / 相关案例由构建期扫描自动生成（`src/lib/glossary-usage.ts`），随 `npm run build` 刷新；
+术语**单一数据源**：`src/lib/glossary.ts`（170 词 × 8 类：fund-structure / aml-kyc / aeoi / fund-operations / regulatory / legal-entity / governance / tax）。**18 个字段**：`id` / `term`（参与自动匹配）/ `fullName` / `zh` / `category` / `level`（core·advanced·expert）/ `jurisdiction` / `definition` / `whyImportant` / `scenario` / `aliases`（参与匹配 + 搜索）/ `related` / `cases?` / `courses?` / `source` / `tags` / `brief`（Drawer 与列表一句话）/ `commonMistakes?`。**标注匹配规则（V1.19.0 起）**：英文走词边界匹配；中文通道为「规范中文名（≥2 字）恒可 + 中文别名 ≥4 字才参与」，4 字门槛用于压掉「管理人 / 开放式 / 分配」这类短通用词造成的过度链接。新增术语只需追加一个对象：
+- 课程 / 案例正文**自动标注**（最长优先，code/pre/链接内不标注），无需改课程与案例文件；
+- 相关课程 / 相关案例由构建期扫描自动生成（`src/lib/glossary-usage.ts`），随 `npm run build` 刷新；构建期闸门 `scripts/check-glossary.mjs` 校验重复 ID / 断链 / 无效引用 / **标注文本撞车（ASCII + 中文同口径）** / 必填字段；
 - `/glossary` 列表与 `/glossary/[id]` 详情均为 SSG。
 
-全站版本号统一维护于 **`src/lib/site-config.ts`**（当前 `v1.9 Beta`），升级版本只改该文件。
+全站版本号统一维护于 **`src/lib/site-config.ts`**（当前 `v1.19.1`），升级版本只改该文件。
 
 ## 部署到 GitHub + Vercel
 
@@ -115,7 +115,7 @@ scripts/
 - **P1.8**：Skills 能力标签体系（20 项受控词表 + `/skills` 技能页 + 成长地图数据结构预留）；全站版本号统一配置与内测标识（Beta Badge / 状态卡 / 页脚）；**案例库筛选区重构**（业务模块 → 技能按一级动态展开 → 标签折叠进「高级筛选」）+ 难度归一 基础/进阶/高级 + 状态口径 待学习/学习中/已完成（首次打开详情即记开始）。
 - **P1.8.1**：筛选区再收敛（适配 100+ 案例）——首屏行顺序固定 **模块 → 业务 → 技能（选中业务域展开）→ 难度**；业务域 7 类合并为 5 类（**KYC & Onboarding** = KYC/CDD + Investor Onboarding；**AML & Compliance** = AML + Compliance；Fund Structure / Fund Documents / Client Communication 不变；旧 URL `area` 值自动映射不失效）；**状态收纳进「高级筛选」**（与标签并列，默认折叠）；案例卡技能标签默认只显示前 2 个、其余折叠为 **+N**。
 - **P1.8.2**：技能行默认折叠（「▸ 展开技能（N）」）+ 筛选器紧凑化（chips py-1 / p-4 / space-y-2），首屏再压缩 20%+。
-- **V1.9（术语库 Glossary）**：全站术语单一数据源 `src/lib/glossary.ts`（51 词 × 5 类：KYC / AML / Fund Structure / Fund Documents / Operations）。课程与案例正文**自动识别标注**（英文术语虚线下划线，词边界防误链，code/pre/链接内不标注）；Hover 150ms Tooltip（中文名 + 一句话定义 + 关联术语），Click 右侧 Drawer（定义 / 常见误区 / 关联术语 / 相关课程 / 相关案例 + 完整页入口）；每个术语**会话内首次出现自动提示一次**、每页至多 2 次。新增 `/glossary` 列表（类别 + 检索）与 `/glossary/[id]` SSG 详情页（自动出现位置索引，构建期扫描课程与案例正文生成，零手工维护）；`/search` 升级为**一次命中术语 / 课程 / 模块 / 案例**。
+- **V1.9（术语库 Glossary）**：全站术语单一数据源 `src/lib/glossary.ts`（51 词 × 5 类：KYC / AML / Fund Structure / Fund Documents / Operations）。课程与案例正文**自动识别标注**（英文术语虚线下划线，词边界防误链，code/pre/链接内不标注）；**Click 右侧 Drawer**（定义 / 常见误区 / 关联术语 / 相关课程 / 相关案例 + 完整页入口）。新增 `/glossary` 列表（类别 + 检索）与 `/glossary/[id]` SSG 详情页（自动出现位置索引，构建期扫描课程与案例正文生成，零手工维护）；`/search` 升级为**一次命中术语 / 课程 / 模块 / 案例**。**V1.19.1：移除 Hover Tooltip 与「首次出现自动提示」，术语解释只在点击时出现**（Hover 仅保留虚线下划线加深的视觉反馈）。
 - **V2+（预留）**：我的笔记、错题本、Investor Onboarding、Trust & PTC、Fund Documents、AI 导师、商业阅读、登录系统、数据库与团队同步、技能成长地图 UI。仅保留扩展空间，未实现业务逻辑。
 
 ## 免责声明

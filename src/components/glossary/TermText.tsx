@@ -7,7 +7,7 @@ import TermLink from "./TermLink";
 /**
  * 把一段纯文本按术语词表切段：
  *   - 普通片段 → 原样文本
- *   - 命中术语 → <TermLink>（虚线下划线，hover 提示 / click Drawer）
+ *   - 命中术语 → <TermLink>（虚线下划线，hover 仅视觉反馈 / click Drawer）
  * 同一套切分逻辑用于：
  *   - 课程正文纯文本（LessonViewer / 目标 / 要点 / 风险）
  *   - 案例 markdown 文本叶子（MarkdownBody 递归调用 renderSegments）

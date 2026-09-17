@@ -371,6 +371,65 @@ V1.14 就已全部具备（`GlossaryProvider` 的 `DrawerContent`，底部有「
 
 ---
 
+## V1.19.1 已交付（Hotfix · 来源：V1.19.0 上线后 Lu 实测报障）
+
+**性质**：纯 Bug Fix + UX 收敛，**不是新功能**。零新增字段、零新增路由、零数据变更。
+
+### Bug 1：进页未点击即自动弹术语卡
+
+复现：进入课程页 / 案例页 → 用户未做任何操作 → 右侧自动出现术语预览卡（如 KYC）→ 数秒后自动消失。
+
+**根因**：`TermLink` 的**挂载副作用**调用 `registerAutoHint(termId, …)`，把术语塞进
+`GlossaryProvider` 的自动提示队列；队列首个元素在 `AUTO_HINT_SHOW_MS = 3200ms` 后
+显示、再 3.2s 后自动消失；`MAX_AUTO_PER_PAGE = 2` 表示每页最多自动弹 2 次。
+所以「页面一打开就弹、几秒后消失」是**设计如此**，但产品上属于错误行为（用户没有触发任何操作）。
+
+### Bug 2：Hover 即弹术语（两套交互重复）
+
+**根因**：`TermLink` 的 `onMouseEnter` 起一个 `HOVER_DELAY_MS = 140ms` 定时器，
+到点调 `requestTooltip()` 出预览卡。与 Click → Drawer 形成两套并行交互。
+
+判断：V1.19.0 已具备「正文术语 → Drawer → 完整术语页」的完整链路，
+Hover Preview 的边际价值为负 —— 干扰阅读、页面闪烁、与 Drawer 功能重复、易被误认为系统 Bug。
+
+### 修改内容
+
+| 文件 | 改动 |
+| --- | --- |
+| `src/components/glossary/TermLink.tsx` | 移除 hover 定时器 / `requestTooltip` / `dismissTooltip` / `registerAutoHint` 挂载副作用；组件收敛为「Click → `openTerm`」单一行为；`cursor-help` → `cursor-pointer` |
+| `src/components/glossary/GlossaryProvider.tsx` | 删除 `TooltipCard` 组件、`TooltipState` / `RectSnap` 类型、`tooltip` state、`AUTO_HINT_SHOW_MS` / `MAX_AUTO_PER_PAGE` 常量、自动提示队列（`autoQueueRef` / `autoBusyRef` / `autoRemainRef` / `pageAutoCountRef` / `hintedTermsRef` / `prevPathRef` + pathname 重置 effect）、`registerAutoHint` / `requestTooltip` / `dismissTooltip` / `clearAutoRemain` / `pickTerm`；Context 收敛为 `openTerm` / `closeTerm` / `usageMap`。**保留** ESC 关闭 Drawer + 背景滚动锁定 + 使用位置惰性拉取。676 → 429 行 |
+| `src/app/globals.css` | 删除 `.glossary-tooltip` 规则与 `glossary-pop` keyframes（仅 Tooltip 使用）；保留 Drawer 的 `glossary-slide-in` / `glossary-fade-in` |
+| `src/lib/glossary.ts` | 订正文件头注释：原文写「中文别名只参与搜索，不参与正文标注」—— 该口径已被 V1.19.0 推翻，易误导后续维护 |
+| `src/types/glossary.ts` `src/components/glossary/TermText.tsx` | 注释去 Tooltip 化 |
+| `README.md` | V1.9 条目改为「Click-only」口径；术语维护章节订正为 170 词 × 8 类 / 18 字段 / V1.19.0 双通道匹配规则；版本号 `v1.9 Beta` → `v1.19.1` |
+| `src/lib/site-config.ts` | `v1.19.0` → `v1.19.1` |
+
+### 交互定稿（全站唯一口径）
+
+```
+Hover  → 仅视觉反馈（虚线下划线加深 + 极浅底色），不弹任何浮层
+Click  → 打开右侧 Drawer（定义 / 为什么重要 / 常见误区 / 关联课程与案例 / 完整术语页）
+ESC    → 关闭 Drawer
+```
+
+术语解释**只在用户点击时出现**。全站不再存在任何自动弹术语的逻辑。
+
+### 验证口径（关键，别退回「采样法」）
+
+「没有自动弹窗」不能用「某时刻 `querySelector` 为空」证明 —— 原自动提示 3.2s 后会自动消失，
+采样点一旦错过就是**假绿**。正确做法：`addInitScript` 在 document 起点挂 `MutationObserver`，
+把**任何一次** `.glossary-tooltip` / `[role=tooltip]` 节点的插入累加计数，
+最终断言计数 `=== 0`，观察窗取 4.5s（> 3.2s）。
+
+### 明确不做（scope discipline）
+
+- ❌ 不改 `lessons.ts` / 案例数据 / 术语数据（本版 0 条术语增删改）
+- ❌ 不改 Click → Drawer 链路本身（Drawer 内容、`/glossary/[id]` 详情页、`/api/glossary/usage` 全部不动）
+- ❌ 不新增「首次进入引导 / 新手提示」等替代性自动浮层（同一产品错误换皮，不做）
+- ❌ 不调整已交付的 V1.19.0 中文标注范围与阈值（与本次交互收敛无关）
+
+---
+
 ## V1.16.0 后续候选（CAMS 相关，暂未排期）
 
 ### 每日练习 / 50 题小测

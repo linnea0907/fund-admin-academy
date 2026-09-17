@@ -5,13 +5,11 @@ import {
   useCallback,
   useContext,
   useEffect,
-  useLayoutEffect,
   useRef,
   useState,
   type ReactNode,
 } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import {
   getGlossaryCategory,
   getTerm,
@@ -21,37 +19,16 @@ import {
 } from "@/lib/glossary";
 
 /* ================================================================
- * 常量与全局去重状态
- * ================================================================ */
-
-/** 每个术语在本次会话内只自动提示一次（提示“这里可点开术语”） */
-const AUTO_HINT_SHOW_MS = 3200;
-const MAX_AUTO_PER_PAGE = 2;
-
-interface RectSnap {
-  left: number;
-  top: number;
-  width: number;
-  height: number;
-  bottom: number;
-}
-
-interface TooltipState {
-  termId: string;
-  rect: RectSnap;
-  auto: boolean;
-}
-
-/* ================================================================
  * Context
+ *
+ * V1.19.1 交互收敛：全站术语**只在点击时**出现解释。
+ * 已移除 hover Tooltip 与「首次出现自动提示」两条链路
+ * （requestTooltip / dismissTooltip / registerAutoHint / TooltipCard）。
  * ================================================================ */
 
 interface GlossaryContextValue {
   openTerm: (termId: string) => void;
   closeTerm: () => void;
-  requestTooltip: (termId: string, rect: DOMRect) => void;
-  dismissTooltip: () => void;
-  registerAutoHint: (termId: string, getRect: () => DOMRect | null) => void;
   usageMap: GlossaryUsageMap | null;
 }
 
@@ -76,104 +53,6 @@ function categoryChipCls(category: string): string {
   return `inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-bold tracking-wide ring-1 ${
     CATEGORY_TINT[category] ?? "bg-slate-100 text-slate-500 ring-slate-200"
   }`;
-}
-
-/* ================================================================
- * Tooltip 卡片（fixed 层，测量后定位）
- * ================================================================ */
-
-function TooltipCard({
-  state,
-  onPickTerm,
-  onGotoPage,
-}: {
-  state: TooltipState;
-  onPickTerm: (id: string) => void;
-  onGotoPage: (id: string) => void;
-}) {
-  const term = getTerm(state.termId);
-  const cardRef = useRef<HTMLDivElement>(null);
-  const [pos, setPos] = useState<{ left: number; top: number } | null>(null);
-
-  useLayoutEffect(() => {
-    const card = cardRef.current;
-    if (!card || !term) return;
-    const w = card.offsetWidth;
-    const h = card.offsetHeight;
-    const pad = 10;
-    const left = Math.max(pad, Math.min(state.rect.left - 6, window.innerWidth - w - pad));
-    const topAbove = state.rect.top - h - pad;
-    const top = topAbove >= pad ? topAbove : state.rect.bottom + pad;
-    setPos({ left, top });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state, term?.id]);
-
-  if (!term) return null;
-
-  const category = getGlossaryCategory(term.category);
-
-  return (
-    <div
-      ref={cardRef}
-      role="tooltip"
-      className="glossary-tooltip pointer-events-auto fixed z-[95] w-[320px] max-w-[calc(100vw-20px)] rounded-xl border border-slate-200 bg-white p-3.5 shadow-xl shadow-slate-900/10"
-      style={pos ? { left: pos.left, top: pos.top, visibility: "visible" } : { visibility: "hidden", left: 0, top: 0 }}
-    >
-      <div className="flex items-start justify-between gap-2">
-        <div className="min-w-0">
-          <span className={categoryChipCls(term.category)}>{category.label}</span>
-          <p className="mt-1.5 text-sm font-bold leading-tight text-slate-800">
-            {term.term}
-            <span className="ml-1.5 font-normal text-slate-400">{term.zh}</span>
-          </p>
-        </div>
-        <button
-          type="button"
-          aria-label="关闭提示"
-          onClick={() => onGotoPage("")}
-          className="shrink-0 rounded-md p-1 text-slate-300 transition hover:bg-slate-100 hover:text-slate-500"
-        >
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-            <path d="M3 3l8 8M11 3L3 11" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-          </svg>
-        </button>
-      </div>
-
-      <p className="mt-2 text-[13px] leading-relaxed text-slate-600">{termBrief(term)}</p>
-
-      {term.related.length > 0 && (
-        <div className="mt-2.5 border-t border-slate-100 pt-2">
-          <p className="text-[10px] font-semibold uppercase tracking-wide text-slate-400">关联术语</p>
-          <div className="mt-1.5 flex flex-wrap gap-1.5">
-            {term.related.map((rid) => {
-              const rt = getTerm(rid);
-              if (!rt) return null;
-              return (
-                <button
-                  key={rid}
-                  type="button"
-                  onClick={() => onPickTerm(rid)}
-                  className="rounded-full bg-slate-100 px-2 py-0.5 text-[11px] font-medium text-slate-600 transition hover:bg-[#0e2a5e] hover:text-white"
-                >
-                  {rt.term}
-                </button>
-              );
-            })}
-          </div>
-        </div>
-      )}
-
-      <div className="mt-2.5 flex justify-end">
-        <button
-          type="button"
-          onClick={() => onGotoPage(term.id)}
-          className="text-[11px] font-semibold text-[#0e2a5e] underline decoration-dotted underline-offset-2 hover:decoration-solid"
-        >
-          查看完整术语 →
-        </button>
-      </div>
-    </div>
-  );
 }
 
 /* ================================================================
@@ -469,104 +348,16 @@ function DrawerContent({
  * ================================================================ */
 
 export default function GlossaryProvider({ children }: { children: ReactNode }) {
-  const pathname = usePathname();
-
   const [drawerTermId, setDrawerTermId] = useState<string | null>(null);
-  const [tooltip, setTooltip] = useState<TooltipState | null>(null);
   const [usageMap, setUsageMap] = useState<GlossaryUsageMap | null>(null);
-
-  // 自动提示（首次出现提示、后续不提示）
-  const hintedTermsRef = useRef<Set<string>>(new Set());
-  const pageAutoCountRef = useRef(0);
-  const autoQueueRef = useRef<{ termId: string; getRect: () => DOMRect | null }[]>([]);
-  const autoBusyRef = useRef(false);
-  const autoRemainRef = useRef<number | null>(null);
-
-  // 路由变化：本页自动提示计数重置（会话内已提示术语不重复）
-  const prevPathRef = useRef(pathname);
-  useEffect(() => {
-    if (prevPathRef.current !== pathname) {
-      prevPathRef.current = pathname;
-      pageAutoCountRef.current = 0;
-    }
-  }, [pathname]);
-
-  // 自动提示队列依次播放（一个 3.2s 后播下一个；每术语每会话一次、每页至多 2 次）
-  const drainAutoHintRef = useRef<() => void>(() => {});
-  useEffect(() => {
-    drainAutoHintRef.current = () => {
-      if (autoBusyRef.current) return;
-      const next = autoQueueRef.current.shift();
-      if (!next) return;
-      autoBusyRef.current = true;
-      const rect = next.getRect();
-      if (!rect) {
-        autoBusyRef.current = false;
-        drainAutoHintRef.current();
-        return;
-      }
-      // 出现在视口外的术语不自动弹（例如折叠在下方的段落）
-      if (rect.top < 0 || rect.top > window.innerHeight) {
-        autoBusyRef.current = false;
-        drainAutoHintRef.current();
-        return;
-      }
-      setTooltip({
-        termId: next.termId,
-        rect: { left: rect.left, top: rect.top, width: rect.width, height: rect.height, bottom: rect.bottom },
-        auto: true,
-      });
-      autoRemainRef.current = window.setTimeout(() => {
-        autoRemainRef.current = null;
-        setTooltip((cur) => (cur && cur.auto ? null : cur));
-        autoBusyRef.current = false;
-        drainAutoHintRef.current();
-      }, AUTO_HINT_SHOW_MS);
-    };
-  }, []);
-
-  const registerAutoHint = useCallback((termId: string, getRect: () => DOMRect | null) => {
-    if (hintedTermsRef.current.has(termId)) return;
-    if (pageAutoCountRef.current >= MAX_AUTO_PER_PAGE) return;
-    hintedTermsRef.current.add(termId);
-    pageAutoCountRef.current += 1;
-    autoQueueRef.current.push({ termId, getRect });
-    drainAutoHintRef.current();
-  }, []);
-
-  const clearAutoRemain = useCallback(() => {
-    if (autoRemainRef.current !== null) {
-      window.clearTimeout(autoRemainRef.current);
-      autoRemainRef.current = null;
-    }
-    autoBusyRef.current = false;
-  }, []);
 
   const openTerm = useCallback((termId: string) => {
     if (!getTerm(termId)) return;
-    clearAutoRemain();
-    setTooltip(null);
     setDrawerTermId(termId);
-  }, [clearAutoRemain]);
+  }, []);
 
   const closeTerm = useCallback(() => {
     setDrawerTermId(null);
-  }, []);
-
-  const requestTooltip = useCallback(
-    (termId: string, rect: DOMRect) => {
-      clearAutoRemain();
-      setTooltip({
-        termId,
-        rect: { left: rect.left, top: rect.top, width: rect.width, height: rect.height, bottom: rect.bottom },
-        auto: false,
-      });
-    },
-    [clearAutoRemain]
-  );
-
-  const dismissTooltip = useCallback(() => {
-    setTooltip((cur) => (cur && cur.auto ? cur : null));
   }, []);
 
   // Drawer 打开时：ESC 关闭 + 锁定背景滚动
@@ -602,49 +393,11 @@ export default function GlossaryProvider({ children }: { children: ReactNode }) 
       });
   }, [drawerTermId, usageMap]);
 
-  // 卸载清理
-  useEffect(
-    () => () => {
-      if (autoRemainRef.current !== null) window.clearTimeout(autoRemainRef.current);
-    },
-    []
-  );
-
-  const pickTerm = useCallback((id: string) => {
-    if (getTerm(id)) {
-      setDrawerTermId(id);
-    }
-  }, []);
-
   const drawerTerm = drawerTermId ? getTerm(drawerTermId) : null;
 
   return (
-    <GlossaryContext.Provider
-      value={{
-        openTerm,
-        closeTerm,
-        requestTooltip,
-        dismissTooltip,
-        registerAutoHint,
-        usageMap,
-      }}
-    >
+    <GlossaryContext.Provider value={{ openTerm, closeTerm, usageMap }}>
       {children}
-
-      {/* Tooltip */}
-      {tooltip && (
-        <TooltipCard
-          state={tooltip}
-          onPickTerm={(id) => {
-            setTooltip(null);
-            pickTerm(id);
-          }}
-          onGotoPage={(id) => {
-            setTooltip(null);
-            if (id) openTerm(id);
-          }}
-        />
-      )}
 
       {/* Drawer */}
       {drawerTerm && drawerTermId && (
