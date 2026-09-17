@@ -17,6 +17,7 @@ import {
   termBrief,
   type GlossaryUsageMap,
 } from "@/lib/glossary";
+import { displayBadge } from "@/lib/lesson-number";
 
 /* ================================================================
  * Context
@@ -271,7 +272,8 @@ function DrawerContent({
                             : "bg-[#0e2a5e] text-white"
                         }`}
                       >
-                        {l.id.startsWith("E") ? `E${l.id.replace("E", "")}` : `第 ${l.id} 讲`}
+                        {/* V1.20.0：必修显示连续编号（lesson.id 仍为数据主键） */}
+                        {displayBadge(l.id)}
                       </span>
                       <span className="truncate">{l.title}</span>
                     </span>

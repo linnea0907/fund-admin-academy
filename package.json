@@ -7,7 +7,8 @@
     "gen:cases": "node scripts/build-case-index.mjs",
     "gen:glossary": "node scripts/build-glossary-import.mjs",
     "check:glossary": "node scripts/check-glossary.mjs",
-    "prebuild": "npm run check:glossary && npm run gen:cases && npm run gen:glossary",
+    "check:lesson-numbers": "node scripts/check-lesson-numbers.mjs",
+    "prebuild": "npm run check:lesson-numbers && npm run check:glossary && npm run gen:cases && npm run gen:glossary",
     "build": "next build",
     "start": "next start",
     "lint": "eslint"

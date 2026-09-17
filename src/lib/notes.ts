@@ -255,7 +255,13 @@ export function matchNote(n: StudyNote, kw: string): boolean {
 export interface NoteGroupCourse {
   id: string;
   title: string;
-  /** required = 必修八讲（01/02/10/11/12/13/14/15）；elective = 选修 E01–E11 */
+  /**
+   * 分组显示名（V1.20.0）。必修为「03 AML 与投资者尽调」—— 编号取**展示编号**，
+   * 与 （数据主键）解耦；选修为「E01 …」。
+   * 省略时回退为 `${id} ${title}`（保持向后兼容）。
+   */
+  label?: string;
+  /** required = 必修八讲（展示编号 01–08）；elective = 选修 E01–E11 */
   kind: "required" | "elective";
 }
 
@@ -316,7 +322,7 @@ export function groupNotesBySource(
     out.push({
       key: `course:${c.id}`,
       kind: c.kind,
-      label: `${c.id} ${c.title}`,
+      label: c.label ?? `${c.id} ${c.title}`,
       count: list.length,
       notes: list,
     });

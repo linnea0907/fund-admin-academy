@@ -7,6 +7,14 @@ import { camsLessons } from "./lessons-cams";
  *
  * - 内容框架：2024 年 7 月版《境外私募基金募集与运营法律实务指南》+ Fund Admin 实务整理
  * - 结构约定：课程目录为既定 6 讲；模块 id m1-mN 保持稳定，进度/收藏 key 依赖它
+ * - **编号约定（V1.20.0，两层编号勿混）**：
+ *     ① `id` = 数据主键（历史编号 01/02/10/12/14/15，与 cams 的 11/13），
+ *        URL slug、进度 key、收藏 key、`data-reading-scope`、笔记 sourceId、
+ *        术语 `courses` 字段全部依赖它 → **永不修改**；
+ *     ② 展示编号 = 用户看到的连续编号 01–08，在 `lib/lesson-number.ts` 由
+ *        `orderedLessons` 下标派生 → 加课自动重排，不存在手写映射表。
+ *     模块标题前缀（`1.1` / `3.1` / `7.1` …）写的是**展示编号**，
+ *     由 `scripts/check-lesson-numbers.mjs` 校验一致性。
  * - 合规约定：法规版本、费用、期限、表格、门槛、牌照类别、申报流程等均为时点性信息，
  *   正文不写死，需办理时按现行官方规则复核（见各讲 meta.timeSensitive）
  */
@@ -518,7 +526,7 @@ export const lessons: Lesson[] = [
     modules: [
       {
         id: "m1",
-        title: "3.1 判断链起点：它是不是集合投资安排",
+        title: "7.1 判断链起点：它是不是集合投资安排",
         body: [
           "开曼基金分析通常从“是否构成集合投资安排”开始：投资者汇集资金、利益来自投资组合、投资者不参与日常管理。若属 non-fund arrangement（如单纯的持股公司、集团内部安排、联合投资工具等）或适用其他排除情形，可能不落入基金监管框架。",
           "是否可按投资者意愿赎回，是把安排导向开放/封闭框架的关键分叉；封闭式集合投资安排通常进入 Private Fund 分析，允许赎回的共同基金安排进入 Mutual Fund 分析。该判断以实际安排与现行法律为准。",
@@ -532,7 +540,7 @@ export const lessons: Lesson[] = [
       },
       {
         id: "m2",
-        title: "3.2 Private Fund / Mutual Fund 与分主体核查",
+        title: "7.2 Private Fund / Mutual Fund 与分主体核查",
         body: [
           "开曼现行框架下，封闭式私募基金多进入 Private Fund（私募基金法体系）分析，面向公众的共同基金进入 Mutual Fund（共同基金法体系）分析；各自有注册与豁免路径，条件与门槛须按现行法规复核。单一资产基金不当然因“只有一个资产”而排除 Private Fund 属性——是否构成取决于集合、投资利益与安排特征。",
           "注册后应分主体核查：Fund 本身、GP（若合伙）、Manager/投资经理、以及 AIV、平行基金、共同投资载体、SPV 等关联主体——各自是否需要在开曼注册、备案或任命服务商，结论互不相同。基金注册证书本身不是 Manager 牌照。",
@@ -546,7 +554,7 @@ export const lessons: Lesson[] = [
       },
       {
         id: "m3",
-        title: "3.3 治理与服务商：董事、注册代理与运营者结构",
+        title: "7.3 治理与服务商：董事、注册代理与运营者结构",
         body: [
           "开曼基金的日常治理依赖董事、注册代理/注册办事处与行政管理员等安排。所谓 Four Eyes（双人审批）等机制，应结合基金法律形式与运营者结构核查是否适用，而非简单表述为所有基金统一适用的固定规则。",
           "注册代理/企业服务商负责维护注册办事处与法定记录；行政管理员依服务协议提供份额登记、会计与报表支持。服务商是否“被认可”及任命变更是否需备案，按 CIMA 现行规则办理。",
@@ -559,7 +567,7 @@ export const lessons: Lesson[] = [
       },
       {
         id: "m4",
-        title: "3.4 持续合规：一张年度清单",
+        title: "7.4 持续合规：一张年度清单",
         body: [
           "基金获准注册后进入持续合规周期，覆盖范围通常包括：审计与财务报表、年度申报与费用、估值安排、资产保管或所有权验证、现金监控、证券识别、治理、AML/CFT、AEOI（CRS/FATCA）、数据保护、经济实质以及实益所有权登记。各事项的启动时点、申报窗口与表格按 CIMA 现行指引执行。",
           "注册时序、期限、表格与程序均属时点性内容，不建议在通用课程中写死；Fund Admin 应依托服务商的合规日历逐项跟踪并留痕。",
@@ -573,7 +581,7 @@ export const lessons: Lesson[] = [
       },
       {
         id: "m5",
-        title: "3.5 实务手册：Private Fund 注册、审计、估值、经济实质与实益所有权",
+        title: "7.5 实务手册：Private Fund 注册、审计、估值、经济实质与实益所有权",
         body: [
           "Private Fund 分析以现行法规为准：判断是否落入私募基金法框架、是否需 CIMA 注册或符合豁免条件；单一资产基金不当然排除。基金注册证书只证明基金本体注册状态，不是 Manager 或其他主体的牌照。",
           "持续合规模块：年度审计（含提交时点）、估值安排与估值政策、资产保管或所有权验证、现金监控、证券识别、AML、AEOI、数据保护、经济实质（ES）与实益所有权（BO）登记。各模块启动时点、表格与窗口按 CIMA 现行指引执行，Fund Admin 以合规日历跟踪并留痕。",
@@ -752,7 +760,7 @@ export const lessons: Lesson[] = [
     modules: [
       {
         id: "m1",
-        title: "4.1 六步框架总览",
+        title: "3.1 六步框架总览",
         body: [
           "把 CDD 拆成六个可执行步骤便于质量控制与留痕：①Identify 识别客户与结构 → ②Verify 核实身份与文件 → ③Understand 了解业务性质、投资目的与资金来源 → ④Screen 筛查制裁、PEP 与负面信息 → ⑤Risk-rate 风险评级并决定是否需强化尽调 → ⑥Monitor 持续监控与定期复核。",
           "六步不是一次性动作：投资者存续期内信息变化（股权变更、新增董事、税务居民变化）会触发复核。把每一步的结论与依据记录在案，是 AML 检查与审计回应的基础。",
@@ -765,7 +773,7 @@ export const lessons: Lesson[] = [
       },
       {
         id: "m2",
-        title: "4.2 个人与机构投资者：要素清单",
+        title: "3.2 个人与机构投资者：要素清单",
         body: [
           "个人投资者通常覆盖：身份与地址、税收居民身份、职业/雇主、投资目的、资金来源（SOF）与财富来源（SOW）、授权代理人、PEP 身份、制裁与负面信息。机构投资者则覆盖：成立与存续状态、组织文件、董事、授权签字人、所有权链、UBO（最终受益所有人）、控制人、监管或上市状态、SOF、投资目的，以及复杂结构的商业合理性说明。",
           "机构文件的“齐全”不等于 CDD“充分”：文件齐了但未理解结构与资金来源，或存在明显矛盾未澄清，仍是尽调不足。同样，认购完成不等于 AML 完成——AML 结论须在接纳前后独立形成并留痕。",
@@ -779,7 +787,7 @@ export const lessons: Lesson[] = [
       },
       {
         id: "m3",
-        title: "4.3 Trust / PTC：先判断角色再要文件",
+        title: "3.3 Trust / PTC：先判断角色再要文件",
         body: [
           "面对信托或私人信托公司（PTC）投资者，先做角色判断：Settlor（设立人）、Trustee（受托人）、Protector（保护人）、Beneficiary（受益人）或受益人类别，以及其他行使最终有效控制的人（如安排发起人）。不同角色在尽调中的意义不同。",
           "不要机械地“向所有 Trust 角色索取同一套文件”。应先识别哪些角色对资金与投资决策行使最终有效控制，再决定需要验证与了解的对象；同时核对信托契据与相关决议以确认权力归属。",
@@ -793,7 +801,7 @@ export const lessons: Lesson[] = [
       },
       {
         id: "m4",
-        title: "4.4 治理角色、Admin 边界与可疑活动",
+        title: "3.4 治理角色、Admin 边界与可疑活动",
         body: [
           "AML 治理常见三职：AMLCO（合规官，统筹体系与政策）、MLRO（洗钱报告官，接收内部可疑报告并对外提交）、DMLRO（副报告官，替补与分担）。各法域角色与备案要求不同，但“政策-执行-报告”职能分离是通用思路。",
           "Fund Admin 可依服务协议提供 CDD 操作支持（收集文件、执行筛查、记录归档），但通常不当然是最终客户接纳决定者或可疑活动报告决定者。发现可疑活动时应注意保密并禁止向客户通风报信（Tipping-off），由指定角色按流程处理。EDD 必须针对具体风险，而不是套模板堆文件。",
@@ -806,7 +814,7 @@ export const lessons: Lesson[] = [
       },
       {
         id: "m5",
-        title: "4.5 实务手册：AMLCO / MLRO / DMLRO、PEP 与 EDD、SOF/SOW、Trust/PTC",
+        title: "3.5 实务手册：AMLCO / MLRO / DMLRO、PEP 与 EDD、SOF/SOW、Trust/PTC",
         body: [
           "AML 治理角色分工：AMLCO 负责反洗钱体系与政策的建立维护；MLRO 接收内部可疑活动报告并决定是否向金融情报机构提交；DMLRO 在 MLRO 缺位时代行并向其汇报。角色职责与备案要求按适用法域现行规定执行，Fund Admin 通常提供 CDD 操作支持而非最终决策。",
           "PEP 适用强化尽调（EDD），且范围通常含近亲属与密切关联人；EDD 必须针对具体风险，如大额或来源不明的资金、复杂不透明结构。SOF（资金来源）回答这笔资金从哪里来，SOW（财富来源）回答其财富如何积累，二者在 EDD 中都要有支持文件。Trust/PTC 场景先做角色判断：Settlor、Trustee、Protector、受益人类别与其他行使最终有效控制的人，再定制化收集文件，避免一刀切。",
@@ -1226,7 +1234,7 @@ export const lessons: Lesson[] = [
     modules: [
       {
         id: "m1",
-        title: "6.1 先分清名称：Private Fund vs Private Investment Fund",
+        title: "8.1 先分清名称：Private Fund vs Private Investment Fund",
         body: [
           "BVI 语境里容易出现名称混淆：Private Fund（私人基金）是 BVI 共同基金体系（Mutual Funds Act）下面向专业投资者的类别；Private Investment Fund（私募投资基金）是《私募投资基金法》（PIF Act）下的封闭式基金制度；Professional Fund 则指向专业投资者并可适用简化安排。不要仅凭客户或文件中的“private fund”字样直接判断监管分类。",
           "开放式的集合投资安排通常进入 BVI 共同基金（Mutual Fund）体系分析；封闭式集合投资安排则重点分析 Private Investment Fund 制度。分类须结合运作方式、投资者属性与现行法律。",
@@ -1240,7 +1248,7 @@ export const lessons: Lesson[] = [
       },
       {
         id: "m2",
-        title: "6.2 Private Investment Fund：模块化拆解",
+        title: "8.2 Private Investment Fund：模块化拆解",
         body: [
           "Private Investment Fund（PIF）制度通常覆盖以下模块：FSC 认可/注册、组织文件中体现的投资者限制、授权代表（Approved Representative）、董事与指定人士或相应职能、估值安排、资产管理、资产保管、利益冲突管理、审计，以及变更通知义务。各模块的具体触发与执行按 PIF Act 与 FSC 指引办理。",
           "基金应持续保存投资者名册、组织文件与财务记录，服务商（注册代理、授权代表、审计师）的任命与变更按规定通知 FSC。",
@@ -1253,7 +1261,7 @@ export const lessons: Lesson[] = [
       },
       {
         id: "m3",
-        title: "6.3 Approved Manager：简化监管不是无监管",
+        title: "8.3 Approved Manager：简化监管不是无监管",
         body: [
           "BVI 获批管理人（Approved Manager）是面向 BVI 基金提供管理服务的简化监管制度：适用基金范围（通常限定于 BVI 的特定基金类别）、业务规模限制、董事要求、授权代表、财务报表、年度申报与重大事项通知等构成其合规义务。它比全面持牌更轻，但仍是受监管安排。",
           "Approved Manager 不是注册代理牌照，也不替代基金的 AML、AEOI 与其他合规义务。获批管理人的基金覆盖面与限制条件可能变化，须按 FSC 现行规则复核。",
@@ -1266,7 +1274,7 @@ export const lessons: Lesson[] = [
       },
       {
         id: "m4",
-        title: "6.4 法律人格、经济实质与三类业务",
+        title: "8.4 法律人格、经济实质与三类业务",
         body: [
           "BVI 有限合伙可依据 BVI 法律选择是否具有法律人格，这一点与 Cayman ELP 的规则并不相同，不能直接套用开曼经验。基金文件的合伙协议须明确该选择。",
           "经济实质应按主体分别分析：Fund、Manager、GP、持股 SPV 与其他实体各自主营业务与相关活动归属不同。业务层面应区分：投资基金业务（fund investment business）、基金管理业务（fund management business）与持股业务（holding business），其相关活动分类与经济实质测试不同。",
@@ -1279,7 +1287,7 @@ export const lessons: Lesson[] = [
       },
       {
         id: "m5",
-        title: "6.5 实务手册：基金分类速查、Approved Manager 与经济实质",
+        title: "8.5 实务手册：基金分类速查、Approved Manager 与经济实质",
         body: [
           "BVI 分类速查：不要凭名称下结论。开放式集合投资安排一般进入共同基金（Mutual Fund）体系（含 Professional Fund 等面向专业投资者的类别）；封闭式集合投资安排重点分析 Private Investment Fund（PIF Act 体系）。Private Fund 与 Private Investment Fund 名称相近、制度不同，判断依据是运作方式、投资者限制与现行法律。",
           "Approved Manager 是简化监管制度：适用基金范围与业务规模限制、董事、授权代表、财务报表、年度申报与重大事项通知构成持续义务；它不是注册代理牌照，也不替代基金的 AML、AEOI 与其他合规义务。经济实质（ES）按主体与业务分开判断：Fund、Manager、GP、持股 SPV 各自的主营业务不同，需区分基金投资业务、基金管理业务与持股业务。",
@@ -1481,10 +1489,5 @@ export function findLessonBySlug(slug: string): Lesson | undefined {
   );
 }
 
-/** 课程编号展示：必修 "第 14 讲" / 选修 "E01 · 选修" */
-export function lessonLabel(lesson: { id: string }): string {
-  return isElectiveId(lesson.id)
-    ? `${lesson.id} · 选修`
-    : `第 ${lesson.id} 讲`;
-}
+/** 课程编号展示：见 `@/lib/lesson-number` 的 `displayLabel`（V1.20.0 起由展示编号派生） */
 

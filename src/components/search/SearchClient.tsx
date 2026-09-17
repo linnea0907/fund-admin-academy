@@ -10,6 +10,7 @@ import {
   type GlossaryTerm,
 } from "@/lib/glossary";
 import { recordTermEvents } from "@/lib/wiki-metrics";
+import { displayNumber } from "@/lib/lesson-number";
 
 function escapeRegExp(s: string): string {
   return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -456,7 +457,7 @@ export default function SearchClient({ data }: { data: SearchData }) {
               badge="Courses"
               badgeCls="bg-amber-100 text-amber-700"
               title="课程中心"
-              desc="必修八讲 + 第 16 讲全真模拟 + 选修专题，模块化学习与考核"
+              desc="必修八讲 + 第 09 讲全真模拟 + 选修专题，模块化学习与考核"
               meta={`${data.counts.lessonsRequired} 讲必修 · ${data.counts.lessonsTotal} 讲全部`}
             />
           </section>
@@ -725,7 +726,7 @@ export default function SearchClient({ data }: { data: SearchData }) {
                       className="group flex items-center gap-3 rounded-xl border border-slate-100 px-3 py-3 transition hover:border-blue-200 hover:bg-blue-50/40"
                     >
                       <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#0e2a5e] text-xs font-bold text-white">
-                        {lesson.id}
+                        {displayNumber(lesson.id)}
                       </span>
                       <span className="min-w-0 flex-1">
                         <span className="flex items-center gap-2">
@@ -777,7 +778,7 @@ export default function SearchClient({ data }: { data: SearchData }) {
                         <span className="mt-0.5 block truncate text-xs text-slate-400">
                           {lesson.id.startsWith("E")
                             ? `${lesson.id} · 选修 · ${lesson.title}`
-                            : `第 ${lesson.id} 讲 · ${lesson.title}`}
+                            : `第 ${displayNumber(lesson.id)} 讲 · ${lesson.title}`}
                         </span>
                       </span>
                       <span className="shrink-0 rounded-full bg-[#0e2a5e]/5 px-2.5 py-1 text-[11px] font-medium text-[#0e2a5e]">

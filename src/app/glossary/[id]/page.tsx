@@ -10,6 +10,7 @@ import {
   termBrief,
 } from "@/lib/glossary";
 import { getTermRelations } from "@/lib/glossary-usage";
+import { displayBadge } from "@/lib/lesson-number";
 import TermFavoriteButton from "@/components/favorites/TermFavoriteButton";
 import TermViewTracker from "@/components/glossary/TermViewTracker";
 
@@ -37,7 +38,8 @@ function LessonBadge({ id }: { id: string }) {
         isElective ? "bg-amber-100 text-amber-700" : "bg-[#0e2a5e] text-white"
       }`}
     >
-      {isElective ? id : `第 ${id} 讲`}
+      {/* V1.20.0：必修显示连续编号（lesson.id 仍为数据主键） */}
+      {displayBadge(id)}
     </span>
   );
 }

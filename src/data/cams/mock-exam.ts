@@ -2,7 +2,7 @@ import type { CamsDomain } from "@/types/cams";
 import { CAMS_EXAM } from "@/types/cams";
 
 /**
- * 第 16 讲 · CAMS Full Mock Exam —— 学习路径末端的考试入口。
+ * 第 09 讲 · CAMS Full Mock Exam —— 学习路径末端的考试入口。
  *
  * ## 为什么它不是一个 Lesson
  * 它没有内容模块（m1-mN）、没有自测题、没有风险/清单等课程字段，本质是
@@ -12,12 +12,18 @@ import { CAMS_EXAM } from "@/types/cams";
  * favorites / [slug] 静态生成等 7 处加特例分支。
  *
  * 因此这里的做法是：**独立数据 + 独立卡片组件**，视觉上与课程卡片同构，
- * 编号 16 排在课程中心「必修课程」网格末尾与首页「学习路线」末尾，
+ * 编号 09 排在课程中心「必修课程」网格末尾与首页「学习路线」末尾，
  * 点击直接进入既有 `/cams-exam`（不新建第二套考试系统）。
  */
 
-/** 课程中心/学习路线中的展示编号（接在必修 01…15 之后） */
-export const CAMS_MOCK_EXAM_ID = "16";
+/**
+ * 课程中心/学习路线中的展示编号。
+ *
+ * V1.20.0：历史编号为 "16"（接在旧必修 01…15 之后）。课程编号改为连续
+ * 01–08 后，本值同步改为 **"09"**（必须恒等于必修课程数 + 1）。
+ * `scripts/check-lesson-numbers.mjs` 在 prebuild 阶段断言该等式。
+ */
+export const CAMS_MOCK_EXAM_ID = "09";
 
 /** 卡片点击目标：既有模拟考试页面 */
 export const CAMS_MOCK_EXAM_HREF = "/cams-exam";

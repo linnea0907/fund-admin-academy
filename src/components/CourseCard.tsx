@@ -9,6 +9,7 @@ import {
   lessonDoneCount,
   lessonPercent,
 } from "@/lib/progress";
+import { displayNumber } from "@/lib/lesson-number";
 
 /** 课程卡片：简介 + 进度 + 状态（选修课通过 elective 显示徽章） */
 export default function CourseCard({
@@ -36,7 +37,8 @@ export default function CourseCard({
     >
       <div className="flex items-start justify-between gap-3">
         <span className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-[#0e2a5e] text-sm font-bold text-white">
-          {lesson.id}
+          {/* V1.20.0：展示连续编号（01…08），lesson.id 仍为数据主键 */}
+          {displayNumber(lesson.id)}
         </span>
         {completed ? (
           <span className="inline-flex items-center gap-1 rounded-full bg-emerald-100 px-2.5 py-1 text-xs font-semibold text-emerald-700">

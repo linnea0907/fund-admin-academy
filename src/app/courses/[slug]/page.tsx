@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { findLessonBySlug, allLessons, lessonLabel } from "@/data/lessons";
+import { findLessonBySlug, allLessons } from "@/data/lessons";
 import { lessonNeighbors } from "@/lib/ordering";
+import { displayLabel } from "@/lib/lesson-number";
 import { getLessonTerms } from "@/lib/glossary-usage";
 import LessonViewer from "@/components/LessonViewer";
 import LessonReader from "@/components/LessonReader";
@@ -22,7 +23,7 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   const lesson = findLessonBySlug(slug);
   if (!lesson) return { title: "课程不存在" };
   return {
-    title: `${lessonLabel(lesson)} · ${lesson.title}`,
+    title: `${displayLabel(lesson)} · ${lesson.title}`,
     description: lesson.subtitle,
   };
 }

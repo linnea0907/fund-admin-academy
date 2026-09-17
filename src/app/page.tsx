@@ -4,6 +4,7 @@ import Link from "next/link";
 import { orderedLessons } from "@/lib/ordering";
 import { camsMockExam } from "@/data/cams/mock-exam";
 import { siteConfig } from "@/lib/site-config";
+import { displayNumber } from "@/lib/lesson-number";
 import { useAcademy } from "@/hooks/use-academy";
 import {
   favoriteCount,
@@ -90,7 +91,7 @@ export default function HomePage() {
               href={`/courses/${nextLesson.slug}`}
               className="mt-4 inline-flex items-center gap-2 rounded-lg bg-amber-300 px-4 py-2 text-sm font-semibold text-[#0e2a5e] transition hover:bg-amber-200"
             >
-              继续学习 · 第 {nextLesson.id} 讲 {nextLesson.title}
+              继续学习 · 第 {displayNumber(nextLesson.id)} 讲 {nextLesson.title}
               <span aria-hidden>→</span>
             </Link>
           )}
@@ -139,7 +140,7 @@ export default function HomePage() {
           等核心知识。
         </p>
         <p className="mt-2 text-sm leading-relaxed text-slate-600">
-          建议先完成必修课程，再根据工作需要学习选修专题；完成必修后以第 16 讲全真模拟检验掌握程度。
+          建议先完成必修课程，再根据工作需要学习选修专题；完成必修后以第 09 讲全真模拟检验掌握程度。
         </p>
         <p className="mt-3 border-t border-slate-100 pt-2.5 text-[11px] text-slate-400">
           仅供内部学习参考，不构成法律、税务或监管意见。
@@ -160,7 +161,7 @@ export default function HomePage() {
             />
           </div>
         </div>
-        <StatCard label="课程数" value={String(stat.totalLessons)} sub="核心八讲 · 另有第 16 讲全真模拟" />
+        <StatCard label="课程数" value={String(stat.totalLessons)} sub="核心八讲 · 另有第 09 讲全真模拟" />
         <StatCard label="模块数" value={String(moduleCount)} sub="全部课程章节" />
         <StatCard label="风险提示数" value={String(riskCount)} sub="全部课程警示" />
         <StatCard label="自测题数" value={String(quizCount)} sub="全部课程题目" />
@@ -188,7 +189,7 @@ export default function HomePage() {
             {nextLesson ? (
               <>
                 <p className="mt-1 text-sm text-amber-800">
-                  第 {nextLesson.id} 讲 · {nextLesson.title}
+                  第 {displayNumber(nextLesson.id)} 讲 · {nextLesson.title}
                 </p>
                 <p className="mt-0.5 text-xs text-amber-700/80">
                   当前进度 {lessonDoneCount(state, nextLesson)}/{nextLesson.modules.length} 模块 ·
@@ -215,12 +216,17 @@ export default function HomePage() {
       <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
         <h2 className="text-sm font-bold text-slate-800">学习建议</h2>
         <ul className="mt-3 space-y-2 text-sm text-slate-600">
-          <Suggestion icon="📍" text={suggestionText(stat.percent, doneIds.length, favs, nextLesson?.id ?? null)} />
+          <Suggestion icon="📍" text={suggestionText(
+            stat.percent,
+            doneIds.length,
+            favs,
+            nextLesson ? displayNumber(nextLesson.id) : null
+          )} />
           {stat.percent > 0 && stat.percent < 100 && (
             <Suggestion
               icon="🧭"
               text={`已完成 ${stat.percent}%（${doneIds.length}/${stat.totalLessons} 门课）。建议按编号顺序推进，当前停在 ${
-                nextLesson ? `第 ${nextLesson.id} 讲` : "已完成"
+                nextLesson ? `第 ${displayNumber(nextLesson.id)} 讲` : "已完成"
               }。`}
             />
           )}
@@ -255,11 +261,11 @@ export default function HomePage() {
                         : "bg-[#0e2a5e]/10 text-[#0e2a5e]"
                     }`}
                   >
-                    {done ? "✓" : lesson.id}
+                    {done ? "✓" : displayNumber(lesson.id)}
                   </span>
                   <span className="min-w-0 flex-1">
                     <span className="block truncate text-sm font-semibold text-slate-700 group-hover:text-[#0e2a5e]">
-                      第 {lesson.id} 讲 · {lesson.title}
+                      第 {displayNumber(lesson.id)} 讲 · {lesson.title}
                     </span>
                     <span className="block truncate text-xs text-slate-400">
                       {lesson.subtitle}
@@ -284,7 +290,7 @@ export default function HomePage() {
             );
           })}
 
-          {/* 第 16 讲：学习路径终点的 CAMS 全真模拟考试入口 */}
+          {/* 第 09 讲：学习路径终点的 CAMS 全真模拟考试入口 */}
           <li>
             <Link
               href={camsMockExam.href}
@@ -336,7 +342,7 @@ export default function HomePage() {
                   className="flex items-center gap-3 py-3 transition hover:bg-slate-50"
                 >
                   <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#0e2a5e]/10 text-sm font-bold text-[#0e2a5e]">
-                    {lesson.id}
+                    {displayNumber(lesson.id)}
                   </span>
                   <span className="min-w-0 flex-1">
                     <span className="block truncate text-sm font-medium text-slate-700">
@@ -363,16 +369,17 @@ function suggestionText(
   percent: number,
   completedCourses: number,
   favs: number,
-  nextId: string | null
+  /** 下一讲的**展示编号**（如 "03"），由调用方用 displayNumber() 转换后传入 */
+  nextDisplayNumber: string | null
 ): string {
   if (percent === 0)
     return "从第 01 讲开始，先建立“一只境外基金如何运转”的全局框架，再沿学习路线逐讲推进。";
   if (percent === 100)
-    return "进度已满！建议输出型复习：把每讲风险提示整理成自己的检查清单，并以第 16 讲 CAMS Full Mock Exam 检验掌握程度。";
+    return "进度已满！建议输出型复习：把每讲风险提示整理成自己的检查清单，并以第 09 讲 CAMS Full Mock Exam 检验掌握程度。";
   const base = `保持节奏：已完成 ${completedCourses} 门课程（${percent}%）。`;
   if (favs > 0)
-    return `${base} 优先推进第 ${nextId} 讲，每周回看一次收藏内容巩固。`;
-  return `${base} 优先推进第 ${nextId} 讲，看到重点内容记得点星标收藏，方便日后复习。`;
+    return `${base} 优先推进第 ${nextDisplayNumber} 讲，每周回看一次收藏内容巩固。`;
+  return `${base} 优先推进第 ${nextDisplayNumber} 讲，看到重点内容记得点星标收藏，方便日后复习。`;
 }
 
 function Suggestion({ icon, text }: { icon: string; text: string }) {

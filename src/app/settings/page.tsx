@@ -5,6 +5,7 @@ import { orderedLessons } from "@/lib/ordering";
 import { useAcademy } from "@/hooks/use-academy";
 import { STORAGE_KEY } from "@/lib/storage";
 import { favoriteCount, totalProgress } from "@/lib/progress";
+import { displayNumber } from "@/lib/lesson-number";
 
 export default function SettingsPage() {
   const {
@@ -164,7 +165,8 @@ export default function SettingsPage() {
         <ul className="mt-3 space-y-1.5 text-sm text-slate-600">
           {orderedLessons.map((l) => (
             <li key={l.id} className="flex items-center gap-2">
-              <span className="w-6 font-bold text-[#0e2a5e]">{l.id}</span>
+              {/* V1.20.0：展示连续编号（lesson.id 仍为数据主键） */}
+              <span className="w-6 font-bold text-[#0e2a5e]">{displayNumber(l.id)}</span>
               {l.title}
             </li>
           ))}

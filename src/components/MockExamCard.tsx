@@ -3,7 +3,7 @@ import { camsMockExam } from "@/data/cams/mock-exam";
 import { CamsTags } from "@/components/CamsTag";
 
 /**
- * 第 16 讲 · CAMS Full Mock Exam —— 必修学习路径末端的考试入口卡片。
+ * 第 09 讲 · CAMS Full Mock Exam —— 必修学习路径末端的考试入口卡片。
  *
  * 视觉与 CourseCard 同构（编号块 / CAMS 标签 / 标题 / 副题 / 元信息行），
  * 但用琥珀色系区分「这是考试，不是内容课程」；底部进度条位置改为规格行。

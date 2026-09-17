@@ -11,6 +11,11 @@ import {
 } from "@/lib/ordering";
 import { GLOSSARY_TERMS } from "@/lib/glossary";
 import {
+  displayTag,
+  displayTitle,
+  resolveStoredTitle,
+} from "@/lib/lesson-number";
+import {
   deleteNote,
   groupNotesBySource,
   hlStatusMeta,
@@ -35,18 +40,23 @@ import type {
 
 /**
  * 学习笔记的归档课程序列（V1.17.0 知识分类）：
- * 必修八讲（01/02/10/11/12/13/14/15，编号升序）→ 选修（E01–E11，编号升序）。
+ * 必修八讲（**展示编号 01–08**，编号升序）→ 选修（E01–E11，编号升序）。
  * 笔记由来源自动归档，用户无需手工分类。
+ *
+ * V1.20.0：分组标题的编号改走 `displayTitle()`（展示编号），
+ * 但 `id` 仍是 lesson.id —— 归档匹配靠 sourceId，因此**旧笔记无需迁移**。
  */
 const NOTE_COURSES: NoteGroupCourse[] = [
   ...orderedLessons.map((l) => ({
     id: l.id,
     title: l.title,
+    label: displayTitle(l),
     kind: "required" as const,
   })),
   ...electiveLessonsOrdered.map((l) => ({
     id: l.id,
     title: l.title,
+    label: displayTitle(l),
     kind: "elective" as const,
   })),
 ];
@@ -207,7 +217,7 @@ function FavoritesPanel({
         out.push({
           key: `lesson:${l.id}`,
           category: "课程",
-          tag: `整课 · ${l.id.startsWith("E") ? `选修 ${l.id}` : `第 ${l.id} 讲`}`,
+          tag: `整课 · ${displayTag(l.id)}`,
           href: `/courses/${l.slug}`,
           title: l.title,
           subtitle: l.subtitle,
@@ -544,6 +554,15 @@ function NotesPanel({
             <NoteCard
               key={n.noteId}
               note={n}
+              title={
+                n.sourceType === "course"
+                  ? resolveStoredTitle(
+                      n.sourceId,
+                      (id) => courseMap.get(id),
+                      n.sourceTitle
+                    )
+                  : n.sourceTitle
+              }
               status={liveStatus(n)}
               href={jump(n)}
               onEdit={() => {
@@ -562,7 +581,7 @@ function NotesPanel({
           caseRefs={caseRefs}
           courseOptions={orderedAllLessons.map((l) => ({
             id: l.id,
-            title: `${l.id} ${l.title}`,
+            title: displayTitle(l),
           }))}
           onClose={() => {
             setCreateOpen(false);
@@ -583,12 +602,19 @@ function NotesPanel({
 
 function NoteCard({
   note,
+  title,
   status,
   href,
   onEdit,
   onDelete,
 }: {
   note: StudyNote;
+  /**
+   * 显示标题（V1.20.0）：按 sourceId 回查课程表重算展示编号 ——
+   * 历史笔记里存的是旧编号（如「14 Cayman 基金核心框架」），
+   * 显示时替换为当前编号（「07 Cayman 基金核心框架」），**无需迁移**。
+   */
+  title: string;
   status: { key: HLStatus; hint: string } | null;
   href: string | null;
   onEdit: () => void;
@@ -598,7 +624,7 @@ function NoteCard({
     <li className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
       <div className="flex items-baseline justify-between gap-3">
         <p className="min-w-0 text-[15px] font-semibold text-slate-800">
-          {note.sourceTitle}
+          {title}
         </p>
         <span className="shrink-0 text-[11px] text-slate-400">
           {fmtDate(note.createdAt)}

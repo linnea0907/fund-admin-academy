@@ -8,7 +8,7 @@ import { CAMS_DOMAINS } from "@/types/cams";
 import type { CamsDomain } from "@/types/cams";
 
 /**
- * 课程中心（V1.16.0：新增 CAMS 域筛选器；V1.16.1：必修区末端纳入第 16 讲全真模拟）
+ * 课程中心（V1.16.0：新增 CAMS 域筛选器；V1.16.1：必修区末端纳入第 09 讲全真模拟）
  *
  * 筛选器为「AND」语义：选中一个或多个 CAMS 域后，仅显示覆盖该域（任一命中）的课程。
  * 必修/选修分组内分别过滤；未选任何域时显示全部。
@@ -16,11 +16,11 @@ import type { CamsDomain } from "@/types/cams";
  * V1.16.2（V1.16.1 验收意见 P1-1）：补全域标签使四域分布均衡 —— 10 → A/B/C/D、
  * 14 → B/D、15 → B，最终 A=2 / B=5 / C=2 / D=3，四域均无空分类。
  *
- * 第 16 讲「CAMS Full Mock Exam」是**考试入口卡片**而非内容课程
+ * 第 09 讲「CAMS Full Mock Exam」是**考试入口卡片**而非内容课程
  * （见 data/cams/mock-exam.ts 的说明），它覆盖四个 Domain，因此在任何筛选条件下
  * 都显示在必修区末尾 —— 保证任一 CAMS 域筛选都不会得到「空分类」体验。
  *
- * 顶部文案口径（V1.16.2，验收意见 P1-2）：一律表述为「必修八讲 + 第 16 讲全真模拟」，
+ * 顶部文案口径（V1.16.2，验收意见 P1-2）：一律表述为「必修八讲（01–08）+ 第 09 讲全真模拟」，
  * 严禁出现「必修八讲」孤立的结尾式表述，避免用户误以为学习路径到此结束。
  */
 export default function CoursesPage() {
@@ -60,7 +60,7 @@ export default function CoursesPage() {
       <header>
         <h1 className="text-xl font-bold text-slate-800 sm:text-2xl">课程中心</h1>
         <p className="mt-1.5 text-sm text-slate-500">
-          学习路径：必修八讲（01 → 02 → 10 → 11 → 12 → 13 → 14 → 15）→ 第 16 讲 CAMS 全真模拟
+          学习路径：必修八讲（01 → 02 → 03 → 04 → 05 → 06 → 07 → 08）→ 第 09 讲 CAMS 全真模拟
           （Assessment，不计入课程完成数）· 选修课程（E01–E11）按需深入 ·
           每讲含学习目标、模块内容、风险提示、思维导图与自测
         </p>
@@ -108,12 +108,12 @@ export default function CoursesPage() {
         </section>
       )}
 
-      {/* 必修课程（含第 16 讲考试入口） */}
+      {/* 必修课程（含第 09 讲考试入口） */}
       <section>
         <div className="mb-3 flex items-baseline gap-2">
           <h2 className="text-sm font-bold text-slate-800">必修课程</h2>
           <span className="text-xs text-slate-400">
-            共 {required.length} 门 + 第 16 讲 CAMS 全真模拟 · 学习主线
+            共 {required.length} 门 + 第 09 讲 CAMS 全真模拟 · 学习主线
           </span>
         </div>
         {required.length === 0 && (
@@ -125,7 +125,7 @@ export default function CoursesPage() {
           {required.map((lesson) => (
             <CourseCard key={lesson.id} lesson={lesson} />
           ))}
-          {/* 第 16 讲：学习路径终点的 CAMS 全真模拟考试入口 */}
+          {/* 第 09 讲：学习路径终点的 CAMS 全真模拟考试入口 */}
           <MockExamCard />
         </div>
       </section>

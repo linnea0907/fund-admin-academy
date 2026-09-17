@@ -21,6 +21,7 @@ import TermText from "@/components/glossary/TermText";
 import HighlightEngine from "@/components/reading/HighlightEngine";
 import { isElectiveId } from "@/data/lessons";
 import { camsMockExam } from "@/data/cams/mock-exam";
+import { displayNumber, displayTitle } from "@/lib/lesson-number";
 
 interface LessonViewerProps {
   lesson: Lesson;
@@ -77,7 +78,7 @@ export default function LessonViewer({ lesson, prev, next, terms = [] }: LessonV
                 选修 · {lesson.id}
               </span>
             ) : (
-              <span>第 {lesson.id} 讲</span>
+              <span>第 {displayNumber(lesson.id)} 讲</span>
             )}
             <span>/</span>
             <span className="rounded bg-white/10 px-2 py-0.5">⏱ {lesson.minutes} 分钟</span>
@@ -180,7 +181,7 @@ export default function LessonViewer({ lesson, prev, next, terms = [] }: LessonV
               <div className="flex items-start justify-between gap-3">
                 <h3 className="text-base font-bold text-slate-800">
                   <span className="mr-2 inline-flex h-6 items-center rounded-md bg-[#0e2a5e] px-2 text-xs text-white">
-                    {lesson.id}·{m.id.replace("m", "")}
+                    {displayNumber(lesson.id)}·{m.id.replace("m", "")}
                   </span>
                   {m.title}
                 </h3>
@@ -244,7 +245,7 @@ export default function LessonViewer({ lesson, prev, next, terms = [] }: LessonV
       <HighlightEngine
         sourceType="course"
         sourceId={lesson.id}
-        sourceTitle={`${lesson.id} ${lesson.title}`}
+        sourceTitle={displayTitle(lesson)}
         contentVersion={lesson.meta?.contentVersion}
         scopeRef={moduleScopeRef}
       />
@@ -301,7 +302,7 @@ export default function LessonViewer({ lesson, prev, next, terms = [] }: LessonV
           >
             <p className="text-xs text-slate-400">← 上一讲</p>
             <p className="mt-1 text-sm font-semibold text-slate-700">
-              {prev.id} · {prev.title}
+              {displayNumber(prev.id)} · {prev.title}
             </p>
           </Link>
         ) : (
@@ -314,12 +315,12 @@ export default function LessonViewer({ lesson, prev, next, terms = [] }: LessonV
           >
             <p className="text-xs text-slate-400">下一讲 →</p>
             <p className="mt-1 text-sm font-semibold text-slate-700">
-              {next.id} · {next.title}
+              {displayNumber(next.id)} · {next.title}
             </p>
           </Link>
         ) : (
-          /* 必修最后一讲（第 15 讲）之后不再是课程，而是学习路径终点：
-             第 16 讲 CAMS Full Mock Exam（考试入口卡片，见 data/cams/mock-exam.ts）。
+          /* 必修最后一讲（第 08 讲 BVI）之后不再是课程，而是学习路径终点：
+             第 09 讲 CAMS Full Mock Exam（考试入口卡片，见 data/cams/mock-exam.ts）。
              选修课末讲保持空白 —— 选修不进入学习路线，也不引导考试。 */
           !isElectiveId(lesson.id) && (
             <Link

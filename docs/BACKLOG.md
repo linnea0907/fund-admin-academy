@@ -430,6 +430,123 @@ ESC    → 关闭 Drawer
 
 ---
 
+## V1.20.0 已交付（来源：2026-09-17 Lu 直接下达）
+
+**主题：课程编号重构 —— 展示编号连续化 01–09（纯展示层，数据主键零改动）**
+
+### 背景与问题
+
+课程主键 `lesson.id` 是历史遗留编号（`01 / 02 / 10 / 11 / 12 / 13 / 14 / 15`），
+它同时充当进度 key、收藏 key、`data-reading-scope`、笔记 `sourceId`、
+术语 `courses` 字段、路由 SSG 参数 —— **是数据主键，不能改**。
+但它此前被**直接当展示编号渲染在全站 10 处**，对新用户不直观：
+序号跳号（02 之后直接 10）、且模块标题前缀（`3.1` / `4.1`）与卡片编号
+（14 / 10）根本对不上。
+
+### 两层编号拆分（本版核心设计）
+
+| 层 | 值 | 来源 | 可变性 |
+|---|---|---|---|
+| 数据主键 `lesson.id` | `01/02/10/11/12/13/14/15` | 课程数据文件 | **永不改**（URL/进度/收藏/笔记依赖） |
+| 展示编号 | `01`…`08` | `lib/lesson-number.ts` 由 `orderedLessons` **下标派生** | 加课自动重排 |
+
+新增单一数据源 `src/lib/lesson-number.ts`（`displayNumber` / `displayLabel` /
+`displayTag` / `displayBadge` / `displayTitle` / `modulePrefix` / `resolveStoredTitle`），
+**不新增任何数据字段**，全站 10 处渲染点统一改调它。
+
+### 新编号映射
+
+| 展示编号 | 数据主键 id | slug（URL 不变） | 课程 | 模块前缀 |
+|---|---|---|---|---|
+| 01 | `01` | `fund-lifecycle` | 一只境外基金如何运转 | 1.1–1.5 |
+| 02 | `02` | `fund-structure` | 基金结构全景 | 2.1–2.5 |
+| 03 | `10` | `aml-kyc` | AML 与投资者尽调 | 4.x → **3.1–3.5** |
+| 04 | `11` | `aml-foundations` | AML Foundations | 11.x → **4.1–4.4** |
+| 05 | `12` | `fatca-crs` | FATCA 与 CRS | 5.1–5.5 |
+| 06 | `13` | `aml-technology-monitoring` | AML Technology & Monitoring | 13.x → **6.1–6.4** |
+| 07 | `14` | `cayman-framework` | Cayman 基金核心框架 | 3.x → **7.1–7.5** |
+| 08 | `15` | `bvi-fund-manager` | BVI 基金与管理人 | 6.x → **8.1–8.5** |
+| 09 | （非 Lesson） | `/cams-exam` | CAMS Full Mock Exam | — |
+
+模块标题前缀共重排 **23 处**（14→7.x、10→4.x→3.x、15→6.x→8.x、11→11.x→4.x、13→13.x→6.x）。
+
+### 改动清单
+
+**新增**
+- `src/lib/lesson-number.ts` — 编号单一数据源
+- `scripts/check-lesson-numbers.mjs` — 构建期闸门（接入 prebuild），5 项校验：
+  ① URL 冻结（8 门必修 slug 必须等于冻结表）② 展示编号连续唯一
+  ③ 模块标题前缀 === `modulePrefix()` ④ 模拟考编号 === 必修数 + 1
+  ⑤ id 与模拟考编号不撞号
+
+**渲染点（10 处 → 全部改调 displayNumber 系）**
+- `components/CourseCard.tsx` 卡片编号块
+- `components/LessonViewer.tsx` 面包屑 / 模块眉标 / 上下一讲 / `sourceTitle`
+- `components/MockExamCard.tsx`（读 `camsMockExam.id`）
+- `components/LessonToc.tsx`（无编号，未改）
+- `components/search/SearchClient.tsx` 课程命中编号块 + 模块命中副标
+- `components/favorites/FavoritesApp.tsx` 收藏 tag / 笔记分组 label / 笔记卡片标题解析 / 编辑器下拉
+- `components/glossary/GlossaryProvider.tsx` Drawer「相关课程」徽标
+- `app/page.tsx` 学习路线 / 继续学习 / 最近学习 / 下一步推荐 / 学习建议
+- `app/courses/page.tsx` 路径文案 + 分区计数
+- `app/courses/[slug]/page.tsx` metadata title
+- `app/glossary/[id]/page.tsx` LessonBadge
+- `app/settings/page.tsx` 课程体系列表
+- `app/cams-exam/page.tsx` + `components/cams/CamsExam.tsx` 面包屑（读 `CAMS_MOCK_EXAM_ID`）
+
+**数据/配置**
+- `src/data/cams/mock-exam.ts` — `CAMS_MOCK_EXAM_ID` `"16"` → `"09"`
+- `src/data/lessons.ts` / `lessons-cams.ts` — 模块标题前缀 23 处 + 编号约定注释
+- `src/lib/ordering.ts` — 注明「本数组顺序 = 全站展示编号唯一来源」
+- `src/lib/notes.ts` — `NoteGroupCourse` 新增可选 `label`，分组标签改用它
+- `package.json` — prebuild 前置 `check:lesson-numbers`
+- `src/lib/site-config.ts` — `v1.19.1` → `v1.20.0`
+
+### 旧数据免迁移（关键验收项）
+
+`sourceTitle` 是**存进 localStorage 的数据**，历史笔记里写的是旧编号
+（如 `"14 Cayman 基金核心框架"`）。本版**不做数据迁移**：
+
+- 笔记归档靠 `sourceId` 匹配 → 归档行为不变；
+- 笔记卡片标题改由 `resolveStoredTitle()` **显示时按 sourceId 回查课程表重算编号**
+  → 旧笔记自动显示 `07 Cayman 基金核心框架`，回查不到（孤儿/案例笔记）时退回存储值；
+- 新写入的 `sourceTitle` 用 `displayTitle()`（存新编号）。
+
+进度 / 收藏 / 高亮锚点全部靠 `lesson.id`，**完全不受影响**。
+
+### 明确不做（scope discipline）
+
+- ❌ 不改 `lesson.id`、`slug`、任何 URL（`FROZEN_URLS` 闸门锁死）
+- ❌ 不改进度 key（`moduleKey` = `14/m1`）、收藏 key、`data-reading-scope`（`14-m1`）
+- ❌ 不改术语 `courses` 字段（`["12"]` 等引用的是 id，非展示编号）
+- ❌ 不写任何 localStorage 迁移代码
+- ❌ 不改案例库的 `module: 1`（那是 **ICS Module 号**，与课程编号体系无关）
+- ❌ 不改案例正文的「02.2 KYC/CDD 操作手册」引用（**ICS 内部知识库文档编号**，
+  见 `docs/CASE-LIBRARY-SPEC.md`，与站内课程编号无关 —— 曾误判为课程引用，已排除）
+- ❌ 不收录/改动任何课程正文内容
+
+### 踩坑记录（写入 ENV-NOTES）
+
+- **同一文件并行 Edit 会互相覆盖**：Edit 是「读盘 → 改 → 写盘」，同文件多个并行调用
+  最后一个写入者胜，前面的静默丢失。本版在 `LessonViewer.tsx` 上实测丢了 4 处编辑
+  （只有 1 处存活），改用「单进程一次性读改写」修正。**教训：同文件多处修改必须串行或合并成一次写入。**
+- grep 出来的「漏点」**必须先判断归属**：`{cs.id}` 是案例号、`module: 1` 是 ICS Module 号，
+  都不是课程编号 —— 机械替换会把 29 个案例的引用改坏。
+
+### 统计差量
+
+| 指标 | V1.19.1 | V1.20.0 | 差量 |
+|---|---|---|---|
+| 必修展示编号 | 01/02/10/11/12/13/14/15 | 01–08 连续 | 跳号消除 |
+| 模拟考展示编号 | 16 | 09 | −7 |
+| 模块标题前缀失配 | 4 讲失配（14/10/15/11/13） | 0 | 全部对齐 |
+| 渲染点改调编号派生 | 0 | 10 处 | — |
+| 构建期闸门 | 1（术语） | 2（+编号） | +1 |
+| 数据主键/slug 改动 | 0 | **0** | 无 |
+| localStorage 迁移 | — | **无** | — |
+
+---
+
 ## V1.16.0 后续候选（CAMS 相关，暂未排期）
 
 ### 每日练习 / 50 题小测

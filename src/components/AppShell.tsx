@@ -23,7 +23,7 @@ import { useUiPref } from "@/hooks/use-ui-pref";
  *    （用户无法理解其含义，易误读为未读/待办，信息价值低）。
  *
  *  V1.16.1：
- *  - 「CAMS 模拟考试」由「知识检索」子项**迁出**，改为课程中心第 16 讲
+ *  - 「CAMS 模拟考试」由「知识检索」子项**迁出**，改为课程中心第 09 讲
  *    （学习路径终点，见 data/cams/mock-exam.ts 与 MockExamCard）。
  *    理由：案例库 / 术语库 / 实务工具包属 Reference（查资料），
  *    模拟考试属 Learning Assessment（学习评估），不应混在同一层级。
