@@ -7,6 +7,8 @@
  * 用途：
  *   - /glossary 列表：术语行显示“出现于 N 讲 · M 案例”
  *   - /glossary/[id] 详情：自动生成的 相关课程 / 相关案例 区块（零手工维护）
+ *   - 课程页（V1.18.0）：本课关联术语 —— 术语 → 课程 的反向索引
+ *   - 案例详情页（V1.18.0）：本案例关联术语 —— 术语 → 案例 的反向索引
  *   - Drawer 与 /api/glossary/usage：点击术语时按需拉取关联位置
  *
  * 本模块引用 fs 与课程数据，仅限 Server Components / Route Handlers 使用。
@@ -19,8 +21,11 @@ import {
   TERM_LEVELS,
   findTermMatches,
   getGlossaryCategory,
+  type CaseTermRef,
   type GlossaryCategory,
   type GlossaryUsageMap,
+  type LessonTermRef,
+  type RelatedTermRef,
   type TermCaseRef,
   type TermLessonRef,
   type TermLevel,
@@ -199,6 +204,81 @@ export function getTermRelations(termId: string): TermRelations {
       manualCases: [],
     }
   );
+}
+
+/* ================================================================
+ * V1.18.0 反向索引：课程 → 术语 / 案例 → 术语（知识网络的双向导航）
+ *   唯一数据源 = buildTermRelations() 的反转，即
+ *   「自动命中（正文 ASCII 术语）∪ 人工指定（术语数据的 courses / cases 字段）」。
+ *   因此不需要在课程数据（lessons.ts 锁定基线）或案例数据里维护任何新字段。
+ * ================================================================ */
+
+/** Core → Advanced → Expert 的固定次序（与 TERM_LEVELS 同源） */
+const LEVEL_ORDER = new Map(TERM_LEVELS.map((l, i) => [l.id, i]));
+
+/** 等级优先、组内按术语名升序（大小写不敏感 + 数字自然序） */
+function compareTermRefs(a: RelatedTermRef, b: RelatedTermRef): number {
+  return (
+    (LEVEL_ORDER.get(a.level) ?? 99) - (LEVEL_ORDER.get(b.level) ?? 99) ||
+    a.term.localeCompare(b.term, "en", { sensitivity: "base", numeric: true })
+  );
+}
+
+/**
+ * 反转关联关系：把「术语 → 宿主（课程/案例）」摊平成「宿主 id → 术语[]」。
+ * 只保留仍存在于术语库中的术语（防删词后留下悬空引用），并按
+ * Core → Advanced → Expert + 组内名称升序排好，展示层只做分组切分。
+ */
+function invertRelations(
+  pick: (rel: TermRelations) => { id: string }[]
+): Record<string, RelatedTermRef[]> {
+  const relations = buildTermRelations();
+  const byId = new Map(GLOSSARY_TERMS.map((t) => [t.id, t] as const));
+  const out: Record<string, RelatedTermRef[]> = {};
+
+  for (const [termId, rel] of Object.entries(relations)) {
+    const t = byId.get(termId);
+    if (!t) continue;
+    const ref: RelatedTermRef = { id: t.id, term: t.term, zh: t.zh, level: t.level };
+    for (const host of pick(rel)) {
+      const bucket = (out[host.id] ??= []);
+      if (!bucket.some((r) => r.id === ref.id)) bucket.push(ref);
+    }
+  }
+
+  for (const hostId of Object.keys(out)) out[hostId].sort(compareTermRefs);
+  return out;
+}
+
+let lessonTermsCache: Record<string, RelatedTermRef[]> | null = null;
+let caseTermsCache: Record<string, RelatedTermRef[]> | null = null;
+
+/**
+ * 全部课程的关联术语（进程内缓存）。
+ * 仅返回至少关联 1 个术语的宿主；无关联的课程 id 不会出现在结果中。
+ */
+export function buildLessonTerms(): Record<string, LessonTermRef[]> {
+  lessonTermsCache ??= invertRelations((rel) => rel.lessons);
+  return lessonTermsCache;
+}
+
+/** 单门课的关联术语（无关联时返回空数组，展示层据此隐藏整块） */
+export function getLessonTerms(lessonId: string): LessonTermRef[] {
+  return buildLessonTerms()[lessonId] ?? [];
+}
+
+/**
+ * 全部案例的关联术语（进程内缓存）。
+ * 与课程侧同源同序：自动命中案例正文的术语 ∪ 术语数据 `cases` 字段人工指定。
+ */
+export function buildCaseTerms(): Record<string, CaseTermRef[]> {
+  caseTermsCache ??= invertRelations((rel) => rel.cases);
+  return caseTermsCache;
+}
+
+/** 单个案例的关联术语（无关联时返回空数组，展示层据此隐藏整块） */
+export function getCaseTerms(caseId: string): CaseTermRef[] {
+  return buildCaseTerms()[caseId] ?? [];
 }
 
 /* ================================================================

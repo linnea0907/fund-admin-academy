@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useRef } from "react";
 import type { Lesson } from "@/types";
+import type { LessonTermRef } from "@/lib/glossary";
 import { useAcademy } from "@/hooks/use-academy";
 import {
   isLessonComplete,
@@ -15,6 +16,7 @@ import QuizPanel from "@/components/QuizPanel";
 import Disclaimer from "@/components/Disclaimer";
 import PracticalGuide from "@/components/PracticalGuide";
 import { CamsTags } from "@/components/CamsTag";
+import RelatedTerms from "@/components/RelatedTerms";
 import TermText from "@/components/glossary/TermText";
 import HighlightEngine from "@/components/reading/HighlightEngine";
 import { isElectiveId } from "@/data/lessons";
@@ -24,10 +26,12 @@ interface LessonViewerProps {
   lesson: Lesson;
   prev?: Lesson | null;
   next?: Lesson | null;
+  /** 本课关联术语（V1.18.0；由服务端反向索引计算后传入，空数组则不渲染该区块） */
+  terms?: LessonTermRef[];
 }
 
-/** 课程详情主体：目标 / 模块 / 风险 / 导图 / 自测 */
-export default function LessonViewer({ lesson, prev, next }: LessonViewerProps) {
+/** 课程详情主体：目标 / 关联术语 / 模块 / 风险 / 导图 / 自测 */
+export default function LessonViewer({ lesson, prev, next, terms = [] }: LessonViewerProps) {
   const {
     state,
     toggleModuleComplete,
@@ -153,6 +157,13 @@ export default function LessonViewer({ lesson, prev, next }: LessonViewerProps) 
           ))}
         </ul>
       </section>
+
+      {/* ===== 本课关联术语（V1.18.0：课程 → 术语 反向导航；置于课程概览后、模块列表前） ===== */}
+      <RelatedTerms
+        title="本课关联术语"
+        hint="由术语库自动生成（与术语详情页「关联课程」同源），点击查看术语详解"
+        terms={terms}
+      />
 
       {/* ===== 模块内容（V1.12：article 带 data-reading-scope 供高亮引擎扫描） ===== */}
       <section ref={moduleScopeRef} className="mt-6 space-y-5">

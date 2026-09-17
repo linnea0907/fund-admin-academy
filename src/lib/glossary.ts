@@ -23,6 +23,7 @@ import {
   type GlossaryCategoryDef,
   type GlossaryTerm,
   type TermJurisdiction,
+  type TermLevel,
   type TermSourceDef,
   type TermSourceId,
 } from "@/types/glossary";
@@ -372,3 +373,28 @@ export interface TermUsage {
 }
 
 export type GlossaryUsageMap = Record<string, TermUsage>;
+
+/* ================================================================
+ * 反向索引类型（V1.18.0）：课程 → 术语 / 案例 → 术语
+ *   由 buildTermRelations()（自动命中 ∪ 人工指定 courses / cases）反转得到，
+ *   不在课程数据（lessons.ts 锁定基线）或案例数据里维护第二套字段。
+ *   展示层只需可序列化的最小字段。
+ * ================================================================ */
+
+/** 反向索引的最小可序列化字段（课程侧 / 案例侧同构，故共用一个接口） */
+export interface RelatedTermRef {
+  /** 术语 id（详情页路由 = /glossary/<id>） */
+  id: string;
+  /** 英文术语名（chip 主标） */
+  term: string;
+  /** 中文名（chip 副标 / tooltip） */
+  zh: string;
+  /** 成熟度等级：core / advanced / expert（分组用） */
+  level: TermLevel;
+}
+
+/** 课程 → 术语（V1.18.0） */
+export type LessonTermRef = RelatedTermRef;
+
+/** 案例 → 术语（V1.18.0） */
+export type CaseTermRef = RelatedTermRef;

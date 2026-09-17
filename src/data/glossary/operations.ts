@@ -472,6 +472,7 @@ export const FUND_OPERATIONS_TERMS: GlossaryTerm[] = [
     scenario: ["Redemption", "Fund Operations"],
     aliases: ["Gate", "Redemption Gate", "赎回门槛", "赎回限制"],
     related: ["redemption", "lock-up", "nav", "dealing-day", "suspension-of-redemption"],
+    courses: ["02"],
     source: ["ics", "blue-book"],
     tags: ["赎回限额", "递延支付", "公平对待"],
     brief: "赎回超限时按比例递延支付的门槛机制。",

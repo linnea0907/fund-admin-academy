@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import type { CaseSectionKey } from "@/types";
+import type { RelatedTermRef } from "@/lib/glossary";
 import { getCaseModule } from "@/lib/case-modules";
 import { levelLabel } from "@/lib/case-filter";
 import {
@@ -14,6 +15,7 @@ import {
 } from "@/lib/case-categories";
 import { useAcademy } from "@/hooks/use-academy";
 import MarkdownBody from "./MarkdownBody";
+import RelatedTerms from "@/components/RelatedTerms";
 import HighlightEngine from "@/components/reading/HighlightEngine";
 
 export interface CaseViewerSection {
@@ -46,6 +48,8 @@ interface CaseViewerProps {
   businessArea: string;
   entityType: string;
   topics: string[];
+  /** 本案例关联术语（V1.18.0；由服务端反向索引计算后传入，空数组则不渲染该区块） */
+  terms?: RelatedTermRef[];
 }
 
 /** 小节卡片底色：区分「先思考 / 答案 / 总结」三类 */
@@ -71,6 +75,7 @@ export default function CaseViewer({
   businessArea,
   entityType,
   topics,
+  terms = [],
 }: CaseViewerProps) {
   const router = useRouter();
   const { state, completeCase, toggleCaseComplete, markCaseStarted, toggleFavorite } = useAcademy();
@@ -278,6 +283,14 @@ export default function CaseViewer({
           </div>
         </div>
       </header>
+
+      {/* ===== 本案例关联术语（V1.18.0：案例 → 术语 反向导航；置于案例概览后、正文前） ===== */}
+      <RelatedTerms
+        title="本案例关联术语"
+        hint="由术语库自动生成（与术语详情页「关联案例」同源），点击查看术语详解"
+        icon="🗂️"
+        terms={terms}
+      />
 
       {/* ===== 正文小节 ===== */}
       {!ready ? (

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { CASE_SECTIONS } from "@/lib/case-modules";
+import { getCaseTerms } from "@/lib/glossary-usage";
 import {
   caseNeighbors,
   caseSlug,
@@ -49,6 +50,9 @@ export default async function CasePage({ params }: { params: Params }) {
       })).filter((s) => s.content.trim() !== "")
     : [];
 
+  // V1.18.0 案例 → 术语：反转术语库关联关系（自动命中 ∪ 人工指定 cases），零新增维护字段
+  const terms = getCaseTerms(c.id);
+
   return (
     <CaseViewer
       id={c.id}
@@ -66,6 +70,7 @@ export default async function CasePage({ params }: { params: Params }) {
       businessArea={c.businessArea}
       entityType={c.entityType}
       topics={c.topics}
+      terms={terms}
     />
   );
 }

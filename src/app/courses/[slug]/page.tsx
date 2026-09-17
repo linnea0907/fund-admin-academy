@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { findLessonBySlug, allLessons, lessonLabel } from "@/data/lessons";
 import { lessonNeighbors } from "@/lib/ordering";
+import { getLessonTerms } from "@/lib/glossary-usage";
 import LessonViewer from "@/components/LessonViewer";
 import LessonReader from "@/components/LessonReader";
 import { MobileToc } from "@/components/LessonToc";
@@ -32,6 +33,8 @@ export default async function LessonPage({ params }: { params: Params }) {
   if (!lesson) notFound();
 
   const { prev, next } = lessonNeighbors(lesson);
+  // V1.18.0：课程 → 术语 反向索引（术语库自动命中 ∪ 人工指定 courses，构建期烘焙）
+  const terms = getLessonTerms(lesson.id);
 
   return (
     <div>
@@ -39,7 +42,7 @@ export default async function LessonPage({ params }: { params: Params }) {
       <MobileToc lesson={lesson} />
       {/* 桌面：左侧 sticky 目录（可折叠）+ 正文 */}
       <LessonReader lesson={lesson}>
-        <LessonViewer lesson={lesson} prev={prev} next={next} />
+        <LessonViewer lesson={lesson} prev={prev} next={next} terms={terms} />
       </LessonReader>
     </div>
   );
