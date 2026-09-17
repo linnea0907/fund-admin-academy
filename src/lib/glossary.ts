@@ -78,15 +78,38 @@ function escapeRegExp(s: string): string {
   return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
-/** 是否纯 ASCII（含空格与 & / - . 等连接符）——中文别名不参与正文标注，避免子串误链 */
+/** 是否纯 ASCII（含空格与 & / - . 等连接符）——英文匹配通道的判定 */
 function isAscii(s: string): boolean {
   return /^[\x20-\x7E]+$/.test(s);
 }
 
+/** 是否含中日韩统一表意文字（用于识别中文匹配文本） */
+function isCjk(s: string): boolean {
+  return /[\u4e00-\u9fa5]/.test(s);
+}
+
 /**
- * 单个术语参与正文标注的文本集合：
- * term + fullName（纯 ASCII 且与 term 不同）+ aliases（仅纯 ASCII）。
- * 中文名与中文别名只用于搜索匹配，不进正文标注。
+ * ★ 中文别名进入正文标注的最小长度（V1.19.0）。
+ * 中文没有词边界，2~3 字的次要形态多是口语化/通用表达——实测 02 讲正文里
+ * 「管理人」命中 13 次、「开放式」「封闭式」各 6 次、「分配」5 次，全量放开会把
+ * 中文正文点满，反而制造新的视觉噪音。规范中文名 zh 不受此限：它承担「中文读者
+ * 认出术语」的主职责（如「侧袋」只有 2 字，但正是需求指定的验收项）。
+ */
+export const CH_ALIAS_MIN_LEN = 4;
+
+/** 规范中文名的最小长度（防御性，现网最短为 2 字） */
+const CH_TERM_MIN_LEN = 2;
+
+/**
+ * 单个术语参与正文标注的文本集合（按长度降序 —— 长词先命中，「赎回门槛」优先于「赎回」）：
+ *   英文通道：term + fullName（纯 ASCII 且与 term 不同）+ aliases（纯 ASCII）
+ *   中文通道（V1.19.0）：zh（规范中文名，恒可）+ 中文别名（长度 ≥ CH_ALIAS_MIN_LEN）
+ *
+ * V1.19.0 之前中文被完全排除，导致正文为中文的课程（如 02 讲的「侧袋、赎回门槛、
+ * 暂停赎回条款」）无法「边学边查」，术语库与课程内容成了两张皮。
+ *
+ * ⚠️ 本函数同时决定 ① 正文标注 ② findTermMatches → 术语关联 / 覆盖率，
+ * 两者刻意同源，避免「正文里能点开、术语页却不列该课」的不一致。
  */
 export function termMatchTexts(t: GlossaryTerm): string[] {
   const set = new Set<string>();
@@ -96,6 +119,16 @@ export function termMatchTexts(t: GlossaryTerm): string[] {
   }
   for (const a of t.aliases ?? []) {
     if (a && isAscii(a)) set.add(a.trim());
+  }
+  // 中文通道
+  if (t.zh && isCjk(t.zh) && t.zh.trim().length >= CH_TERM_MIN_LEN) {
+    set.add(t.zh.trim());
+  }
+  for (const a of t.aliases ?? []) {
+    if (!a) continue;
+    const v = a.trim();
+    if (!v || isAscii(v) || !isCjk(v)) continue;
+    if (v.length >= CH_ALIAS_MIN_LEN) set.add(v);
   }
   return [...set].sort((a, b) => b.length - a.length);
 }

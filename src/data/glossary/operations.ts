@@ -207,7 +207,7 @@ export const FUND_OPERATIONS_TERMS: GlossaryTerm[] = [
       "管理人（或 GP）在基金实现约定回报门槛后，就其超额部分按约定比例（常见 20%）分得的业绩报酬，通常通过 Carry 载体持有并受回拨条款约束。",
     whyImportant: "超额收益分成的计算以瀑布与门槛为前提，且常涉及归属（Vesting）与回拨安排：错算会同时影响管理人报酬与投资人净回报，并且是审计重点。",
     scenario: ["Fund Operations", "Fund Governance"],
-    aliases: ["Carried Interest", "Carry", "超额收益分成", "业绩报酬"],
+    aliases: ["Carried Interest", "Carry", "超额收益分成"],
     related: ["waterfall", "performance-fee", "hurdle-rate", "preferred-return", "catch-up"],
     source: ["ics", "blue-book"],
     tags: ["业绩报酬", "回拨", "归属安排"],

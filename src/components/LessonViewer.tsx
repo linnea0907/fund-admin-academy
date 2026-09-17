@@ -158,7 +158,7 @@ export default function LessonViewer({ lesson, prev, next, terms = [] }: LessonV
         </ul>
       </section>
 
-      {/* ===== 本课关联术语（V1.18.0：课程 → 术语 反向导航；置于课程概览后、模块列表前） ===== */}
+      {/* ===== 本课关联术语（V1.18.0 反向导航 · V1.19.0 默认收起；置于课程概览后、模块列表前） ===== */}
       <RelatedTerms
         title="本课关联术语"
         hint="由术语库自动生成（与术语详情页「关联课程」同源），点击查看术语详解"

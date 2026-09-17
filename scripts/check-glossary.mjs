@@ -7,7 +7,9 @@
  *   2. Broken Related Terms     — related 必须指向存在的术语 id
  *   3. Invalid Case References  — cases 必须指向 content/cases/<id>.md
  *   4. Invalid Course References— courses 必须是存在的课程 id（01/02/10/12/14/15 或 E01..E11）
- *   5. Alias Collision          — 参与正文标注的文本（term / ASCII fullName / ASCII alias）不可撞车
+ *   5. Alias Collision          — 参与正文标注的文本（term / ASCII fullName / ASCII alias
+ *                                  / 规范中文名 zh / 中文别名）不可撞车
+ *                                  （V1.19.0 起覆盖中文通道，与 termMatchTexts 同口径）
  *   6. Required Fields Missing  — 14 字段结构必填项不可为空
  *
  * 用法：
@@ -36,6 +38,15 @@ const LESSON_FILES = [
 
 /** 参与正文标注的文本是否纯 ASCII（与 src/lib/glossary.ts 的 isAscii 保持一致） */
 const isAscii = (s) => /^[\x20-\x7E]+$/.test(s);
+/** 是否含中日韩统一表意文字（与 src/lib/glossary.ts 的 isCjk 保持一致） */
+const isCjk = (s) => /[\u4e00-\u9fa5]/.test(s);
+/**
+ * 中文别名进入正文标注的最小长度（与 src/lib/glossary.ts 的 CH_ALIAS_MIN_LEN 保持一致）。
+ * ⚠️ 两处必须同步改：本闸门负责拦截「撞车」，口径不一致会让闸门误放行或误报。
+ */
+const CH_ALIAS_MIN_LEN = 4;
+/** 规范中文名的最小长度（与 glossary.ts 的 CH_TERM_MIN_LEN 保持一致） */
+const CH_TERM_MIN_LEN = 2;
 
 /* ---------------- 解析 ---------------- */
 
@@ -186,7 +197,12 @@ for (const t of terms) {
   }
 }
 
-/* 5. Alias Collision（正文标注文本撞车） */
+/* 5. Alias Collision（正文标注文本撞车）
+ *   口径必须与 src/lib/glossary.ts 的 termMatchTexts() 完全一致：
+ *   英文通道 = term + ASCII fullName + ASCII alias；
+ *   中文通道 = zh（长度 ≥ CH_TERM_MIN_LEN）+ 中文别名（长度 ≥ CH_ALIAS_MIN_LEN）。
+ *   V1.19.0 前只校验英文通道，导致「业绩报酬」同时挂在 carried-interest 与
+ *   performance-fee 上却未被发现（中文别名当时不参与标注，属休眠歧义）。 */
 const matchTexts = new Map();
 for (const t of terms) {
   const texts = new Set();
@@ -195,6 +211,14 @@ for (const t of terms) {
     texts.add(t.fullName.trim());
   }
   for (const a of t.aliases) if (a && isAscii(a)) texts.add(a.trim());
+  // 中文通道
+  if (t.zh && isCjk(t.zh) && t.zh.trim().length >= CH_TERM_MIN_LEN) texts.add(t.zh.trim());
+  for (const a of t.aliases) {
+    if (!a) continue;
+    const v = a.trim();
+    if (!v || isAscii(v) || !isCjk(v)) continue;
+    if (v.length >= CH_ALIAS_MIN_LEN) texts.add(v);
+  }
   for (const txt of texts) {
     const key = txt.toLowerCase();
     if (!matchTexts.has(key)) matchTexts.set(key, []);
