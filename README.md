@@ -1,20 +1,24 @@
-# Fund Admin Academy · 境外私募基金学习中心
+# Fund Admin Academy · 境外基金行政知识平台
 
-面向基金行政管理从业者的独立学习网站。将原 SharePoint 单页版《境外私募基金学习中心》重构为可长期维护的 Next.js 应用。
+面向基金行政管理从业者的独立学习站点。将原 SharePoint 单页版《境外私募基金学习中心》重构为可长期维护的 Next.js 应用，现覆盖课程、术语库、案例库、实务工具包与 CAMS 认证支持。
 
-- **课程体系（6 讲）**：一只境外基金如何运转 / 基金结构全景 / Cayman 基金核心框架 / AML 与投资者尽调 / FATCA 与 CRS / BVI 基金与管理人
-- **每讲结构**：学习目标 → 模块内容 → 风险提示 → 思维导图 → 课程自测
-- **本地数据**：学习进度与收藏仅保存在浏览器（localStorage），支持导入 / 导出备份
+- **课程体系（19 门）**：必修八讲 `01`–`08` + 第 `09` 讲全真模拟（考试入口，非内容课程）+ 选修 `E01`–`E11`
+  - 必修：01 一只境外基金如何运转 / 02 基金结构全景 / 03 AML 与投资者尽调 / 04 AML Foundations / 05 FATCA 与 CRS / 06 AML Technology & Monitoring / 07 Cayman 基金核心框架 / 08 BVI 基金与管理人
+- **知识资产**：术语库 **170** 条（8 分类）· 实务案例 **29** 篇（13 篇正文已导入）· 实务工具包 **5** 份 · 课程内 Checklist **111** / Common Mistakes **63** / Documents To Check **81** / Escalation Triggers **66**
+- **检索**：`/search` 单一入口，8 个范围（全部 · 术语 · 案例 · 课程 · 实务工具包 · SOP 依据 · 邮件模板 · Checklist），支持深链 `?q=` / `?scope=`
+- **本地数据**：学习进度、收藏、笔记、高亮、考试记录仅存于浏览器（localStorage），支持导入 / 导出备份
+- **首页定位**：学习驾驶舱 —— 只回答「学到哪了 / 接下来学什么 / 最近在学什么」，其余功能一律走左侧导航（见 `docs/IA-PRINCIPLES.md`）
 
 ## 技术栈
 
 | 层 | 选型 |
 | --- | --- |
-| 框架 | Next.js 16（App Router） |
+| 框架 | Next.js 16（App Router，静态 SSG） |
 | 语言 | TypeScript（strict） |
 | 样式 | Tailwind CSS v4 |
+| 内容渲染 | react-markdown + remark-gfm（案例正文）· gray-matter（frontmatter） |
 | 规范 | ESLint（next 内置配置） |
-| 存储 | localStorage（Key: `fund-admin-academy-v1`） |
+| 存储 | localStorage（学习 `fund-admin-academy-v1` 等独立 key，详见「数据与状态」） |
 
 ## 本地运行
 
@@ -36,88 +40,96 @@ npm run build && npm run start
 > 网络提示：国内执行 `npm install` 较慢时可加镜像参数：
 > `npm install --registry=https://registry.npmmirror.com`
 
+### npm 脚本
+
+| 脚本 | 作用 |
+| --- | --- |
+| `dev` / `build` / `start` / `lint` | 常规开发、构建、启动、检查 |
+| `gen:cases` | 重建案例检索索引 `content/cases/index.json` |
+| `gen:glossary` | 由 `content/glossary/imported.json` 烘焙 `src/data/glossary/imported.ts` |
+| `check:lesson-numbers` | **构建期闸门**：URL 冻结表 / 展示编号连续唯一 / 模块标题前缀 / 模拟考号 |
+| `check:glossary` | **构建期闸门**：重复 ID / 断链 / 无效引用 / 标注文本撞车 / 必填字段 |
+| `prebuild` | 依次跑上列四步；因此 `npm run build` 会自动执行全部闸门与生成 |
+
+> 任一道闸门失败即中断构建。改动课程顺序、术语数据或案例索引后，先单独跑对应 `check:*` / `gen:*` 更快定位。
+
 ## 项目结构
 
 ```
 src/
-├─ app/                    # App Router 页面
-│  ├─ page.tsx             # Dashboard 首页（总进度/统计/最近学习）
-│  ├─ courses/             # 课程中心 + 课程详情 [slug]
-│  ├─ cases/               # 案例库：目录 /cases + 案例详情 /cases/[id]（Real Fund Admin Cases）
-│  ├─ skills/              # Skills 技能页（技能说明 / 案例覆盖 / 完成率）
-│  ├─ favorites/           # 收藏夹（课程 / 模块两级收藏）
-│  └─ settings/            # 设置（重置 / 导出 / 导入）
-├─ components/
-│  ├─ AppShell.tsx         # 应用外壳：深蓝侧栏 + 移动端抽屉 + 全站页脚
-│  ├─ CourseCard.tsx       # 课程卡片
-│  ├─ ProgressTracker.tsx  # 环形进度
-│  ├─ LessonViewer.tsx     # 课程详情主体
-│  ├─ LessonToc.tsx        # 目录（桌面 sticky / 移动 chips）
-│  ├─ MindMap.tsx          # 思维导图（纯 CSS）
-│  ├─ QuizPanel.tsx        # 课程自测（即时判分）
-│  ├─ cases/               # 案例库组件（目录/卡片/详情/Markdown 渲染）
-│  └─ skills/              # Skills 技能页组件
-├─ data/lessons.ts         # ★ 全部课程内容（内容迭代只改此文件）
-├─ hooks/use-academy.tsx   # 全局状态 Provider（localStorage 持久化）
-├─ lib/                    # storage / progress / case-modules / skill-defs / site-config 等工具
-└─ types/                  # 领域类型
+├─ app/                        # App Router 路由（全部静态 SSG）
+│  ├─ page.tsx                 # 首页 · 学习驾驶舱（Server Component）
+│  ├─ courses/                 # 课程中心 + 课程详情 [slug]
+│  ├─ cases/                   # 案例库目录 + 案例详情 [id]
+│  ├─ glossary/                # 术语库列表（双页签）+ 术语详情 [id]
+│  ├─ search/                  # 全站检索（8 范围）
+│  ├─ toolkit/                 # 实务工具包 + 详情 [id]
+│  ├─ cams-exam/               # 第 09 讲 CAMS 全真模拟考试
+│  ├─ backlog/                 # 案例工坊（案例种子录入）
+│  ├─ favorites/               # 收藏夹（课程 / 模块 / 案例 / 术语 / 工具包）
+│  ├─ skills/                  # 案例技能覆盖视图
+│  ├─ settings/                # 设置（重置 / 导出 / 导入 / 版本与内测状态）
+│  └─ api/glossary/usage/      # 术语关联位置索引（Drawer 惰性拉取）
+├─ components/                 # AppShell / 课程 / 案例 / 术语 / 首页 / 检索 等视图组件
+├─ hooks/use-academy.tsx       # 全局状态 Provider（localStorage 持久化）
+├─ data/                       # ★ 内容数据（见下表）
+├─ lib/                        # 状态 / 排序 / 编号 / 检索 / 术语关系 等纯逻辑
+└─ types/                      # 领域类型（index=课程与通用 · glossary · cams · aml-toolkit · knowledge-note）
 
 content/
-└─ cases/                  # ★ 案例库正文（Case-001.md ~ Case-026.md + index.json，Module 1 现 6 例）
-scripts/
-└─ build-case-index.mjs    # 案例索引生成脚本（npm run gen:cases）
+└─ cases/                      # ★ 案例正文 Case-001.md ~ Case-029.md + index.json（构建期生成）
+
+scripts/                       # 索引生成与构建期闸门（见「npm 脚本」）
+docs/                          # 规范与文档（见「文档索引」）
 ```
 
-## 课程内容如何维护
+## 内容如何维护
 
-课程数据集中在 **`src/data/lessons.ts`**，每讲为 `Lesson` 对象（含 `goal` / `modules` / `risks` / `mindmap` / `quiz`）。**新增或修改课程内容时只替换该文件即可**，页面与交互逻辑无需改动。
+| 内容 | 数据源 | 说明 |
+| --- | --- | --- |
+| 必修课程 | `src/data/lessons.ts`（6 讲）、`src/data/lessons-cams.ts`（CAMS 2 讲） | 每讲为 `Lesson` 对象（`goal` / `modules` / `risks` / `mindmap` / `quiz` / 实务四类清单） |
+| 选修课程 | `src/data/electives-a·b·c.ts` | 共 11 门，`E` 前缀 id |
+| 术语库 | `src/data/glossary/*.ts`（8 分类各一文件） | **18 字段**；`term` / `aliases` 参与正文标注与检索；可选批量导入通道 `content/glossary/imported.json`（当前 0 条，全部为手写数据） |
+| 案例库 | `content/cases/Case-*.md` | frontmatter 7 字段 + 正文 10 个中文小节；规范见 `docs/CASE-LIBRARY-SPEC.md` |
+| 实务工具包 | `src/data/aml-toolkit.ts` | 5 份（`checklist` / `sop` / `comparison`） |
+| CAMS 题库与口径 | `src/types/cams.ts`、`src/data/cams/` | 四域权重 30/20/30/20；120 题 / 210 分钟 / 及格线 75 |
+| 展示编号 | `src/lib/lesson-number.ts` | 由 `orderedLessons` **下标派生**，无映射表 |
+| 版本号与品牌 | `src/lib/site-config.ts` | 升级版本只改此文件 |
 
-## 案例库如何维护（Real Fund Admin Cases，V2 + P1.8）
+### 两条不可违反的约定
 
-案例正文按 **`content/cases/Case-001.md ~ Case-026.md`** 存放（frontmatter 7 字段：`id` / `title` / `level` / `module` / `tags` / `estimatedTime` / `skills` + 正文 10 个中文 `#` 小节：场景背景 → 已收到资料 → 缺失资料 → 你的判断 → 标准答案 → 理由分析 → 常见错误 → 客户沟通示例 → ICS SOP依据 → Takeaway）。标准答案以 **ICS 内部 SOP** 为准；Skills 受控词表（20 项）见 `src/lib/skill-defs.ts`。字段规范、导入工作流见 **`docs/CASE-LIBRARY-SPEC.md`**。目录/技能/详情页均为 **SSG**：开发模式编辑即刷新；生产模式改内容后 `npm run build`（prebuild 自动刷新 `index.json`，无需手动 `gen:cases`）。
+1. **两层编号勿混**。数据主键 `lesson.id`（`01/02/10/11/12/13/14/15`）被 URL、进度、收藏、笔记、术语 `courses` 字段依赖，**永不改**；页面展示的是运行时派生的连续编号 `01`–`09`。新增课程只需加入 `orderedLessons`，展示编号自动重排，**不写迁移代码**。
+2. **术语解释只在点击时出现**。Hover 仅保留视觉反馈，无浮层、无自动弹出。
 
-## 术语库如何维护（V1.9 Glossary）
+## 数据与状态（localStorage）
 
-术语**单一数据源**：`src/lib/glossary.ts`（170 词 × 8 类：fund-structure / aml-kyc / aeoi / fund-operations / regulatory / legal-entity / governance / tax）。**18 个字段**：`id` / `term`（参与自动匹配）/ `fullName` / `zh` / `category` / `level`（core·advanced·expert）/ `jurisdiction` / `definition` / `whyImportant` / `scenario` / `aliases`（参与匹配 + 搜索）/ `related` / `cases?` / `courses?` / `source` / `tags` / `brief`（Drawer 与列表一句话）/ `commonMistakes?`。**标注匹配规则（V1.19.0 起）**：英文走词边界匹配；中文通道为「规范中文名（≥2 字）恒可 + 中文别名 ≥4 字才参与」，4 字门槛用于压掉「管理人 / 开放式 / 分配」这类短通用词造成的过度链接。新增术语只需追加一个对象：
-- 课程 / 案例正文**自动标注**（最长优先，code/pre/链接内不标注），无需改课程与案例文件；
-- 相关课程 / 相关案例由构建期扫描自动生成（`src/lib/glossary-usage.ts`），随 `npm run build` 刷新；构建期闸门 `scripts/check-glossary.mjs` 校验重复 ID / 断链 / 无效引用 / **标注文本撞车（ASCII + 中文同口径）** / 必填字段；
-- `/glossary` 列表与 `/glossary/[id]` 详情均为 SSG。
+| key | 内容 |
+| --- | --- |
+| `fund-admin-academy-v1` | 学习进度、收藏、最近学习 |
+| `fund-admin-academy-notes-v1` | 学习笔记与高亮 |
+| `fund-admin-academy-ui-v1` | 界面偏好（侧栏 / 目录折叠） |
+| `fund-admin-academy-exam-records-v1` | 模拟考试记录（上限 20 条） |
 
-全站版本号统一维护于 **`src/lib/site-config.ts`**（当前 `v1.19.1`），升级版本只改该文件。
+新增持久化一律「**独立 key + 追加式字段 + 清洗函数**」；客户端读取一律「**首帧默认值 + 挂载后回读**」，以避免 SSR/CSR 不一致。
 
-## 部署到 GitHub + Vercel
+## 文档索引
 
-1. **推送到 GitHub**
+| 文档 | 用途 |
+| --- | --- |
+| `docs/IA-PRINCIPLES.md` | **信息架构守则（Subtraction First）** —— 涉首页 / 导航 / 信息架构的改动必读 |
+| `docs/BACKLOG.md` | 需求池与版本历史（含每版交付要点） |
+| `docs/DATA-SPEC.md` | 数据层规范 |
+| `docs/CASE-LIBRARY-SPEC.md` | 案例字段、模块划分与导入工作流 |
+| `docs/ACCEPTANCE_TEMPLATE.md` | 版本验收包模板（12 章节） |
+| `docs/BLUEBOOK_MAPPING.md` | 与《境外私募基金募集与运营法律实务指南》的章节映射 |
+| `docs/IMPLEMENTATION-NOTES.md` / `docs/V2_ROADMAP.md` / `docs/V2_CASE_SEED.md` | 实现笔记与规划 |
 
-   ```bash
-   git init
-   git add .
-   git commit -m "feat: Fund Admin Academy v1"
-   git branch -M main
-   git remote add origin https://github.com/linnea0907/fund-admin-academy.git
-   git push -u origin main
-   ```
+## 部署
 
-2. **Vercel 导入部署**
-   - 打开 [vercel.com/new](https://vercel.com/new)，用 GitHub 账号登录并授权仓库
-   - 选择 `linnea0907/fund-admin-academy`
-   - 框架自动识别为 Next.js，无需额外配置，点击 **Deploy**
-   - 部署完成后即可通过 `https://fund-admin-academy.vercel.app` 访问
+推送到 `main` 即由 Vercel 自动构建部署（`npm run build`，prebuild 自动执行全部闸门与索引生成），线上地址：
 
-3. **后续迭代**
-   - 本地修改 → `git push` → Vercel 自动重新部署
-
-## 阶段规划
-
-- **当前版本：Fund Admin Academy v1.9 Beta**（版本号读 `src/lib/site-config.ts`）。
-- **V1**：Dashboard / 课程中心 / 课程详情 / 学习进度 / 收藏 / 设置（重置、导出、导入）；数据存于 localStorage。
-- **Case Library V2**：Real Fund Admin Cases（取消原监管知识案例库思路），5 大 Module 结构（Module 1 已扩至 6 例）= Case-001 ~ Case-026（当前 26 例，正文已导入 10 例：Module 1 全 6 例 + Module 3 三例 012/013/014 + Module 4 一例 018）。目录/详情/多维筛选/进度/Markdown 渲染已上线；正文按对应 SOP 逐份导入，其余骨架待投喂。
-- **P1.8**：Skills 能力标签体系（20 项受控词表 + `/skills` 技能页 + 成长地图数据结构预留）；全站版本号统一配置与内测标识（Beta Badge / 状态卡 / 页脚）；**案例库筛选区重构**（业务模块 → 技能按一级动态展开 → 标签折叠进「高级筛选」）+ 难度归一 基础/进阶/高级 + 状态口径 待学习/学习中/已完成（首次打开详情即记开始）。
-- **P1.8.1**：筛选区再收敛（适配 100+ 案例）——首屏行顺序固定 **模块 → 业务 → 技能（选中业务域展开）→ 难度**；业务域 7 类合并为 5 类（**KYC & Onboarding** = KYC/CDD + Investor Onboarding；**AML & Compliance** = AML + Compliance；Fund Structure / Fund Documents / Client Communication 不变；旧 URL `area` 值自动映射不失效）；**状态收纳进「高级筛选」**（与标签并列，默认折叠）；案例卡技能标签默认只显示前 2 个、其余折叠为 **+N**。
-- **P1.8.2**：技能行默认折叠（「▸ 展开技能（N）」）+ 筛选器紧凑化（chips py-1 / p-4 / space-y-2），首屏再压缩 20%+。
-- **V1.9（术语库 Glossary）**：全站术语单一数据源 `src/lib/glossary.ts`（51 词 × 5 类：KYC / AML / Fund Structure / Fund Documents / Operations）。课程与案例正文**自动识别标注**（英文术语虚线下划线，词边界防误链，code/pre/链接内不标注）；**Click 右侧 Drawer**（定义 / 常见误区 / 关联术语 / 相关课程 / 相关案例 + 完整页入口）。新增 `/glossary` 列表（类别 + 检索）与 `/glossary/[id]` SSG 详情页（自动出现位置索引，构建期扫描课程与案例正文生成，零手工维护）；`/search` 升级为**一次命中术语 / 课程 / 模块 / 案例**。**V1.19.1：移除 Hover Tooltip 与「首次出现自动提示」，术语解释只在点击时出现**（Hover 仅保留虚线下划线加深的视觉反馈）。
-- **V2+（预留）**：我的笔记、错题本、Investor Onboarding、Trust & PTC、Fund Documents、AI 导师、商业阅读、登录系统、数据库与团队同步、技能成长地图 UI。仅保留扩展空间，未实现业务逻辑。
+https://fund-admin-academy.vercel.app
 
 ## 免责声明
 
-课程内容仅用于基金行政管理从业者的内部学习与能力建设，不构成法律、税务或监管意见。
+课程与案例内容仅用于基金行政管理从业者的内部学习与能力建设，不构成法律、税务或监管意见。案例标准答案以 ICS 内部 SOP 为准。
