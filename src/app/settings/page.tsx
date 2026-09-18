@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import { orderedLessons } from "@/lib/ordering";
 import { useAcademy } from "@/hooks/use-academy";
 import { STORAGE_KEY } from "@/lib/storage";
+import { siteConfig } from "@/lib/site-config";
 import { favoriteCount, totalProgress } from "@/lib/progress";
 import { displayNumber } from "@/lib/lesson-number";
 
@@ -201,6 +202,28 @@ export default function SettingsPage() {
               </span>
             </span>
           ))}
+        </div>
+      </section>
+
+      {/* 版本信息（V1.20.2：由首页迁入，首页不再承载内测状态） */}
+      <section className="rounded-2xl border border-amber-200 bg-gradient-to-r from-amber-50/80 to-white p-5 shadow-sm sm:p-6">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-center gap-3.5">
+            <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-amber-100 text-xl">
+              {siteConfig.statusCard.icon}
+            </span>
+            <div>
+              <p className="text-sm font-bold text-amber-900">
+                {siteConfig.statusCard.title}
+              </p>
+              <p className="mt-0.5 text-xs text-amber-800/90">
+                Current Version: {siteConfig.version}
+              </p>
+            </div>
+          </div>
+          <p className="text-xs text-amber-700/80 sm:text-right">
+            {siteConfig.statusCard.line}
+          </p>
         </div>
       </section>
 
