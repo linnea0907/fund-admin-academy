@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import {
   getGlossaryCategory,
   getTermSource,
@@ -210,6 +210,25 @@ export default function SearchClient({ data }: { data: SearchData }) {
   const [scope, setScope] = useState<Scope>("all");
   const inputRef = useRef<HTMLInputElement>(null);
   const kw = keyword.trim();
+
+  /**
+   * 深链参数回读（V1.20.1）：支持从首页搜索框直达 `/search?q=…&scope=…`。
+   *
+   * 为什么不用 `useSearchParams()`：本页是 SSG 静态页，useSearchParams 必须包在
+   * Suspense 边界内，且会把整页拖入客户端渲染；这里改为挂载后读
+   * `window.location.search`，与 `use-ui-pref` / `AcademyProvider` 同一套
+   * 「首帧渲染默认值 + 布局副作用回读」口径 —— 既不触发 React #418
+   * （SSR 首帧为空、客户端首帧同样为空），也不影响静态导出。
+   */
+  const useIsomorphicLayoutEffect =
+    typeof window !== "undefined" ? useLayoutEffect : useEffect;
+  useIsomorphicLayoutEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const q = params.get("q");
+    const s = params.get("scope");
+    if (q) setKeyword(q);
+    if (s && SCOPES.some((x) => x.key === s)) setScope(s as Scope);
+  }, []);
 
   const hits = useMemo(() => {
     if (!kw) return null;

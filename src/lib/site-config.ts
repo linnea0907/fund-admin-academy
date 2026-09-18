@@ -7,9 +7,9 @@ export const siteConfig = {
   /** 产品名 */
   name: "Fund Admin Academy",
   /** 中文副题（品牌区） */
-  nameZh: "境外私募基金学习中心",
+  nameZh: "境外基金行政知识平台",
   /** 当前版本号（不含阶段词；页面展示统一为「内测版 vX」/ Internal Beta 等） */
-  version: "v1.20.0",
+  version: "v1.20.1",
   /** 版本阶段标签 */
   releaseStage: "Internal Beta",
   /** 内测状态卡文案 */

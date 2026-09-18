@@ -7,11 +7,11 @@ import AppShell from "@/components/AppShell";
 
 export const metadata: Metadata = {
   title: {
-    default: "Fund Admin Academy · 境外私募基金学习中心",
+    default: "Fund Admin Academy · 境外基金行政知识平台",
     template: "%s · Fund Admin Academy",
   },
   description:
-    "面向基金行政管理从业者的境外私募基金学习中心：基金运作、基金结构、Cayman、AML、FATCA/CRS、BVI。",
+    "境外基金行政、AML/KYC 与合规运营知识平台：基金运作与架构、Cayman、BVI、AML、FATCA/CRS、AML Technology 课程，以及术语库、实务案例库、实务工具包与 CAMS 认证备考。",
 };
 
 export const viewport: Viewport = {

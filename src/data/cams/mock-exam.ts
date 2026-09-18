@@ -28,8 +28,17 @@ export const CAMS_MOCK_EXAM_ID = "09";
 /** 卡片点击目标：既有模拟考试页面 */
 export const CAMS_MOCK_EXAM_HREF = "/cams-exam";
 
+/**
+ * 考试记录的**稳定标识**（V1.20.1），写进 `exam-records` 的 `examId` 字段。
+ *
+ * 刻意与 `CAMS_MOCK_EXAM_ID`（展示编号 "09"）解耦：展示编号会随课程增删重排
+ * （见 `src/lib/lesson-number.ts`），若用它当记录主键，未来加课就会让历史记录
+ * 认不出是哪场考试。此值与展示层编号无关，**定下后永不改**。
+ */
+export const CAMS_MOCK_EXAM_KEY = "cams-full-mock";
+
 export interface MockExamEntry {
-  /** 编号（"16"） */
+  /** 展示编号（V1.20.0 起为 "09"；由 CAMS_MOCK_EXAM_ID 提供） */
   id: string;
   /** 点击目标路由 */
   href: string;

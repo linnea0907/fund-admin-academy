@@ -3,7 +3,8 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { camsQuestions } from "@/data/cams";
-import { CAMS_MOCK_EXAM_ID } from "@/data/cams/mock-exam";
+import { CAMS_MOCK_EXAM_ID, CAMS_MOCK_EXAM_KEY } from "@/data/cams/mock-exam";
+import { appendExamRecord } from "@/lib/exam-records";
 import { CAMS_DOMAINS, CAMS_EXAM } from "@/types/cams";
 import type { CamsDomain } from "@/types/cams";
 
@@ -32,6 +33,8 @@ export default function CamsExam() {
   const [current, setCurrent] = useState(0);
   const [elapsed, setElapsed] = useState(0);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  /** 本次考试是否已落库（防「手动交卷」与「到时自动交卷」重复写入） */
+  const recordedRef = useRef(false);
 
   const total = camsQuestions.length;
   const answeredCount = useMemo(
@@ -62,6 +65,7 @@ export default function CamsExam() {
     setAnswers({});
     setCurrent(0);
     setElapsed(0);
+    recordedRef.current = false;
     setPhase("exam");
   }
 
@@ -108,6 +112,29 @@ export default function CamsExam() {
   }, [answers, total]);
 
   const passed = stats.percent >= CAMS_EXAM.passPercent;
+
+  /**
+   * 交卷落库（V1.20.1）。
+   *
+   * 放在 effect 里而不是 `submit()` 内，是为了**同时覆盖两条交卷路径**：
+   * ① 手动交卷（下方两个「交卷」按钮）；② 到时自动交卷（计时器回调里 setPhase）。
+   * `recordedRef` 保证一场考试只写一条记录（含重复点交卷、结果页返回等情形）。
+   * 本 effect 只做写入，不 setState —— 不会触发 react-hooks/set-state-in-effect。
+   */
+  useEffect(() => {
+    if (phase !== "result" || recordedRef.current) return;
+    recordedRef.current = true;
+    appendExamRecord({
+      examId: CAMS_MOCK_EXAM_KEY,
+      correct: stats.correct,
+      total,
+      percent: stats.percent,
+      passed: stats.percent >= CAMS_EXAM.passPercent,
+      answered: answeredCount,
+      durationSec: elapsed,
+      byDomain: stats.byDomain,
+    });
+  }, [phase, stats, total, answeredCount, elapsed]);
 
   /* ---------- 说明页 ---------- */
   if (phase === "intro") {
