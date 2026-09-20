@@ -8,6 +8,7 @@
     "gen:glossary": "node scripts/build-glossary-import.mjs",
     "scan:terms": "node --no-warnings scripts/scan-term-candidates.mjs",
     "check:glossary": "node --no-warnings scripts/check-glossary.mjs",
+    "export:glossary": "node --no-warnings scripts/export-glossary.mjs",
     "check:lesson-numbers": "node scripts/check-lesson-numbers.mjs",
     "prebuild": "npm run check:lesson-numbers && npm run gen:cases && npm run gen:glossary && npm run check:glossary && npm run scan:terms",
     "build": "next build",
