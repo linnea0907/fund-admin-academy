@@ -24,6 +24,10 @@
  *   - 停用词 + 占位符（ABC / XYZ / 连续字母串）+ 地名货币缩写（HK / USD / EU…）
  *   - 与既有 candidates.json 合并，**保留 firstSeenAt**（首次发现时间跨构建稳定）
  *
+ * 顺带取回（V1.20.6）：声明档会把正文自带的**中文名 / 英文全称**一并带回候选
+ *   （`zh` / `fullName`），并记录课程 id（`courseIds`）—— 补全包据此直接填真实值，
+ *   减少 Copilot 猜测面。**系统只负责发现与导出，定义类内容仍由 Copilot 撰写。**
+ *
  * ⚠️ 边界：仅发现英文/缩写术语。中文术语不做自动发现（无词典兜底，误报率不可控）。
  *
  * 依赖：Node ≥ 22.18（默认启用 TS 类型剥离）+ scripts/lib/ts-loader.mjs
@@ -261,6 +265,41 @@ function snippetOf(text, idx, len) {
   return `${from > 0 ? "…" : ""}${text.slice(from, to).replace(/\s+/g, " ")}${to < text.length ? "…" : ""}`;
 }
 
+/**
+ * 从语料 label 反推稳定的实体 id（V1.20.6，供补全包的 courses 字段直接使用）。
+ * label 由 buildCorpus() 生成，格式固定：
+ *   课程 = 「第 02 讲 · …」/「选修 E04 · …」；案例 = 「Case-027 · …」（本身即 id）
+ * → 课程 id 形态与术语数据的 `courses` 一致（"02" / "E04"，两位补零）。
+ */
+function refIdOf(doc) {
+  const head = doc.label.split(" · ")[0];
+  if (doc.kind === "case") return head;
+  const m1 = /^第\s*(\d{2})\s*讲$/.exec(head);
+  if (m1) return m1[1];
+  const m2 = /^选修\s*([Ee]\d{2})$/.exec(head);
+  return m2 ? m2[1].toUpperCase() : null;
+}
+
+/**
+ * 「中文名（缩写）」里括号**之前**的中文名（V1.20.6）。
+ * 规则保守，只取紧贴括号的尾部连续中文串（2~10 字）并剥掉常见前导虚词／状语，
+ * 拿不准就返回空串 —— 宁可空着交给 Copilot，也不给错线索。
+ *
+ * ⚠️ 刻意**只剥虚词与状语**（另行 / 单独 / 应当 / 的 …），不剥实义动词：
+ * 「登记机构」「报告主体」「披露义务」这类真实中文名以动词性字眼开头，
+ * 剥了反而更错。残留前缀（如「提交可疑活动报告」）属可接受噪声 ——
+ * 补全包里已显式标注「自动提取，需校验」。
+ */
+const ZH_LEAD_NOISE =
+  /^(?:另行|单独|一并|同时|还需|仍然|应当|必须|应|需|须|则可|则不|则|并|还|该|本|其|此|是|即|指|称|称为|叫做|简称|如|的|在|由|向|对|和|与|或|包括|例如)+/;
+function zhNameBefore(matchText) {
+  const before = matchText.split(/[（(]/)[0];
+  const tail = /([\u4e00-\u9fa5]{2,10})$/.exec(before);
+  if (!tail) return "";
+  const cleaned = tail[1].replace(ZH_LEAD_NOISE, "");
+  return cleaned.length >= 2 ? cleaned : "";
+}
+
 const CONF_RANK = { declared: 0, acronym: 1, phrase: 2 };
 
 /* ================================================================
@@ -273,7 +312,7 @@ function scan() {
 
   for (const doc of corpus) {
     for (const chunk of unrecognizedChunks(doc.text)) {
-      const collect = (rx, confidence, group) => {
+      const collect = (rx, confidence, group, extract) => {
         rx.lastIndex = 0;
         let m;
         while ((m = rx.exec(chunk)) !== null) {
@@ -298,17 +337,31 @@ function scan() {
               confidence,
               docs: new Set(),
               courses: new Set(),
+              courseIds: new Set(),
               cases: new Set(),
               count: 0,
               samples: [],
+              zh: "",
+              fullName: "",
             };
             map.set(key, e);
           }
           if (CONF_RANK[confidence] < CONF_RANK[e.confidence]) e.confidence = confidence;
+          // 正文自带的声明值（V1.20.6）：首个非空者为准，后续不覆盖，避免被后文噪声改写
+          if (extract) {
+            const extra = extract(m);
+            if (extra?.zh && !e.zh) e.zh = extra.zh;
+            if (extra?.fullName && !e.fullName) e.fullName = extra.fullName;
+          }
           e.count += 1;
           e.docs.add(doc.label);
-          if (doc.kind === "course") e.courses.add(doc.label.split(" · ")[0]);
-          else e.cases.add(doc.label.split(" · ")[0]);
+          if (doc.kind === "course") {
+            e.courses.add(doc.label.split(" · ")[0]);
+            const refId = refIdOf(doc);
+            if (refId) e.courseIds.add(refId);
+          } else {
+            e.cases.add(doc.label.split(" · ")[0]);
+          }
           if (e.samples.length < 3) {
             e.samples.push({
               kind: doc.kind,
@@ -319,8 +372,10 @@ function scan() {
           }
         }
       };
-      collect(RX_DECLARED_ZH, "declared", 1);
-      collect(RX_DECLARED_FULL, "declared", 1);
+      // 声明档顺带取回正文自带的中文名（group 1 是缩写，中文名在括号前）
+      collect(RX_DECLARED_ZH, "declared", 1, (m) => ({ zh: zhNameBefore(m[0]) }));
+      // 声明档顺带取回英文全称（group 2 = `SAR（Suspicious Activity Report）` 里的全称）
+      collect(RX_DECLARED_FULL, "declared", 1, (m) => ({ fullName: (m[2] ?? "").trim() }));
       collect(RX_ACRONYM, "acronym", 0);
       collect(RX_PHRASE, "phrase", 0);
     }
@@ -336,6 +391,11 @@ function scan() {
     cases: [...v.cases].sort(),
     count: v.count,
     samples: v.samples,
+    // 正文自带声明值（V1.20.6）：有则填真值，无则空串
+    zh: v.zh,
+    fullName: v.fullName,
+    // 课程 id（"02" / "E04"）：与术语数据 courses 字段同口径，供补全包直接使用
+    courseIds: [...v.courseIds].sort(),
   }));
 
   list.sort((a, b) => {
@@ -381,6 +441,9 @@ function signatureOf(c) {
     c.count,
     c.courses,
     c.cases,
+    c.zh ?? "",
+    c.fullName ?? "",
+    c.courseIds ?? [],
     c.samples.map((s) => [s.label, s.context]),
   ]);
 }
@@ -442,10 +505,13 @@ const touched = before !== after;
 if (touched) fs.writeFileSync(OUT_JSON, after, "utf8");
 
 const byConf = (k) => payload.candidates.filter((c) => c.confidence === k).length;
+const withZh = payload.candidates.filter((c) => c.zh).length;
+const withFull = payload.candidates.filter((c) => c.fullName).length;
 console.log(
   `[scan:terms] 语料 ${payload.baseline.documents} 篇（课程 ${payload.baseline.courses} / 案例 ${payload.baseline.cases}）` +
     ` · 已有术语 ${GLOSSARY_TERMS.length} 条 · 候选 ${payload.candidates.length} 个` +
     `（声明 ${byConf("declared")} / 缩写 ${byConf("acronym")} / 词组 ${byConf("phrase")}）` +
+    ` · 正文自带中文名 ${withZh} / 英文全称 ${withFull}` +
     ` · 新增 ${stats.fresh} / 更新 ${stats.changed}` +
     ` → content/glossary/candidates.json${touched ? "" : "（无变化，未改动文件）"}`
 );

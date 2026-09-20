@@ -176,7 +176,72 @@ const CONF_ZH: Record<string, string> = {
   phrase: "词组",
 };
 
-/** 术语补全包（交给 Copilot 生成 14 字段条目） */
+/**
+ * 由术语名推导 id（V1.20.6）。
+ * ⚠️ 必须与 `scripts/build-glossary-import.mjs` 的兜底推导**同口径**，
+ * 否则补全包里预填的 id 与生成器实际产出的 id 会不一致。
+ */
+export function slugOfTerm(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+/** 待补占位符（导入脚本会拒收含该标记的条目，见 build-glossary-import.mjs） */
+export const TODO_MARK = "〔待补〕";
+
+const ENUMS = {
+  category: [
+    "fund-structure",
+    "aml-kyc",
+    "aeoi",
+    "fund-operations",
+    "regulatory",
+    "legal-entity",
+    "governance",
+    "tax",
+  ],
+  level: ["core", "advanced", "expert"],
+  jurisdiction: [
+    "Global",
+    "Cayman",
+    "BVI",
+    "Hong Kong",
+    "Singapore",
+    "China",
+    "USA",
+    "UK",
+    "EU",
+    "Luxembourg",
+    "Mauritius",
+    "Other",
+  ],
+  scenario: [
+    "Investor Onboarding",
+    "Transfer",
+    "Redemption",
+    "Periodic Review",
+    "AEOI / CRS / FATCA",
+    "Fund Setup",
+    "Fund Governance",
+    "Fund Operations",
+    "Regulatory Filing",
+    "Client Communication",
+  ],
+  source: ["ics", "blue-book", "cima", "sfc", "mas", "internal"],
+};
+
+/**
+ * 术语补全包（V1.20.6：结构化半成品 —— 系统填「可确定的」，Copilot 写「内容类」）
+ *
+ * 职责分工（Lu 定稿「系统负责发现，AI 负责内容」）：
+ *   系统预填（零臆造）：id / term / zh / fullName（正文自带声明时）/ courses / cases
+ *   Copilot 撰写：definition / whyImportant / commonMistakes / brief / category /
+ *                 level / jurisdiction / scenario / aliases / related / source / tags
+ * 末尾附可直接落库的 imported.json 骨架（合法 JSON 结构 + 〔待补〕 占位）。
+ * ⚠️ 导入脚本会拒收仍含 〔待补〕 的条目 —— 占位未替换就无法入库（双保险：闸门还会再拦断链）。
+ */
 export function buildTermCompletionPackage(
   adopted: AdoptedTerm[],
   byKey: Map<string, TermCandidate>
@@ -189,45 +254,97 @@ export function buildTermCompletionPackage(
     const sources = sourceTagsOf(c)
       .map((s) => s.text)
       .join(" / ");
-    const ctx = c.samples.map((s) => `   - ${s.label}：${s.context}`).join("\n");
+    const filled = [
+      `term=${c.text}`,
+      `id=${slugOfTerm(c.text)}`,
+      c.zh ? `zh=${c.zh}` : null,
+      c.fullName ? `fullName=${c.fullName}` : null,
+    ]
+      .filter(Boolean)
+      .join("｜");
+    const rel =
+      [
+        (c.courseIds ?? []).length ? `关联课程 ${JSON.stringify(c.courseIds)}` : null,
+        (c.cases ?? []).length ? `关联案例 ${JSON.stringify(c.cases)}` : null,
+      ]
+        .filter(Boolean)
+        .join("｜") || "关联课程 / 案例：未识别到（请人工确认）";
+    const ctx = c.samples.map((s) => `     - ${s.label}：${s.context}`);
     return [
-      `${i + 1}. ${c.text}`,
-      `   置信档：${CONF_ZH[c.confidence] ?? c.confidence}｜出现 ${c.docs} 篇 / ${c.count} 次｜来源：${sources || "—"}`,
-      `   首次发现：${formatFoundDate(c.firstSeenAt)}`,
+      `${i + 1}. ${c.text}  〔${CONF_ZH[c.confidence] ?? c.confidence}〕`,
+      `   出现 ${c.docs} 篇 / ${c.count} 次｜来源：${sources || "—"}｜首次发现 ${formatFoundDate(c.firstSeenAt)}`,
+      `   系统已填：${filled}`,
+      `   ${rel}`,
+      ...(c.zh || c.fullName
+        ? ["   ⚠️ 中文名 / 英文全称由正文声明自动提取，可能有前缀噪声，请校验后再用。"]
+        : []),
       `   上下文：`,
-      ctx || "   - （无摘录）",
+      ...(ctx.length ? ctx : ["     - （无摘录）"]),
       "",
     ].join("\n");
   });
 
   const skeleton = adopted
-    .map((a) => `{"id": "", "term": "${(byKey.get(a.key)?.text ?? a.text).replace(/"/g, '\\"')}", "zh": "", "category": "", "definition": "", "whyImportant": "", "scenario": [], "aliases": [], "related": [], "source": [], "tags": [], "brief": ""}`)
-    .join(",\n  ");
+    .map((a) => {
+      const c = byKey.get(a.key);
+      const esc = (s: string) => s.replace(/"/g, '\\"');
+      const parts = [
+        `"id": "${slugOfTerm(c?.text ?? a.text)}"`,
+        `"term": "${esc(c?.text ?? a.text)}"`,
+        `"fullName": ${c?.fullName ? `"${esc(c.fullName)}"` : `"${TODO_MARK}"`}`,
+        `"zh": ${c?.zh ? `"${esc(c.zh)}"` : `"${TODO_MARK}"`}`,
+        `"category": "${TODO_MARK}"`,
+        `"level": "${TODO_MARK}"`,
+        `"jurisdiction": ["${TODO_MARK}"]`,
+        `"definition": "${TODO_MARK}"`,
+        `"whyImportant": "${TODO_MARK}"`,
+        `"scenario": ["${TODO_MARK}"]`,
+        `"aliases": ["${TODO_MARK}"]`,
+        `"related": ["${TODO_MARK}"]`,
+        `"source": ["${TODO_MARK}"]`,
+        `"tags": ["${TODO_MARK}"]`,
+        `"brief": "${TODO_MARK}"`,
+      ];
+      const courseIds = c?.courseIds ?? [];
+      const cases = c?.cases ?? [];
+      if (courseIds.length) parts.push(`"courses": ${JSON.stringify(courseIds)}`);
+      if (cases.length) parts.push(`"cases": ${JSON.stringify(cases)}`);
+      return `  { ${parts.join(", ")} }`;
+    })
+    .join(",\n");
 
   return [
     "====================================",
-    `请基于以下 ${adopted.length} 个「待审核术语」补全 Fund Admin Wiki 术语条目。`,
+    "Fund Admin Wiki · 术语补全包（结构化半成品）",
+    "====================================",
+    `共 ${adopted.length} 个已采纳术语待补全。`,
+    "系统已填好「可确定字段」（id / 术语名 / 正文自带的中文名与英文全称 / 关联课程·案例），",
+    `其余字段以 ${TODO_MARK} 标出，请你撰写。术语库已有条目已排除。`,
     "",
-    "语料来源：本站课程（含选修）与案例库正文；术语库已有条目已排除。",
-    "请先按上下文判断该术语是否真的属于「境外基金行政 / AML·KYC / 合规运营」领域，",
-    "不属于的直接剔除并在回复里说明理由。",
+    "---- 硬规矩 ----",
+    "1) 受控枚举（只能取以下值，不得自创）：",
+    `   category      ${ENUMS.category.join("｜")}`,
+    `   level         ${ENUMS.level.join("｜")}`,
+    `   jurisdiction  ${ENUMS.jurisdiction.join("｜")}`,
+    `   scenario      ${ENUMS.scenario.join("｜")}`,
+    `   source        ${ENUMS.source.join("｜")}`,
+    "2) related 只能指向术语库中**已存在**的 id（可查 src/data/glossary/*.ts 或站内 /glossary）。",
+    "3) aliases / scenario / related / source / tags 均为**非空数组**，至少 1 项。",
+    "4) 不要写入生效日期、罚款金额、执法数字等**时效性内容**（项目硬规矩）。",
+    "5) 定义与标准答案类内容必须依据 ICS SOP 与课程 / 案例原文，不得臆造。",
+    "6) 请先按上下文判断该术语是否真属于「境外基金行政 / AML·KYC / 合规运营」领域，",
+    "   不属于的直接剔除并在回复里说明理由（不要为了凑数而收录）。",
     "",
     "---- 待补全术语 ----",
     ...blocks,
     "---- 输出要求 ----",
-    "1) 逐条补全 14 字段：id / term / fullName / zh / category / level / jurisdiction /",
-    "   definition / whyImportant / scenario / aliases / related / source / tags / brief。",
-    "   - id 用小写连字符（如 capital-call）；category / jurisdiction / scenario / source /",
-    "     level 必须取自 src/types/glossary.ts 的受控枚举，不得自创。",
-    "   - related 只能指向术语库中已存在的 id。",
-    "2) 不要写入生效日期、罚款金额、执法数字等时效性内容（项目硬规矩）。",
-    "3) 标准答案类内容必须依据 ICS SOP，不得臆造。",
-    "4) 最终输出 `content/glossary/imported.json` 的完整内容：",
-    '   {"version": 1, "terms": [ ... ]}',
-    "   结构骨架（可直接在此之上填写字段值）：",
-    "  [",
-    `  ${skeleton}`,
-    "  ]",
+    `把下方骨架里**所有 ${TODO_MARK} 替换为真实内容**（导入脚本会拒收仍含占位符的条目），`,
+    "然后输出 content/glossary/imported.json 的完整内容：",
+    '{"version": 1, "terms": [ ... ]}',
+    "骨架（已是合法 JSON 结构，可直接在此之上填写字段值）：",
+    "[",
+    skeleton,
+    "]",
     "====================================",
   ].join("\n");
 }

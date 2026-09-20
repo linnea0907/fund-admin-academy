@@ -7,9 +7,9 @@
     "gen:cases": "node scripts/build-case-index.mjs",
     "gen:glossary": "node scripts/build-glossary-import.mjs",
     "scan:terms": "node --no-warnings scripts/scan-term-candidates.mjs",
-    "check:glossary": "node scripts/check-glossary.mjs",
+    "check:glossary": "node --no-warnings scripts/check-glossary.mjs",
     "check:lesson-numbers": "node scripts/check-lesson-numbers.mjs",
-    "prebuild": "npm run check:lesson-numbers && npm run check:glossary && npm run gen:cases && npm run gen:glossary && npm run scan:terms",
+    "prebuild": "npm run check:lesson-numbers && npm run gen:cases && npm run gen:glossary && npm run check:glossary && npm run scan:terms",
     "build": "next build",
     "start": "next start",
     "lint": "eslint"

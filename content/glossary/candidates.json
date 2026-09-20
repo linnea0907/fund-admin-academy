@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-09-20T07:03:57.565Z",
+  "generatedAt": "2026-09-20T08:38:00.339Z",
   "baseline": {
     "glossaryTerms": 170,
     "documents": 275,
@@ -40,8 +40,14 @@
           "context": "CFIUS 美国外国投资审查：涉及美国标的时的基金考量 理解 CFIUS 审查对象与触发逻辑（美国标…"
         }
       ],
+      "zh": "美国外国投资委员会",
+      "fullName": "",
+      "courseIds": [
+        "E04",
+        "E08"
+      ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-20T08:37:26.005Z"
     },
     {
       "key": "sar",
@@ -75,8 +81,11 @@
           "context": " ↓ 静默核验全部身份要素 ↓ ┌─ 真实命中 → 冻结 → CRF / SAR → 记录 └─ 误报 → 记录排除理由 → 归档留痕 ``` **时间压力不能…"
         }
       ],
+      "zh": "提交可疑活动报告",
+      "fullName": "",
+      "courseIds": [],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-20T08:38:00.339Z"
     },
     {
       "key": "pif",
@@ -109,8 +118,13 @@
           "context": "8.2 Private Investment Fund：模块化拆解 Private Investment Fund（PIF）制度通常覆盖以下模块："
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [
+        "15"
+      ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-20T08:37:26.005Z"
     },
     {
       "key": "tbml",
@@ -143,8 +157,13 @@
           "context": " 回流投资、TBML 的共性是「缺少真实商业实质」"
         }
       ],
+      "zh": "贸易洗钱",
+      "fullName": "",
+      "courseIds": [
+        "11"
+      ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-20T08:37:26.005Z"
     },
     {
       "key": "atl",
@@ -177,8 +196,13 @@
           "context": "…的资金网络与共同控制人。 按风险细分设计场景，用回溯测试（back-testing）调优 ATL 规则触发 / BTL 统计识别偏离常态（结构化） 规则引擎与 AI/ML 互补，非替代关…"
         }
       ],
+      "zh": "",
+      "fullName": "Above the Line",
+      "courseIds": [
+        "13"
+      ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-20T08:37:26.005Z"
     },
     {
       "key": "btl",
@@ -211,8 +235,13 @@
           "context": "…。 按风险细分设计场景，用回溯测试（back-testing）调优 ATL 规则触发 / BTL 统计识别偏离常态（结构化） 规则引擎与 AI/ML 互补，非替代关系 模型治理：数据、验…"
         }
       ],
+      "zh": "",
+      "fullName": "Below the Line",
+      "courseIds": [
+        "13"
+      ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-20T08:37:26.005Z"
     },
     {
       "key": "bsa",
@@ -239,6 +268,9 @@
           "context": " Agent 并非美国 Bank Secrecy Act（BSA）项下必须建立完整 "
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
       "lastSeenAt": "2026-09-20T07:00:35.831Z"
     },
@@ -267,8 +299,13 @@
           "context": "1.1 ESG 基金是什么 社会责任投资（SRI）/ESG 基金把环境、社会与治理因素纳入策略或排除标准。产品标签（如可持续、绿色）应与其…"
         }
       ],
+      "zh": "社会责任投资",
+      "fullName": "",
+      "courseIds": [
+        "E09"
+      ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-20T08:37:26.005Z"
     },
     {
       "key": "bo",
@@ -289,8 +326,13 @@
           "context": "（ES）与实益所有权（BO）登记。各模块启动时点、表格与窗口按 "
         }
       ],
+      "zh": "实益所有权",
+      "fullName": "",
+      "courseIds": [
+        "14"
+      ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-20T08:37:26.005Z"
     },
     {
       "key": "ml",
@@ -311,8 +353,13 @@
           "context": "4.2 六类金融犯罪的区别 金融犯罪不是单一概念。洗钱（ML）关注「"
         }
       ],
+      "zh": "洗钱",
+      "fullName": "",
+      "courseIds": [
+        "11"
+      ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-20T08:37:26.005Z"
     },
     {
       "key": "tf",
@@ -333,8 +380,13 @@
           "context": "是否违法」；恐怖融资（TF）的资金**可能来自合法来源**，目的是支持恐怖活动，常表现为小额、多笔、多渠道；制裁（sa…"
         }
       ],
+      "zh": "恐怖融资",
+      "fullName": "",
+      "courseIds": [
+        "11"
+      ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-20T08:37:26.005Z"
     },
     {
       "key": "ofc",
@@ -368,8 +420,14 @@
           "context": "/OFC 分属不同法域的立法体系，不能因为都叫“伞形”就视为同一类结构。 "
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [
+        "02",
+        "E06"
+      ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-20T08:37:26.005Z"
     },
     {
       "key": "esg",
@@ -403,8 +461,14 @@
           "context": "ESG 社会责任投资与披露：从基金文件到运营落地 理解 ESG 在基金产品设计与募集文件中的位置 认识 ESG 披露义务的适用与审慎表述（SFDR 等按…"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [
+        "E02",
+        "E09"
+      ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-20T08:37:26.005Z"
     },
     {
       "key": "erisa",
@@ -438,8 +502,14 @@
           "context": "（证券法与 ERISA）、投资标的涉及美国公司（如 CFIUS、行业限制）、以及在美国向投资者发售权益（私募发售…"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [
+        "E02",
+        "E04"
+      ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-20T08:37:26.005Z"
     },
     {
       "key": "crf",
@@ -472,6 +542,9 @@
           "context": " ↓ 静默核验全部身份要素 ↓ ┌─ 真实命中 → 冻结 → CRF / SAR → 记录 └─ 误报 → 记录排除理由 → 归档留痕 ``` **…"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
       "lastSeenAt": "2026-09-20T07:00:35.831Z"
     },
@@ -506,8 +579,13 @@
           "context": "1.1 载体：OFC 与 LPF 香港 OFC 是公司型"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [
+        "E06"
+      ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-20T08:37:26.005Z"
     },
     {
       "key": "nfe",
@@ -540,8 +618,13 @@
           "context": "5.5 实务手册：FI / NFE 分类、"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [
+        "12"
+      ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-20T08:37:26.005Z"
     },
     {
       "key": "aiv",
@@ -574,8 +657,13 @@
           "context": "、Manager、AIV、平行基金、"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [
+        "14"
+      ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-20T08:37:26.005Z"
     },
     {
       "key": "ppoc",
@@ -608,8 +696,13 @@
           "context": " 注册标识而非金融牌照；注册角色（PPOC/Authorising Person 等）资格与兼任规则按办理时官方要求复核。年度工作含…"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [
+        "12"
+      ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-20T08:37:26.005Z"
     },
     {
       "key": "cpa",
@@ -642,6 +735,9 @@
           "context": "…核证人资质**：需提供执业证扫描件或网上查询链接/截图；常见为执业律师与 CPA，非执业 CPA 也可接受； 5. **核证人联系方式**：联系地址、联系电话/联系邮箱（三选二）。 另…"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
       "lastSeenAt": "2026-09-20T07:00:35.831Z"
     },
@@ -676,8 +772,13 @@
           "context": "…识别连接点并升级：投资者问卷中的美国身份信号、管理团队美国地点、标的国别等。 管理人连接：RIA 注册与豁免分析属美国法律意见 投资者连接："
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [
+        "E04"
+      ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-20T08:37:26.005Z"
     },
     {
       "key": "sdd",
@@ -711,6 +812,9 @@
           "context": " / SDD，无论风险等级，"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
       "lastSeenAt": "2026-09-20T07:00:35.831Z"
     },
@@ -739,8 +843,13 @@
           "context": " 最直接的暴露面。 MSB 与支付：钱骡（money mule）账户、第三方通道分拆资金、虚构交易。保险：超额缴费后…"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [
+        "11"
+      ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-20T08:37:26.005Z"
     },
     {
       "key": "sfdr",
@@ -767,8 +876,13 @@
           "context": "…与其实际策略一致，避免漂绿（greenwashing）风险。 欧洲等地有专门披露规则（如 SFDR 等），对金融产品的可持续披露提出分类与模板要求；是否适用取决于产品在当地的销售与法律安排…"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [
+        "E09"
+      ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-20T08:37:26.005Z"
     },
     {
       "key": "fra",
@@ -801,6 +915,9 @@
           "context": "…外沟通与后续动作 6. 后续解冻依 FRA 指引办理；许可须向总督申请，并按指定表格抄送 FRA ## Q5 误报（False Positive）也要**留痕**： - 记录命中项…"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
       "lastSeenAt": "2026-09-20T07:00:35.831Z"
     },
@@ -835,8 +952,13 @@
           "context": "或监管责任。 授权文件是责任边界的起点：没写在 IMA/"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [
+        "01"
+      ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-20T08:37:26.005Z"
     },
     {
       "key": "ctc",
@@ -857,8 +979,13 @@
           "context": "…能包含通过其他方式行使控制的人，不限于持股 文件复核重点：矛盾信息、失效文件、复印件来源 CTC（受信任的第三方/证书）并非所有情形下唯一核验方式"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [
+        "10"
+      ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-20T08:37:26.005Z"
     },
     {
       "key": "etf",
@@ -879,8 +1006,13 @@
           "context": "…域来源原则与基金豁免安排（现行复核） 新加坡：基金免税与激励计划等安排（现行复核） 美国：ETF/PFIC/"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [
+        "E03"
+      ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-20T08:37:26.005Z"
     },
     {
       "key": "gdpr",
@@ -901,8 +1033,13 @@
           "context": "…取决于数据处理者所在地、投资者所在地与数据传输路径（如香港《个人资料（私隐）条例》、欧盟 GDPR、开曼《数据保护法》等，范围按个案判断）。 是否构成受规管处理、谁是控制者/处理者，属专业…"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [
+        "E07"
+      ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-20T08:37:26.005Z"
     },
     {
       "key": "iga",
@@ -923,8 +1060,13 @@
           "context": "（依 IGA 或 "
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [
+        "12"
+      ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-20T08:37:26.005Z"
     },
     {
       "key": "irs",
@@ -945,8 +1087,13 @@
           "context": " 下可能涉及向 IRS 注册取得 "
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [
+        "12"
+      ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-20T08:37:26.005Z"
     },
     {
       "key": "isae",
@@ -967,8 +1114,13 @@
           "context": "…投资者变更、服务商变更全部归档 外包评估：年度回顾服务商 SLA 与内控报告（如 SOC/ISAE 类报告按需索取） 服务商变更 = 需通知相关方并办理法定备案（按法域规则）"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [
+        "E01"
+      ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-20T08:37:26.005Z"
     },
     {
       "key": "kpi",
@@ -989,6 +1141,9 @@
           "context": "…** —— 期间发生的异常、命中、逾期事项及其整改状态 5. **外包监督记录** —— KPI、例外、抽样、事件与整改 目标是能够**随时提供**\"及时、充分的证据，说明本基金如何持…"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
       "lastSeenAt": "2026-09-20T07:00:35.831Z"
     },
@@ -1011,8 +1166,13 @@
           "context": "…2 名单筛查与交易筛查 名单筛查解决「与我打交道的对象是否在名单上」，须多源覆盖（联合国、OFAC、欧盟及内部名单）并用模糊匹配处理拼写变体、音译差异与别名。交易/支付筛查解决「这笔资金是…"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [
+        "13"
+      ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-20T08:37:26.005Z"
     },
     {
       "key": "pfic",
@@ -1033,8 +1193,13 @@
           "context": "…则与基金豁免安排（现行复核） 新加坡：基金免税与激励计划等安排（现行复核） 美国：ETF/PFIC/"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [
+        "E03"
+      ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-20T08:37:26.005Z"
     },
     {
       "key": "rfmc",
@@ -1055,8 +1220,13 @@
           "context": "…券与基金法例判断。 管理人方面，新加坡对基金管理活动有持牌/登记体系；历史上某些类别（如 RFMC）的适用口径会调整，通用课程不宜写死，建议使用“须符合持牌/登记或豁免要求（现行复核）”等…"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [
+        "E05"
+      ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-20T08:37:26.005Z"
     },
     {
       "key": "scc",
@@ -1077,8 +1247,13 @@
           "context": "…段最小化：只收业务必需 第三方处理协议：明确数据责任与安全 跨境传输保障：按现行要求（如 SCC 等）"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [
+        "E07"
+      ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-20T08:37:26.005Z"
     },
     {
       "key": "sla",
@@ -1099,8 +1274,13 @@
           "context": "、投资者变更、服务商变更全部归档 外包评估：年度回顾服务商 SLA 与内控报告（如 SOC/ISAE 类报告按需索取） 服务商变更 = 需通知相关方并办理法…"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [
+        "E01"
+      ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-20T08:37:26.005Z"
     },
     {
       "key": "soc",
@@ -1121,8 +1301,13 @@
           "context": "、投资者变更、服务商变更全部归档 外包评估：年度回顾服务商 SLA 与内控报告（如 SOC/ISAE 类报告按需索取） 服务商变更 = 需通知相关方并办理法定备案（按法域规则）"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [
+        "E01"
+      ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-20T08:37:26.005Z"
     },
     {
       "key": "swift",
@@ -1143,8 +1328,13 @@
           "context": "…配处理拼写变体、音译差异与别名。交易/支付筛查解决「这笔资金是否涉及受制裁主体」，需解析 SWIFT 报文、支付指令、区块链交易中的付款人、收款人、代理行与用途。 命中后的处置：先做「误报排…"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [
+        "13"
+      ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-20T08:37:26.005Z"
     },
     {
       "key": "tcsp",
@@ -1165,8 +1355,13 @@
           "context": "持有、分拆现金。守门人（律师/会计师/TCSP）：批量设立空壳公司、"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [
+        "11"
+      ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-20T08:37:26.005Z"
     },
     {
       "key": "tia",
@@ -1187,8 +1382,13 @@
           "context": " 下在本地税务机关/门户（如开曼的 TIA 门户）完成注册与分类申报，并指定联络角色（如 PPOC/Principal Point …"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [
+        "12"
+      ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-20T08:37:26.005Z"
     },
     {
       "key": "reference letter",
@@ -1222,6 +1422,9 @@
           "context": "…人 Cheung Man Ho 因长期在外工作、名下没有常规账单，提出用一份「推荐信 / Reference Letter」作为"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
       "lastSeenAt": "2026-09-20T07:00:35.831Z"
     },
@@ -1261,6 +1464,9 @@
           "context": "…充哪些资料？** **Q3. 下一步应该如何处理？** **Q4. 是否需要升级至主管或 Compliance？**"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
       "lastSeenAt": "2026-09-20T07:00:35.831Z"
     },
@@ -1297,8 +1503,15 @@
           "context": "的共同基金安排进入 Mutual Fund 分析。该判断以实际安排与现行法律为准。 第一步：集合投资安排（Collective In…"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [
+        "02",
+        "14",
+        "15"
+      ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-20T08:37:26.005Z"
     },
     {
       "key": "private investment fund",
@@ -1331,8 +1544,13 @@
           "context": "…析，封闭式集合投资安排重点看 Private Investment Fund 制度 掌握 Private Investment Fund 模块："
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [
+        "15"
+      ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-20T08:37:26.005Z"
     },
     {
       "key": "approved manager",
@@ -1365,8 +1583,13 @@
           "context": "8.3 Approved Manager：简化监管不是无监管 BVI 获批管理人（Approved Manager）是面向 BVI…"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [
+        "15"
+      ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-20T08:37:26.005Z"
     },
     {
       "key": "blocker",
@@ -1400,8 +1623,14 @@
           "context": "…报规则随时间与辖区变化，必须结合税务顾问意见。 税透：合伙层面不缴所得税、所得过到投资者 Blocker：公司层阻断税透，用于延迟与定性 预提税：股息/利息/特许权使用费按双边安排 PE/"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [
+        "E03",
+        "E04"
+      ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-20T08:37:26.005Z"
     },
     {
       "key": "audit",
@@ -1434,6 +1663,9 @@
           "context": " Audit 的范畴。** ## 错误理解 vs 正确理解 **错误理解**：我们做了 "
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
       "lastSeenAt": "2026-09-20T07:00:35.831Z"
     },
@@ -1468,8 +1700,13 @@
           "context": " 分类速查：Financial Institution（金融机构）含 Investment Entity（投资实体）等子类；Non-Reporting FI 需满足特定条件；NFE（非金融实体）…"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [
+        "12"
+      ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-20T08:37:26.005Z"
     },
     {
       "key": "authorising person",
@@ -1502,8 +1739,13 @@
           "context": " 注册标识而非金融牌照；注册角色（PPOC/Authorising Person 等）资格与兼任规则按办理时官方要求复核。年度工作含分类复核、"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [
+        "12"
+      ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-20T08:37:26.005Z"
     },
     {
       "key": "fund manager",
@@ -1536,6 +1778,9 @@
           "context": " Agent = Fund Manager ❌ 两者监管职责不同。 ## 错误三 只看牌照 不看"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
       "lastSeenAt": "2026-09-20T07:00:35.831Z"
     },
@@ -1570,8 +1815,13 @@
           "context": "，注意保密与禁止 Tipping-off"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [
+        "10"
+      ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-20T08:37:26.005Z"
     },
     {
       "key": "audit coverage",
@@ -1598,6 +1848,9 @@
           "context": "Audit Coverage 1. 服务商层面证据可支持本基金结论，但不能替代 2. 本基金层面必须补足：风险与政策…"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
       "lastSeenAt": "2026-09-20T07:00:35.831Z"
     },
@@ -1627,6 +1880,9 @@
           "context": "某开曼基金（Cayman Fund）个人投资人 Tan Wei Ming（新加坡永久居民）提交"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
       "lastSeenAt": "2026-09-20T07:00:35.831Z"
     },
@@ -1655,6 +1911,9 @@
           "context": " Q&A」Q2 / Q3**（Cayman Guidance Note 第 31 条；开曼与 BVI/HK 规则差异） - 02.2 "
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
       "lastSeenAt": "2026-09-20T07:00:35.831Z"
     },
@@ -1683,6 +1942,9 @@
           "context": "核证（Certification）最低要求共 5 点（02.2 手册 §二）： 1. **证件及内容齐全清晰**：如身份…"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
       "lastSeenAt": "2026-09-20T07:00:35.831Z"
     },
@@ -1711,6 +1973,9 @@
           "context": "（Signature Page：Chan Tai Man） - 香港永久居民身份证复印件（正反面，未核证） - 银行转账水单（金额与认缴一致）"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
       "lastSeenAt": "2026-09-20T07:00:35.831Z"
     },
@@ -1739,6 +2004,9 @@
           "context": "…冻依 FRA 指引办理；许可须向总督申请，并按指定表格抄送 FRA ## Q5 误报（False Positive）也要**留痕**： - 记录命中项、核验要素、排除理由、核验人、审批人与时间 - 保存…"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
       "lastSeenAt": "2026-09-20T07:00:35.831Z"
     },
@@ -1767,8 +2035,13 @@
           "context": " 分类速查：Financial Institution（金融机构）含 Investment Entity（投资实体）等子类；Non-Report…"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [
+        "12"
+      ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-20T08:37:26.005Z"
     },
     {
       "key": "fund administration team",
@@ -1796,6 +2069,9 @@
           "context": "…w process at this stage. > > Kind regards, > Fund Administration Team **不得**使用以下表述：疑似洗钱 / 我们已上报 / 该账户可能被制裁 / 你为何要…"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
       "lastSeenAt": "2026-09-20T07:00:35.831Z"
     },
@@ -1825,6 +2101,9 @@
           "context": "涉及知识点： - Investor Onboarding - "
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
       "lastSeenAt": "2026-09-20T07:00:35.831Z"
     },
@@ -1853,8 +2132,13 @@
           "context": " 现行规则办理。 Four Eyes 等治理机制是否适用：取决于法律形式与运营者结构 "
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [
+        "14"
+      ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-20T08:37:26.005Z"
     },
     {
       "key": "line",
@@ -1881,8 +2165,13 @@
           "context": "…Above the Line）是规则/阈值触发预警的传统方式；BTL（Below the Line）借助统计识别低于阈值但偏离常态的交易（如结构化规避）。误报偏高时应调优（tuning）而…"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [
+        "13"
+      ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-20T08:37:26.005Z"
     },
     {
       "key": "active",
@@ -1903,8 +2192,13 @@
           "context": "…投资实体），是否可归入 Non-Reporting FI，或属于 NFE（非金融实体）及 Active/Passive 类别。分类决定后续注册与申报义务。 同一基金在不同法域口径（"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [
+        "12"
+      ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-20T08:37:26.005Z"
     },
     {
       "key": "advisor",
@@ -1925,8 +2219,13 @@
           "context": "/Advisor）→ ④行政服务（"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [
+        "01"
+      ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-20T08:37:26.005Z"
     },
     {
       "key": "alert",
@@ -1947,6 +2246,9 @@
           "context": "> **误区**：因出生年份不同而直接关闭 Alert。 > > **正确做法**：出生年份只是一个身份要素，不足以自动排除潜在制裁命中。应综合…"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
       "lastSeenAt": "2026-09-20T07:00:35.831Z"
     },
@@ -1969,8 +2271,13 @@
           "context": " 认可/注册、组织文件中体现的投资者限制、授权代表（Approved Representative）、董事与指定人士或相应职能、"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [
+        "15"
+      ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-20T08:37:26.005Z"
     },
     {
       "key": "authorisation",
@@ -1991,6 +2298,9 @@
           "context": "…易对手（付款人、收款人、银行）以及其他相关方**。 ## Q3 需核验： **授权（Authorisation）** - 谁有权指令变更收款账户？依据是什么（"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
       "lastSeenAt": "2026-09-20T07:00:35.831Z"
     },
@@ -2013,6 +2323,9 @@
           "context": " Agent 并非美国 Bank Secrecy Act（BSA）项下必须建立完整 "
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
       "lastSeenAt": "2026-09-20T07:00:35.831Z"
     },
@@ -2035,8 +2348,13 @@
           "context": "错误影响对价与后续 Call。 冲突无留痕 "
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [
+        "E10"
+      ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-20T08:37:26.005Z"
     },
     {
       "key": "certified true copy",
@@ -2057,6 +2375,9 @@
           "context": "- 护照核证版（Certified True Copy） - 银行账单：如为客户打印的电子账单（无原件），**无需核证**，但需客户以邮件文字确…"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
       "lastSeenAt": "2026-09-20T07:00:35.831Z"
     },
@@ -2079,6 +2400,9 @@
           "context": "某开曼基金个人投资人 Cheung Man Ho 因长期在外工作、名下没有常规账单，提出用一份「推荐信 / Reference Le…"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
       "lastSeenAt": "2026-09-20T07:00:35.831Z"
     },
@@ -2101,8 +2425,13 @@
           "context": "…入 Mutual Fund 分析。该判断以实际安排与现行法律为准。 第一步：集合投资安排（Collective Investment Arrangement）与否 第二步：non-fund arrangement 或其他排除情形 第三步：按投资者…"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [
+        "14"
+      ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-20T08:37:26.005Z"
     },
     {
       "key": "contact",
@@ -2123,8 +2452,13 @@
           "context": "…）完成注册与分类申报，并指定联络角色（如 PPOC/Principal Point of Contact、Authorising Person）及申报授权安排。 注册角色（如 PPOC 与 Au…"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [
+        "12"
+      ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-20T08:37:26.005Z"
     },
     {
       "key": "crypto fund",
@@ -2145,8 +2479,13 @@
           "context": "Crypto Fund 区块链与数字货币基金：托管、"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [
+        "E11"
+      ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-20T08:37:26.005Z"
     },
     {
       "key": "dear investor",
@@ -2167,6 +2506,9 @@
           "context": "延迟，使用中性措辞： > Dear Investor, > > Thank you for your "
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
       "lastSeenAt": "2026-09-20T07:00:35.831Z"
     },
@@ -2189,6 +2531,9 @@
           "context": "## 错误一 看到底层客户就要求全部穿透。 ❌ 未考虑 Discretionary Account 安排。 ## 错误二 只审查 "
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
       "lastSeenAt": "2026-09-20T07:00:35.831Z"
     },
@@ -2211,6 +2556,9 @@
           "context": " | **Evidence**（执行证据） | | "
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
       "lastSeenAt": "2026-09-20T07:00:35.831Z"
     },
@@ -2233,6 +2581,9 @@
           "context": "有效期 - Existing Client - "
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
       "lastSeenAt": "2026-09-20T07:00:35.831Z"
     },
@@ -2255,6 +2606,9 @@
           "context": "… ↓ 第三道防线 · 独立验证 Internal Audit · External Audit · Independent "
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
       "lastSeenAt": "2026-09-20T07:00:35.831Z"
     },
@@ -2277,8 +2631,13 @@
           "context": " Foundations 金融犯罪全景：洗钱、恐怖融资、制裁、贿赂、逃税与欺诈的类型学与风险识别 理解洗钱的三个经…"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [
+        "11"
+      ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-20T08:37:26.005Z"
     },
     {
       "key": "framework",
@@ -2299,6 +2658,9 @@
           "context": " Framework **有效**。 仍需独立测试确认： - 样本是否合规 - 风险评级是否合理 - "
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
       "lastSeenAt": "2026-09-20T07:00:35.831Z"
     },
@@ -2321,6 +2683,9 @@
           "context": "…置顺序： **① 核验 Verify** → **② 限制或冻结 Restrict / Freeze** → **③ 报告 Report** → **④ 记录 Document** 1. …"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
       "lastSeenAt": "2026-09-20T07:00:35.831Z"
     },
@@ -2343,6 +2708,9 @@
           "context": " Reuse - Historical Records Review 重点： 历史客户已接受的 "
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
       "lastSeenAt": "2026-09-20T07:00:35.831Z"
     },
@@ -2365,6 +2733,9 @@
           "context": "Identity Verification BVI 与 Cayman 对"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
       "lastSeenAt": "2026-09-20T07:00:35.831Z"
     },
@@ -2387,6 +2758,9 @@
           "context": " Audit | **Independent Conclusion**（独立审计结论） | "
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
       "lastSeenAt": "2026-09-20T07:00:35.831Z"
     },
@@ -2409,8 +2783,13 @@
           "context": "直接放行 US Indicia 等矛盾信号必须先澄清取证。 零申报即零工作 分类、校验、申报与留痕的年度流程必须完整。"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [
+        "12"
+      ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-20T08:37:26.005Z"
     },
     {
       "key": "internal audit",
@@ -2431,6 +2810,9 @@
           "context": " 执行情况 ↓ 第三道防线 · 独立验证 Internal Audit · External Audit · Independent "
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
       "lastSeenAt": "2026-09-20T07:00:35.831Z"
     },
@@ -2453,6 +2835,9 @@
           "context": "某香港基金（HK Fund）个人投资人 Lee Ka Yan 首次"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
       "lastSeenAt": "2026-09-20T07:00:35.831Z"
     },
@@ -2475,6 +2860,9 @@
           "context": " 就直接接受。 ❌ 仍需审查 Letter 内容及适用场景。 ## 错误四 不了解投票权和投资决策权的重要性。 ❌ 控制权分…"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
       "lastSeenAt": "2026-09-20T07:00:35.831Z"
     },
@@ -2497,6 +2885,9 @@
           "context": "…anent Resident Identity Card together with a Mainland Travel Permit (港澳通行证); or > 3. HK Permanent Resident Ident…"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
       "lastSeenAt": "2026-09-20T07:00:35.831Z"
     },
@@ -2519,6 +2910,9 @@
           "context": "… 提示：先自己作答，再对照下方标准答案。 **Q1. 文件是否符合要求？** 移动账单（Mobile Bill）能否作为"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
       "lastSeenAt": "2026-09-20T07:00:35.831Z"
     },
@@ -2541,8 +2935,13 @@
           "context": " Technology & Monitoring 反金融犯罪工具与技术：名单筛查、数字 "
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [
+        "13"
+      ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-20T08:37:26.005Z"
     },
     {
       "key": "mutual",
@@ -2563,8 +2962,13 @@
           "context": "性 → Private/Mutual 框架 确认基金与各关联主体（Fund/"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [
+        "14"
+      ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-20T08:37:26.005Z"
     },
     {
       "key": "mutual funds act",
@@ -2585,8 +2989,13 @@
           "context": "（私人基金）是 BVI 共同基金体系（Mutual Funds Act）下面向专业投资者的类别；Private Investment Fund（私募投资基金）是…"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [
+        "15"
+      ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-20T08:37:26.005Z"
     },
     {
       "key": "ownership",
@@ -2607,6 +3016,9 @@
           "context": "？ **所有权（Ownership）** - ABC Holding Ltd 与该投资者的股权 / 控制关系 - 是否为同…"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
       "lastSeenAt": "2026-09-20T07:00:35.831Z"
     },
@@ -2629,8 +3041,13 @@
           "context": "…否可归入 Non-Reporting FI，或属于 NFE（非金融实体）及 Active/Passive 类别。分类决定后续注册与申报义务。 同一基金在不同法域口径（"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [
+        "12"
+      ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-20T08:37:26.005Z"
     },
     {
       "key": "permanent resident identity",
@@ -2651,6 +3068,9 @@
           "context": "…a Mainland Travel Permit (港澳通行证); or > 3. HK Permanent Resident Identity Card together with your wet signature. > > I…"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
       "lastSeenAt": "2026-09-20T07:00:35.831Z"
     },
@@ -2673,6 +3093,9 @@
           "context": "…，经枢密院令延伸适用于开曼）。 系统在当晚批筛中把一名**存量投资者**标记为潜在命中（Potential Match）： - 姓名与名单主体**完全一致**（含中间名拼写） - 出生年份**不同**（名单…"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
       "lastSeenAt": "2026-09-20T07:00:35.831Z"
     },
@@ -2695,8 +3118,13 @@
           "context": "…税务机关/门户（如开曼的 TIA 门户）完成注册与分类申报，并指定联络角色（如 PPOC/Principal Point of Contact、Authorising Person）及申报授权安排。 注册角色（…"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [
+        "12"
+      ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-20T08:37:26.005Z"
     },
     {
       "key": "private",
@@ -2717,8 +3145,13 @@
           "context": "性 → Private/Mutual 框架 确认基金与各关联主体（Fund/"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [
+        "14"
+      ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-20T08:37:26.005Z"
     },
     {
       "key": "program",
@@ -2739,6 +3172,9 @@
           "context": " Program 的主体。 因此： 其 "
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
       "lastSeenAt": "2026-09-20T07:00:35.831Z"
     },
@@ -2761,6 +3197,9 @@
           "context": "范围内 **原因（Rationale）** - 为什么原账户\"暂不可用\"？ - 为什么必须由第三方收取？ - 商业原因是否具…"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
       "lastSeenAt": "2026-09-20T07:00:35.831Z"
     },
@@ -2783,8 +3222,13 @@
           "context": "…公司（如 CFIUS、行业限制）、以及在美国向投资者发售权益（私募发售合规，如 144A/Reg D/S 条例等路径由美国律师判断）。 "
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [
+        "E04"
+      ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-20T08:37:26.005Z"
     },
     {
       "key": "restrict",
@@ -2805,6 +3249,9 @@
           "context": "… Q4 真实命中的处置顺序： **① 核验 Verify** → **② 限制或冻结 Restrict / Freeze** → **③ 报告 Report** → **④ 记录 Docume…"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
       "lastSeenAt": "2026-09-20T07:00:35.831Z"
     },
@@ -2827,6 +3274,9 @@
           "context": "（Signature Page：Chan Tai Man） - 香港永久居民身份证复印件（正反面，未核证） - 银行转账…"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
       "lastSeenAt": "2026-09-20T07:00:35.831Z"
     },
@@ -2849,6 +3299,9 @@
           "context": "…了**新加坡蓝色身份证（Blue IC）**复印件，并在邮件中表示： > I am a Singapore Permanent Resident. My Blue IC contains both my identity and re…"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
       "lastSeenAt": "2026-09-20T07:00:35.831Z"
     },
@@ -2871,6 +3324,9 @@
           "context": "主体（Subscriber）\"。"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
       "lastSeenAt": "2026-09-20T07:00:35.831Z"
     },
@@ -2893,6 +3349,9 @@
           "context": "某开曼基金（Cayman Fund）个人投资人 Tan Wei Ming（新加坡永久居民）提交"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
       "lastSeenAt": "2026-09-20T07:00:35.831Z"
     },
@@ -2915,8 +3374,13 @@
           "context": " Technology & Monitoring 反金融犯罪工具与技术：名单筛查、数字 "
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [
+        "13"
+      ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-20T08:37:26.005Z"
     },
     {
       "key": "third party payment",
@@ -2937,6 +3401,9 @@
           "context": "Third Party Payment 1. 第三方付款一律触发 "
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
       "lastSeenAt": "2026-09-20T07:00:35.831Z"
     },
@@ -2959,6 +3426,9 @@
           "context": "… ## Q3 核验需要做哪些动作？ ## Q4 如果核验后确认是**真实命中**（True Match），处置顺序是什么？ ## Q5 如果核验后确认是**误报**（False Posit…"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
       "lastSeenAt": "2026-09-20T07:00:35.831Z"
     },
@@ -2981,6 +3451,9 @@
           "context": "某 BVI 基金个人投资人 Wong Siu Ming 提交"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
       "lastSeenAt": "2026-09-20T07:00:35.831Z"
     },
@@ -3003,6 +3476,9 @@
           "context": "某香港基金（HK Fund）个人投资人 Lee Ka Yan 首次"
         }
       ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
       "lastSeenAt": "2026-09-20T07:00:35.831Z"
     }

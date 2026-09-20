@@ -62,7 +62,7 @@ export default function GlossaryTabs({
           onClick={() => setTab("review")}
           label="术语审核"
           count={candidatePool.candidates.length}
-          hint="术语自动发现：待审核候选 / 已发布术语"
+          hint="术语自动发现：发现 → 审核（采纳 / 忽略）→ 导出补全包"
           testId="review"
         />
       </div>
@@ -77,11 +77,7 @@ export default function GlossaryTabs({
       ) : tab === "health" ? (
         <GlossaryHealthPanel health={health} onShowList={() => setTab("list")} />
       ) : (
-        <TermReviewPanel
-          pool={candidatePool}
-          terms={terms}
-          usageCounts={usageCounts}
-        />
+        <TermReviewPanel pool={candidatePool} />
       )}
     </div>
   );

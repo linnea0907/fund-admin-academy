@@ -1,16 +1,28 @@
 #!/usr/bin/env node
 /**
- * Fund Admin Wiki — 术语数据校验（V1.14.1 固化，接入 prebuild）
+ * Fund Admin Wiki — 术语数据校验（V1.14.1 固化；V1.20.6 改为直载真实数据层，接入 prebuild）
+ *
+ * ## V1.20.6 变更（收口 BACKLOG P3-1）
+ * 不再用正则解析 TS 源码，改为经 `scripts/lib/ts-loader.mjs` 直载
+ * `GLOSSARY_TERMS`（内置 ∪ 导入）。两条原因：
+ *   ① 旧正则解析器对 `imported.ts` **天然失效** —— 该文件由 JSON.stringify 生成，
+ *      key 带双引号（`"id": "x"`），而旧正则是 `\s{4}id:\s*"..."`，**一条都匹配不到**
+ *      → 即便把它加回文件列表，也会「0 命中、静默通过」（假绿）。这才是当初
+ *      `f !== "imported.ts"` 那行跳过逻辑背后的真实原因，不是「它是生成物」。
+ *   ② 口径统一从「记得同步改两处」变成**结构性保证**：导入术语与内置术语走
+ *      同一个数组、同一套六项检查，不存在「两条链路各自漂移」的空间。
+ * ⚠️ 因此 prebuild 中 `gen:glossary` 必须排在 `check:glossary` **之前**
+ *    （否则校验的是上一版烘焙产物）。见 package.json。
  *
  * 检查项：
  *   1. Duplicate IDs            — 术语 id 不可重复
  *   2. Broken Related Terms     — related 必须指向存在的术语 id
  *   3. Invalid Case References  — cases 必须指向 content/cases/<id>.md
- *   4. Invalid Course References— courses 必须是存在的课程 id（01/02/10/12/14/15 或 E01..E11）
+ *   4. Invalid Course References— courses 必须是存在的课程 id（01 / 02 / 10… 或 E01..E11）
  *   5. Alias Collision          — 参与正文标注的文本（term / ASCII fullName / ASCII alias
  *                                  / 规范中文名 zh / 中文别名）不可撞车
  *                                  （V1.19.0 起覆盖中文通道，与 termMatchTexts 同口径）
- *   6. Required Fields Missing  — 14 字段结构必填项不可为空
+ *   6. Required Fields Missing  — 结构必填项不可为空（含 level / category 枚举合法性）
  *
  * 用法：
  *   node scripts/check-glossary.mjs          # 校验并输出统计
@@ -18,15 +30,15 @@
  *
  * 退出码：0 = 通过；1 = 存在错误（构建将被阻断）
  *
- * 说明：术语内容为 TypeScript 源码（src/data/glossary/*.ts），本脚本不引入 TS 运行时，
- * 而是按「对象字面量块」结构解析——块首缩进固定为 `  {`，字段缩进 4 空格。
+ * 依赖：Node ≥ 22.18（默认启用 TS 类型剥离）+ scripts/lib/ts-loader.mjs
  */
 
 import fs from "node:fs";
 import path from "node:path";
+import { register } from "node:module";
+import { pathToFileURL } from "node:url";
 
 const ROOT = process.cwd();
-const GLOSSARY_DIR = path.join(ROOT, "src", "data", "glossary");
 const CASES_DIR = path.join(ROOT, "content", "cases");
 const LESSON_FILES = [
   path.join(ROOT, "src", "data", "lessons.ts"),
@@ -36,85 +48,55 @@ const LESSON_FILES = [
   path.join(ROOT, "src", "data", "electives-c.ts"),
 ];
 
-/** 参与正文标注的文本是否纯 ASCII（与 src/lib/glossary.ts 的 isAscii 保持一致） */
+/* ---------------- 直载真实数据层 ---------------- */
+
+try {
+  register("./ts-loader.mjs", pathToFileURL(path.join(ROOT, "scripts", "lib") + path.sep));
+} catch (err) {
+  console.error(
+    `[check:glossary] TS loader 注册失败（需 Node ≥ 22.18）：${err.message}\n` +
+      `  本闸门依赖直载项目数据层，无法降级为「跳过校验」。`
+  );
+  process.exit(1);
+}
+
+let GLOSSARY_TERMS;
+let IMPORTED_TERMS;
+try {
+  ({ GLOSSARY_TERMS } = await import("@/data/glossary"));
+  ({ IMPORTED_TERMS } = await import("@/data/glossary/imported"));
+} catch (err) {
+  console.error(`[check:glossary] 加载术语数据层失败：${err.message}`);
+  process.exit(1);
+}
+
+/** 术语来源标签：导入术语单独标出，便于定位坏数据来自哪条链路 */
+const importedIds = new Set(IMPORTED_TERMS.map((t) => t.id));
+const originOf = (id) => (importedIds.has(id) ? "imported.json" : "内置");
+
+/* ---------------- 常量（与运行时代码同口径） ---------------- */
+
+/** 参与正文标注的文本是否纯 ASCII（与 src/lib/glossary.ts 的 isAscii 一致） */
 const isAscii = (s) => /^[\x20-\x7E]+$/.test(s);
-/** 是否含中日韩统一表意文字（与 src/lib/glossary.ts 的 isCjk 保持一致） */
+/** 是否含中日韩统一表意文字（与 src/lib/glossary.ts 的 isCjk 一致） */
 const isCjk = (s) => /[\u4e00-\u9fa5]/.test(s);
 /**
- * 中文别名进入正文标注的最小长度（与 src/lib/glossary.ts 的 CH_ALIAS_MIN_LEN 保持一致）。
+ * 中文别名进入正文标注的最小长度（与 src/lib/glossary.ts 的 CH_ALIAS_MIN_LEN 一致）。
  * ⚠️ 两处必须同步改：本闸门负责拦截「撞车」，口径不一致会让闸门误放行或误报。
  */
 const CH_ALIAS_MIN_LEN = 4;
-/** 规范中文名的最小长度（与 glossary.ts 的 CH_TERM_MIN_LEN 保持一致） */
+/** 规范中文名的最小长度（与 glossary.ts 的 CH_TERM_MIN_LEN 一致） */
 const CH_TERM_MIN_LEN = 2;
 
-/* ---------------- 解析 ---------------- */
+/* ---------------- 引用目标 ---------------- */
 
 /**
  * 读取源码并把行尾统一为 LF。
  * Windows 上 core.autocrlf=true 会把检出文件写成 CRLF，若直接按 `\n` 切分，
- * 术语块会整体解析不到（假报"引用不存在"）。此处统一归一，保证校验与平台无关。
+ * 课程 id 会整体漏抓（假报"引用不存在"）。此处统一归一，保证校验与平台无关。
  */
 function readSource(file) {
   return fs.readFileSync(file, "utf8").replace(/\r\n?/g, "\n");
-}
-
-function splitBlocks(src) {
-  return src.split(/\n  \{\n/).slice(1);
-}
-
-/** 取字符串字段（单行 `k: "v"` 或换行 `k:\n "v"`） */
-function str(block, key) {
-  const same = new RegExp(`(?:^|\\n)\\s{4}${key}:\\s*"([^"]*)"`).exec(block);
-  if (same) return same[1];
-  const next = new RegExp(`(?:^|\\n)\\s{4}${key}:\\s*\\n\\s*"([^"]*)"`).exec(block);
-  return next ? next[1] : null;
-}
-
-/** 取数组字段（仅支持单行数组） */
-function arr(block, key) {
-  const m = new RegExp(`(?:^|\\n)\\s{4}${key}:\\s*\\[([^\\]]*)\\]`).exec(block);
-  if (!m) return null;
-  return m[1]
-    .split(",")
-    .map((x) => x.trim().replace(/^"|"$/g, ""))
-    .filter(Boolean);
-}
-
-function loadTerms() {
-  const files = fs
-    .readdirSync(GLOSSARY_DIR)
-      .filter((f) => f.endsWith(".ts") && f !== "index.ts" && f !== "imported.ts");
-
-  const terms = [];
-  for (const file of files) {
-    const src = readSource(path.join(GLOSSARY_DIR, file));
-    for (const block of splitBlocks(src)) {
-      const id = str(block, "id");
-      if (!id) continue;
-      terms.push({
-        file,
-        id,
-        term: str(block, "term"),
-        fullName: str(block, "fullName"),
-        zh: str(block, "zh"),
-        category: str(block, "category"),
-        level: str(block, "level"),
-        definition: str(block, "definition"),
-        whyImportant: str(block, "whyImportant"),
-        brief: str(block, "brief"),
-        jurisdiction: arr(block, "jurisdiction") ?? [],
-        scenario: arr(block, "scenario") ?? [],
-        aliases: arr(block, "aliases") ?? [],
-        related: arr(block, "related") ?? [],
-        cases: arr(block, "cases") ?? [],
-        courses: arr(block, "courses") ?? [],
-        source: arr(block, "source") ?? [],
-        tags: arr(block, "tags") ?? [],
-      });
-    }
-  }
-  return terms;
 }
 
 function loadCaseIds() {
@@ -141,7 +123,7 @@ function loadCourseIds() {
 
 /* ---------------- 校验 ---------------- */
 
-const terms = loadTerms();
+const terms = GLOSSARY_TERMS;
 const caseIds = loadCaseIds();
 const courseIds = loadCourseIds();
 const idSet = new Set(terms.map((t) => t.id));
@@ -156,7 +138,7 @@ for (const t of terms) {
   if (byId.has(t.id)) {
     fail(
       "Duplicate IDs",
-      `id "${t.id}" 重复出现于 ${byId.get(t.id).file} 与 ${t.file}`
+      `id "${t.id}" 重复出现于 ${originOf(t.id)} 与 ${originOf(byId.get(t.id).id)}（内置与导入不可同 id）`
     );
   } else {
     byId.set(t.id, t);
@@ -166,13 +148,13 @@ for (const t of terms) {
 /* 2. Broken Related Terms */
 const relatedEdges = new Set();
 for (const t of terms) {
-  for (const r of t.related) {
+  for (const r of t.related ?? []) {
     if (r === t.id) {
-      fail("Broken Related Terms", `${t.id} 的 related 指向自身`);
+      fail("Broken Related Terms", `${t.id}（${originOf(t.id)}）的 related 指向自身`);
       continue;
     }
     if (!idSet.has(r)) {
-      fail("Broken Related Terms", `${t.id} -> "${r}" 不存在`);
+      fail("Broken Related Terms", `${t.id}（${originOf(t.id)}）-> "${r}" 不存在`);
     } else {
       relatedEdges.add(`${t.id}->${r}`);
     }
@@ -181,18 +163,18 @@ for (const t of terms) {
 
 /* 3. Invalid Case References */
 for (const t of terms) {
-  for (const c of t.cases) {
+  for (const c of t.cases ?? []) {
     if (!caseIds.has(c)) {
-      fail("Invalid Case References", `${t.id} -> "${c}"（content/cases/${c}.md 不存在）`);
+      fail("Invalid Case References", `${t.id}（${originOf(t.id)}）-> "${c}"（content/cases/${c}.md 不存在）`);
     }
   }
 }
 
 /* 4. Invalid Course References */
 for (const t of terms) {
-  for (const c of t.courses) {
+  for (const c of t.courses ?? []) {
     if (!courseIds.has(c)) {
-      fail("Invalid Course References", `${t.id} -> "${c}"（课程 id 不存在）`);
+      fail("Invalid Course References", `${t.id}（${originOf(t.id)}）-> "${c}"（课程 id 不存在）`);
     }
   }
 }
@@ -210,10 +192,10 @@ for (const t of terms) {
   if (t.fullName && isAscii(t.fullName) && t.fullName.trim() !== (t.term ?? "").trim()) {
     texts.add(t.fullName.trim());
   }
-  for (const a of t.aliases) if (a && isAscii(a)) texts.add(a.trim());
+  for (const a of t.aliases ?? []) if (a && isAscii(a)) texts.add(a.trim());
   // 中文通道
   if (t.zh && isCjk(t.zh) && t.zh.trim().length >= CH_TERM_MIN_LEN) texts.add(t.zh.trim());
-  for (const a of t.aliases) {
+  for (const a of t.aliases ?? []) {
     if (!a) continue;
     const v = a.trim();
     if (!v || isAscii(v) || !isCjk(v)) continue;
@@ -230,7 +212,7 @@ for (const list of matchTexts.values()) {
   if (uniqueIds.length > 1) {
     fail(
       "Alias Collision",
-      `标注文本 "${list[0].raw}" 同时命中: ${uniqueIds.join(", ")}`
+      `标注文本 "${list[0].raw}" 同时命中: ${uniqueIds.map((id) => `${id}（${originOf(id)}）`).join(", ")}`
     );
   }
 }
@@ -261,29 +243,33 @@ const VALID_CATEGORIES = new Set([
 ]);
 
 for (const t of terms) {
+  const from = originOf(t.id);
   for (const k of REQUIRED_STR) {
     if (!t[k] || !String(t[k]).trim()) {
-      fail("Required Fields Missing", `${t.id} 缺少必填字段 "${k}"`);
+      fail("Required Fields Missing", `${t.id}（${from}）缺少必填字段 "${k}"`);
     }
   }
   for (const k of REQUIRED_ARR) {
     if (!Array.isArray(t[k]) || t[k].length === 0) {
-      fail("Required Fields Missing", `${t.id} 缺少必填数组 "${k}"`);
+      fail("Required Fields Missing", `${t.id}（${from}）缺少必填数组 "${k}"`);
     }
   }
   if (t.level && !VALID_LEVELS.has(t.level)) {
-    fail("Required Fields Missing", `${t.id} 的 level "${t.level}" 非法（core/advanced/expert）`);
+    fail("Required Fields Missing", `${t.id}（${from}）的 level "${t.level}" 非法（core/advanced/expert）`);
   }
   if (t.category && !VALID_CATEGORIES.has(t.category)) {
-    fail("Required Fields Missing", `${t.id} 的 category "${t.category}" 非法`);
+    fail("Required Fields Missing", `${t.id}（${from}）的 category "${t.category}" 非法`);
   }
 }
 
-/* 附加信息：孤立术语（无人工案例 / 课程指定时的静态快照，供人工巡检参考） */
-const manualCaseTerms = terms.filter((t) => t.cases.length > 0).length;
-const manualCourseTerms = terms.filter((t) => t.courses.length > 0).length;
+/* 附加信息：人工指定关联（供人工巡检参考） */
+const manualCaseTerms = terms.filter((t) => (t.cases ?? []).length > 0).length;
+const manualCourseTerms = terms.filter((t) => (t.courses ?? []).length > 0).length;
 if (terms.length < 100) {
   warnings.push(`术语总数 ${terms.length} < 100（V1.14.0 验收基线为 ≥100）`);
+}
+if (terms.length !== GLOSSARY_TERMS.length) {
+  warnings.push(`术语集合不一致：${terms.length} vs ${GLOSSARY_TERMS.length}`);
 }
 
 /* ---------------- 输出 ---------------- */
@@ -295,8 +281,9 @@ for (const t of terms) {
   catCount[t.category] = (catCount[t.category] || 0) + 1;
 }
 
-console.log("── Fund Admin Wiki · 术语数据校验 ─────────────────");
+console.log("── Fund Admin Wiki · 术语数据校验（直载数据层） ────");
 console.log(`术语总数          ${terms.length}`);
+console.log(`来源分布          内置 ${terms.length - importedIds.size} · 导入 ${importedIds.size}（imported.json）`);
 console.log(`分类分布          ${JSON.stringify(catCount)}`);
 console.log(`等级分布          Core ${levelCount.core} · Advanced ${levelCount.advanced} · Expert ${levelCount.expert}`);
 console.log(`关联术语边        ${relatedEdges.size}`);
@@ -317,5 +304,8 @@ if (errors.length > 0) {
   process.exit(1);
 }
 
-console.log(`\n✅ 校验通过：${terms.length} 条术语，0 重复 / 0 断链 / 0 无效引用 / 0 标注撞车 / 0 缺字段`);
+console.log(
+  `\n✅ 校验通过：${terms.length} 条术语（内置 ${terms.length - importedIds.size} + 导入 ${importedIds.size}），` +
+    `0 重复 / 0 断链 / 0 无效引用 / 0 标注撞车 / 0 缺字段`
+);
 process.exit(0);

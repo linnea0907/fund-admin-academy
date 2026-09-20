@@ -64,6 +64,20 @@ const SCENARIOS = [
 const SOURCES = ["ics", "blue-book", "cima", "sfc", "mas", "internal"];
 const LEVELS = ["core", "advanced", "expert"];
 
+/**
+ * 补全包占位符（V1.20.6）。
+ * 术语补全包会预填「可确定字段」并把待撰写字段标成 `〔待补〕`；
+ * 若 Copilot 漏替换就落盘，会变成一条「字面值 = 〔待补〕」的坏术语 —— 此处直接拒收。
+ * ⚠️ 与 `src/lib/term-review-store.ts` 的 TODO_MARK 必须保持一致。
+ */
+const TODO_MARK = "〔待补〕";
+function containsTodo(v) {
+  if (typeof v === "string") return v.includes(TODO_MARK);
+  if (Array.isArray(v)) return v.some(containsTodo);
+  if (v && typeof v === "object") return Object.values(v).some(containsTodo);
+  return false;
+}
+
 /** 内置术语 id（读源码数据文件，避免与内置重复） */
 function builtinIds() {
   const dir = path.join(ROOT, "src", "data", "glossary");
@@ -171,6 +185,14 @@ if (fs.existsSync(SRC_JSON)) {
       if (tags.length === 0) missing.push("tags");
       if (missing.length > 0) {
         warnings.push(`id「${id}」缺少必填内容 ${missing.join(" / ")}，已跳过（补全后重跑即可）`);
+        continue;
+      }
+
+      // 补全包占位符未替换（V1.20.6）：整条拒收，避免「字面值 = 〔待补〕」入库
+      if (containsTodo(raw)) {
+        warnings.push(
+          `id「${id}」仍含补全包占位符 ${TODO_MARK}，已跳过（请让 Copilot 替换全部占位后再落盘）`
+        );
         continue;
       }
       seen.add(id);
