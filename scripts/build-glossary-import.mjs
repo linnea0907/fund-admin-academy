@@ -9,8 +9,12 @@
  *
  * 约定：
  * - imported.json 结构：{ version: 1, terms: GlossaryTerm[] }（管理员手工维护的导入清单）
+ * - 维护入口：术语库 → 「术语审核」页签 → 采纳候选 → 导出术语补全包（V1.20.5）
+ *   （V1.14.0 的「知识工坊上传界面」已于 V1.15.2 下线，本条链路本身始终保留）
  * - 文件缺失 / 损坏 / 无 terms → 生成空数组文件（保证 import 永不失败）
  * - 字段缺失或枚举非法 → 归一为安全默认值并打印警告，不阻断构建
+ * - 必填内容缺失（whyImportant / scenario / aliases / related / tags）→ **跳过该条并告警**，
+ *   否则会在 check-glossary 处拦死构建（V1.20.5 起）
  * - id 与内置术语重复 → 跳过并警告（内置优先）
  */
 import fs from "node:fs";
@@ -58,6 +62,7 @@ const SCENARIOS = [
   "Client Communication",
 ];
 const SOURCES = ["ics", "blue-book", "cima", "sfc", "mas", "internal"];
+const LEVELS = ["core", "advanced", "expert"];
 
 /** 内置术语 id（读源码数据文件，避免与内置重复） */
 function builtinIds() {
@@ -139,11 +144,36 @@ if (fs.existsSync(SRC_JSON)) {
         warnings.push(`id「${id}」Category「${asStr(raw.category)}」非法，已跳过`);
         continue;
       }
-      seen.add(id);
 
       const jurisdiction = pickEnum(asArr(raw.jurisdiction), JURISDICTIONS, "Global");
       const scenario = pickEnum(asArr(raw.scenario), SCENARIOS, null);
       const source = pickEnum(asArr(raw.source), SOURCES, "internal");
+
+      // level（V1.20.5 修复）：GlossaryTerm.level 为必填，check-glossary 也校验其枚举；
+      // 此前本脚本不产出该字段 —— 一旦 imported.json 真有条目，tsc 与 check:glossary 会双双失败。
+      const level = pickEnum([asStr(raw.level)], LEVELS, null);
+      if (level.length === 0) {
+        warnings.push(`id「${id}」未给 level（core/advanced/expert），已按 advanced 处理`);
+      }
+
+      // 必填内容预校验（V1.20.5）：check-glossary 要求 whyImportant 非空、
+      // scenario/aliases/related/tags 为非空数组。缺项若照常输出，会直接拦死构建，
+      // 因此改为「跳过 + 报告」，保证一份不完整的 imported.json 不会把构建弄红。
+      const whyImportant = asStr(raw.whyImportant);
+      const aliases = asArr(raw.aliases);
+      const related = asArr(raw.related);
+      const tags = asArr(raw.tags);
+      const missing = [];
+      if (!whyImportant) missing.push("whyImportant");
+      if (scenario.length === 0) missing.push("scenario");
+      if (aliases.length === 0) missing.push("aliases");
+      if (related.length === 0) missing.push("related");
+      if (tags.length === 0) missing.push("tags");
+      if (missing.length > 0) {
+        warnings.push(`id「${id}」缺少必填内容 ${missing.join(" / ")}，已跳过（补全后重跑即可）`);
+        continue;
+      }
+      seen.add(id);
 
       const out = {
         id,
@@ -151,14 +181,15 @@ if (fs.existsSync(SRC_JSON)) {
         fullName: asStr(raw.fullName) || term,
         zh,
         category: category[0],
+        level: level[0] ?? "advanced",
         jurisdiction,
         definition,
-        whyImportant: asStr(raw.whyImportant),
+        whyImportant,
         scenario,
-        aliases: asArr(raw.aliases),
-        related: asArr(raw.related),
+        aliases,
+        related,
         source,
-        tags: asArr(raw.tags),
+        tags,
         brief: briefOf({ brief: asStr(raw.brief), definition }),
       };
       const cases = asArr(raw.cases);
@@ -187,8 +218,8 @@ const out = `/**
  * Fund Admin Wiki — 批量导入层（自动生成，请勿手改）
  *
  * 由 \`scripts/build-glossary-import.mjs\` 从 \`content/glossary/imported.json\` 生成。
- * 导入术语请把 JSON 落到 content/glossary/imported.json（由管理员维护，
- * 知识工坊上传界面已于 V1.15.2 下线），再运行 \`npm run gen:glossary\`（或直接 build）。
+ * 导入术语请把 JSON 落到 content/glossary/imported.json，再运行 \`npm run gen:glossary\`（或直接 build）。
+ * 维护入口：术语库 → 「术语审核」页签 → 采纳候选 → 导出术语补全包（V1.20.5）。
  *
  * 本次烘焙：${terms.length} 条导入术语
  * 源文件：${fs.existsSync(SRC_JSON) ? "content/glossary/imported.json" : "（不存在，输出空数组）"}
