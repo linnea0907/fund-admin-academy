@@ -1,7 +1,7 @@
 {
   "schema": "case-library-index",
   "version": 5,
-  "generatedAt": "2026-09-18T10:01:39.263Z",
+  "generatedAt": "2026-09-20T03:39:35.931Z",
   "total": 29,
   "ready": 13,
   "cases": [
@@ -810,7 +810,8 @@
         "Outsourcing",
         "Cayman",
         "Fund-Level Evidence",
-        "Audit Coverage"
+        "Audit Coverage",
+        "Three Lines of Defense"
       ],
       "skills": [
         "Outsourcing Oversight",
@@ -818,7 +819,7 @@
         "Fund Governance Review",
         "Compliance Escalation"
       ],
-      "estimatedTime": 12,
+      "estimatedTime": 15,
       "ready": true,
       "jurisdiction": [
         "Cayman"
@@ -829,7 +830,7 @@
         "AML Audit",
         "Outsourcing"
       ],
-      "searchText": "case-028 aml audit coverage——集团审计能否覆盖本基金 高级 cayman fund governance fund aml audit administrator outsourcing fund-level evidence audit coverage outsourcing oversight evidence assessment fund governance review compliance escalation aml aml/cft amlco cima faq cdd kpi mlro dmlro text dear thank sharing group audit report board reviewed notes testing covered group's european operations samples funds while happy rely level evidence supporting remains accountable obtaining sufficient appropriate fund's please provide following respect mapping scope risk profile investor base controls results sample files documentation evidencing key screening escalation monitoring operated practice during period list exceptions incidents remediation items arising status board's written basis determining cycle confirm independence function arrangements filed soon practicable kind regards directors ics sop coverage takeaway support work cannot replace conclusions service provider supports assessment required"
+      "searchText": "case-028 aml audit coverage——集团审计能否覆盖本基金 高级 cayman fund governance fund aml audit administrator outsourcing fund-level evidence audit coverage three lines of defense outsourcing oversight evidence assessment fund governance review compliance escalation aml audit kyc aml/cft amlco text operations transfer agent compliance mlro dmlro internal external independent review framework edd evidence conclusion cima faq cdd kpi dear thank sharing group report board reviewed notes testing covered group's european samples funds while happy rely level supporting remains accountable obtaining sufficient appropriate fund's please provide following respect mapping scope risk profile investor base controls results sample files documentation evidencing key screening escalation monitoring operated practice during period list exceptions incidents remediation items arising status board's written basis determining cycle confirm independence function arrangements filed soon practicable kind regards directors ics sop coverage takeaway"
     },
     {
       "id": "Case-029",

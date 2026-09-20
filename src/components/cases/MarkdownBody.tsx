@@ -96,7 +96,13 @@ const components: Components = {
     </code>
   ),
   pre: ({ children }) => (
-    <pre className="my-3 overflow-x-auto rounded-xl bg-slate-900 p-4 text-[13px] leading-relaxed text-slate-100">
+    // ⚠️ react-markdown 把围栏代码块渲染为 <pre><code>，而下面的 code 组件会给它套上
+    // 「行内代码」样式（bg-slate-100 浅底 + 深色字）—— 在深色面板上表现为一行行浅色横杠，
+    // 缩进空格段更会刷成一条孤立细线（2026-09-20 在 Case-028 三层防线图上实测发现）。
+    // 这里用任意变体把子级 code 的样式还原成「随 pre」，恢复本组件原本的深底浅字设计。
+    // 另：font-mono 原本只挂在子级 code 上，pre 自身没有 —— 一旦 code 层被去掉就会退回
+    // 正文字体（等宽对齐失效）。这里把 font-mono 提到 pre 上，让代码块不再依赖子元素。
+    <pre className="my-3 overflow-x-auto rounded-xl bg-slate-900 p-4 font-mono text-[13px] leading-relaxed text-slate-100 [&>code]:rounded-none [&>code]:bg-transparent [&>code]:p-0 [&>code]:text-inherit">
       {children}
     </pre>
   ),

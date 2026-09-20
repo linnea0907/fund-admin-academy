@@ -2,7 +2,7 @@
 
 > 状态：V2 已落地，P1.8（Skills 能力标签 + 版本体系）已叠加，P1.8.1（筛选区四行结构 + 业务域合并 5 类 + 状态入高级筛选 + 卡片技能 2+N）已叠加（2026-09-08）。
 > 定位：**Real Fund Admin Cases**——让新人学会真实工作中的判断，而不是背 AML 法规；**标准答案优先依据 ICS 内部 SOP**，不以通用教材、CAMS 教材或监管理论作为标准答案。后续案例正文由 **Copilot 提供**，WorkBuddy 仅负责导入与前端展示。
-> 当前进度（2026-09-08）：正文已导入 10/26 —— Module 1：Case-001 ~ Case-005（按《02.2 KYC/CDD 操作手册》撰写）+ Case-026（台湾身份证，追加第 6 例）；Module 3：Case-012 / Case-013 / Case-014；Module 4：Case-018。其余为元数据骨架（含 title/module/level/skills），正文待对应 SOP 提供后导入。
+> 当前进度（2026-09-20）：正文已导入 **13/29** —— Module 1：Case-001 ~ Case-005（按《02.2 KYC/CDD 操作手册》撰写）/ Case-026（台湾身份证）；Module 3：Case-012 / Case-013 / Case-014；Module 4：Case-018；Module 5：Case-027（同名制裁命中）/ Case-028（AML Audit Coverage，2026-09-20 主线收敛为「做 AML ≠ 审 AML」）/ Case-029（第三方付款）。其余为元数据骨架（含 title/module/level/skills），正文待对应 SOP 提供后导入。
 > 本文是案例文件字段/结构与导入工作流的唯一依据。
 
 ## 一、文件位置与目录

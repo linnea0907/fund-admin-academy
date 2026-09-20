@@ -10,12 +10,13 @@ tags:
   - Cayman
   - Fund-Level Evidence
   - Audit Coverage
+  - Three Lines of Defense
 skills:
   - Outsourcing Oversight
   - Evidence Assessment
   - Fund Governance Review
   - Compliance Escalation
-estimatedTime: 12
+estimatedTime: 15
 jurisdiction:
   - Cayman
 businessArea: Fund Governance
@@ -27,13 +28,38 @@ topics:
 
 # 场景背景
 
+## 本案例只讲一个概念
+
+**做 AML ≠ 审 AML。**
+
+Administrator 可以执行 AML 工作，但 AML Audit 的核心是：
+
+> **独立验证 AML 框架是否有效运行。**
+
+常见的类比：
+
+- 记账 ≠ 审计
+- 开车 ≠ 年检
+- 经营公司 ≠ 审计公司
+
+Administrator 执行 KYC、筛查、持续监控，属于"做 AML"；
+判断这些工作**是否有效**，属于"审 AML"——需要另一层主体、另一套方法。
+
+## 案例背景
+
 开曼基金的董事会正在审阅年度 AML 合规报告。
 
-基金行政管理人（Administrator）在回复中写道：
+Administrator 在回复中写道：
 
 > "我方集团本年度 AML/CFT 审计已于 6 月完成，由集团内部审计部门执行，
 > 结论为无重大发现。因此**本基金无需另行安排 AML 审计**。
 > 需说明的是，本次审计测试范围为我方**欧洲业务**，样本为**其他基金**的投资者档案。"
+
+从董事会的角度，Administrator 事实上已经完成了三件事：
+
+- KYC 已完成
+- 制裁筛查已完成
+- 持续监控已进行
 
 董事会秘书问：
 
@@ -41,6 +67,57 @@ topics:
 > 毕竟行政管理人是我们最重要的外包方，他们做过就相当于我们做过了。"
 
 合规官（AMLCO）表示："我们这边没有人手再做一次全面审计。"
+
+**本案例需要解决的问题**：这些 AML 工作与集团审计报告，是否已经满足本基金的 AML Audit 要求？
+
+## 三层防线：谁在做什么
+
+```text
+第一道防线 · 执行
+  Administrator · Fund Operations · Transfer Agent
+  职责：执行 KYC、筛查、持续监控
+
+                    ↓
+
+第二道防线 · 监督
+  Compliance · AMLCO · MLRO · DMLRO
+  职责：监督 AML 执行情况
+
+                    ↓
+
+第三道防线 · 独立验证
+  Internal Audit · External Audit · Independent AML Review
+  职责：验证 AML 系统是否有效
+```
+
+Administrator 提供的 AML 报告属于**第一道防线的产出**——它说明"做了"，
+但不构成**第三道防线**的独立验证。
+
+## 实务场景
+
+Administrator 向董事会报告本基金本年度的 AML 工作：
+
+- 500 个投资人完成 KYC
+- 100 个投资人完成周期审查
+- 全部投资人完成制裁筛查
+
+这证明：AML 工作**已经执行**。
+但不能直接证明：AML Framework **有效**。
+
+仍需独立测试确认：
+
+- 样本是否合规
+- 风险评级是否合理
+- EDD 是否按政策执行
+- 监控机制是否有效
+
+**这才属于 AML Audit 的范畴。**
+
+## 错误理解 vs 正确理解
+
+**错误理解**：我们做了 AML 工作，因此 AML Audit 已完成。
+
+**正确理解**：AML 工作已完成，但还需要**独立验证**这些工作是否**有效执行**。
 
 # 你的判断
 
@@ -79,6 +156,16 @@ D. 由 AMLCO 个人签字确认即可
 **C。评估可复用证据，并补足本基金层面的测试。**
 
 服务商层面的证据**可以支持**，但**不能替代**本基金的审计结论。董事会必须确保本基金取得**充分适当的基金层面证据**。
+
+**关键区别**
+
+| 主体 | 提供的是 |
+|---|---|
+| Administrator | **Evidence**（执行证据） |
+| AML Audit | **Independent Conclusion**（独立审计结论） |
+
+Administrator 的报告只能证明"工作已执行"，属于证据；
+审计要交付的是一个**独立的有效性结论**。董事会缺少的是**后者**。
 
 **不建议 A**：集团审计未映射本基金的风险、投资者与控制；样本为其他基金、测试范围为欧洲业务，与实际被依赖的职能不匹配。直接引用等于用一个不覆盖本基金的报告，关闭一项本基金必须自证的义务。
 
@@ -166,11 +253,16 @@ D. 由 AMLCO 个人签字确认即可
       证据能否按基金提供？
 ```
 
+**换句话说**：Administrator 的报告停留在**第一道防线**（执行），
+本案要补的是**第三道防线**（独立验证）。两者不能互相替代。
+
 **"行政管理人做过审计"这一事实，本身不是本基金的证据。** 董事会保留最终责任，执行可以外包，责任与可见性不能外包。
 
 # 常见错误
 
 ❌ 直接引用集团审计报告关闭本基金审计项
+
+❌ 把 Administrator 的执行报告（KYC / 筛查 / 监控已完成）当成 AML Audit 的独立结论
 
 ❌ 认为行政管理人做了审计就等于本基金做了审计
 
@@ -225,18 +317,14 @@ Audit Coverage
 
 # Takeaway
 
-**集团审计 ≠ 本基金审计。**
+Administrator 可以执行 AML 工作。
 
-服务商证据只能支持结论，不能替代结论。
+Administrator 的报告可以作为 AML Audit 的**证据来源**。
 
-董事会要的不是一份报告，而是一条能按基金追溯的**证据链**。
+但 Administrator 的报告本身**不能替代** AML Audit。
 
-## Key Takeaway
+AML Audit 的核心价值在于：**独立测试 + 独立结论**。
 
-> **Administrator-level evidence may support the audit work, but it cannot replace fund-level audit conclusions.**
->
-> **Service-provider evidence supports the assessment, while sufficient and appropriate fund-level evidence remains required.**
+一句话：
 
-**中文对照**：管理人（Administrator）层面的证据可以支持审计工作，但不能替代**基金层面**的审计结论；服务商证据用于支持评估，而**充分且适当的基金层面证据**仍是必备要求。
-
-这是本次 AML 培训最重要的监管观点之一 —— **服务商证据可以支持、但不能替代基金层面的审计结论**。
+**做 AML ≠ 审 AML。**
