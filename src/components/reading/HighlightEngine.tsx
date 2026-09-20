@@ -104,6 +104,22 @@ interface BlockScan extends ReadingBlock {
 
 const SCOPED_TAGS = new Set(["P", "LI", "BLOCKQUOTE"]);
 
+/**
+ * 展开目标元素的所有祖先 <details>（V1.20.4）。
+ *
+ * 案例答案区改为默认折叠后，已存的划线/高亮可能落在收起的小节内：
+ * 此时元素虽然在 DOM 中，但被 UA 样式 display:none，`scrollIntoView` 会滚到空白处、
+ * 用户看不到闪烁提示。跳转前先把祖先 details 打开（直接改 DOM 属性，不经 React state，
+ * 不产生 hydration 差异）。若 `<details>` 本身未受控，React 不会把它改回收起态。
+ */
+function openAncestorDetails(el: HTMLElement): void {
+  let p: HTMLElement | null = el.parentElement;
+  while (p) {
+    if (p instanceof HTMLDetailsElement && !p.open) p.open = true;
+    p = p.parentElement;
+  }
+}
+
 /** 扫描容器内所有 [data-reading-scope] 下的块，赋确定性锚点 */
 function scanBlocks(container: HTMLElement): BlockScan[] {
   const out: BlockScan[] = [];
@@ -391,6 +407,8 @@ export default function HighlightEngine({
       return;
     }
     const first = marks[0] as HTMLElement;
+    // V1.20.4：目标可能位于默认收起的小节/答案卡片内，先展开再滚动定位
+    openAncestorDetails(first);
     first.scrollIntoView({ behavior: "smooth", block: "center" });
     marks.forEach((m) => m.classList.add("hl-flash"));
     if (flashTimer.current) window.clearTimeout(flashTimer.current);

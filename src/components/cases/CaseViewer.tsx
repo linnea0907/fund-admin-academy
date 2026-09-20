@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import type { CaseSectionKey } from "@/types";
 import type { RelatedTermRef } from "@/lib/glossary";
+import type { CaseAnswerItem } from "@/lib/case-answers";
 import { getCaseModule } from "@/lib/case-modules";
 import { levelLabel } from "@/lib/case-filter";
 import {
@@ -15,6 +16,7 @@ import {
 } from "@/lib/case-categories";
 import { useAcademy } from "@/hooks/use-academy";
 import MarkdownBody from "./MarkdownBody";
+import CaseAnswerDeck from "./CaseAnswerDeck";
 import RelatedTerms from "@/components/RelatedTerms";
 import HighlightEngine from "@/components/reading/HighlightEngine";
 
@@ -50,6 +52,8 @@ interface CaseViewerProps {
   topics: string[];
   /** 本案例关联术语（V1.18.0；由服务端反向索引计算后传入，空数组则不渲染该区块） */
   terms?: RelatedTermRef[];
+  /** V1.20.4 逐题答案（服务端切块；为空时「标准答案」小节退回整节原样渲染） */
+  answers?: CaseAnswerItem[];
 }
 
 /** 小节卡片底色：区分「先思考 / 答案 / 总结」三类 */
@@ -58,6 +62,16 @@ const PANEL_STYLE: Partial<Record<CaseSectionKey, string>> = {
   standard_answer: "border-amber-200 bg-amber-50/40",
   takeaway: "border-emerald-200 bg-emerald-50/40",
 };
+
+/**
+ * V1.20.4 默认整节收起的小节 —— 「答案推理类」，避免学员进入案例即被剧透。
+ * 目的（Lu 2026-09-20）：先独立思考，再逐层展开；「客户沟通示例」「Takeaway」保持展开。
+ */
+const COLLAPSED_SECTIONS: ReadonlySet<CaseSectionKey> = new Set<CaseSectionKey>([
+  "reasoning",
+  "common_mistakes",
+  "sop_reference",
+]);
 
 export default function CaseViewer({
   id,
@@ -76,6 +90,7 @@ export default function CaseViewer({
   entityType,
   topics,
   terms = [],
+  answers = [],
 }: CaseViewerProps) {
   const router = useRouter();
   const { state, completeCase, toggleCaseComplete, markCaseStarted, toggleFavorite } = useAcademy();
@@ -318,7 +333,26 @@ export default function CaseViewer({
               className="mt-4"
               data-reading-scope={`${id}-${s.key}`}
             >
-              <MarkdownBody content={s.content} />
+              {/* V1.20.4 答案区默认折叠：
+                  ① 标准答案 → 逐题卡片（题干常显 + 答案收起，每题独立展开）
+                  ② 理由分析 / 常见错误 / ICS SOP依据 → 整节收起
+                  ③ 其余小节 → 保持原样
+                  全部用原生 <details>，无 React state / 无 storage 读取，首帧即收起态。 */}
+              {s.key === "standard_answer" && answers.length > 0 ? (
+                <CaseAnswerDeck items={answers} />
+              ) : COLLAPSED_SECTIONS.has(s.key) ? (
+                <details data-collapsed-section={s.key} className="group">
+                  <summary className="inline-flex cursor-pointer list-none items-center gap-2 rounded-lg border border-slate-200 bg-white px-3.5 py-2 text-xs font-semibold text-slate-600 transition hover:border-slate-300 hover:bg-slate-50 [&::-webkit-details-marker]:hidden">
+                    <span className="group-open:hidden">展开查看 ▾</span>
+                    <span className="hidden group-open:inline">收起 ▴</span>
+                  </summary>
+                  <div className="mt-3">
+                    <MarkdownBody content={s.content} />
+                  </div>
+                </details>
+              ) : (
+                <MarkdownBody content={s.content} />
+              )}
             </div>
           </section>
         ))

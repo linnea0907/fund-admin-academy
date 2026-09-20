@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { CASE_SECTIONS } from "@/lib/case-modules";
+import { splitCaseAnswers } from "@/lib/case-answers";
 import { getCaseTerms } from "@/lib/glossary-usage";
 import {
   caseNeighbors,
@@ -50,6 +51,13 @@ export default async function CasePage({ params }: { params: Params }) {
       })).filter((s) => s.content.trim() !== "")
     : [];
 
+  // V1.20.4 逐题答案：把「你的判断」与「标准答案」按题号配对，供逐题折叠卡片渲染。
+  // 解析不通过（题号对不上 / 数量不等）→ 返回 []，CaseViewer 退回整节原样渲染，不丢内容。
+  const answers = splitCaseAnswers(
+    c.sections.questions ?? "",
+    c.sections.standard_answer ?? ""
+  );
+
   // V1.18.0 案例 → 术语：反转术语库关联关系（自动命中 ∪ 人工指定 cases），零新增维护字段
   const terms = getCaseTerms(c.id);
 
@@ -71,6 +79,7 @@ export default async function CasePage({ params }: { params: Params }) {
       entityType={c.entityType}
       topics={c.topics}
       terms={terms}
+      answers={answers}
     />
   );
 }
