@@ -163,16 +163,19 @@ export const REGULATORY_TERMS: GlossaryTerm[] = [
     level: "core",
     jurisdiction: ["Cayman", "BVI", "Global"],
     definition:
-      "开曼《Private Funds Act》定义的私募基金：以非公开方式发行不可赎回的投资权益、由管理人管理、主要目的为投资获利，须向 CIMA 注册并履行年度申报与审计义务；BVI 亦有对应的私募基金制度。",
+      "开曼《Private Funds Act》定义的私募基金：以非公开方式发行不可赎回的投资权益、由管理人管理、主要目的为投资获利，须向 CIMA 注册并履行年度申报与审计义务。BVI 的对应制度分两条线：封闭式基金适用私人投资基金（PIF），开放式基金适用私募基金 / 专业基金。",
     whyImportant:
       "「是否构成受监管私募基金」决定注册、申报与审计义务的有无：架构设计（封闭期、赎回安排、投资人数）会直接影响归类结果。",
     scenario: ["Fund Setup", "Regulatory Filing"],
     aliases: ["Private Fund", "私募基金注册", "Private Funds Act"],
-    related: ["registered-fund", "cima", "fsc", "auditor", "regulatory-reporting"],
+    related: ["registered-fund", "cima", "fsc", "auditor", "regulatory-reporting", "pif", "professional-fund"],
     source: ["cima", "blue-book"],
     tags: ["注册义务", "年度申报", "审计"],
     brief: "离岸法下须注册并年度申报/审计的私募基金类别。",
-    commonMistakes: ["认为「私募」即无需注册与申报（未评估是否落入法定定义）"],
+    commonMistakes: [
+      "认为「私募」即无需注册与申报（未评估是否落入法定定义）",
+      "把 BVI 的私人投资基金（PIF，封闭式）与本条（开曼 / 开放式口径）当作同一制度"
+    ],
   },
   {
     id: "registered-fund",

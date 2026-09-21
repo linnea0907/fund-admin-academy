@@ -39,7 +39,7 @@ const {
   TERM_SOURCES,
 } = await import("@/types/glossary");
 const { siteConfig } = await import("@/lib/site-config");
-const { buildWikiHealth } = await import("@/lib/glossary-usage");
+const { buildWikiHealth, wikiHealthSummary } = await import("@/lib/glossary-usage");
 
 const SITE_VERSION = siteConfig.version;
 
@@ -48,8 +48,12 @@ const SITE_VERSION = siteConfig.version;
  *   覆盖率 = 至少关联 1 门课程 **或** 1 个案例的术语占比。
  *   孤立术语 = 既无课程关联、也无案例关联。
  * ⚠️ 与「无 related 关联边」是两个不同指标，本文件里分开呈现，避免误读。
+ *
+ * `health` 取明细（rows 用于per-term 命中数）；`healthAuto` 取「仅正文自动命中」口径，
+ * 两者差值 = 「人工挂靠但正文未引用」的部分。
  */
 const health = buildWikiHealth();
+const healthAuto = wikiHealthSummary().auto;
 const usageOf = new Map(health.rows.map((r) => [r.id, r]));
 
 /* ---------------- 参数 ---------------- */
@@ -135,6 +139,8 @@ const jsonPayload = {
       coveragePct: health.coverage,
       byCategory: health.byCategory,
       byLevel: health.byLevel,
+      /** 「仅正文自动命中」口径（排除人工挂靠），差值即「人工挂靠但正文未引用」的部分 */
+      auto: healthAuto,
     },
   },
   /** 每个术语在课程 / 案例正文中的自动命中数（零人工维护，与站内展示一致） */
@@ -285,6 +291,17 @@ p(`| 课程与案例都关联 | ${health.linkedBoth} |`);
 p(`| 至少关联其一（并集） | **${health.linkedAny}** |`);
 p(`| **覆盖率** | **${health.coverage}%** |`);
 p(`| **孤立术语** | **${health.isolated}** |`);
+p();
+p(`**口径对照**（排除「人工挂靠但正文未引用」的部分，即下一阶段真正要补内容的缺口）：`);
+p();
+p(`| 项 | 自动命中 ∪ 人工指定 | 仅正文自动命中 |`);
+p(`|---|---|---|`);
+p(`| 至少关联 1 门课程 | ${health.linkedCourses} | ${healthAuto.linkedCourses} |`);
+p(`| 至少关联 1 个案例 | ${health.linkedCases} | ${healthAuto.linkedCases} |`);
+p(`| 两者都关联 | ${health.linkedBoth} | ${healthAuto.linkedBoth} |`);
+p(`| 至少关联其一 | ${health.linkedAny} | ${healthAuto.linkedAny} |`);
+p(`| 孤立 | ${health.isolated} | ${healthAuto.isolated} |`);
+p(`| **覆盖率** | **${health.coverage}%** | **${healthAuto.coverage}%** |`);
 p();
 p(`按分类覆盖：`);
 p();

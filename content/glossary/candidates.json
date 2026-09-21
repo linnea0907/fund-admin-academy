@@ -1,54 +1,13 @@
 {
   "version": 1,
-  "generatedAt": "2026-09-20T08:38:00.339Z",
+  "generatedAt": "2026-09-21T02:22:18.966Z",
   "baseline": {
-    "glossaryTerms": 170,
+    "glossaryTerms": 181,
     "documents": 275,
     "courses": 128,
     "cases": 147
   },
   "candidates": [
-    {
-      "key": "cfius",
-      "text": "CFIUS",
-      "confidence": "declared",
-      "acronym": true,
-      "docs": 6,
-      "courses": [
-        "选修 E04",
-        "选修 E08"
-      ],
-      "cases": [],
-      "count": 13,
-      "samples": [
-        {
-          "kind": "course",
-          "label": "选修 E04 · 1.1 美国连接点识别",
-          "href": "/courses/e04-us-fund-basics#m1",
-          "context": "（证券法与 ERISA）、投资标的涉及美国公司（如 CFIUS、行业限制）、以及在美国向投资者发售权益（私募发售合规，如 144A/Reg D/S 条例…"
-        },
-        {
-          "kind": "course",
-          "label": "选修 E04 · 1.1 美国连接点识别",
-          "href": "/courses/e04-us-fund-basics#m1",
-          "context": "判定影响发售与报告 标的连接：美国目标可能触发 CFIUS 或行业许可 发售连接：募集活动的地域与对象决定适用路径"
-        },
-        {
-          "kind": "course",
-          "label": "选修 E08 · CFIUS",
-          "href": "/courses/e08-cfius",
-          "context": "CFIUS 美国外国投资审查：涉及美国标的时的基金考量 理解 CFIUS 审查对象与触发逻辑（美国标…"
-        }
-      ],
-      "zh": "美国外国投资委员会",
-      "fullName": "",
-      "courseIds": [
-        "E04",
-        "E08"
-      ],
-      "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T08:37:26.005Z"
-    },
     {
       "key": "sar",
       "text": "SAR",
@@ -86,45 +45,6 @@
       "courseIds": [],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
       "lastSeenAt": "2026-09-20T08:38:00.339Z"
-    },
-    {
-      "key": "pif",
-      "text": "PIF",
-      "confidence": "declared",
-      "acronym": true,
-      "docs": 4,
-      "courses": [
-        "第 15 讲"
-      ],
-      "cases": [],
-      "count": 9,
-      "samples": [
-        {
-          "kind": "course",
-          "label": "第 15 讲 · 8.1 先分清名称：Private Fund vs Private Investment Fund",
-          "href": "/courses/bvi-fund-manager#m1",
-          "context": "…类别；Private Investment Fund（私募投资基金）是《私募投资基金法》（PIF Act）下的"
-        },
-        {
-          "kind": "course",
-          "label": "第 15 讲 · 8.1 先分清名称：Private Fund vs Private Investment Fund",
-          "href": "/courses/bvi-fund-manager#m1",
-          "context": "…tual Fund 体系分析 封闭式 → Private Investment Fund（PIF Act 体系） 各制度注册与豁免条件按 "
-        },
-        {
-          "kind": "course",
-          "label": "第 15 讲 · 8.2 Private Investment Fund：模块化拆解",
-          "href": "/courses/bvi-fund-manager#m2",
-          "context": "8.2 Private Investment Fund：模块化拆解 Private Investment Fund（PIF）制度通常覆盖以下模块："
-        }
-      ],
-      "zh": "",
-      "fullName": "",
-      "courseIds": [
-        "15"
-      ],
-      "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T08:37:26.005Z"
     },
     {
       "key": "tbml",
@@ -389,47 +309,6 @@
       "lastSeenAt": "2026-09-20T08:37:26.005Z"
     },
     {
-      "key": "ofc",
-      "text": "OFC",
-      "confidence": "acronym",
-      "acronym": true,
-      "docs": 9,
-      "courses": [
-        "第 02 讲",
-        "选修 E06"
-      ],
-      "cases": [],
-      "count": 18,
-      "samples": [
-        {
-          "kind": "course",
-          "label": "第 02 讲 · 2.1 维度一：组织形式",
-          "href": "/courses/fund-structure#m1",
-          "context": "、OFC 与“开放式/封闭式”放进同一个分类层级——它们回答的是不同维度的问题。 "
-        },
-        {
-          "kind": "course",
-          "label": "第 02 讲 · 2.2 维度二：伞形与隔离结构",
-          "href": "/courses/fund-structure#m2",
-          "context": "）、香港 OFC（可设 "
-        },
-        {
-          "kind": "course",
-          "label": "第 02 讲 · 2.2 维度二：伞形与隔离结构",
-          "href": "/courses/fund-structure#m2",
-          "context": "/OFC 分属不同法域的立法体系，不能因为都叫“伞形”就视为同一类结构。 "
-        }
-      ],
-      "zh": "",
-      "fullName": "",
-      "courseIds": [
-        "02",
-        "E06"
-      ],
-      "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T08:37:26.005Z"
-    },
-    {
       "key": "esg",
       "text": "ESG",
       "confidence": "acronym",
@@ -471,47 +350,6 @@
       "lastSeenAt": "2026-09-20T08:37:26.005Z"
     },
     {
-      "key": "erisa",
-      "text": "ERISA",
-      "confidence": "acronym",
-      "acronym": true,
-      "docs": 6,
-      "courses": [
-        "选修 E02",
-        "选修 E04"
-      ],
-      "cases": [],
-      "count": 8,
-      "samples": [
-        {
-          "kind": "course",
-          "label": "选修 E02 · 1.1 机构投资人类型与特点",
-          "href": "/courses/e02-investor-landscape#m1",
-          "context": "1.1 机构投资人类型与特点 美国企业养老金计划与政府养老金计划：常受 ERISA 或州法约束，可能要求特殊受托与披露安排；主权财富基金注重稳定性、透明度与合规；母基金（"
-        },
-        {
-          "kind": "course",
-          "label": "选修 E04 · 美国基金基础",
-          "href": "/courses/e04-us-fund-basics",
-          "context": "美国基金基础 RIA、Blocker、ERISA 与私募发售：美国连接点下的基金常识 理解美国在基金中的常见连接点：管理人注册、投资者身份…"
-        },
-        {
-          "kind": "course",
-          "label": "选修 E04 · 1.1 美国连接点识别",
-          "href": "/courses/e04-us-fund-basics#m1",
-          "context": "（证券法与 ERISA）、投资标的涉及美国公司（如 CFIUS、行业限制）、以及在美国向投资者发售权益（私募发售…"
-        }
-      ],
-      "zh": "",
-      "fullName": "",
-      "courseIds": [
-        "E02",
-        "E04"
-      ],
-      "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T08:37:26.005Z"
-    },
-    {
       "key": "crf",
       "text": "CRF",
       "confidence": "acronym",
@@ -547,162 +385,6 @@
       "courseIds": [],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
       "lastSeenAt": "2026-09-20T07:00:35.831Z"
-    },
-    {
-      "key": "lpf",
-      "text": "LPF",
-      "confidence": "acronym",
-      "acronym": true,
-      "docs": 3,
-      "courses": [
-        "选修 E06"
-      ],
-      "cases": [],
-      "count": 7,
-      "samples": [
-        {
-          "kind": "course",
-          "label": "选修 E06 · 香港基金架构",
-          "href": "/courses/e06-hong-kong-fund-architecture",
-          "context": "香港基金架构 OFC、LPF、9号牌与税务优惠：香港基金要点 认识香港基金载体：OFC（"
-        },
-        {
-          "kind": "course",
-          "label": "选修 E06 · 香港基金架构",
-          "href": "/courses/e06-hong-kong-fund-architecture",
-          "context": "型公司）与 LPF（"
-        },
-        {
-          "kind": "course",
-          "label": "选修 E06 · 1.1 载体：OFC 与 LPF",
-          "href": "/courses/e06-hong-kong-fund-architecture#m1",
-          "context": "1.1 载体：OFC 与 LPF 香港 OFC 是公司型"
-        }
-      ],
-      "zh": "",
-      "fullName": "",
-      "courseIds": [
-        "E06"
-      ],
-      "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T08:37:26.005Z"
-    },
-    {
-      "key": "nfe",
-      "text": "NFE",
-      "confidence": "acronym",
-      "acronym": true,
-      "docs": 3,
-      "courses": [
-        "第 12 讲"
-      ],
-      "cases": [],
-      "count": 5,
-      "samples": [
-        {
-          "kind": "course",
-          "label": "第 12 讲 · 5.1 第一层：基金自身分类",
-          "href": "/courses/fatca-crs#m1",
-          "context": "…ment Entity（投资实体），是否可归入 Non-Reporting FI，或属于 NFE（非金融实体）及 Active/Passive 类别。分类决定后续注册与申报义务。 同一基…"
-        },
-        {
-          "kind": "course",
-          "label": "第 12 讲 · 5.1 第一层：基金自身分类",
-          "href": "/courses/fatca-crs#m1",
-          "context": "…ity 判断：以金融资产投资/管理为主业等测试为准 Non-Reporting FI 与 NFE 各有限定条件 "
-        },
-        {
-          "kind": "course",
-          "label": "第 12 讲 · 5.5 实务手册：FI / NFE 分类、Passive NFE、Controlling Person 与 GIIN",
-          "href": "/courses/fatca-crs#m5",
-          "context": "5.5 实务手册：FI / NFE 分类、"
-        }
-      ],
-      "zh": "",
-      "fullName": "",
-      "courseIds": [
-        "12"
-      ],
-      "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T08:37:26.005Z"
-    },
-    {
-      "key": "aiv",
-      "text": "AIV",
-      "confidence": "acronym",
-      "acronym": true,
-      "docs": 3,
-      "courses": [
-        "第 14 讲"
-      ],
-      "cases": [],
-      "count": 4,
-      "samples": [
-        {
-          "kind": "course",
-          "label": "第 14 讲 · Cayman 基金核心框架",
-          "href": "/courses/cayman-framework",
-          "context": "、Manager、AIV、平行基金、"
-        },
-        {
-          "kind": "course",
-          "label": "第 14 讲 · 7.2 Private Fund / Mutual Fund 与分主体核查",
-          "href": "/courses/cayman-framework#m2",
-          "context": "（若合伙）、Manager/投资经理、以及 AIV、平行基金、"
-        },
-        {
-          "kind": "course",
-          "label": "第 14 讲 · 7.2 Private Fund / Mutual Fund 与分主体核查",
-          "href": "/courses/cayman-framework#m2",
-          "context": "、Manager、AIV、平行基金、"
-        }
-      ],
-      "zh": "",
-      "fullName": "",
-      "courseIds": [
-        "14"
-      ],
-      "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T08:37:26.005Z"
-    },
-    {
-      "key": "ppoc",
-      "text": "PPOC",
-      "confidence": "acronym",
-      "acronym": true,
-      "docs": 3,
-      "courses": [
-        "第 12 讲"
-      ],
-      "cases": [],
-      "count": 4,
-      "samples": [
-        {
-          "kind": "course",
-          "label": "第 12 讲 · 5.2 第二层：注册与角色安排",
-          "href": "/courses/fatca-crs#m2",
-          "context": " 下在本地税务机关/门户（如开曼的 TIA 门户）完成注册与分类申报，并指定联络角色（如 PPOC/Principal Point of Contact、Authorising Perso…"
-        },
-        {
-          "kind": "course",
-          "label": "第 12 讲 · 5.2 第二层：注册与角色安排",
-          "href": "/courses/fatca-crs#m2",
-          "context": "…f Contact、Authorising Person）及申报授权安排。 注册角色（如 PPOC 与 Authorising Person）的资格、独立性及兼任规则须按办理时官方要求复核…"
-        },
-        {
-          "kind": "course",
-          "label": "第 12 讲 · 5.5 实务手册：FI / NFE 分类、Passive NFE、Controlling Person 与 GIIN",
-          "href": "/courses/fatca-crs#m5",
-          "context": " 注册标识而非金融牌照；注册角色（PPOC/Authorising Person 等）资格与兼任规则按办理时官方要求复核。年度工作含…"
-        }
-      ],
-      "zh": "",
-      "fullName": "",
-      "courseIds": [
-        "12"
-      ],
-      "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T08:37:26.005Z"
     },
     {
       "key": "cpa",
@@ -757,7 +439,7 @@
           "kind": "course",
           "label": "选修 E04 · 美国基金基础",
           "href": "/courses/e04-us-fund-basics",
-          "context": "美国基金基础 RIA、Blocker、ERISA 与私募发售：美国连接点下的基金常识 理解美国在基金中的常见连…"
+          "context": "美国基金基础 RIA、Blocker、"
         },
         {
           "kind": "course",
@@ -778,7 +460,7 @@
         "E04"
       ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T08:37:26.005Z"
+      "lastSeenAt": "2026-09-21T02:22:18.966Z"
     },
     {
       "key": "sdd",
@@ -1003,7 +685,7 @@
           "kind": "course",
           "label": "选修 E03 · 1.1 设立地税制概览",
           "href": "/courses/e03-tax-framework#m1",
-          "context": "…域来源原则与基金豁免安排（现行复核） 新加坡：基金免税与激励计划等安排（现行复核） 美国：ETF/PFIC/"
+          "context": "…域来源原则与基金豁免安排（现行复核） 新加坡：基金免税与激励计划等安排（现行复核） 美国：ETF/"
         }
       ],
       "zh": "",
@@ -1012,7 +694,7 @@
         "E03"
       ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T08:37:26.005Z"
+      "lastSeenAt": "2026-09-21T02:22:18.966Z"
     },
     {
       "key": "gdpr",
@@ -1146,87 +828,6 @@
       "courseIds": [],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
       "lastSeenAt": "2026-09-20T07:00:35.831Z"
-    },
-    {
-      "key": "ofac",
-      "text": "OFAC",
-      "confidence": "acronym",
-      "acronym": true,
-      "docs": 1,
-      "courses": [
-        "第 13 讲"
-      ],
-      "cases": [],
-      "count": 1,
-      "samples": [
-        {
-          "kind": "course",
-          "label": "第 13 讲 · 6.2 名单筛查与交易筛查",
-          "href": "/courses/aml-technology-monitoring#m2",
-          "context": "…2 名单筛查与交易筛查 名单筛查解决「与我打交道的对象是否在名单上」，须多源覆盖（联合国、OFAC、欧盟及内部名单）并用模糊匹配处理拼写变体、音译差异与别名。交易/支付筛查解决「这笔资金是…"
-        }
-      ],
-      "zh": "",
-      "fullName": "",
-      "courseIds": [
-        "13"
-      ],
-      "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T08:37:26.005Z"
-    },
-    {
-      "key": "pfic",
-      "text": "PFIC",
-      "confidence": "acronym",
-      "acronym": true,
-      "docs": 1,
-      "courses": [
-        "选修 E03"
-      ],
-      "cases": [],
-      "count": 1,
-      "samples": [
-        {
-          "kind": "course",
-          "label": "选修 E03 · 1.1 设立地税制概览",
-          "href": "/courses/e03-tax-framework#m1",
-          "context": "…则与基金豁免安排（现行复核） 新加坡：基金免税与激励计划等安排（现行复核） 美国：ETF/PFIC/"
-        }
-      ],
-      "zh": "",
-      "fullName": "",
-      "courseIds": [
-        "E03"
-      ],
-      "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T08:37:26.005Z"
-    },
-    {
-      "key": "rfmc",
-      "text": "RFMC",
-      "confidence": "acronym",
-      "acronym": true,
-      "docs": 1,
-      "courses": [
-        "选修 E05"
-      ],
-      "cases": [],
-      "count": 1,
-      "samples": [
-        {
-          "kind": "course",
-          "label": "选修 E05 · 1.1 载体与管理人框架",
-          "href": "/courses/e05-singapore-fund-architecture#m1",
-          "context": "…券与基金法例判断。 管理人方面，新加坡对基金管理活动有持牌/登记体系；历史上某些类别（如 RFMC）的适用口径会调整，通用课程不宜写死，建议使用“须符合持牌/登记或豁免要求（现行复核）”等…"
-        }
-      ],
-      "zh": "",
-      "fullName": "",
-      "courseIds": [
-        "E05"
-      ],
-      "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T08:37:26.005Z"
     },
     {
       "key": "scc",
@@ -1379,7 +980,7 @@
           "kind": "course",
           "label": "第 12 讲 · 5.2 第二层：注册与角色安排",
           "href": "/courses/fatca-crs#m2",
-          "context": " 下在本地税务机关/门户（如开曼的 TIA 门户）完成注册与分类申报，并指定联络角色（如 PPOC/Principal Point …"
+          "context": " 下在本地税务机关/门户（如开曼的 TIA 门户）完成注册与分类申报，并指定联络角色（如 "
         }
       ],
       "zh": "",
@@ -1388,7 +989,7 @@
         "12"
       ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T08:37:26.005Z"
+      "lastSeenAt": "2026-09-21T02:22:18.966Z"
     },
     {
       "key": "reference letter",
@@ -1508,45 +1109,6 @@
       "courseIds": [
         "02",
         "14",
-        "15"
-      ],
-      "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T08:37:26.005Z"
-    },
-    {
-      "key": "private investment fund",
-      "text": "Private Investment Fund",
-      "confidence": "phrase",
-      "acronym": false,
-      "docs": 5,
-      "courses": [
-        "第 15 讲"
-      ],
-      "cases": [],
-      "count": 12,
-      "samples": [
-        {
-          "kind": "course",
-          "label": "第 15 讲 · BVI 基金与管理人",
-          "href": "/courses/bvi-fund-manager",
-          "context": " 与 Private Investment Fund 等概念及其适用 理解开放式安排进入 BVI 共同基金（Mutual Fund）体系分析，…"
-        },
-        {
-          "kind": "course",
-          "label": "第 15 讲 · BVI 基金与管理人",
-          "href": "/courses/bvi-fund-manager",
-          "context": "…式安排进入 BVI 共同基金（Mutual Fund）体系分析，封闭式集合投资安排重点看 Private Investment Fund 制度 掌握 Private Investment Fund 模块："
-        },
-        {
-          "kind": "course",
-          "label": "第 15 讲 · BVI 基金与管理人",
-          "href": "/courses/bvi-fund-manager",
-          "context": "…析，封闭式集合投资安排重点看 Private Investment Fund 制度 掌握 Private Investment Fund 模块："
-        }
-      ],
-      "zh": "",
-      "fullName": "",
-      "courseIds": [
         "15"
       ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
@@ -1685,19 +1247,19 @@
           "kind": "course",
           "label": "第 12 讲 · 5.1 第一层：基金自身分类",
           "href": "/courses/fatca-crs#m1",
-          "context": "…金自身分类开始：是否属于 Financial Institution（金融机构）及其下的 Investment Entity（投资实体），是否可归入 Non-Reporting FI，或属于 NFE（非金融实体）及…"
+          "context": "…金自身分类开始：是否属于 Financial Institution（金融机构）及其下的 Investment Entity（投资实体），是否可归入 Non-Reporting FI，或属于 "
         },
         {
           "kind": "course",
           "label": "第 12 讲 · 5.1 第一层：基金自身分类",
           "href": "/courses/fatca-crs#m1",
-          "context": " 多边规则）下可能有不同处理，必须分别读取适用文本，不能以“基金”二字直接下结论。 Investment Entity 判断：以金融资产投资/管理为主业等测试为准 Non-Reporting FI 与 NFE…"
+          "context": " 多边规则）下可能有不同处理，必须分别读取适用文本，不能以“基金”二字直接下结论。 Investment Entity 判断：以金融资产投资/管理为主业等测试为准 Non-Reporting FI 与 "
         },
         {
           "kind": "course",
           "label": "第 12 讲 · 5.5 实务手册：FI / NFE 分类、Passive NFE、Controlling Person 与 GIIN",
           "href": "/courses/fatca-crs#m5",
-          "context": " 分类速查：Financial Institution（金融机构）含 Investment Entity（投资实体）等子类；Non-Reporting FI 需满足特定条件；NFE（非金融实体）…"
+          "context": " 分类速查：Financial Institution（金融机构）含 Investment Entity（投资实体）等子类；Non-Reporting FI 需满足特定条件；"
         }
       ],
       "zh": "",
@@ -1706,7 +1268,7 @@
         "12"
       ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T08:37:26.005Z"
+      "lastSeenAt": "2026-09-21T02:22:18.966Z"
     },
     {
       "key": "authorising person",
@@ -1724,19 +1286,19 @@
           "kind": "course",
           "label": "第 12 讲 · 5.2 第二层：注册与角色安排",
           "href": "/courses/fatca-crs#m2",
-          "context": "…申报，并指定联络角色（如 PPOC/Principal Point of Contact、Authorising Person）及申报授权安排。 注册角色（如 PPOC 与 Authorising Person）的资…"
+          "context": "、Authorising Person）及申报授权安排。 注册角色（如 "
         },
         {
           "kind": "course",
           "label": "第 12 讲 · 5.2 第二层：注册与角色安排",
           "href": "/courses/fatca-crs#m2",
-          "context": "…ct、Authorising Person）及申报授权安排。 注册角色（如 PPOC 与 Authorising Person）的资格、独立性及兼任规则须按办理时官方要求复核，课程不宜写死。"
+          "context": " 与 Authorising Person）的资格、独立性及兼任规则须按办理时官方要求复核，课程不宜写死。"
         },
         {
           "kind": "course",
           "label": "第 12 讲 · 5.5 实务手册：FI / NFE 分类、Passive NFE、Controlling Person 与 GIIN",
           "href": "/courses/fatca-crs#m5",
-          "context": " 注册标识而非金融牌照；注册角色（PPOC/Authorising Person 等）资格与兼任规则按办理时官方要求复核。年度工作含分类复核、"
+          "context": "/Authorising Person 等）资格与兼任规则按办理时官方要求复核。年度工作含分类复核、"
         }
       ],
       "zh": "",
@@ -1745,7 +1307,7 @@
         "12"
       ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T08:37:26.005Z"
+      "lastSeenAt": "2026-09-21T02:22:18.966Z"
     },
     {
       "key": "fund manager",
@@ -2189,7 +1751,7 @@
           "kind": "course",
           "label": "第 12 讲 · 5.1 第一层：基金自身分类",
           "href": "/courses/fatca-crs#m1",
-          "context": "…投资实体），是否可归入 Non-Reporting FI，或属于 NFE（非金融实体）及 Active/Passive 类别。分类决定后续注册与申报义务。 同一基金在不同法域口径（"
+          "context": "）及 Active/Passive 类别。分类决定后续注册与申报义务。 同一基金在不同法域口径（"
         }
       ],
       "zh": "",
@@ -2198,7 +1760,7 @@
         "12"
       ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T08:37:26.005Z"
+      "lastSeenAt": "2026-09-21T02:22:18.966Z"
     },
     {
       "key": "advisor",
@@ -2429,33 +1991,6 @@
       "fullName": "",
       "courseIds": [
         "14"
-      ],
-      "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T08:37:26.005Z"
-    },
-    {
-      "key": "contact",
-      "text": "Contact",
-      "confidence": "phrase",
-      "acronym": false,
-      "docs": 1,
-      "courses": [
-        "第 12 讲"
-      ],
-      "cases": [],
-      "count": 1,
-      "samples": [
-        {
-          "kind": "course",
-          "label": "第 12 讲 · 5.2 第二层：注册与角色安排",
-          "href": "/courses/fatca-crs#m2",
-          "context": "…）完成注册与分类申报，并指定联络角色（如 PPOC/Principal Point of Contact、Authorising Person）及申报授权安排。 注册角色（如 PPOC 与 Au…"
-        }
-      ],
-      "zh": "",
-      "fullName": "",
-      "courseIds": [
-        "12"
       ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
       "lastSeenAt": "2026-09-20T08:37:26.005Z"
@@ -2986,7 +2521,7 @@
           "kind": "course",
           "label": "第 15 讲 · 8.1 先分清名称：Private Fund vs Private Investment Fund",
           "href": "/courses/bvi-fund-manager#m1",
-          "context": "（私人基金）是 BVI 共同基金体系（Mutual Funds Act）下面向专业投资者的类别；Private Investment Fund（私募投资基金）是…"
+          "context": "（私人基金）是 BVI 共同基金体系（Mutual Funds Act）下面向专业投资者的类别；"
         }
       ],
       "zh": "",
@@ -2995,7 +2530,7 @@
         "15"
       ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T08:37:26.005Z"
+      "lastSeenAt": "2026-09-21T02:22:18.966Z"
     },
     {
       "key": "ownership",
@@ -3038,7 +2573,7 @@
           "kind": "course",
           "label": "第 12 讲 · 5.1 第一层：基金自身分类",
           "href": "/courses/fatca-crs#m1",
-          "context": "…否可归入 Non-Reporting FI，或属于 NFE（非金融实体）及 Active/Passive 类别。分类决定后续注册与申报义务。 同一基金在不同法域口径（"
+          "context": "）及 Active/Passive 类别。分类决定后续注册与申报义务。 同一基金在不同法域口径（"
         }
       ],
       "zh": "",
@@ -3047,7 +2582,7 @@
         "12"
       ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T08:37:26.005Z"
+      "lastSeenAt": "2026-09-21T02:22:18.966Z"
     },
     {
       "key": "permanent resident identity",
@@ -3098,33 +2633,6 @@
       "courseIds": [],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
       "lastSeenAt": "2026-09-20T07:00:35.831Z"
-    },
-    {
-      "key": "principal point",
-      "text": "Principal Point",
-      "confidence": "phrase",
-      "acronym": false,
-      "docs": 1,
-      "courses": [
-        "第 12 讲"
-      ],
-      "cases": [],
-      "count": 1,
-      "samples": [
-        {
-          "kind": "course",
-          "label": "第 12 讲 · 5.2 第二层：注册与角色安排",
-          "href": "/courses/fatca-crs#m2",
-          "context": "…税务机关/门户（如开曼的 TIA 门户）完成注册与分类申报，并指定联络角色（如 PPOC/Principal Point of Contact、Authorising Person）及申报授权安排。 注册角色（…"
-        }
-      ],
-      "zh": "",
-      "fullName": "",
-      "courseIds": [
-        "12"
-      ],
-      "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T08:37:26.005Z"
     },
     {
       "key": "private",
@@ -3219,7 +2727,7 @@
           "kind": "course",
           "label": "选修 E04 · 1.1 美国连接点识别",
           "href": "/courses/e04-us-fund-basics#m1",
-          "context": "…公司（如 CFIUS、行业限制）、以及在美国向投资者发售权益（私募发售合规，如 144A/Reg D/S 条例等路径由美国律师判断）。 "
+          "context": "、行业限制）、以及在美国向投资者发售权益（私募发售合规，如 144A/Reg D/S 条例等路径由美国律师判断）。 "
         }
       ],
       "zh": "",
@@ -3228,7 +2736,7 @@
         "E04"
       ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T08:37:26.005Z"
+      "lastSeenAt": "2026-09-21T02:22:18.966Z"
     },
     {
       "key": "restrict",
