@@ -9,7 +9,7 @@ export const siteConfig = {
   /** 中文副题（品牌区） */
   nameZh: "境外基金行政知识平台",
   /** 当前版本号（不含阶段词；页面展示统一为「内测版 vX」/ Internal Beta 等） */
-  version: "v1.20.8",
+  version: "v1.20.9",
   /** 版本阶段标签 */
   releaseStage: "Internal Beta",
   /** 内测状态卡文案 */
