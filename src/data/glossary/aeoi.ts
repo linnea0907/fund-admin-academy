@@ -127,17 +127,21 @@ export const AEOI_TERMS: GlossaryTerm[] = [
     source: ["blue-book"],
     tags: ["身份分类", "控权人", "主动/被动"],
     brief: "FATCA 下非金融机构的外国实体，分主动型与被动型。",
+    commonMistakes: [
+      "把 FATCA 的 NFFE 与 CRS 的 NFE 当作同一概念：两套体系的最外层分类名不可互换——FATCA 用 NFFE（Non-Financial Foreign Entity），CRS 用 NFE（Non-Financial Entity），分类逻辑接近但适用法规与判断标准不同",
+      "在 CRS 自我证明表里沿用 NFFE 口径填写，导致分类与表格体系不匹配（CRS 表格应填 NFE）",
+    ],
   },
   {
     id: "active-nfe",
     term: "Active NFE",
     fullName: "Active Non-Financial Entity",
-    zh: "主动型非金融外国实体",
+    zh: "主动型非金融实体",
     category: "aeoi",
     level: "expert",
-    jurisdiction: ["USA", "Global"],
+    jurisdiction: ["Global", "USA"],
     definition:
-      "以主动经营业务为主（如贸易、制造、服务）或属上市/政府/非营利等特定类别的 NFFE，其被动收入与资产占比低于法定门槛（通常被动收入 < 50%）。",
+      "以主动经营业务为主（如贸易、制造、服务）或属上市/政府/非营利等特定类别的非金融实体，其被动收入与资产占比低于法定门槛（通常被动收入 < 50%）。同一分类逻辑在两套体系下名称不同：CRS 称主动型 NFE，FATCA 语境下称 Active NFFE。",
     whyImportant:
       "主动型 NFE 通常无需申报控权人，可显著简化 AEOI 尽调：但须取得支持性财务数据或声明，不能仅凭客户自我描述归类。",
     scenario: ["AEOI / CRS / FATCA", "Investor Onboarding"],
@@ -146,17 +150,21 @@ export const AEOI_TERMS: GlossaryTerm[] = [
     source: ["blue-book", "ics"],
     tags: ["身份分类", "被动收入门槛", "简化尽调"],
     brief: "以主动经营业务为主、通常无需申报控权人的实体。",
+    commonMistakes: [
+      "把「主动型 NFE」与「Active NFFE」当作两个不同分类：名称不同而分类逻辑同一（CRS 用 NFE / FATCA 用 NFFE，不可混用）",
+      "仅凭客户自我描述即归为主动型，未取得支持性财务数据或声明",
+    ],
   },
   {
     id: "passive-nfe",
     term: "Passive NFE",
     fullName: "Passive Non-Financial Entity",
-    zh: "被动型非金融外国实体",
+    zh: "被动型非金融实体",
     category: "aeoi",
     level: "expert",
-    jurisdiction: ["USA", "Global"],
+    jurisdiction: ["Global", "USA"],
     definition:
-      "不符合主动型标准、以持有投资/被动收入为主的 NFFE（或本身为另一 FFI/NFFE 的投资实体），须申报其控权人（Controlling Persons）信息，或在无美国控权人时作出声明。",
+      "不符合主动型标准、以持有投资或被动收入为主的非金融实体（包括属投资实体的持有结构），须申报其控权人（Controlling Persons）信息，或声明不存在应申报的控权人。同一分类逻辑在两套体系下名称不同：CRS 称被动型 NFE，FATCA 语境下称 Passive NFFE。",
     whyImportant:
       "基金投资人中的控股公司、家族持有实体多属被动型 NFE：控权人识别不到位是 AEOI 申报错误中最常见的成因。",
     scenario: ["AEOI / CRS / FATCA", "Investor Onboarding", "Periodic Review"],
@@ -165,6 +173,10 @@ export const AEOI_TERMS: GlossaryTerm[] = [
     source: ["blue-book", "ics"],
     tags: ["控权人申报", "投资实体", "尽调"],
     brief: "以被动收入为主、须申报控权人的实体。",
+    commonMistakes: [
+      "把 Passive NFE 与 Passive NFFE 混用：在 CRS 表格填 NFFE、在 FATCA 表格填 NFE，导致分类与表格体系不匹配（CRS 用 NFE / FATCA 用 NFFE）",
+      "对被动型实体未穿透识别控权人即完成尽调",
+    ],
   },
   {
     id: "controlling-person",
@@ -276,7 +288,7 @@ export const AEOI_TERMS: GlossaryTerm[] = [
     whyImportant: "申报为年度周期性义务：零申报（nil return）通常也须提交，漏交会被视为未履行 FFI 义务。",
     scenario: ["AEOI / CRS / FATCA", "Regulatory Filing"],
     aliases: ["FATCA Reporting", "FATCA 申报义务", "Form 8966"],
-    related: ["fatca", "ffi", "giin", "crs-reporting", "reportable-account"],
+    related: ["fatca", "ffi", "giin", "crs-reporting", "reportable-account", "ditc-portal", "ppoc", "authorising-person"],
     source: ["blue-book", "ics"],
     tags: ["年度申报", "零申报", "IRS"],
     brief: "FFI 按年向主管机关或 IRS 提交美国账户信息的申报义务。",
@@ -295,7 +307,7 @@ export const AEOI_TERMS: GlossaryTerm[] = [
       "CRS 申报口径要求账户持有人税务居民辖区与 TIN 准确：TIN 缺失是申报退回的高频原因，须在自证阶段就完成收集。",
     scenario: ["AEOI / CRS / FATCA", "Regulatory Filing"],
     aliases: ["CRS Reporting", "CRS 申报义务"],
-    related: ["crs", "reportable-account", "tin", "self-certification", "fatca-reporting"],
+    related: ["crs", "reportable-account", "tin", "self-certification", "fatca-reporting", "ditc-portal", "ppoc", "authorising-person"],
     source: ["blue-book", "ics"],
     tags: ["年度申报", "TIN", "交换"],
     brief: "金融机构按年向本地机关提交需申报账户信息。",

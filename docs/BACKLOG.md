@@ -1071,56 +1071,91 @@ LPF 首版中文名取「有限合伙基金」，与内置 `limited-partnership`
 
 ---
 
-## 术语库扩容 · 下一批需求（来源：V1.20.7 Copilot 验收意见「未给到 WorkBuddy 的新需求」）
+## V1.20.8 已交付（2026-09-21 · 来源：Lu 直接下达「V1.20.8 优先级确认」）
 
-### P1 `Authorising Person` 术语入库 + PPOC 组互链
+### 交付内容
 
-- **来源**：Copilot 验收意见（明示「下一批优先级最高的补充项」）。
-- **目标**：收录 `Authorising Person`（授权人），与 `PPOC` / `DITC Portal` / `CRS Reporting` / `FATCA Reporting` 建立**双向**关联。
-- **实务依据**：行业高频提问「PPOC 是谁 / Authorising Person 是谁 / 能否同一人」。属基金行政操作知识。
-- **⚠️ 前置障碍（需先决策）**：Copilot 点名的 `DITC Portal` **当前在 181 条里不存在**（无 `ditc-portal` 词条）。
-  二选一：① 新建 `ditc-portal` 词条；② 在 `ppoc` / `authorising-person` 定义正文中提及、但不建关联边。
-  建议 ①（否则「互链」目标不完整），但会引入一条非 Copilot 清单内的术语 → **需 Lu 确认**。
-- **同步要求**：`PPOC` 当前对 `crs-reporting` / `fatca-reporting` 只有出链，本批应补齐回链（即上面「新发现」第一项）。
-- **涉及文件**：`content/glossary/imported.json`。
-- **验收口径**：闸门 182/183 条 0 错；`PPOC` / `Authorising Person` / `DITC Portal` / `CRS Reporting` / `FATCA Reporting` 五者组内在站内页面上**全双向可达**（探针实测 + 截图）。
+| 项 | 内容 | 结果 |
+|---|---|---|
+| P1-1/2 | 新增 `DITC Portal` · `Authorising Person` | 术语 **181 → 183**（导入 11 → 13） |
+| P1-3 | 五词组**完整互链** | `DITC Portal ↔ PPOC ↔ Authorising Person ↔ CRS Reporting ↔ FATCA Reporting` 全互链 |
+| P1-4 | `active-nfe` / `passive-nfe` 口径修复 | 中文名 → 「主动型非金融实体」/「被动型非金融实体」；定义去 NFFE 化；`jurisdiction` 改 `Global` 优先 |
+| P1-5 | `commonMistakes` 补「CRS 用 NFE / FATCA 用 NFFE / 不可混用」 | 覆盖 `nfe`（V1.20.7 已做）· `nffe` · `active-nfe` · `passive-nfe` 四条 |
+| P1-6 | 图谱反向关联治理 | 指定 7 条叶子全部脱离叶子，入链 **2~4** |
+| P2-7 | 搜索同义词层 | 新增 `src/lib/search-synonyms.ts` + `/search` 推荐块；**不写 aliases、不进正文标注** |
+| P4-8 | Jurisdiction Pack | **暂缓**（Lu 决策：现有属地筛选已覆盖大部分场景，除非后续证明存在明确横向比较需求） |
 
-### P2 搜索同义词层（`Fund Manager` → 推荐术语）
+### 数据变化
 
-- **来源**：Copilot 验收意见（替代 P3-5 的 alias 方案）。
-- **目标**：站内搜索 `Fund Manager` 时，**推荐** `Investment Manager` / `GP` / `Management Company` / `Sponsor` 等真实术语。
-- **硬约束**：**不得**把 `Fund Manager` 加入任何术语的 `aliases`（会变成可标注文本 → 过度标注，见 V1.20.7 否决项）。
-- **形态**：检索层映射（Search Redirect / 同义词表），**不新增导航模块**。
-- **现状实测（2026-09-21）**：检索层**没有任何同义词 / 别名重定向机制**。`SearchClient.tsx` 的匹配是
-  「逐 scope 对结构化字段做 `toLowerCase().includes()`」（lesson title/subtitle、case、sop、template、checklist、toolkit），
-  术语 scope 走 `term` / `aliases` / `fullName`。因 `Fund Manager` 未进任何 `aliases`，**当前在术语 scope 命中 0**。
-  ⇒ 需**新增**一张映射表与「推荐术语」呈现（不是改现有字段）。
-- **涉及文件**：`src/components/search/SearchClient.tsx`、`src/app/search/page.tsx`（+ 映射表落点待定）。
-- **验收口径**：搜索 `Fund Manager` 时给出术语推荐且**页面正文标注不新增任何 `data-term`**（反向断言：`Fund Manager` 命中的术语数 = 0）。
-- **登记时三问答复**（IA 守则）：① 新增了什么 —— 检索层同义词映射表；② 删除了什么 —— **无**（纯增量，不改现有搜索范围）；③ 为什么不能只删除而必须新增 —— 无对应术语可删，用户输入的自然语言泛称必须被映射到真实术语，否则检索为空。
+```
+术语        181 → 183          覆盖率   76%（138/181）→ 77%（140/183）
+关联边      859 → 894（+35）   孤立     43 → 43（未增加）
+可标注文本  661 → 670          全库叶子 15 → 8（剩余为存量，见下）
+```
 
-### P3 Jurisdiction Pack（法域基金结构聚类）
+### 四条实测发现
 
-- **来源**：Copilot 验收意见（明示「知识网络增强，不新增模块」）。
-- **目标**：把 `OFC` / `LPF` / `RFMC` / `A/I LFMC` / `PIF` / `Professional Fund` / `Private Fund` / `Mutual Fund`
-  按**法域 → 基金载体**聚类，形成「法域基金结构导航」。用户学的是**各法域载体比较**，而非孤立术语。
-- **⚠️ 缺口**：`A/I LFMC` 当前不在库中（`rfmc` 定义里提到但无独立词条）→ 需先决是否收录。
-- **形态约束**：只做**聚类视图**（在 `/glossary` 内或术语页内的分组入口），**不得新增一级/二级导航项**。
-- **登记时三问答复**（IA 守则）：① 新增了什么 —— 术语页内的法域聚类视图；② 删除了什么 —— **无**；③ 为什么不能只删除而必须新增 —— 现有 `related` 图谱是**术语对术语**的散点关系，无法表达「同法域载体并列对比」这一结构，属现有模块无法解决。**⚠️ ②为 0 属高风险，排期前须补充减法设计。**
-- **⚠️ 现状实测（2026-09-21，显著加重举证责任）**：`/glossary` **已经有属地筛选**（`GlossaryExplorer.tsx` 的 `jur` 维度，
-  与分类 / 等级 / 来源 / 仅看已使用 / 仅看孤立并列，chip 上带条数）。
-  即「筛 BVI → 看 PIF / Professional Fund」**当前已可做到**。
-  因此 P3 若只是「再做一个按属地分组的列表」，按 Subtraction First 属**重复展示**，应先考虑**删除**。
-  真正未被覆盖的只有一点：**跨法域的载体形态横向对比**（同一屏内并列香港 / 新加坡 / BVI / 开曼各自的载体与监管依据）。
-  排期时须先回答「能否通过调整现有筛选条的默认值与分组方式解决」。
+1. **`DITC Portal` 的体系归属**：DITC（Department for International Tax Cooperation）隶开曼税务信息主管当局（TIA），
+   **与 CIMA 分属两套体系** —— 「CIMA 牌照不替代门户注册」已写入 `commonMistakes`（官方 FAQ 明确 DITC 非 CIMA 下属）。
+2. **`Authorising Person` 的权限边界**：与 `PPOC` 须**分别任命**、原则上**不得同一人**；权限**仅及于 PPOC 的身份变更**，
+   申报提交权在 PPOC 一侧（官方 Guidance Note：授权人负责提交 PPoC 变更申请）。即「备用钥匙」而非「副手」。
+3. **`DITC Portal` 与课程正文命名的差异**：`lessons.ts` 第 10 讲（`fatca-crs`）用的说法是 **「TIA 门户」**，
+   并非 "DITC Portal"。故 `aliases` 收录 `"TIA 门户"` / `"TIA Portal"`，使正文 2 处既有关联成链（实测 `TIA 门户 → ditc-portal`）。
+4. **P2 只有 2/4 个落点**：Lu 指定的 4 个推荐目标中，**`Management Company` 与 `Sponsor` 当前无词条**，
+   无法作为推荐落点（会渲染死链）。本轮只登记 `investment-manager` / `gp`；缺口见下方「下一批」。
+   另：`Fund Manager` 在课程正文实测出现 **0 次**，故「不进 aliases」的决定本轮**零标注影响**（风险为潜在、非现存）。
 
-### WB-追加 P1 NFE / NFFE 口径治理（本轮实测发现，非 Copilot 提出）
+### 剩余叶子节点（存量，本轮未动 —— 超出 Lu 指定范围）
 
-- **问题**：`active-nfe` / `passive-nfe` 的 `zh` 与定义正文用 NFFE 口径（「非金融外国实体」），但 `id` / `term` 是 CRS 的 NFE。
-  术语库**自身**即存在 Copilot 所指的最易混淆之处。
-- **选项**：① 改 `zh` 为「主动型/被动型非金融实体」并将 NFFE 语义移入 `commonMistakes`（**改动内置术语核心字段，需 Lu 确认**）；② 维持现状，仅在 `commonMistakes` 中以文字消歧（低风险但字面仍混）。
-- **建议**：①。理由：`zh` 是**恒可标注文本**，留着 NFFE 译法会持续把 NFFE 概念注入正文标注。
-- **涉及文件**：`src/data/glossary/aeoi.ts`。
+```
+hedge-fund · private-equity-fund · fund-of-funds · foundation
+llc · pcc · transfer-pricing · stamp-duty
+```
+
+> 这 8 条**不是 V1.20.7 / V1.20.8 新增**，属存量单向图谱问题。Lu 本轮指定的 7 条已全部处理。
+> 是否一并补入链**待 Lu 确认**（做法同本轮：各补 2 条上游即可，只动 `related`）。
+
+### 验证
+
+闸门 **183 条 0 错**（0 重复 / 0 断链 / 0 无效引用 / 0 标注撞车 / 0 缺字段）· tsc **0** · lint **0 错误 0 警告** · build 通过
+冒烟 `v1208-smoke` 全绿 · 截图 md5 全唯一
+标注实测：`TIA 门户 → ditc-portal` · `Authorising Person → authorising-person` ·
+AML 语境中的「授权人」**未被误标**（中文名采用限定词「授权人（开曼）」）· `Active/Passive NFE` 未被 `nfe` 抢走
+
+**旧脚本退役（硬闸门）**：`v1207-smoke.mjs`（断言口径基于 181 条 → 会假红）、`v1207-shots.mjs`（会覆盖已冻结的 v1.20.7 截图）。
+
+---
+
+## 术语库扩容 · 下一批（V1.20.7 验收意见 → V1.20.8 交付情况）
+
+> 本节保留为**登记台账**：交付状态就地标注，未交付项继续留存。
+
+### ✅ 已交付（V1.20.8）P1 `DITC Portal` + `Authorising Person` + 五词组互链
+
+原前置障碍（「`DITC Portal` 当前无词条，二选一」）已由 Lu 拍板选择 **① 新建词条**，完整互链目标达成。
+
+### ✅ 已交付（V1.20.8）P2 搜索同义词层
+
+- **落地**：`src/lib/search-synonyms.ts`（触发词 → 目标术语 id，**整串匹配**，附 `normalizeQuery` 处理大小写 / 复数 / 全角空格 / 末尾标点）
+  + `SearchClient.tsx` 的「你可能想找」推荐块（`data-synonym-redirect` / `data-synonym-target` 锚点）。
+- **硬约束已守住**：未写任何 `aliases`；`investment-manager` 的别名列表经断言确认不含 `Fund Manager`；正文标注未新增。
+- **⚠️ 遗留缺口（下一批）**：`Management Company` / `Sponsor` **无词条** → 推荐只覆盖 2/4。
+  待其入库后在 `SEARCH_SYNONYM_REDIRECTS[].targets` 追加 id 即可，**渲染层无需改动**。
+
+### ⏸ 暂缓（V1.20.8 定档为 P4）Jurisdiction Pack（法域基金结构聚类）
+
+- **Lu 决策（2026-09-21）**：**暂缓**。理由：现有 Jurisdiction Filter 已覆盖大部分场景，
+  除非后续证明存在**明确的横向比较需求**，否则不新增展示层。
+- **保留的实测结论**（供日后重启时直接引用）：`/glossary` 已有属地筛选（`jur` 维度，chip 带条数），
+  「筛 BVI → 看 PIF / Professional Fund」**当前已可做到**；真正未被覆盖的只有**跨法域载体形态横向对比**。
+  重启前须先回答「能否通过调整现有筛选条的默认值与分组方式解决」。
+- **⚠️ 缺口仍在**：`A/I LFMC` 不在库中（`rfmc` 定义提及但无独立词条）→ 若重启，需先决是否收录。
+
+### ✅ 已交付（V1.20.8）WB-追加 P1 NFE / NFFE 口径治理
+
+采用方案 ①：`zh` 改为「主动型/被动型非金融实体」，NFFE 语义移入 `commonMistakes` 并在定义中显式标注
+「CRS 称 NFE / FATCA 称 NFFE」。实测曲线：**正文对旧中文名零引用**，故无覆盖回退。
+
 
 ---
 

@@ -1,8 +1,8 @@
 {
   "version": 1,
-  "generatedAt": "2026-09-21T02:22:18.966Z",
+  "generatedAt": "2026-09-21T04:09:09.353Z",
   "baseline": {
-    "glossaryTerms": 181,
+    "glossaryTerms": 183,
     "documents": 275,
     "courses": 128,
     "cases": 147
@@ -965,33 +965,6 @@
       "lastSeenAt": "2026-09-20T08:37:26.005Z"
     },
     {
-      "key": "tia",
-      "text": "TIA",
-      "confidence": "acronym",
-      "acronym": true,
-      "docs": 1,
-      "courses": [
-        "第 12 讲"
-      ],
-      "cases": [],
-      "count": 1,
-      "samples": [
-        {
-          "kind": "course",
-          "label": "第 12 讲 · 5.2 第二层：注册与角色安排",
-          "href": "/courses/fatca-crs#m2",
-          "context": " 下在本地税务机关/门户（如开曼的 TIA 门户）完成注册与分类申报，并指定联络角色（如 "
-        }
-      ],
-      "zh": "",
-      "fullName": "",
-      "courseIds": [
-        "12"
-      ],
-      "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-21T02:22:18.966Z"
-    },
-    {
       "key": "reference letter",
       "text": "Reference Letter",
       "confidence": "phrase",
@@ -1260,45 +1233,6 @@
           "label": "第 12 讲 · 5.5 实务手册：FI / NFE 分类、Passive NFE、Controlling Person 与 GIIN",
           "href": "/courses/fatca-crs#m5",
           "context": " 分类速查：Financial Institution（金融机构）含 Investment Entity（投资实体）等子类；Non-Reporting FI 需满足特定条件；"
-        }
-      ],
-      "zh": "",
-      "fullName": "",
-      "courseIds": [
-        "12"
-      ],
-      "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-21T02:22:18.966Z"
-    },
-    {
-      "key": "authorising person",
-      "text": "Authorising Person",
-      "confidence": "phrase",
-      "acronym": false,
-      "docs": 3,
-      "courses": [
-        "第 12 讲"
-      ],
-      "cases": [],
-      "count": 4,
-      "samples": [
-        {
-          "kind": "course",
-          "label": "第 12 讲 · 5.2 第二层：注册与角色安排",
-          "href": "/courses/fatca-crs#m2",
-          "context": "、Authorising Person）及申报授权安排。 注册角色（如 "
-        },
-        {
-          "kind": "course",
-          "label": "第 12 讲 · 5.2 第二层：注册与角色安排",
-          "href": "/courses/fatca-crs#m2",
-          "context": " 与 Authorising Person）的资格、独立性及兼任规则须按办理时官方要求复核，课程不宜写死。"
-        },
-        {
-          "kind": "course",
-          "label": "第 12 讲 · 5.5 实务手册：FI / NFE 分类、Passive NFE、Controlling Person 与 GIIN",
-          "href": "/courses/fatca-crs#m5",
-          "context": "/Authorising Person 等）资格与兼任规则按办理时官方要求复核。年度工作含分类复核、"
         }
       ],
       "zh": "",

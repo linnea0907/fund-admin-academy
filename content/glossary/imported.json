@@ -140,7 +140,7 @@
       "whyImportant": "开曼基金的 FATCA/CRS 申报权限绑定在 PPOC 上：更换基金行政管理人、开户服务商或合规负责人时，必须同步在 Portal 上变更 PPOC 与授权人角色，否则申报无法提交，进而产生逾期申报风险。",
       "scenario": ["AEOI / CRS / FATCA", "Regulatory Filing", "Client Communication"],
       "aliases": ["Principal Point of Contact", "主要联系人"],
-      "related": ["crs-reporting", "fatca-reporting", "giin", "cima", "aeoi", "account-holder"],
+      "related": ["ditc-portal", "authorising-person", "crs-reporting", "fatca-reporting", "giin", "cima", "aeoi", "account-holder"],
       "source": ["cima"],
       "tags": ["开曼", "AEOI", "Portal", "申报权限"],
       "brief": "开曼 DITC Portal 上持有申报权限的角色，与授权人配对。",
@@ -231,6 +231,49 @@
       "commonMistakes": [
         "在认购阶段未识别美国投资人，导致后续 PFIC 信息义务无法履行",
         "把 PFIC 与 CFC 当作同一分类（判定标准与后果均不同）"
+      ]
+    },
+    {
+      "id": "ditc-portal",
+      "term": "DITC Portal",
+      "fullName": "Department for International Tax Cooperation Portal",
+      "zh": "DITC 门户",
+      "category": "aeoi",
+      "level": "advanced",
+      "jurisdiction": ["Cayman"],
+      "definition": "开曼税务信息主管当局（TIA）通过国际税务合作部（DITC）运营的线上申报门户，是开曼金融机构履行 AEOI 义务的唯一线上通道：机构注册（Notification）、FATCA 与 CRS 年度申报、合规表（Compliance Form）与申报声明、PPOC 与授权人的变更，均须经该门户提交。",
+      "whyImportant": "开曼的 AEOI 义务是「门户化」的：未完成 Notification 注册即无从申报，而门户权限绑定在登记用户账号上——行政管理人可以维护台账，但只有门户上的登记用户才能完成提交。DITC 隶税务信息主管当局，与 CIMA 分属两套体系，CIMA 牌照不能替代门户注册。",
+      "scenario": ["AEOI / CRS / FATCA", "Regulatory Filing", "Fund Setup"],
+      "aliases": ["DITC Portal", "TIA 门户", "TIA Portal", "Cayman AEOI Portal"],
+      "related": ["ppoc", "authorising-person", "crs-reporting", "fatca-reporting", "cima", "aeoi"],
+      "source": ["cima"],
+      "tags": ["开曼", "AEOI", "申报通道", "门户权限"],
+      "brief": "开曼 AEOI 申报的唯一线上通道，申报权限绑定登记用户账号。",
+      "commonMistakes": [
+        "把 DITC 门户当作 CIMA 的系统：DITC 隶税务信息主管当局（TIA），与 CIMA 分属两套体系，牌照与门户注册互不替代",
+        "更换行政管理人或合规负责人后只做内部交接，未在门户上同步变更 PPOC 与授权人，导致申报无人有权提交"
+      ]
+    },
+    {
+      "id": "authorising-person",
+      "term": "Authorising Person",
+      "fullName": "Authorising Person",
+      "zh": "授权人（开曼）",
+      "category": "aeoi",
+      "level": "expert",
+      "jurisdiction": ["Cayman"],
+      "definition": "开曼 DITC 门户上与主要联系人（PPOC）配对任命的角色：授权人有权就 PPOC 的身份变更向税务信息主管当局发出变更通知，据此在 PPOC 离任或失联时保证申报权限可以交接。其权限范围小于 PPOC（PPOC 掌握申报提交权，授权人掌握 PPOC 变更权），两者须分别任命，除由 CIMA 持牌实体担任等特定情形外不得为同一人。",
+      "whyImportant": "授权人是基金 AEOI 权限的「备用钥匙」：PPOC 一旦离任、失联或拒不配合，只有授权人能发起 PPOC 变更；若门户上只登记了 PPOC 而未登记授权人，基金将无人有权更换 PPOC，申报随即中断。任命须有董事、受托人或普通合伙人签署的授权函作为依据。",
+      "scenario": ["AEOI / CRS / FATCA", "Regulatory Filing", "Client Communication"],
+      "aliases": ["Authorising Person", "Authorizing Person"],
+      "related": ["ppoc", "ditc-portal", "crs-reporting", "fatca-reporting", "cima"],
+      "source": ["cima"],
+      "tags": ["开曼", "AEOI", "门户权限", "角色分离"],
+      "brief": "开曼门户上负责发起 PPOC 变更的角色，与 PPOC 配对且原则上不得同一人。",
+      "commonMistakes": [
+        "安排同一人同时担任 PPOC 与授权人，使角色分离失效（除由 CIMA 持牌实体担任等特定情形外不被允许）",
+        "只登记 PPOC 而漏登记授权人：门户上两个角色须同时齐备，否则 PPOC 变更无从发起",
+        "把授权人当成 PPOC 的「副手」或代理人，误以为其也能提交申报（授权人权限仅及于 PPOC 的身份变更）"
       ]
     }
   ]

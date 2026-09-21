@@ -11,6 +11,7 @@ import {
 } from "@/lib/glossary";
 import { recordTermEvents } from "@/lib/wiki-metrics";
 import { displayNumber } from "@/lib/lesson-number";
+import { matchSynonymRedirect } from "@/lib/search-synonyms";
 
 function escapeRegExp(s: string): string {
   return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -349,6 +350,15 @@ export default function SearchClient({ data }: { data: SearchData }) {
     return () => window.clearTimeout(timer);
   }, [kw, topHitKey]);
 
+  /** 术语 id 集合 —— 同义词推荐落点校验用，避免渲染出死链 */
+  const termIdSet = useMemo(() => new Set(data.terms.map((t) => t.id)), [data.terms]);
+
+  /**
+   * 搜索同义词推荐（V1.20.8）：把泛称（Fund Manager）指向受控角色。
+   * 只做**推荐**：不写 aliases、不参与正文标注、不改动结果集。
+   */
+  const synonym = useMemo(() => matchSynonymRedirect(kw, termIdSet), [kw, termIdSet]);
+
   /** 当前范围是否展示某结果组 */
   const show = (g: Exclude<Scope, "all">) => scope === "all" || scope === g;
 
@@ -434,6 +444,39 @@ export default function SearchClient({ data }: { data: SearchData }) {
           ))}
         </div>
       </div>
+
+      {/* ===== 搜索同义词推荐（V1.20.8）：泛称 → 受控角色，只推荐、不参与正文标注 ===== */}
+      {synonym && (
+        <section
+          data-synonym-redirect={synonym.trigger}
+          className="rounded-2xl border border-amber-200 bg-amber-50/50 p-4 sm:p-5"
+        >
+          <h2 className="flex flex-wrap items-center gap-2 text-sm font-bold text-slate-800">
+            你可能想找
+            <span className="rounded bg-amber-100 px-1.5 py-0.5 text-[10px] font-semibold text-amber-700">
+              泛称指引
+            </span>
+          </h2>
+          <p className="mt-1 text-xs text-slate-500">{synonym.note}</p>
+          <div className="mt-3 flex flex-wrap gap-2">
+            {synonym.targetIds.map((id) => {
+              const t = data.terms.find((x) => x.id === id);
+              if (!t) return null;
+              return (
+                <Link
+                  key={id}
+                  href={`/glossary/${id}`}
+                  data-synonym-target={id}
+                  className="rounded-full border border-amber-200 bg-white px-3 py-1.5 text-xs font-semibold text-[#0e2a5e] transition hover:border-[#0e2a5e]"
+                >
+                  {t.term}
+                  <span className="ml-1.5 font-normal text-slate-500">{t.zh}</span>
+                </Link>
+              );
+            })}
+          </div>
+        </section>
+      )}
 
       {/* ===== 空闲态：知识检索四级结构 ===== */}
       {!kw ? (
