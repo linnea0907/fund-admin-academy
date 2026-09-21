@@ -5,7 +5,7 @@
  * 导入术语请把 JSON 落到 content/glossary/imported.json，再运行 `npm run gen:glossary`（或直接 build）。
  * 维护入口：术语库 → 「术语审核」页签 → 采纳候选 → 导出术语补全包（V1.20.5）。
  *
- * 本次烘焙：13 条导入术语
+ * 本次烘焙：29 条导入术语
  * 源文件：content/glossary/imported.json
  */
 import type { GlossaryTerm } from "@/types/glossary";
@@ -591,6 +591,744 @@ export const IMPORTED_TERMS: GlossaryTerm[] = [
       "安排同一人同时担任 PPOC 与授权人，使角色分离失效（除由 CIMA 持牌实体担任等特定情形外不被允许）",
       "只登记 PPOC 而漏登记授权人：门户上两个角色须同时齐备，否则 PPOC 变更无从发起",
       "把授权人当成 PPOC 的「副手」或代理人，误以为其也能提交申报（授权人权限仅及于 PPOC 的身份变更）"
+    ]
+  },
+  {
+    "id": "cash-intensive-business",
+    "term": "Cash Intensive Business",
+    "fullName": "Cash Intensive Business",
+    "zh": "现金密集行业",
+    "category": "aml-kyc",
+    "level": "advanced",
+    "jurisdiction": [
+      "Global"
+    ],
+    "definition": "经营活动中大量以现金结算、难以追踪资金来源的行业，典型如餐饮、零售、娱乐、博彩、加油站、便利店与典当行。犯罪分子利用这类行业「现金进、账面出」的特征，把犯罪所得混入合法营收，构成洗钱放置阶段（placement）的常见入口。",
+    "whyImportant": "现金密集行业是洗钱放置阶段的高风险地带：Fund Admin 若投资人或其资金来源涉及此类行业，应提高受益所有人穿透与资金来源核验的标准，现金交易无法留痕决定了尽调只能依赖更强的经营实质审查。",
+    "scenario": [
+      "Investor Onboarding",
+      "Periodic Review"
+    ],
+    "aliases": [
+      "Cash Intensive Business",
+      "Cash-Intensive Business",
+      "现金密集型行业"
+    ],
+    "related": [
+      "aml",
+      "mlro",
+      "str",
+      "ubo",
+      "sof",
+      "transaction-monitoring",
+      "private-banking",
+      "third-party-payment-channel"
+    ],
+    "source": [
+      "blue-book",
+      "cima"
+    ],
+    "tags": [
+      "洗钱放置",
+      "现金",
+      "高风险行业",
+      "资金来源"
+    ],
+    "brief": "以现金结算为主、资金难留痕的行业，是洗钱放置阶段的常见入口。",
+    "commonMistakes": [
+      "把现金密集行业一律判定为高风险，忽略其经营规模与合规成熟度的差异"
+    ]
+  },
+  {
+    "id": "nested-account",
+    "term": "Nested Account",
+    "fullName": "Nested Account",
+    "zh": "嵌套账户",
+    "category": "aml-kyc",
+    "level": "advanced",
+    "jurisdiction": [
+      "Global"
+    ],
+    "definition": "境外银行通过其在另一家银行开立的代理账户，向自己的下游客户「转租」银行服务所形成的多层级账户结构。下游客户的身份与交易对代理行不可见，资金可跨越多层离岸账户流转，制造追查断点。",
+    "whyImportant": "嵌套账户是代理行业务的高风险形态：中间机构层层转手后，真正客户与资金用途完全脱离代理行的尽调视野。Fund Admin 在核查境外收款路径或代理行链路时，须警惕多层嵌套导致的受益所有人不明。",
+    "scenario": [
+      "Investor Onboarding",
+      "Fund Operations",
+      "Periodic Review"
+    ],
+    "aliases": [
+      "Nested Account",
+      "嵌套账户",
+      "转租账户"
+    ],
+    "related": [
+      "correspondent-banking",
+      "aml",
+      "cdd",
+      "ubo",
+      "transaction-monitoring"
+    ],
+    "source": [
+      "blue-book",
+      "cima"
+    ],
+    "tags": [
+      "代理行",
+      "离析",
+      "受益所有人",
+      "账户层级"
+    ],
+    "brief": "代理账户被中间机构层层转租形成的多层账户结构，客户与资金对代理行不可见。",
+    "commonMistakes": [
+      "只尽调直接客户，忽略其通过嵌套账户向下游客户转租服务的风险"
+    ]
+  },
+  {
+    "id": "correspondent-banking",
+    "term": "Correspondent Banking",
+    "fullName": "Correspondent Banking",
+    "zh": "代理行",
+    "category": "aml-kyc",
+    "level": "advanced",
+    "jurisdiction": [
+      "Global"
+    ],
+    "definition": "一家银行（代理行，correspondent bank）为另一家银行（委托行，respondent bank）提供账户与清算服务，使其客户得以在自身未设网点或清算渠道的辖区完成收付。代理行通常不直接接触委托行的客户，依赖委托行自行完成客户尽调。",
+    "whyImportant": "代理行业务是跨境资金流转的基础设施，也是 FATF 点名的高风险领域：代理行对委托行客户「看不见」，若委托行尽调缺失，犯罪资金即可借道进入国际清算体系。Fund Admin 处理跨境收款时，应识别路径中是否涉及代理行及其尽调充分性。",
+    "scenario": [
+      "Fund Operations",
+      "Investor Onboarding"
+    ],
+    "aliases": [
+      "Correspondent Banking",
+      "代理行业务",
+      "通汇业务"
+    ],
+    "related": [
+      "nested-account",
+      "aml",
+      "cdd",
+      "transaction-monitoring",
+      "fatf"
+    ],
+    "source": [
+      "blue-book",
+      "cima"
+    ],
+    "tags": [
+      "跨境清算",
+      "代理行",
+      "FATF",
+      "银行"
+    ],
+    "brief": "银行间互为代理提供清算服务的业务，代理行对委托行客户尽调不可见。",
+    "commonMistakes": [
+      "把代理行与委托行客户尽调责任混同，误以为代理行应直接尽调终端客户"
+    ]
+  },
+  {
+    "id": "private-banking",
+    "term": "Private Banking",
+    "fullName": "Private Banking",
+    "zh": "私人银行",
+    "category": "aml-kyc",
+    "level": "advanced",
+    "jurisdiction": [
+      "Global"
+    ],
+    "definition": "面向高净值个人提供定制化财富管理、投资、信托与跨境资产配置等服务的银行业务。因客户关系高度个性化、客户与银行家（relationship manager）之间信任深、交易金额大且跨境频繁，长期被列为洗钱与逃税的高风险通道。",
+    "whyImportant": "私人银行的「信任 + 定制 + 跨境」组合是 AML 的典型薄弱点：关系经理可能协助客户隐匿资产或规避审查。Fund Admin 在对接私人银行账户或高净值投资人时，须特别核验资金来源与实益所有人，防止被用作离析或整合环节。",
+    "scenario": [
+      "Investor Onboarding",
+      "Periodic Review"
+    ],
+    "aliases": [
+      "Private Banking",
+      "私人银行",
+      "财富管理"
+    ],
+    "related": [
+      "aml",
+      "pep",
+      "ubo",
+      "sof",
+      "sow",
+      "edd",
+      "cash-intensive-business",
+      "correspondent-banking"
+    ],
+    "source": [
+      "blue-book",
+      "cima"
+    ],
+    "tags": [
+      "高净值",
+      "财富管理",
+      "跨境",
+      "高风险"
+    ],
+    "brief": "面向高净值个人的定制化银行业务，跨境与信任关系构成高风险。",
+    "commonMistakes": [
+      "把私人银行客户默认视为低风险，忽略关系经理与客户的深度绑定带来的审查盲区"
+    ]
+  },
+  {
+    "id": "insider-trading",
+    "term": "Insider Trading",
+    "fullName": "Insider Trading",
+    "zh": "内幕交易",
+    "category": "aml-kyc",
+    "level": "advanced",
+    "jurisdiction": [
+      "Global",
+      "Hong Kong",
+      "USA"
+    ],
+    "definition": "掌握未公开、足以影响证券价格的内幕信息的人，在该信息公开前买卖相关证券或泄露该信息供他人交易的行为。内幕信息通常源于公司重大事件（并购、业绩、重大合同）或掌握信息的中介机构。",
+    "whyImportant": "内幕交易是证券市场的典型金融犯罪，也是资金进入基金体系的常见来源之一：证券资管行业尤其暴露。Fund Admin 在核查投资人资金来源与交易行为时，若发现异常时点交易或内幕信息关联，应升级审查。",
+    "scenario": [
+      "Investor Onboarding",
+      "Periodic Review",
+      "Fund Operations"
+    ],
+    "aliases": [
+      "Insider Trading",
+      "内幕交易",
+      "内幕买卖"
+    ],
+    "related": [
+      "market-manipulation",
+      "sec",
+      "aml",
+      "regulatory-reporting",
+      "sof"
+    ],
+    "source": [
+      "blue-book",
+      "sfc"
+    ],
+    "tags": [
+      "证券",
+      "内幕信息",
+      "市场失当",
+      "犯罪所得"
+    ],
+    "brief": "利用未公开内幕信息买卖证券的行为，是证券市场典型金融犯罪。",
+    "commonMistakes": [
+      "只关注上市公司内部人，忽略中介机构、关联方等「临时内幕人」同样可构成内幕交易"
+    ]
+  },
+  {
+    "id": "market-manipulation",
+    "term": "Market Manipulation",
+    "fullName": "Market Manipulation",
+    "zh": "市场操纵",
+    "category": "aml-kyc",
+    "level": "advanced",
+    "jurisdiction": [
+      "Global",
+      "Hong Kong",
+      "USA"
+    ],
+    "definition": "通过虚假交易、误导性报价、散布不实信息或其他手段，人为扭曲证券价格或交易量、制造虚假市场活跃假象的行为。常见手法包括对倒（wash trading）、拉抬出货（pump and dump）、虚假申报等。",
+    "whyImportant": "市场操纵制造虚假价格信号，直接损害市场完整性；操纵所得同样是犯罪所得，可借基金与资管产品进入体系。Fund Admin 对异常交易模式与可疑资金进出应保持警觉，必要时触发可疑交易报告。",
+    "scenario": [
+      "Investor Onboarding",
+      "Fund Operations",
+      "Periodic Review"
+    ],
+    "aliases": [
+      "Market Manipulation",
+      "市场操纵",
+      "操纵市场"
+    ],
+    "related": [
+      "insider-trading",
+      "sec",
+      "aml",
+      "str",
+      "transaction-monitoring"
+    ],
+    "source": [
+      "blue-book",
+      "sfc"
+    ],
+    "tags": [
+      "证券",
+      "价格扭曲",
+      "市场失当",
+      "可疑交易"
+    ],
+    "brief": "人为扭曲证券价格或交易量的行为，制造虚假市场假象。",
+    "commonMistakes": [
+      "把市场操纵等同于内幕交易，二者行为要件与证据重点不同"
+    ]
+  },
+  {
+    "id": "third-party-payment-channel",
+    "term": "Third Party Payment Channel",
+    "fullName": "Third Party Payment Channel",
+    "zh": "第三方通道",
+    "category": "aml-kyc",
+    "level": "advanced",
+    "jurisdiction": [
+      "Global"
+    ],
+    "definition": "资金经由与交易无关的第三方账户或支付渠道完成划转，使名义付款人与实际资金受益人脱钩。MSB 与支付机构场景中，犯罪分子常把大额资金分拆到多个第三方通道划转，规避单一账户的额度与尽调触发点。",
+    "whyImportant": "第三方通道分拆资金是规避交易监控的典型手法：Fund Admin 收款时若发现缴付主体与认购人名称不一致、多笔小额经不同第三方汇入，须澄清资金真实来源后再入账，否则可能承接来历不明资金。",
+    "scenario": [
+      "Fund Operations",
+      "Investor Onboarding",
+      "Periodic Review"
+    ],
+    "aliases": [
+      "Third Party Payment Channel",
+      "Third Party Payment",
+      "第三方通道",
+      "第三方支付通道",
+      "第三方代付"
+    ],
+    "related": [
+      "aml",
+      "sof",
+      "transaction-monitoring",
+      "str",
+      "ubo",
+      "fictitious-transaction",
+      "overpayment-scheme"
+    ],
+    "source": [
+      "blue-book",
+      "ics"
+    ],
+    "tags": [
+      "分拆资金",
+      "第三方",
+      "支付通道",
+      "MSB"
+    ],
+    "brief": "资金经无关第三方账户划转使名义付款人与实际受益人脱钩的通道。",
+    "commonMistakes": [
+      "把第三方通道一律当作技术问题处理，忽略其背后的资金分拆与受益人不明风险"
+    ]
+  },
+  {
+    "id": "fictitious-transaction",
+    "term": "Fictitious Transaction",
+    "fullName": "Fictitious Transaction",
+    "zh": "虚构交易",
+    "category": "aml-kyc",
+    "level": "advanced",
+    "jurisdiction": [
+      "Global"
+    ],
+    "definition": "并无真实商业实质、仅为资金划转制造表面理由的交易。MSB 与支付场景中，犯罪分子以虚构的商品或服务交易为名，把非法资金包装成看似合法的收付，实现资金性质转换。",
+    "whyImportant": "虚构交易是离析阶段「制造合法假象」的核心手段：没有真实货物或服务，资金进出就只是账面游戏。Fund Admin 在核查投资人业务背景与资金往来时，须关注交易对手、单据与资金流是否自洽，识别无商业实质的资金流转。",
+    "scenario": [
+      "Fund Operations",
+      "Investor Onboarding",
+      "Periodic Review"
+    ],
+    "aliases": [
+      "Fictitious Transaction",
+      "虚拟交易",
+      "虚构交易",
+      "虚假交易"
+    ],
+    "related": [
+      "aml",
+      "transaction-monitoring",
+      "sof",
+      "str",
+      "mlro",
+      "trade-mispricing",
+      "third-party-payment-channel"
+    ],
+    "source": [
+      "blue-book",
+      "cima"
+    ],
+    "tags": [
+      "离析",
+      "虚假交易",
+      "商业实质",
+      "MSB"
+    ],
+    "brief": "无真实商业实质、仅为资金划转制造理由的交易。",
+    "commonMistakes": [
+      "仅核对单据表面完整性，未验证交易背后的真实商业实质与资金流自洽性"
+    ]
+  },
+  {
+    "id": "overpayment-scheme",
+    "term": "Overpayment Scheme",
+    "fullName": "Overpayment Scheme",
+    "zh": "超额缴费",
+    "category": "aml-kyc",
+    "level": "advanced",
+    "jurisdiction": [
+      "Global"
+    ],
+    "definition": "以明显超出应缴金额的方式缴纳保费或款项，随后要求将超出部分退还至第三方账户或退款至与原始付款人无关的账户。保险场景中常表现为「趸缴大额保费后迅速退保」，把一笔资金从名义付款人转移到实际受益人。",
+    "whyImportant": "超额缴费后退款至第三方，本质是把非法资金「洗白再分流」：缴费建立表面合法来源，退款完成受益转移。Fund Admin 对投资人超额缴款并指示退款至第三方的行为应高度警惕，须澄清退款对象与原始缴款人的关系。",
+    "scenario": [
+      "Fund Operations",
+      "Investor Onboarding"
+    ],
+    "aliases": [
+      "Overpayment Scheme",
+      "超额缴费",
+      "超额缴款",
+      "退保退款"
+    ],
+    "related": [
+      "aml",
+      "sof",
+      "transaction-monitoring",
+      "str",
+      "ubo",
+      "third-party-payment-channel",
+      "fictitious-transaction"
+    ],
+    "source": [
+      "blue-book",
+      "cima"
+    ],
+    "tags": [
+      "保险",
+      "退款",
+      "资金分流",
+      "超额"
+    ],
+    "brief": "超额缴费后要求退款至第三方，实现资金洗白与受益转移的手法。",
+    "commonMistakes": [
+      "把超额缴款当作普通操作差错退款处理，未识别其退款对象与原始付款人脱钩的风险"
+    ]
+  },
+  {
+    "id": "crypto-mixer",
+    "term": "Crypto Mixer",
+    "fullName": "Crypto Mixer",
+    "zh": "混币",
+    "category": "aml-kyc",
+    "level": "advanced",
+    "jurisdiction": [
+      "Global"
+    ],
+    "definition": "把多笔来源不同的虚拟资产汇集、打乱并重新分配，从而切断交易输入与输出之间可追踪关联的服务（又称混币服务，mixing / tumbling）。犯罪分子借此隐藏虚拟资产流向，规避链上分析与追踪。",
+    "whyImportant": "混币器是虚拟资产领域离析阶段的核心工具：一旦资金经混币处理，链上追踪断点难以复原。Fund Admin 在受理虚拟资产出资或核查涉及虚拟资产的资金来源时，应识别是否经混币器流转，必要时拒绝或升级审查。",
+    "scenario": [
+      "Investor Onboarding",
+      "Fund Operations",
+      "Periodic Review"
+    ],
+    "aliases": [
+      "Crypto Mixer",
+      "Mixer",
+      "混币器",
+      "混币服务"
+    ],
+    "related": [
+      "aml",
+      "privacy-coin",
+      "transaction-monitoring",
+      "str",
+      "travel-rule"
+    ],
+    "source": [
+      "blue-book",
+      "cima"
+    ],
+    "tags": [
+      "虚拟资产",
+      "离析",
+      "链上追踪",
+      "匿名"
+    ],
+    "brief": "汇集并打乱多笔虚拟资产以切断交易关联的服务，隐藏资金流向。",
+    "commonMistakes": [
+      "把混币器当作普通的隐私工具，忽略其切断交易追踪、掩盖资金来源的洗钱功能"
+    ]
+  },
+  {
+    "id": "privacy-coin",
+    "term": "Privacy Coin",
+    "fullName": "Privacy Coin",
+    "zh": "隐私币",
+    "category": "aml-kyc",
+    "level": "advanced",
+    "jurisdiction": [
+      "Global"
+    ],
+    "definition": "在协议层默认隐藏交易金额、发送方与接收方等链上信息的虚拟资产（典型如 Monero、Zcash 的遮蔽地址）。与比特币「伪匿名」不同，隐私币的链上交易信息对第三方不可见，追溯难度显著更高。",
+    "whyImportant": "隐私币把虚拟资产从「伪匿名」推向「真匿名」：交易双方与金额均不可见，传统链上分析手段基本失效。Fund Admin 在涉及虚拟资产的尽调中，应识别是否使用隐私币并相应提高审查强度，多家监管机构已对隐私币交易采取限制。",
+    "scenario": [
+      "Investor Onboarding",
+      "Fund Operations",
+      "Periodic Review"
+    ],
+    "aliases": [
+      "Privacy Coin",
+      "隐私币",
+      "匿名币"
+    ],
+    "related": [
+      "aml",
+      "crypto-mixer",
+      "transaction-monitoring",
+      "travel-rule",
+      "str"
+    ],
+    "source": [
+      "blue-book",
+      "cima"
+    ],
+    "tags": [
+      "虚拟资产",
+      "匿名",
+      "链上不可见",
+      "高风险"
+    ],
+    "brief": "协议层默认隐藏交易信息的虚拟资产，链上追溯难度显著更高。",
+    "commonMistakes": [
+      "把隐私币与比特币等伪匿名币等同，低估其链上信息完全不可见带来的追溯失效"
+    ]
+  },
+  {
+    "id": "travel-rule",
+    "term": "Travel Rule",
+    "fullName": "Travel Rule",
+    "zh": "旅行规则",
+    "category": "aml-kyc",
+    "level": "advanced",
+    "jurisdiction": [
+      "Global",
+      "USA"
+    ],
+    "definition": "金融行动特别工作组（FATF）Recommendation 16 确立的规则：金融机构与虚拟资产服务提供商在办理资金划转时，须随交易传递并取得「发起人」与「受益人」的指定身份信息，使资金流转全程可追溯。",
+    "whyImportant": "旅行规则是虚拟资产领域「让交易可追踪」的关键义务：传统电汇已有成熟报文体系，而虚拟资产转账的发起人与受益人信息传递长期缺失，构成匿名洗钱漏洞。Fund Admin 处理虚拟资产收付时应关注服务商是否履行旅行规则义务。",
+    "scenario": [
+      "Fund Operations",
+      "Investor Onboarding",
+      "Regulatory Filing"
+    ],
+    "aliases": [
+      "Travel Rule",
+      "旅行规则",
+      "FATF 旅行规则"
+    ],
+    "related": [
+      "fatf",
+      "aml",
+      "transaction-monitoring",
+      "crypto-mixer",
+      "privacy-coin"
+    ],
+    "source": [
+      "blue-book",
+      "cima"
+    ],
+    "tags": [
+      "FATF",
+      "虚拟资产",
+      "信息传递",
+      "可追溯"
+    ],
+    "brief": "FATF 确立的资金划转须随附发起人与受益人身份信息的规则。",
+    "commonMistakes": [
+      "把旅行规则仅理解为传统电汇义务，忽略其对虚拟资产转账的同等适用"
+    ]
+  },
+  {
+    "id": "trade-mispricing",
+    "term": "Trade Mispricing",
+    "fullName": "Trade Mispricing",
+    "zh": "价量失真",
+    "category": "aml-kyc",
+    "level": "advanced",
+    "jurisdiction": [
+      "Global"
+    ],
+    "definition": "在跨境贸易中人为高报或低报商品价格、数量或价值（over/under-invoicing），使实际资金流与真实货值脱节，实现资金跨境转移或隐藏利润。是贸易洗钱（Trade-based Money Laundering，TBML）的核心手段之一。",
+    "whyImportant": "价量失真把资金转移隐藏在看似正常的贸易单据背后：发票金额与真实货值不符，资金差额即为被转移的非法资金。Fund Admin 在涉及贸易背景的投资人或资金往来中，应关注单据与货值是否自洽，识别 TBML 风险。",
+    "scenario": [
+      "Investor Onboarding",
+      "Fund Operations",
+      "Periodic Review"
+    ],
+    "aliases": [
+      "Trade Mispricing",
+      "价量失真",
+      "贸易价量失真",
+      "高报低报"
+    ],
+    "related": [
+      "aml",
+      "sof",
+      "transaction-monitoring",
+      "str",
+      "mlro",
+      "fictitious-transaction",
+      "shell-company"
+    ],
+    "source": [
+      "blue-book",
+      "cima"
+    ],
+    "tags": [
+      "贸易洗钱",
+      "TBML",
+      "跨境贸易",
+      "单据"
+    ],
+    "brief": "跨境贸易中高报或低报价格数量使资金流与货值脱节，实现资金转移。",
+    "commonMistakes": [
+      "只核对贸易单据形式完整性，未交叉验证发票金额与实际货值的合理性"
+    ]
+  },
+  {
+    "id": "gatekeeper",
+    "term": "Gatekeeper",
+    "fullName": "Gatekeeper",
+    "zh": "守门人",
+    "category": "aml-kyc",
+    "level": "advanced",
+    "jurisdiction": [
+      "Global"
+    ],
+    "definition": "掌握金融体系「入口」、其专业服务被犯罪分子利用来设立架构或掩饰资金的职业群体，典型如律师、会计师、公司服务提供商（TCSP）、信托与不动产中介。守门人可能被用于批量设立空壳公司、代名董事或不保存实益所有权。",
+    "whyImportant": "守门人是 FATF 重点关注的「被利用节点」：他们掌握架构入口与专业声誉，一旦被渗透，可为犯罪资金提供规模化、专业化的清洗通道。Fund Admin 尽调时应关注客户架构是否经由守门人批量设立、是否配合穿透实益所有人。",
+    "scenario": [
+      "Investor Onboarding",
+      "Fund Setup",
+      "Periodic Review"
+    ],
+    "aliases": [
+      "Gatekeeper",
+      "守门人",
+      "门卫人",
+      "专业守门人"
+    ],
+    "related": [
+      "tcsp",
+      "corporate-services-provider",
+      "shell-company",
+      "ubo",
+      "mlro",
+      "str"
+    ],
+    "source": [
+      "blue-book",
+      "cima"
+    ],
+    "tags": [
+      "守门人",
+      "律师",
+      "会计师",
+      "TCSP",
+      "FATF"
+    ],
+    "brief": "掌握金融体系入口、可能被利用来设立架构或掩饰资金的职业群体。",
+    "commonMistakes": [
+      "把守门人当作普通服务商对待，忽略其批量设立空壳公司、代名董事等被利用风险"
+    ]
+  },
+  {
+    "id": "tcsp",
+    "term": "TCSP",
+    "fullName": "Trust or Company Service Provider",
+    "zh": "信托或公司服务提供商",
+    "category": "legal-entity",
+    "level": "advanced",
+    "jurisdiction": [
+      "Hong Kong",
+      "BVI",
+      "Cayman",
+      "Global"
+    ],
+    "definition": "为他人提供信托设立、公司注册、注册地址、代名董事/股东、公司秘书等服务的专业机构（Trust or Company Service Provider）。TCSP 因能批量创设离岸架构，被多法域列为须持牌或注册并承担 AML 义务的主体。",
+    "whyImportant": "TCSP 是「架构入口」的集大成者：一个 TCSP 可批量设立大量空壳公司与信托，成为守门人风险最集中的环节。Fund Admin 接触的基金架构若由 TCSP 搭建，须核验其牌照/注册与尽调质量，并穿透最终实益所有人。",
+    "scenario": [
+      "Fund Setup",
+      "Investor Onboarding",
+      "Regulatory Filing"
+    ],
+    "aliases": [
+      "TCSP",
+      "Trust or Company Service Provider",
+      "信托或公司服务提供商",
+      "信托与公司服务商"
+    ],
+    "related": [
+      "corporate-services-provider",
+      "gatekeeper",
+      "shell-company",
+      "nominee",
+      "registered-agent",
+      "ubo"
+    ],
+    "source": [
+      "blue-book",
+      "sfc",
+      "cima"
+    ],
+    "tags": [
+      "TCSP",
+      "牌照",
+      "架构入口",
+      "代名"
+    ],
+    "brief": "为他人提供信托设立与公司注册等服务的专业机构，多法域须持牌或注册。",
+    "commonMistakes": [
+      "把 TCSP 与 Fund Administrator 混同，忽略其批量创设架构带来的守门人风险"
+    ]
+  },
+  {
+    "id": "shell-company",
+    "term": "Shell Company",
+    "fullName": "Shell Company",
+    "zh": "空壳公司",
+    "category": "legal-entity",
+    "level": "advanced",
+    "jurisdiction": [
+      "Global",
+      "BVI",
+      "Cayman",
+      "Hong Kong"
+    ],
+    "definition": "不开展实际经营、无实质雇员或营业场所、仅作为持有资产或资金划转「外壳」而设立的法律实体。空壳公司本身合法，但常被用于隐匿实益所有人、规避审查或离析资金，成为守门人批量设立架构的常见载体。",
+    "whyImportant": "空壳公司是受益所有人穿透的最大障碍之一：层层空壳叠加后，真实控制人深藏其后。Fund Admin 尽调时不能止步于空壳公司本身，须沿架构链向上穿透，识别最终实益所有人并评估其设立真实目的。",
+    "scenario": [
+      "Investor Onboarding",
+      "Fund Setup",
+      "Periodic Review"
+    ],
+    "aliases": [
+      "Shell Company",
+      "空壳公司",
+      "壳公司"
+    ],
+    "related": [
+      "ubo",
+      "nominee",
+      "nominee-director",
+      "gatekeeper",
+      "tcsp",
+      "corporate-services-provider"
+    ],
+    "source": [
+      "blue-book",
+      "cima"
+    ],
+    "tags": [
+      "空壳",
+      "穿透",
+      "受益所有人",
+      "架构"
+    ],
+    "brief": "无实际经营、仅作资产持有或资金划转外壳而设立的法律实体。",
+    "commonMistakes": [
+      "把空壳公司一律视为违法，或反之止步于空壳公司而不向上穿透实益所有人"
     ]
   },
 ];

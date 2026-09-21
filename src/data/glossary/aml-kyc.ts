@@ -121,7 +121,7 @@ export const AML_KYC_TERMS: GlossaryTerm[] = [
     whyImportant:
       "UBO 识别是 AML 与 AEOI 的共同核心：识别不足会导致接纳无效、申报错误与监管处罚，也是「客户拒绝披露 UBO」情形的升级触发点。",
     scenario: ["Investor Onboarding", "Periodic Review", "AEOI / CRS / FATCA"],
-    aliases: ["Ultimate Beneficial Owner", "Beneficial Owner", "受益所有人", "实际控制人", "实益拥有人"],
+    aliases: ["Ultimate Beneficial Owner", "Beneficial Owner", "受益所有人", "实际控制人", "实益拥有人", "实益所有权"],
     related: ["cdd", "edd", "pep", "sof", "spv", "trustee", "controlling-person", "nominee"],
     cases: ["Case-006", "Case-007", "Case-008", "Case-009", "Case-013", "Case-017", "Case-022"],
     source: ["ics", "cima"],

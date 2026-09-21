@@ -1,8 +1,8 @@
 {
   "version": 1,
-  "generatedAt": "2026-09-21T04:09:09.353Z",
+  "generatedAt": "2026-09-21T07:03:28.709Z",
   "baseline": {
-    "glossaryTerms": 183,
+    "glossaryTerms": 199,
     "documents": 275,
     "courses": 128,
     "cases": 147
@@ -62,13 +62,13 @@
           "kind": "course",
           "label": "第 11 讲 · 4.4 高风险形态的识别信号",
           "href": "/courses/aml-foundations#m4",
-          "context": "…核心是穿透到最终实益所有人。 回流投资（round-tripping）指资金先离岸化再以「外资」名义回流，核心问题是缺少商业实质。贸易洗钱（TBML）靠价量失真（高报进口、低报出口、重复使用单证）。这些都是 "
+          "context": "…核心是穿透到最终实益所有人。 回流投资（round-tripping）指资金先离岸化再以「外资」名义回流，核心问题是缺少商业实质。贸易洗钱（TBML）靠"
         },
         {
           "kind": "course",
           "label": "第 11 讲 · 4.4 高风险形态的识别信号",
           "href": "/courses/aml-foundations#m4",
-          "context": "…-tripping）指资金先离岸化再以「外资」名义回流，核心问题是缺少商业实质。贸易洗钱（TBML）靠价量失真（高报进口、低报出口、重复使用单证）。这些都是 "
+          "context": "…-tripping）指资金先离岸化再以「外资」名义回流，核心问题是缺少商业实质。贸易洗钱（TBML）靠"
         },
         {
           "kind": "course",
@@ -83,7 +83,7 @@
         "11"
       ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T08:37:26.005Z"
+      "lastSeenAt": "2026-09-21T07:03:28.709Z"
     },
     {
       "key": "atl",
@@ -223,33 +223,6 @@
       "fullName": "",
       "courseIds": [
         "E09"
-      ],
-      "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T08:37:26.005Z"
-    },
-    {
-      "key": "bo",
-      "text": "BO",
-      "confidence": "declared",
-      "acronym": true,
-      "docs": 1,
-      "courses": [
-        "第 14 讲"
-      ],
-      "cases": [],
-      "count": 1,
-      "samples": [
-        {
-          "kind": "course",
-          "label": "第 14 讲 · 7.5 实务手册：Private Fund 注册、审计、估值、经济实质与实益所有权",
-          "href": "/courses/cayman-framework#m5",
-          "context": "（ES）与实益所有权（BO）登记。各模块启动时点、表格与窗口按 "
-        }
-      ],
-      "zh": "实益所有权",
-      "fullName": "",
-      "courseIds": [
-        "14"
       ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
       "lastSeenAt": "2026-09-20T08:37:26.005Z"
@@ -522,7 +495,7 @@
           "kind": "course",
           "label": "第 11 讲 · 4.3 各行业的犯罪表现方式",
           "href": "/courses/aml-foundations#m3",
-          "context": " 最直接的暴露面。 MSB 与支付：钱骡（money mule）账户、第三方通道分拆资金、虚构交易。保险：超额缴费后…"
+          "context": " 最直接的暴露面。 MSB 与支付：钱骡（money mule）账户、"
         }
       ],
       "zh": "",
@@ -531,7 +504,7 @@
         "11"
       ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T08:37:26.005Z"
+      "lastSeenAt": "2026-09-21T07:03:28.709Z"
     },
     {
       "key": "sfdr",
@@ -926,7 +899,7 @@
           "kind": "course",
           "label": "第 13 讲 · 6.2 名单筛查与交易筛查",
           "href": "/courses/aml-technology-monitoring#m2",
-          "context": "…配处理拼写变体、音译差异与别名。交易/支付筛查解决「这笔资金是否涉及受制裁主体」，需解析 SWIFT 报文、支付指令、区块链交易中的付款人、收款人、代理行与用途。 命中后的处置：先做「误报排…"
+          "context": "…配处理拼写变体、音译差异与别名。交易/支付筛查解决「这笔资金是否涉及受制裁主体」，需解析 SWIFT 报文、支付指令、区块链交易中的付款人、收款人、"
         }
       ],
       "zh": "",
@@ -935,34 +908,7 @@
         "13"
       ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T08:37:26.005Z"
-    },
-    {
-      "key": "tcsp",
-      "text": "TCSP",
-      "confidence": "acronym",
-      "acronym": true,
-      "docs": 1,
-      "courses": [
-        "第 11 讲"
-      ],
-      "cases": [],
-      "count": 1,
-      "samples": [
-        {
-          "kind": "course",
-          "label": "第 11 讲 · 4.3 各行业的犯罪表现方式",
-          "href": "/courses/aml-foundations#m3",
-          "context": "持有、分拆现金。守门人（律师/会计师/TCSP）：批量设立空壳公司、"
-        }
-      ],
-      "zh": "",
-      "fullName": "",
-      "courseIds": [
-        "11"
-      ],
-      "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T08:37:26.005Z"
+      "lastSeenAt": "2026-09-21T07:03:28.709Z"
     },
     {
       "key": "reference letter",
@@ -2823,31 +2769,6 @@
       ],
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
       "lastSeenAt": "2026-09-20T08:37:26.005Z"
-    },
-    {
-      "key": "third party payment",
-      "text": "Third Party Payment",
-      "confidence": "phrase",
-      "acronym": false,
-      "docs": 1,
-      "courses": [],
-      "cases": [
-        "Case-029"
-      ],
-      "count": 1,
-      "samples": [
-        {
-          "kind": "case",
-          "label": "Case-029 · sop_reference",
-          "href": "/cases/case-029",
-          "context": "Third Party Payment 1. 第三方付款一律触发 "
-        }
-      ],
-      "zh": "",
-      "fullName": "",
-      "courseIds": [],
-      "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
     },
     {
       "key": "true match",

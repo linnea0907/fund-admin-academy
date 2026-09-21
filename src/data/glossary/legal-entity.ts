@@ -74,7 +74,7 @@ export const LEGAL_ENTITY_TERMS: GlossaryTerm[] = [
     whyImportant:
       "代名持股是 AML 穿透的关键节点：Fund Admin 与合规不能止步于名义持有人，须取得代名安排文件并识别背后实益拥有人（UBO），否则构成重大合规缺口。",
     scenario: ["Investor Onboarding", "Periodic Review", "Transfer"],
-    aliases: ["代名人", "名义持有人", "Nominee Holder"],
+    aliases: ["代名人", "名义持有人", "Nominee Holder", "代名人持有"],
     related: ["nominee-shareholder", "nominee-director", "ubo", "dma", "aml-letter"],
     source: ["ics", "blue-book"],
     tags: ["代持", "UBO 穿透", "名义持有"],
