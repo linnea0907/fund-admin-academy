@@ -123,8 +123,9 @@
       "tags": ["CRS", "实体分类", "控权人", "自我证明"],
       "brief": "CRS 下不属于金融机构的实体，被动型须穿透控权人。",
       "commonMistakes": [
-        "把 CRS 的 NFE 与 FATCA 的 NFFE 当作同一概念使用",
-        "对被动型 NFE 未穿透识别控权人即完成尽调"
+      "把 CRS 的 NFE 与 FATCA 的 NFFE 当作同一概念：两套体系的最外层分类名不可互换——CRS 用 NFE（Non-Financial Entity），FATCA 用 NFFE（Non-Financial Foreign Entity），分类逻辑接近但适用法规与判断标准不同",
+      "在 CRS 自我证明表里填 NFFE、或在 FATCA 表格（如 W-8BEN-E）里填 NFE，导致分类与表格体系不匹配",
+      "对被动型 NFE 未穿透识别控权人即完成尽调"
       ]
     },
     {
