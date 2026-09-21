@@ -1016,6 +1016,114 @@ tsc 0 / lint 0 / `check:lesson-numbers` 通过 / `check:glossary` 通过（170 �
 
 ---
 
+## V1.20.7 已交付（来源：2026-09-20 Lu 直接下达 · 术语库扩容第一批 P0）
+
+> 登记时间：2026-09-21　｜　状态：**已交付并上线**
+> 提交：`f820883`（11 条入库 + `private-fund` 口径修正）+ 内容收敛 commit（按 Copilot 验收意见）
+> 范围：11 条术语走导入链路入库。规则经 Lu 确认：**`related` 配真实关联，不放宽 builder 与闸门**（维持 V1.20.6「导入 ≈ 内置」口径）。
+
+### 交付内容
+
+| 类目 | 术语 |
+|---|---|
+| 基金结构 | OFC · LPF · AIV |
+| 监管与跨境 | PIF（BVI 封闭式）· RFMC · OFAC · ERISA · CFIUS |
+| AEOI | NFE · PPOC |
+| 税务 | PFIC |
+
+### 闸门第一次实战拦截（V1.20.6 收口的价值兑现）
+
+LPF 首版中文名取「有限合伙基金」，与内置 `limited-partnership` 的**别名精确撞车**，
+闸门报 `[Alias Collision] 标注文本 "有限合伙基金" 同时命中: limited-partnership（内置）, lpf（imported.json）` 并**阻断构建**。
+改名「有限合伙基金（香港）」（对齐既有的「专业基金（BVI）」命名法）后通过。
+⚠️ **撞车是真缺陷自己撞上来的，不是刻意注入的验证用例**——这是 V1.20.6「导入≈内置」闸门第一次在真实数据上生效。
+
+### Copilot 验收结论（2026-09-21）
+
+产品 / 内容 / 术语质量 **三项均通过**，批准 Push + 部署。Copilot 特别认可：
+① 11 条方向正确（均为基金行政/合规高频词）；② PIF / NFE / RFMC 三条最易错的术语处理方向基本正确；
+③ **「导入术语 = 内置术语」闸门经受住第一次实战验证，价值高于新增 11 条本身**。
+
+### 按验收意见收敛的两处（内容级，非新增术语）
+
+1. **NFE `commonMistakes` 强化**：补足「CRS 用 NFE / FATCA 用 NFFE，分类逻辑接近但适用法规与判断标准不同」，
+   并新增一条「在 CRS 表格填 NFFE、在 FATCA 表格填 NFE」的实务错法。
+2. **NFE ↔ NFFE 组补齐互链**：验收时实测发现 `nffe.related` **不含 `nfe`**（单向），
+   且 `active-nfe` / `passive-nfe` 亦未连 `nfe`。三条各补 1 条关联后，组内**全双向**（关联边 856 → 859）。
+
+### 未执行 / 已否决项（明确留痕）
+
+- **P3-5 Fund Manager 不做 `investment-manager` 别名**（Lu + Copilot 一致）。
+  理由：`Fund Manager` 是自然语言泛称（可能指 GP / IM / Portfolio Manager / Management Company / Sponsor），
+  加成别名会变成**可标注文本**，课程正文里高频出现 → 典型过度标注。
+  **替代方案见下方 P2 搜索映射**（能搜到，但不污染正文标注）。
+- **PPOC 不写具体年份**（Copilot 要求）：验收时实测**已满足**——原文措辞为「现行规则并已引入属地要求，存量机构设有过渡期」，无 2026/2027 硬编码。
+- **RFMC 保留废止日期**（Copilot 明确支持）：属「历史制度概念」（类比 Exempted SPC / 旧 Master-Feeder 指引），
+  不是普通时效知识；不留会形成知识断层。**这是「不收录时效性内容」原则的一次显式例外，已留痕。**
+
+### 本轮实测新发现（非本需求引入，待排期）
+
+- **新术语入链为 0**：11 条中 7 条（`ofc` / `lpf` / `rfmc` / `ppoc` / `ofac` / `cfius` / `pfic`）只有出链、无内置术语回链。
+  用户从既有术语页（如 `private-fund`）**无法反向发现**新术语。属既有单向图谱结构问题，非本次遗漏。
+- **`active-nfe` / `passive-nfe` 存在口径混用**：两词条 `id` / `term` 用 CRS 的 NFE，
+  但 `zh` 写作「非金融**外国**实体」（NFFE 译法）、定义正文亦通篇写 NFFE。
+  即 Copilot 指出的「最容易混的一组」**在库内已经真实混用**。治理方案见下方 WB-追加项。
+
+---
+
+## 术语库扩容 · 下一批需求（来源：V1.20.7 Copilot 验收意见「未给到 WorkBuddy 的新需求」）
+
+### P1 `Authorising Person` 术语入库 + PPOC 组互链
+
+- **来源**：Copilot 验收意见（明示「下一批优先级最高的补充项」）。
+- **目标**：收录 `Authorising Person`（授权人），与 `PPOC` / `DITC Portal` / `CRS Reporting` / `FATCA Reporting` 建立**双向**关联。
+- **实务依据**：行业高频提问「PPOC 是谁 / Authorising Person 是谁 / 能否同一人」。属基金行政操作知识。
+- **⚠️ 前置障碍（需先决策）**：Copilot 点名的 `DITC Portal` **当前在 181 条里不存在**（无 `ditc-portal` 词条）。
+  二选一：① 新建 `ditc-portal` 词条；② 在 `ppoc` / `authorising-person` 定义正文中提及、但不建关联边。
+  建议 ①（否则「互链」目标不完整），但会引入一条非 Copilot 清单内的术语 → **需 Lu 确认**。
+- **同步要求**：`PPOC` 当前对 `crs-reporting` / `fatca-reporting` 只有出链，本批应补齐回链（即上面「新发现」第一项）。
+- **涉及文件**：`content/glossary/imported.json`。
+- **验收口径**：闸门 182/183 条 0 错；`PPOC` / `Authorising Person` / `DITC Portal` / `CRS Reporting` / `FATCA Reporting` 五者组内在站内页面上**全双向可达**（探针实测 + 截图）。
+
+### P2 搜索同义词层（`Fund Manager` → 推荐术语）
+
+- **来源**：Copilot 验收意见（替代 P3-5 的 alias 方案）。
+- **目标**：站内搜索 `Fund Manager` 时，**推荐** `Investment Manager` / `GP` / `Management Company` / `Sponsor` 等真实术语。
+- **硬约束**：**不得**把 `Fund Manager` 加入任何术语的 `aliases`（会变成可标注文本 → 过度标注，见 V1.20.7 否决项）。
+- **形态**：检索层映射（Search Redirect / 同义词表），**不新增导航模块**。
+- **现状实测（2026-09-21）**：检索层**没有任何同义词 / 别名重定向机制**。`SearchClient.tsx` 的匹配是
+  「逐 scope 对结构化字段做 `toLowerCase().includes()`」（lesson title/subtitle、case、sop、template、checklist、toolkit），
+  术语 scope 走 `term` / `aliases` / `fullName`。因 `Fund Manager` 未进任何 `aliases`，**当前在术语 scope 命中 0**。
+  ⇒ 需**新增**一张映射表与「推荐术语」呈现（不是改现有字段）。
+- **涉及文件**：`src/components/search/SearchClient.tsx`、`src/app/search/page.tsx`（+ 映射表落点待定）。
+- **验收口径**：搜索 `Fund Manager` 时给出术语推荐且**页面正文标注不新增任何 `data-term`**（反向断言：`Fund Manager` 命中的术语数 = 0）。
+- **登记时三问答复**（IA 守则）：① 新增了什么 —— 检索层同义词映射表；② 删除了什么 —— **无**（纯增量，不改现有搜索范围）；③ 为什么不能只删除而必须新增 —— 无对应术语可删，用户输入的自然语言泛称必须被映射到真实术语，否则检索为空。
+
+### P3 Jurisdiction Pack（法域基金结构聚类）
+
+- **来源**：Copilot 验收意见（明示「知识网络增强，不新增模块」）。
+- **目标**：把 `OFC` / `LPF` / `RFMC` / `A/I LFMC` / `PIF` / `Professional Fund` / `Private Fund` / `Mutual Fund`
+  按**法域 → 基金载体**聚类，形成「法域基金结构导航」。用户学的是**各法域载体比较**，而非孤立术语。
+- **⚠️ 缺口**：`A/I LFMC` 当前不在库中（`rfmc` 定义里提到但无独立词条）→ 需先决是否收录。
+- **形态约束**：只做**聚类视图**（在 `/glossary` 内或术语页内的分组入口），**不得新增一级/二级导航项**。
+- **登记时三问答复**（IA 守则）：① 新增了什么 —— 术语页内的法域聚类视图；② 删除了什么 —— **无**；③ 为什么不能只删除而必须新增 —— 现有 `related` 图谱是**术语对术语**的散点关系，无法表达「同法域载体并列对比」这一结构，属现有模块无法解决。**⚠️ ②为 0 属高风险，排期前须补充减法设计。**
+- **⚠️ 现状实测（2026-09-21，显著加重举证责任）**：`/glossary` **已经有属地筛选**（`GlossaryExplorer.tsx` 的 `jur` 维度，
+  与分类 / 等级 / 来源 / 仅看已使用 / 仅看孤立并列，chip 上带条数）。
+  即「筛 BVI → 看 PIF / Professional Fund」**当前已可做到**。
+  因此 P3 若只是「再做一个按属地分组的列表」，按 Subtraction First 属**重复展示**，应先考虑**删除**。
+  真正未被覆盖的只有一点：**跨法域的载体形态横向对比**（同一屏内并列香港 / 新加坡 / BVI / 开曼各自的载体与监管依据）。
+  排期时须先回答「能否通过调整现有筛选条的默认值与分组方式解决」。
+
+### WB-追加 P1 NFE / NFFE 口径治理（本轮实测发现，非 Copilot 提出）
+
+- **问题**：`active-nfe` / `passive-nfe` 的 `zh` 与定义正文用 NFFE 口径（「非金融外国实体」），但 `id` / `term` 是 CRS 的 NFE。
+  术语库**自身**即存在 Copilot 所指的最易混淆之处。
+- **选项**：① 改 `zh` 为「主动型/被动型非金融实体」并将 NFFE 语义移入 `commonMistakes`（**改动内置术语核心字段，需 Lu 确认**）；② 维持现状，仅在 `commonMistakes` 中以文字消歧（低风险但字面仍混）。
+- **建议**：①。理由：`zh` 是**恒可标注文本**，留着 NFFE 译法会持续把 NFFE 概念注入正文标注。
+- **涉及文件**：`src/data/glossary/aeoi.ts`。
+
+---
+
 ## V1.16.0 后续候选（CAMS 相关，暂未排期）
 
 ### 每日练习 / 50 题小测
