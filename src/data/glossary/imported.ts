@@ -5,7 +5,7 @@
  * 导入术语请把 JSON 落到 content/glossary/imported.json，再运行 `npm run gen:glossary`（或直接 build）。
  * 维护入口：术语库 → 「术语审核」页签 → 采纳候选 → 导出术语补全包（V1.20.5）。
  *
- * 本次烘焙：29 条导入术语
+ * 本次烘焙：65 条导入术语
  * 源文件：content/glossary/imported.json
  */
 import type { GlossaryTerm } from "@/types/glossary";
@@ -1330,5 +1330,1470 @@ export const IMPORTED_TERMS: GlossaryTerm[] = [
     "commonMistakes": [
       "把空壳公司一律视为违法，或反之止步于空壳公司而不向上穿透实益所有人"
     ]
+  },
+  {
+    "id": "tbml",
+    "term": "TBML",
+    "fullName": "Trade-Based Money Laundering",
+    "zh": "贸易洗钱",
+    "category": "aml-kyc",
+    "level": "advanced",
+    "jurisdiction": [
+      "Global"
+    ],
+    "definition": "通过国际贸易交易掩盖非法资金流动并转移价值的洗钱方式，典型手法包括高报/低报货价、虚假发票、虚构货物、重复开票与错配运输；利用贸易单据的复杂性藏匿资金真实来源与去向。",
+    "whyImportant": "贸易洗钱是跨境资金流动中最难识别的洗钱类型之一，因其混在真实贸易流里、单据链条长、涉及多法域。基金行政涉及跨境结构、代收代付或贸易相关底层资产时，需能识别 TBML 信号而非只盯银行资金流。",
+    "scenario": [
+      "Periodic Review"
+    ],
+    "aliases": [
+      "贸易洗钱"
+    ],
+    "related": [
+      "trade-mispricing",
+      "transaction-monitoring",
+      "aml-cft",
+      "fatf",
+      "shell-company"
+    ],
+    "source": [
+      "internal"
+    ],
+    "tags": [
+      "贸易洗钱",
+      "跨境资金",
+      "AML"
+    ],
+    "brief": "利用贸易单据掩盖非法资金流动的洗钱方式，靠商业实质审查识别。",
+    "courses": [
+      "11"
+    ],
+    "commonMistakes": [
+      "只盯资金流而忽略底层贸易单据的合理性（货价、运输、发票对应关系）",
+      "把 TBML 与一般贸易违规混淆——关键区别是「缺少真实商业实质」"
+    ]
+  },
+  {
+    "id": "money-laundering",
+    "term": "ML",
+    "fullName": "Money Laundering",
+    "zh": "洗钱",
+    "category": "aml-kyc",
+    "level": "core",
+    "jurisdiction": [
+      "Global"
+    ],
+    "definition": "将犯罪所得通过处置、离析与整合等环节加以掩饰，使其看似来自合法来源的过程；是六类金融犯罪中最核心、监管资源投入最多的一类。",
+    "whyImportant": "洗钱是反洗钱合规要对抗的首要目标。基金行政必须理解 ML 的三阶段模型（放置/分层/整合），才能在客户准入、交易监控与异常报告各环节正确识别信号，而非把「可疑」当作空泛判断。",
+    "scenario": [
+      "Investor Onboarding",
+      "Periodic Review"
+    ],
+    "aliases": [
+      "洗钱"
+    ],
+    "related": [
+      "aml",
+      "aml-cft",
+      "tbml",
+      "terrorist-financing",
+      "str"
+    ],
+    "source": [
+      "internal"
+    ],
+    "tags": [
+      "洗钱",
+      "金融犯罪",
+      "AML"
+    ],
+    "brief": "掩饰犯罪所得来源使其看似合法的过程，反洗钱对抗的首要目标。",
+    "courses": [
+      "11"
+    ]
+  },
+  {
+    "id": "terrorist-financing",
+    "term": "TF",
+    "fullName": "Terrorist Financing",
+    "zh": "恐怖融资",
+    "category": "aml-kyc",
+    "level": "core",
+    "jurisdiction": [
+      "Global"
+    ],
+    "definition": "为恐怖活动或恐怖组织募集、提供资金的行为；与洗钱的关键区别在于资金本身可能来自合法来源，目的是支持恐怖活动，常表现为小额、多笔、多渠道的资金聚集。",
+    "whyImportant": "恐怖融资的资金来源可以是合法的，因此传统「资金来源是否干净」的判断标准失效。基金行政需针对 TF 的「小额多笔、目的导向」特征设计专门的筛查与监控信号，而非照搬洗钱识别逻辑。",
+    "scenario": [
+      "Investor Onboarding",
+      "Periodic Review"
+    ],
+    "aliases": [
+      "恐怖融资"
+    ],
+    "related": [
+      "aml-cft",
+      "money-laundering",
+      "financial-sanctions",
+      "fatf",
+      "str"
+    ],
+    "source": [
+      "internal"
+    ],
+    "tags": [
+      "恐怖融资",
+      "金融犯罪",
+      "AML"
+    ],
+    "brief": "为恐怖活动募集资金的行为，资金来源可能合法，与洗钱判断逻辑不同。",
+    "courses": [
+      "11"
+    ]
+  },
+  {
+    "id": "bsa",
+    "term": "BSA",
+    "fullName": "Bank Secrecy Act",
+    "zh": "美国银行保密法",
+    "category": "aml-kyc",
+    "level": "advanced",
+    "jurisdiction": [
+      "USA"
+    ],
+    "definition": "美国反洗钱体系的基石性联邦法律（1970 年），要求金融机构建立反洗钱计划、履行客户身份识别、交易记录保存与可疑活动报告（SAR）等义务；由 FinCEN 负责执行。",
+    "whyImportant": "BSA 是理解美国 AML 合规框架的起点，SAR、CTR（大额现金交易报告）、客户尽调等义务皆源于此。涉及美国连接点（US nexus）的基金或服务美国投资者的基金管理人，需把握 BSA 的域外适用边界。",
+    "scenario": [
+      "Regulatory Filing",
+      "Investor Onboarding"
+    ],
+    "aliases": [
+      "美国银行保密法",
+      "银行保密法"
+    ],
+    "related": [
+      "str",
+      "aml",
+      "fatf",
+      "ofac",
+      "money-laundering"
+    ],
+    "source": [
+      "internal"
+    ],
+    "tags": [
+      "美国",
+      "BSA",
+      "反洗钱",
+      "FinCEN"
+    ],
+    "brief": "美国反洗钱基石法律，SAR/客户尽调等义务的源头。",
+    "commonMistakes": [
+      "以为 BSA 仅约束美国境内银行，忽略其对有美国连接点的境外金融机构的域外适用",
+      "把 BSA 与 FATCA 混淆——前者是反洗钱法，后者是税务信息申报法"
+    ]
+  },
+  {
+    "id": "msb",
+    "term": "MSB",
+    "fullName": "Money Services Business",
+    "zh": "货币服务机构",
+    "category": "aml-kyc",
+    "level": "advanced",
+    "jurisdiction": [
+      "Global"
+    ],
+    "definition": "提供汇款、货币兑换、支票兑现、预付卡等货币服务的非银行机构；在多数法域属受 AML 监管的「金融机构」范畴，须履行注册、反洗钱计划与报告义务。",
+    "whyImportant": "货币服务机构是洗钱与恐怖融资的高风险通道，常被用于拆分资金、规避银行渠道审查。基金行政在涉及第三方支付、汇款或跨境资金渠道时，需识别 MSB 风险并对其做相应尽调。",
+    "scenario": [
+      "Investor Onboarding",
+      "Periodic Review"
+    ],
+    "aliases": [
+      "货币服务机构",
+      "资金服务业"
+    ],
+    "related": [
+      "aml",
+      "third-party-payment-channel",
+      "correspondent-banking",
+      "money-laundering",
+      "kyc"
+    ],
+    "source": [
+      "internal"
+    ],
+    "tags": [
+      "MSB",
+      "汇款",
+      "AML",
+      "非银金融机构"
+    ],
+    "brief": "提供汇款/兑换等货币服务的非银行机构，AML 高风险通道。",
+    "courses": [
+      "11"
+    ]
+  },
+  {
+    "id": "sdd",
+    "term": "SDD",
+    "fullName": "Simplified Due Diligence",
+    "zh": "简化尽职调查",
+    "category": "aml-kyc",
+    "level": "core",
+    "jurisdiction": [
+      "Global"
+    ],
+    "definition": "在低风险情形下允许金融机构采取比标准客户尽调（CDD）简化的身份核实与信息收集措施，但须能证明风险确属较低；与 CDD、EDD 共同构成基于风险的分层尽调体系。",
+    "whyImportant": "SDD 是基于风险方法（RBA）在客户尽调环节的体现：风险低可简化，风险高须强化。基金行政须准确判断何种情形可适用 SDD（如公开上市公司、低风险主权实体），避免「一刀切」或「该加强却简化」。",
+    "scenario": [
+      "Investor Onboarding",
+      "Periodic Review"
+    ],
+    "aliases": [
+      "简化尽职调查",
+      "简化尽调"
+    ],
+    "related": [
+      "cdd",
+      "edd",
+      "kyc",
+      "risk-based-approach",
+      "ubo"
+    ],
+    "source": [
+      "internal"
+    ],
+    "tags": [
+      "尽调",
+      "SDD",
+      "RBA",
+      "客户准入"
+    ],
+    "brief": "低风险情形下简化的客户尽调措施，与 CDD/EDD 构成分层体系。",
+    "courses": [
+      "02"
+    ]
+  },
+  {
+    "id": "four-eyes",
+    "term": "Four Eyes",
+    "fullName": "Four-Eyes Principle",
+    "zh": "四眼原则",
+    "category": "governance",
+    "level": "core",
+    "jurisdiction": [
+      "Global"
+    ],
+    "definition": "要求关键决策或操作由两名独立人员分别审查或批准的双人控制原则，通过职责分离降低单人舞弊或操作失误的风险，是基金治理与内控的常见安排。",
+    "whyImportant": "四眼原则是基金行政内控防线的核心机制之一，尤其适用于资金划拨、账户开立、交易审批与合规复核等高风险环节。缺少双人控制常是内控失效与舞弊事件的共同诱因。",
+    "scenario": [
+      "Fund Operations",
+      "Fund Governance"
+    ],
+    "aliases": [
+      "Four Eyes Principle",
+      "四眼原则",
+      "双人复核"
+    ],
+    "related": [
+      "fiduciary-duty",
+      "governing-body",
+      "board-of-directors",
+      "conflicts-of-interest",
+      "effective-compliance-programme"
+    ],
+    "source": [
+      "internal"
+    ],
+    "tags": [
+      "内控",
+      "双人复核",
+      "治理",
+      "职责分离"
+    ],
+    "brief": "关键操作须两名独立人员复核的双人控制原则，内控核心防线。",
+    "courses": [
+      "14"
+    ]
+  },
+  {
+    "id": "false-positive",
+    "term": "False Positive",
+    "fullName": "False Positive",
+    "zh": "误报",
+    "category": "aml-kyc",
+    "level": "core",
+    "jurisdiction": [
+      "Global"
+    ],
+    "definition": "交易监控或制裁筛查系统中，被规则或模型错误标记为可疑或命中、但实际并无风险的结果；与「漏报（False Negative）」相对，是评估监控系统有效性的核心指标。",
+    "whyImportant": "误报率过高会淹没真正风险信号、拖累运营效率并削弱团队对系统的信任。基金行政需在「减少误报」与「不放过真风险」之间调优阈值与场景，而非一味追求零误报或零漏报。",
+    "scenario": [
+      "Periodic Review"
+    ],
+    "aliases": [
+      "误报",
+      "假阳性"
+    ],
+    "related": [
+      "sanctions",
+      "transaction-monitoring",
+      "customer-risk-rating",
+      "ongoing-monitoring",
+      "risk-based-approach"
+    ],
+    "source": [
+      "internal"
+    ],
+    "tags": [
+      "误报",
+      "交易监控",
+      "制裁筛查",
+      "阈值调优"
+    ],
+    "brief": "被系统误判为可疑的正常结果，监控系统调优的核心指标。",
+    "courses": [
+      "13"
+    ]
+  },
+  {
+    "id": "atl",
+    "term": "ATL",
+    "fullName": "Above the Line",
+    "zh": "阈值触发法",
+    "category": "aml-kyc",
+    "level": "advanced",
+    "jurisdiction": [
+      "Global"
+    ],
+    "definition": "交易监控中的规则/阈值触发预警方式：当交易金额、频率等指标超过预设阈值时触发预警，是传统且直观的异常识别手段，须按风险细分设计差异化场景与阈值。",
+    "whyImportant": "ATL 是交易监控最基础的预警机制，阈值设置直接决定系统的灵敏度。基金行政须结合客户预期行为与风险细分设计阈值，并定期回溯测试调优，避免「一刀切」阈值导致漏报或误报泛滥。",
+    "scenario": [
+      "Periodic Review"
+    ],
+    "aliases": [
+      "阈值触发",
+      "规则预警"
+    ],
+    "related": [
+      "btl",
+      "transaction-monitoring",
+      "false-positive",
+      "customer-risk-rating",
+      "risk-based-approach"
+    ],
+    "source": [
+      "internal"
+    ],
+    "tags": [
+      "交易监控",
+      "阈值",
+      "预警",
+      "ATL"
+    ],
+    "brief": "交易监控中靠规则/阈值触发预警的传统方式。",
+    "courses": [
+      "13"
+    ]
+  },
+  {
+    "id": "btl",
+    "term": "BTL",
+    "fullName": "Below the Line",
+    "zh": "统计识别法",
+    "category": "aml-kyc",
+    "level": "advanced",
+    "jurisdiction": [
+      "Global"
+    ],
+    "definition": "交易监控中借助统计方法识别「低于阈值但偏离常态」交易的手段，例如发现结构化规避（structuring）等阈下异常；与 ATL 互补，能捕捉传统阈值规则漏掉的风险。",
+    "whyImportant": "刻意规避监控的洗钱者常把交易拆到阈值之下，仅靠 ATL 无法发现。BTL 通过统计偏离常态来捕捉结构化等阈下异常，是交易监控从「规则驱动」向「数据驱动」升级的关键。",
+    "scenario": [
+      "Periodic Review"
+    ],
+    "aliases": [
+      "统计识别",
+      "阈下识别"
+    ],
+    "related": [
+      "atl",
+      "transaction-monitoring",
+      "false-positive",
+      "money-laundering",
+      "risk-based-approach"
+    ],
+    "source": [
+      "internal"
+    ],
+    "tags": [
+      "交易监控",
+      "统计识别",
+      "结构化",
+      "BTL"
+    ],
+    "brief": "交易监控中靠统计方法识别阈下偏离常态交易的手段。",
+    "courses": [
+      "13"
+    ]
+  },
+  {
+    "id": "ctr",
+    "term": "CTR",
+    "fullName": "Currency Transaction Report",
+    "zh": "大额现金交易报告",
+    "category": "aml-kyc",
+    "level": "advanced",
+    "jurisdiction": [
+      "USA"
+    ],
+    "definition": "美国 BSA 项下要求金融机构对超过一定金额的现金交易向 FinCEN 提交的报告；与可疑活动报告（SAR）并列，是 BSA 报告义务的组成部分。",
+    "whyImportant": "CTR 与 SAR 是 BSA 报告义务的两大支柱：CTR 按金额阈值自动触发，SAR 按可疑判断触发。基金行政须理解二者触发逻辑不同、不可互相替代，才能正确履行报告义务。",
+    "scenario": [
+      "Regulatory Filing",
+      "Periodic Review"
+    ],
+    "aliases": [
+      "大额现金交易报告"
+    ],
+    "related": [
+      "str",
+      "bsa",
+      "aml",
+      "money-laundering",
+      "ofac"
+    ],
+    "source": [
+      "internal"
+    ],
+    "tags": [
+      "BSA",
+      "现金交易",
+      "报告义务",
+      "FinCEN"
+    ],
+    "brief": "美国 BSA 项下按金额阈值自动触发的大额现金交易报告。",
+    "courses": [
+      "11"
+    ]
+  },
+  {
+    "id": "crf",
+    "term": "CRF",
+    "fullName": "Cash Reporting Form",
+    "zh": "资产冻结报告",
+    "category": "aml-kyc",
+    "level": "advanced",
+    "jurisdiction": [
+      "Global"
+    ],
+    "definition": "在资产冻结（freeze）场景下向监管机构（如 FRA）提交的报告，用于披露被冻结资产及未遂交易；与可疑活动报告（SAR）相互独立，不可相互替代。",
+    "whyImportant": "资产冻结与可疑报告是两类不同义务：冻结按制裁命中即时执行，CRF 披露冻结事实；SAR 按可疑门槛另行提交。基金行政须在时间压力下正确区分两者，避免「用一个替代另一个」导致报告遗漏。",
+    "scenario": [
+      "Regulatory Filing",
+      "Periodic Review"
+    ],
+    "aliases": [
+      "资产冻结报告",
+      "冻结报告"
+    ],
+    "related": [
+      "financial-sanctions",
+      "ofac",
+      "str",
+      "sanctions",
+      "aml-cft"
+    ],
+    "source": [
+      "internal"
+    ],
+    "tags": [
+      "资产冻结",
+      "制裁",
+      "报告义务",
+      "CRF"
+    ],
+    "brief": "资产冻结场景下披露被冻结资产的报告，与 SAR 相互独立。"
+  },
+  {
+    "id": "esg",
+    "term": "ESG",
+    "fullName": "Environmental, Social and Governance",
+    "zh": "环境、社会与治理",
+    "category": "fund-operations",
+    "level": "core",
+    "jurisdiction": [
+      "Global"
+    ],
+    "definition": "将环境（Environmental）、社会（Social）与治理（Governance）因素纳入投资决策与基金运营的框架；ESG 基金据此设定策略或排除标准，产品标签须与实质一致。",
+    "whyImportant": "ESG 投资已成为基金产品的重要类别，但「标签与实质不符」是监管重点打击的漂绿（greenwashing）风险。基金行政须确保 ESG 基金的营销、披露与实际持仓/策略一致，避免夸大或误导。",
+    "scenario": [
+      "Fund Setup",
+      "Client Communication"
+    ],
+    "aliases": [
+      "环境社会与治理",
+      "环境、社会和治理"
+    ],
+    "related": [
+      "sri",
+      "sfdr",
+      "investment-manager",
+      "private-fund",
+      "regulatory-reporting"
+    ],
+    "source": [
+      "internal"
+    ],
+    "tags": [
+      "ESG",
+      "可持续投资",
+      "漂绿",
+      "基金策略"
+    ],
+    "brief": "把环境、社会与治理因素纳入投资决策的框架，须防漂绿风险。",
+    "courses": [
+      "E09",
+      "E02"
+    ]
+  },
+  {
+    "id": "sri",
+    "term": "SRI",
+    "fullName": "Socially Responsible Investing",
+    "zh": "社会责任投资",
+    "category": "fund-operations",
+    "level": "advanced",
+    "jurisdiction": [
+      "Global"
+    ],
+    "definition": "将社会、伦理与价值观因素纳入投资筛选或策略的投资方式，是 ESG 投资的早期形态与思想源头，常见做法包括负面筛选（剔除特定行业）与正面筛选（优先布局）。",
+    "whyImportant": "SRI 是理解 ESG 投资谱系的关键一环：从早期的伦理排除到今天的 ESG 整合。基金行政需区分 SRI、ESG、影响力投资等概念边界，避免在营销与披露中混淆客户预期。",
+    "scenario": [
+      "Fund Setup",
+      "Client Communication"
+    ],
+    "aliases": [
+      "社会责任投资",
+      "社会负责任投资"
+    ],
+    "related": [
+      "esg",
+      "sfdr",
+      "investment-manager",
+      "private-fund",
+      "distribution"
+    ],
+    "source": [
+      "internal"
+    ],
+    "tags": [
+      "SRI",
+      "社会责任",
+      "伦理投资",
+      "ESG"
+    ],
+    "brief": "把社会伦理因素纳入投资筛选的投资方式，ESG 的思想源头。",
+    "courses": [
+      "E09"
+    ]
+  },
+  {
+    "id": "sfdr",
+    "term": "SFDR",
+    "fullName": "Sustainable Finance Disclosure Regulation",
+    "zh": "可持续金融披露条例",
+    "category": "regulatory",
+    "level": "advanced",
+    "jurisdiction": [
+      "EU"
+    ],
+    "definition": "欧盟关于可持续金融信息披露的条例，要求金融市场参与者与财务顾问披露可持续性风险、不利影响及产品可持续性特征，并对基金做第 6/8/9 条分类披露。",
+    "whyImportant": "SFDR 是欧盟反漂绿的核心监管框架，向欧盟投资者募资的基金须按其分类（第 8/9 条）履行披露义务。基金行政需理解产品分类与披露要求的对应关系，避免因披露不足或标签不当触犯监管。",
+    "scenario": [
+      "Regulatory Filing",
+      "Client Communication"
+    ],
+    "aliases": [
+      "可持续金融披露条例",
+      "欧盟可持续披露条例"
+    ],
+    "related": [
+      "esg",
+      "sri",
+      "aifmd",
+      "regulatory-reporting",
+      "distribution"
+    ],
+    "source": [
+      "internal"
+    ],
+    "tags": [
+      "SFDR",
+      "欧盟",
+      "可持续披露",
+      "反漂绿"
+    ],
+    "brief": "欧盟可持续金融披露条例，反漂绿的核心监管框架。",
+    "courses": [
+      "E09"
+    ]
+  },
+  {
+    "id": "gdpr",
+    "term": "GDPR",
+    "fullName": "General Data Protection Regulation",
+    "zh": "通用数据保护条例",
+    "category": "regulatory",
+    "level": "advanced",
+    "jurisdiction": [
+      "EU"
+    ],
+    "definition": "欧盟关于个人数据保护与隐私的条例，规范个人数据的收集、处理、存储与跨境传输，赋予数据主体广泛权利，并对违规设高额罚款。",
+    "whyImportant": "基金行政处理大量投资人个人数据（身份、账户、税务信息），涉及欧盟居民或数据处理时须遵守 GDPR。数据跨境传输与第三方处理（如外包、云服务）的合规安排直接影响运营合法性。",
+    "scenario": [
+      "Client Communication",
+      "Fund Operations"
+    ],
+    "aliases": [
+      "通用数据保护条例",
+      "欧盟数据保护条例"
+    ],
+    "related": [
+      "identity-verification",
+      "kyc",
+      "self-certification",
+      "investor-register",
+      "regulatory-reporting"
+    ],
+    "source": [
+      "internal"
+    ],
+    "tags": [
+      "GDPR",
+      "数据保护",
+      "隐私",
+      "欧盟"
+    ],
+    "brief": "欧盟个人数据保护条例，基金行政处理投资人数据的合规基准。",
+    "courses": [
+      "E07"
+    ]
+  },
+  {
+    "id": "ria",
+    "term": "RIA",
+    "fullName": "Registered Investment Adviser",
+    "zh": "注册投资顾问",
+    "category": "regulatory",
+    "level": "advanced",
+    "jurisdiction": [
+      "USA"
+    ],
+    "definition": "在美国证券交易委员会（SEC）或州注册、提供投资咨询服务的机构；须履行信义义务，向客户披露利益冲突，并遵守投资顾问法的记录与报告要求。",
+    "whyImportant": "涉及美国投资者的基金结构常需识别投资顾问的注册状态与豁免情形。RIA 与 ERISA、私募发售规则交织，是判断美国连接点合规义务的关键概念。",
+    "scenario": [
+      "Fund Setup",
+      "Regulatory Filing"
+    ],
+    "aliases": [
+      "Registered Investment Advisor",
+      "注册投资顾问"
+    ],
+    "related": [
+      "investment-advisor",
+      "investment-manager",
+      "sec",
+      "erisa",
+      "fiduciary-duty"
+    ],
+    "source": [
+      "internal"
+    ],
+    "tags": [
+      "美国",
+      "RIA",
+      "投资顾问",
+      "SEC"
+    ],
+    "brief": "在美国 SEC/州注册的投资顾问，须履行信义义务。",
+    "courses": [
+      "E04"
+    ]
+  },
+  {
+    "id": "ima",
+    "term": "IMA",
+    "fullName": "Investment Management Agreement",
+    "zh": "投资管理协议",
+    "category": "governance",
+    "level": "core",
+    "jurisdiction": [
+      "Global"
+    ],
+    "definition": "基金（或其普通合伙人/受托人）与投资管理人之间订立的协议，界定管理人的投资权限、管理费与业绩报酬、报告义务、责任限制与终止安排。",
+    "whyImportant": "IMA 是基金治理的核心文件，直接决定管理人权限边界与收费安排。基金行政须据此执行费用计提、交易授权与报告流程，确保运营动作不越权、收费口径与协议一致。",
+    "scenario": [
+      "Fund Setup",
+      "Fund Governance"
+    ],
+    "aliases": [
+      "投资管理协议"
+    ],
+    "related": [
+      "investment-manager",
+      "management-fee",
+      "performance-fee",
+      "lpa",
+      "fund-administrator"
+    ],
+    "source": [
+      "internal"
+    ],
+    "tags": [
+      "投资管理协议",
+      "管理人",
+      "费用",
+      "治理"
+    ],
+    "brief": "基金与管理人之间的协议，界定投资权限与收费安排。",
+    "courses": [
+      "01"
+    ]
+  },
+  {
+    "id": "sla",
+    "term": "SLA",
+    "fullName": "Service Level Agreement",
+    "zh": "服务水平协议",
+    "category": "fund-operations",
+    "level": "core",
+    "jurisdiction": [
+      "Global"
+    ],
+    "definition": "基金行政管理人与基金或其管理人之间约定的服务标准协议，明确服务范围、交付时限（如 NAV 出具时间、报告期限）、质量指标与违约处理。",
+    "whyImportant": "SLA 是基金管理人衡量行政服务质量、追究责任的依据。基金行政须按 SLA 承诺的时限与质量交付（净值计算、报告、付款），否则面临违约与客户流失风险。",
+    "scenario": [
+      "Fund Operations",
+      "Fund Setup"
+    ],
+    "aliases": [
+      "服务水平协议",
+      "服务级别协议"
+    ],
+    "related": [
+      "fund-administrator",
+      "nav",
+      "regulatory-reporting",
+      "valuation",
+      "investment-manager"
+    ],
+    "source": [
+      "internal"
+    ],
+    "tags": [
+      "SLA",
+      "服务标准",
+      "基金行政",
+      "交付"
+    ],
+    "brief": "基金管理人与行政人之间的服务标准与时限协议。",
+    "courses": [
+      "E01"
+    ]
+  },
+  {
+    "id": "isae",
+    "term": "ISAE",
+    "fullName": "International Standard on Assurance Engagements",
+    "zh": "国际鉴证业务准则",
+    "category": "fund-operations",
+    "level": "advanced",
+    "jurisdiction": [
+      "Global"
+    ],
+    "definition": "国际审计与鉴证准则委员会发布的一系列鉴证业务准则，其中 ISAE 3402 用于服务组织内部控制（如基金行政、托管、数据处理）的报告，供客户审计师依赖。",
+    "whyImportant": "基金行政作为服务组织，常须向客户及其审计师提供 ISAE 3402 报告以证明内控有效性。理解该准则有助于行政人建立可审计的控制体系并满足客户尽调需求。",
+    "scenario": [
+      "Fund Operations",
+      "Regulatory Filing"
+    ],
+    "aliases": [
+      "国际鉴证准则",
+      "ISAE 3402"
+    ],
+    "related": [
+      "soc",
+      "auditor",
+      "effective-compliance-programme",
+      "fund-administrator",
+      "custody"
+    ],
+    "source": [
+      "internal"
+    ],
+    "tags": [
+      "鉴证",
+      "内控报告",
+      "ISAE 3402",
+      "服务组织"
+    ],
+    "brief": "服务组织内控的鉴证准则，ISAE 3402 报告即源于此。",
+    "courses": [
+      "E01"
+    ]
+  },
+  {
+    "id": "soc",
+    "term": "SOC",
+    "fullName": "System and Organization Controls",
+    "zh": "系统与组织控制报告",
+    "category": "fund-operations",
+    "level": "advanced",
+    "jurisdiction": [
+      "USA"
+    ],
+    "definition": "美国注册会计师协会（AICPA）制定的服务组织控制报告框架，其中 SOC 1 关注与财务报告相关的内部控制，SOC 2 关注安全性、可用性、保密性等信任服务标准。",
+    "whyImportant": "基金行政、托管、软件等服务提供商常以 SOC 报告证明内控与数据安全水平，供客户及审计师评估。理解 SOC 1 与 SOC 2 的差异有助于正确解读服务商的合规能力。",
+    "scenario": [
+      "Fund Operations",
+      "Regulatory Filing"
+    ],
+    "aliases": [
+      "SOC 1",
+      "SOC 2",
+      "系统与组织控制"
+    ],
+    "related": [
+      "isae",
+      "auditor",
+      "fund-administrator",
+      "custody",
+      "effective-compliance-programme"
+    ],
+    "source": [
+      "internal"
+    ],
+    "tags": [
+      "SOC",
+      "内控",
+      "AICPA",
+      "服务组织"
+    ],
+    "brief": "美国 AICPA 的服务组织控制报告框架，SOC 1/2 分述内控与数据安全。",
+    "courses": [
+      "E01"
+    ]
+  },
+  {
+    "id": "swift",
+    "term": "SWIFT",
+    "fullName": "Society for Worldwide Interbank Financial Telecommunication",
+    "zh": "环球银行金融电讯协会",
+    "category": "fund-operations",
+    "level": "core",
+    "jurisdiction": [
+      "Global"
+    ],
+    "definition": "提供跨境金融报文传输服务的合作组织，其报文标准（如 MT、ISO 20022）是全球银行与金融机构间资金划拨、结算与信息传递的基础设施。",
+    "whyImportant": "基金行政的资金划拨、结算与对账大量依赖 SWIFT 报文。理解 SWIFT 报文字段与格式，有助于准确执行付款指令、追踪资金与排查支付异常。",
+    "scenario": [
+      "Fund Operations",
+      "Transfer"
+    ],
+    "aliases": [
+      "环球银行金融电讯协会",
+      "环球同业银行金融电讯协会"
+    ],
+    "related": [
+      "fund-administrator",
+      "transfer",
+      "redemption",
+      "custody",
+      "prime-broker"
+    ],
+    "source": [
+      "internal"
+    ],
+    "tags": [
+      "SWIFT",
+      "支付",
+      "结算",
+      "报文"
+    ],
+    "brief": "跨境金融报文传输基础设施，基金行政资金划拨依赖其报文标准。",
+    "courses": [
+      "13"
+    ]
+  },
+  {
+    "id": "etf",
+    "term": "ETF",
+    "fullName": "Exchange Traded Fund",
+    "zh": "交易所交易基金",
+    "category": "fund-structure",
+    "level": "core",
+    "jurisdiction": [
+      "Global"
+    ],
+    "definition": "在证券交易所上市交易、可像股票一样买卖的基金，通常追踪指数或特定策略，兼具基金分散投资与证券流动性特点。",
+    "whyImportant": "ETF 是基金产品谱系的重要成员，其创设/赎回机制、做市与净值跟踪与普通开放式基金不同。基金行政需理解 ETF 的独特运营与估值安排，避免套用普通基金流程。",
+    "scenario": [
+      "Fund Setup",
+      "Fund Operations"
+    ],
+    "aliases": [
+      "交易所交易基金",
+      "交易型开放式指数基金"
+    ],
+    "related": [
+      "open-ended-fund",
+      "mutual-fund",
+      "nav",
+      "valuation",
+      "distribution"
+    ],
+    "source": [
+      "internal"
+    ],
+    "tags": [
+      "ETF",
+      "交易所",
+      "基金产品",
+      "流动性"
+    ],
+    "brief": "在交易所上市交易的基金，兼具分散投资与证券流动性。",
+    "courses": [
+      "E03"
+    ]
+  },
+  {
+    "id": "mutual-fund",
+    "term": "Mutual Fund",
+    "fullName": "Mutual Fund",
+    "zh": "共同基金",
+    "category": "fund-structure",
+    "level": "core",
+    "jurisdiction": [
+      "Global"
+    ],
+    "definition": "集合众多投资者资金、由专业管理人投资于证券组合的开放式投资工具，投资者按份额持有、可通常按净值申购赎回；在美国语境下对应 1940 年投资公司法项下的注册投资公司。",
+    "whyImportant": "共同基金是理解「集合投资」概念的基础载体，与私募基金在投资者门槛、监管注册与流动性安排上差异显著。基金行政需区分公募共同基金与私募基金的合规与运营差异。",
+    "scenario": [
+      "Fund Setup",
+      "Fund Operations"
+    ],
+    "aliases": [
+      "共同基金",
+      "互惠基金"
+    ],
+    "related": [
+      "open-ended-fund",
+      "etf",
+      "nav",
+      "subscription",
+      "redemption"
+    ],
+    "source": [
+      "internal"
+    ],
+    "tags": [
+      "共同基金",
+      "开放式",
+      "公募",
+      "集合投资"
+    ],
+    "brief": "集合投资者资金的开放式投资工具，与私募基金在监管上差异显著。",
+    "courses": [
+      "02",
+      "14",
+      "15"
+    ]
+  },
+  {
+    "id": "blocker",
+    "term": "Blocker",
+    "fullName": "Blocker Corporation",
+    "zh": "隔离公司",
+    "category": "tax",
+    "level": "advanced",
+    "jurisdiction": [
+      "Global"
+    ],
+    "definition": "跨境基金结构中插入在投资者与标的之间的公司型实体，用于阻断税透、延迟或重新定性所得，使特定投资者（如美国应税投资者、免税投资者）获得更优或更清晰的税务处理。",
+    "whyImportant": "Blocker 是跨境私募基金结构设计的核心工具，直接影响美国应税/免税投资者的税务结果（如避免 UBTI、ECI）。基金行政需理解 Blocker 在架构中的位置与税务意图，才能正确核算与申报。",
+    "scenario": [
+      "Fund Setup",
+      "Fund Operations"
+    ],
+    "aliases": [
+      "Blocker 公司",
+      "隔离公司",
+      "税务隔离实体"
+    ],
+    "related": [
+      "tax-transparent-entity",
+      "ubti",
+      "eci",
+      "erisa",
+      "master-fund"
+    ],
+    "source": [
+      "internal"
+    ],
+    "tags": [
+      "税务",
+      "结构设计",
+      "美国投资者",
+      "Blocker"
+    ],
+    "brief": "插入投资人与标的之间的公司，用于阻断税透、优化税务处理。",
+    "courses": [
+      "E03",
+      "E04"
+    ]
+  },
+  {
+    "id": "investment-entity",
+    "term": "Investment Entity",
+    "fullName": "Investment Entity",
+    "zh": "投资实体",
+    "category": "aeoi",
+    "level": "advanced",
+    "jurisdiction": [
+      "Global"
+    ],
+    "definition": "FATCA 与 CRS 项下的金融机构类别之一，指主要业务为以客户名义从事证券投资、组合管理或代表客户交易/管理金融资产的实体，或被金融机构管理的投资工具；须据此履行尽调与申报义务。",
+    "whyImportant": "是否构成「投资实体」直接决定基金在 FATCA/CRS 下的分类与申报义务（如是否为报告金融机构 FFI）。基金行政须准确判断基金与管理人的分类，避免漏报或错报账户信息。",
+    "scenario": [
+      "AEOI / CRS / FATCA",
+      "Regulatory Filing"
+    ],
+    "aliases": [
+      "投资实体"
+    ],
+    "related": [
+      "financial-institution",
+      "ffi",
+      "nfe",
+      "fatca",
+      "crs"
+    ],
+    "source": [
+      "internal"
+    ],
+    "tags": [
+      "FATCA",
+      "CRS",
+      "投资实体",
+      "金融机构分类"
+    ],
+    "brief": "FATCA/CRS 项下的金融机构类别，决定基金申报义务。",
+    "courses": [
+      "12"
+    ]
+  },
+  {
+    "id": "financial-institution",
+    "term": "Financial Institution",
+    "fullName": "Financial Institution",
+    "zh": "金融机构",
+    "category": "aeoi",
+    "level": "advanced",
+    "jurisdiction": [
+      "Global"
+    ],
+    "definition": "FATCA/CRS 项下需履行账户尽调与信息申报义务的主体类别，包括托管机构、存款机构、投资实体与特定保险机构；判定以「业务实质」而非牌照名称为准。",
+    "whyImportant": "金融机构（FI）分类是 FATCA/CRS 义务的起点：被认定为 FI 即须开展账户尽调、识别美国账户/可申报账户并申报。基金行政须先正确判定自身及对手方的 FI 地位，再谈具体义务。",
+    "scenario": [
+      "AEOI / CRS / FATCA",
+      "Regulatory Filing"
+    ],
+    "aliases": [
+      "金融机构",
+      "FI"
+    ],
+    "related": [
+      "investment-entity",
+      "ffi",
+      "nfe",
+      "fatca",
+      "crs"
+    ],
+    "source": [
+      "internal"
+    ],
+    "tags": [
+      "FATCA",
+      "CRS",
+      "金融机构",
+      "分类"
+    ],
+    "brief": "FATCA/CRS 项下须履行尽调申报义务的主体类别。",
+    "courses": [
+      "12"
+    ]
+  },
+  {
+    "id": "iga",
+    "term": "IGA",
+    "fullName": "Intergovernmental Agreement",
+    "zh": "政府间协议",
+    "category": "aeoi",
+    "level": "advanced",
+    "jurisdiction": [
+      "Global"
+    ],
+    "definition": "美国与其他国家（或法域）为实施 FATCA 而签署的政府间协议，分为模式 1（由当地税务当局收集并交换信息）与模式 2（金融机构直接向美国 IRS 报告）；确定当地 FATCA 的具体落地方式。",
+    "whyImportant": "IGA 模式（1 或 2）直接决定金融机构的 FATCA 申报路径：是向当地税务机关还是直接向 IRS 报告。基金行政须识别所属法域的 IGA 模式，才能正确履行 FATCA 义务。",
+    "scenario": [
+      "AEOI / CRS / FATCA",
+      "Regulatory Filing"
+    ],
+    "aliases": [
+      "政府间协议"
+    ],
+    "related": [
+      "fatca",
+      "model-1-iga",
+      "irs",
+      "ffi",
+      "crs"
+    ],
+    "source": [
+      "internal"
+    ],
+    "tags": [
+      "FATCA",
+      "IGA",
+      "政府间协议",
+      "申报路径"
+    ],
+    "brief": "实施 FATCA 的政府间协议，决定金融机构申报路径。",
+    "courses": [
+      "12"
+    ]
+  },
+  {
+    "id": "irs",
+    "term": "IRS",
+    "fullName": "Internal Revenue Service",
+    "zh": "美国国税局",
+    "category": "tax",
+    "level": "core",
+    "jurisdiction": [
+      "USA"
+    ],
+    "definition": "美国联邦税务机构，负责征收联邦税、执行税法并管理税务申报（含 FATCA 项下的信息交换与 W 系列表格）。",
+    "whyImportant": "IRS 是美国税务合规的核心监管方，FATCA 申报、W-8/W-9 表格与税务信息交换均与其对接。基金行政处理美国税务相关表格与申报时需了解 IRS 要求。",
+    "scenario": [
+      "AEOI / CRS / FATCA",
+      "Regulatory Filing"
+    ],
+    "aliases": [
+      "美国国税局",
+      "美国税务局"
+    ],
+    "related": [
+      "fatca",
+      "iga",
+      "w8ben",
+      "w9",
+      "tax-residency"
+    ],
+    "source": [
+      "internal"
+    ],
+    "tags": [
+      "IRS",
+      "美国税务",
+      "FATCA",
+      "申报"
+    ],
+    "brief": "美国联邦税务机构，FATCA 申报与 W 表格的对接方。",
+    "courses": [
+      "12"
+    ]
+  },
+  {
+    "id": "indicia",
+    "term": "Indicia",
+    "fullName": "US Indicia",
+    "zh": "美国迹象",
+    "category": "aeoi",
+    "level": "advanced",
+    "jurisdiction": [
+      "USA"
+    ],
+    "definition": "FATCA 项下用于识别账户持有人是否可能为美国人士的迹象清单，如美国出生地、美国地址、美国电话号码、美国汇款指令等；命中迹象即触发进一步的记录核实或自证。",
+    "whyImportant": "US Indicia 是 FATCA 账户尽调的核心工具：通过迹象清单筛查潜在美国账户，再依自证或记录核实排除。基金行政须掌握迹象清单的命中与治愈流程，确保美国账户不被漏识别。",
+    "scenario": [
+      "AEOI / CRS / FATCA",
+      "Investor Onboarding"
+    ],
+    "aliases": [
+      "美国迹象",
+      "迹象清单"
+    ],
+    "related": [
+      "us-person",
+      "fatca",
+      "self-certification",
+      "w8ben",
+      "w9"
+    ],
+    "source": [
+      "internal"
+    ],
+    "tags": [
+      "FATCA",
+      "美国迹象",
+      "账户尽调",
+      "US Indicia"
+    ],
+    "brief": "FATCA 识别潜在美国账户的迹象清单，命中须核实或自证。",
+    "courses": [
+      "12"
+    ]
+  },
+  {
+    "id": "identity-verification",
+    "term": "Identity Verification",
+    "fullName": "Identity Verification",
+    "zh": "身份核验",
+    "category": "aml-kyc",
+    "level": "core",
+    "jurisdiction": [
+      "Global"
+    ],
+    "definition": "核实客户身份真实性的过程，通过核验身份文件、比对信息或借助可靠数据源确认「客户即其所声称之人」，是客户尽调（CDD）的第一步。",
+    "whyImportant": "身份核验是客户准入的起点，核验不实将导致整个尽调链条失效。基金行政须掌握身份文件的核验要点与防伪意识，确保投资人是真实、可追溯的主体。",
+    "scenario": [
+      "Investor Onboarding"
+    ],
+    "aliases": [
+      "身份核验",
+      "身份核实"
+    ],
+    "related": [
+      "kyc",
+      "cdd",
+      "identity-document",
+      "ubo",
+      "certified-copy"
+    ],
+    "source": [
+      "internal"
+    ],
+    "tags": [
+      "身份核验",
+      "KYC",
+      "客户准入",
+      "尽调"
+    ],
+    "brief": "核实客户身份真实性的过程，客户尽调的第一步。"
+  },
+  {
+    "id": "crypto-fund",
+    "term": "Crypto Fund",
+    "fullName": "Crypto Fund",
+    "zh": "加密基金",
+    "category": "fund-structure",
+    "level": "advanced",
+    "jurisdiction": [
+      "Global"
+    ],
+    "definition": "投资于加密资产（数字代币、加密货币及相关工具）的基金，通常以对冲基金或私募基金形式运作，面临价格波动、托管安全与监管不确定性等独特风险。",
+    "whyImportant": "加密基金在估值、托管、反洗钱（加密资产匿名性）与跨法域监管上与传统基金差异显著。基金行政服务加密基金时须应对数字资产估值、钱包托管与交易合规等新挑战。",
+    "scenario": [
+      "Fund Setup",
+      "Fund Operations"
+    ],
+    "aliases": [
+      "加密基金",
+      "加密货币基金",
+      "数字资产基金"
+    ],
+    "related": [
+      "crypto-mixer",
+      "privacy-coin",
+      "hedge-fund",
+      "valuation",
+      "custody"
+    ],
+    "source": [
+      "internal"
+    ],
+    "tags": [
+      "加密资产",
+      "数字资产",
+      "基金",
+      "托管"
+    ],
+    "brief": "投资加密资产的基金，在估值托管与 AML 上挑战独特。",
+    "courses": [
+      "E11"
+    ]
+  },
+  {
+    "id": "approved-manager",
+    "term": "Approved Manager",
+    "fullName": "Approved Manager",
+    "zh": "获批管理人",
+    "category": "regulatory",
+    "level": "advanced",
+    "jurisdiction": [
+      "BVI"
+    ],
+    "definition": "BVI 面向特定基金提供管理服务的简化监管制度：受基金范围、业务规模限制并须满足董事、授权代表、财务报表、年度申报等义务；比全面持牌更轻，但仍是受监管安排。",
+    "whyImportant": "Approved Manager 是 BVI 基金合规的关键概念：它是「简化监管」而非「无监管」，且不替代基金本身的 AML、AEOI 义务。基金行政须据此区分其与持牌管理人、注册代理的角色边界。",
+    "scenario": [
+      "Fund Setup",
+      "Regulatory Filing"
+    ],
+    "aliases": [
+      "获批管理人",
+      "BVI 获批管理人"
+    ],
+    "related": [
+      "bvi-lp",
+      "fsc",
+      "investment-manager",
+      "licensing",
+      "economic-substance"
+    ],
+    "source": [
+      "internal"
+    ],
+    "tags": [
+      "BVI",
+      "获批管理人",
+      "简化监管",
+      "FSC"
+    ],
+    "brief": "BVI 的简化监管管理人制度，比持牌轻但非无监管。",
+    "courses": [
+      "15"
+    ],
+    "commonMistakes": [
+      "把 Approved Manager 当作无监管安排——它仍有范围、规模、董事与年度申报等持续义务",
+      "以为 Approved Manager 可替代基金的 AML、AEOI 合规义务"
+    ]
+  },
+  {
+    "id": "collective-investment-arrangement",
+    "term": "Collective Investment Arrangement",
+    "fullName": "Collective Investment Arrangement",
+    "zh": "集合投资安排",
+    "category": "fund-structure",
+    "level": "core",
+    "jurisdiction": [
+      "Global"
+    ],
+    "definition": "集合多位投资者资金、按共同投资目的进行投资运作的安排或载体，是基金、集合投资计划等概念的统称，通常需判断是否落入法定的「集合投资计划」定义以确定监管适用。",
+    "whyImportant": "是否构成「集合投资安排/计划」是判断某结构是否受基金监管（注册、牌照、披露）的前提。基金行政须理解该定义的构成要件，避免结构被误判为不受监管或反之。",
+    "scenario": [
+      "Fund Setup",
+      "Regulatory Filing"
+    ],
+    "aliases": [
+      "Collective Investment Scheme",
+      "集合投资安排",
+      "集合投资计划"
+    ],
+    "related": [
+      "mutual-fund",
+      "private-fund",
+      "umbrella-fund",
+      "fund-administrator",
+      "distribution"
+    ],
+    "source": [
+      "internal"
+    ],
+    "tags": [
+      "集合投资",
+      "基金监管",
+      "结构判定",
+      "CIS"
+    ],
+    "brief": "集合投资者资金共同投资的安排，监管适用的判定起点。",
+    "courses": [
+      "14"
+    ]
+  },
+  {
+    "id": "reference-letter",
+    "term": "Reference Letter",
+    "fullName": "Reference Letter",
+    "zh": "推荐信",
+    "category": "aml-kyc",
+    "level": "core",
+    "jurisdiction": [
+      "Global"
+    ],
+    "definition": "客户尽调中由第三方（如银行、专业机构）出具的、用于佐证客户身份、资信或业务关系的证明文件；在部分法域可作为身份核验或声誉佐证材料。",
+    "whyImportant": "推荐信是客户尽调中常见的辅助佐证材料，尤其在缺乏标准身份文件或新设实体场景。基金行政需评估推荐信的来源可靠性与证明力，避免过度依赖单一第三方陈述。",
+    "scenario": [
+      "Investor Onboarding"
+    ],
+    "aliases": [
+      "推荐信",
+      "银行推荐信"
+    ],
+    "related": [
+      "cdd",
+      "kyc",
+      "identity-verification",
+      "introducer",
+      "beneficiary"
+    ],
+    "source": [
+      "internal"
+    ],
+    "tags": [
+      "推荐信",
+      "客户尽调",
+      "佐证",
+      "KYC"
+    ],
+    "brief": "尽调中第三方出具的客户身份或资信佐证文件。"
+  },
+  {
+    "id": "cayman-fund",
+    "term": "Cayman Fund",
+    "fullName": "Cayman Fund",
+    "zh": "开曼基金",
+    "category": "fund-structure",
+    "level": "core",
+    "jurisdiction": [
+      "Cayman"
+    ],
+    "definition": "依开曼群岛法律设立的基金，通常以豁免公司、豁免有限合伙（ELP）或单位信托形式运作，受 CIMA 监管，是离岸私募基金最主流的注册地选择之一。",
+    "whyImportant": "开曼是全球离岸基金的最主要注册地，其注册、监管、AML 与 AEOI 义务构成基金行政日常工作的核心场景。理解开曼基金的类型与 CIMA 要求是服务离岸基金的基础。",
+    "scenario": [
+      "Fund Setup",
+      "Regulatory Filing"
+    ],
+    "aliases": [
+      "开曼基金"
+    ],
+    "related": [
+      "cima",
+      "elp",
+      "exempted-company",
+      "registered-fund",
+      "professional-fund"
+    ],
+    "source": [
+      "internal"
+    ],
+    "tags": [
+      "开曼",
+      "离岸基金",
+      "CIMA",
+      "注册地"
+    ],
+    "brief": "依开曼法律设立的离岸基金，受 CIMA 监管的主流注册地选择。"
   },
 ];

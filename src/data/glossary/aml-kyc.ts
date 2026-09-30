@@ -410,7 +410,7 @@ export const AML_KYC_TERMS: GlossaryTerm[] = [
     whyImportant:
       "STR 的提交与处理有严格保密要求：向客户或第三方透露已提交 STR 构成 tipping-off（通风报信），本身即为违法行为。",
     scenario: ["Regulatory Filing", "Periodic Review"],
-    aliases: ["Suspicious Transaction Report", "Suspicious Activity Report", "可疑交易报告"],
+    aliases: ["Suspicious Transaction Report", "Suspicious Activity Report", "SAR", "可疑交易报告"],
     related: ["aml", "mlro", "edd", "tipping-off"],
     source: ["cima", "ics"],
     tags: ["报告", "保密", "法律义务"],

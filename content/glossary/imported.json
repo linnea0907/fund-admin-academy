@@ -8,14 +8,37 @@
       "zh": "开放式基金型公司",
       "category": "fund-structure",
       "level": "advanced",
-      "jurisdiction": ["Hong Kong"],
+      "jurisdiction": [
+        "Hong Kong"
+      ],
       "definition": "香港《证券及期货条例》下的公司型开放式基金载体：以公司形式设立、可增减股本以配合投资人申购与赎回，分「私人 OFC」与「公众 OFC」两类，须向证监会注册并委任保管人。",
       "whyImportant": "香港此前只有单位信托可做开放式基金，公司型载体无法灵活增减股本；OFC 补上了这一空缺，使香港具备本地注册的公司型开放式基金选项。属地选择（香港 OFC / 开曼 SPC / 新加坡 VCC）会直接影响注册路径、保管安排与税务处理。",
-      "scenario": ["Fund Setup", "Regulatory Filing"],
-      "aliases": ["Open-ended Fund Company", "Open Ended Fund Company", "开放式基金型公司"],
-      "related": ["open-ended-fund", "spc", "vcc", "sfc", "custody"],
-      "source": ["blue-book", "sfc"],
-      "tags": ["香港", "基金载体", "开放式", "证监会"],
+      "scenario": [
+        "Fund Setup",
+        "Regulatory Filing"
+      ],
+      "aliases": [
+        "Open-ended Fund Company",
+        "Open Ended Fund Company",
+        "开放式基金型公司"
+      ],
+      "related": [
+        "open-ended-fund",
+        "spc",
+        "vcc",
+        "sfc",
+        "custody"
+      ],
+      "source": [
+        "blue-book",
+        "sfc"
+      ],
+      "tags": [
+        "香港",
+        "基金载体",
+        "开放式",
+        "证监会"
+      ],
       "brief": "香港的公司型开放式基金载体，须向证监会注册并委任保管人。",
       "commonMistakes": [
         "把 OFC 与开曼 SPC、新加坡 VCC 混为一谈（三者注册地、监管机构与股本规则均不同）",
@@ -29,14 +52,38 @@
       "zh": "有限合伙基金（香港）",
       "category": "fund-structure",
       "level": "advanced",
-      "jurisdiction": ["Hong Kong"],
+      "jurisdiction": [
+        "Hong Kong"
+      ],
       "definition": "香港《有限合伙基金条例》设立的基金载体：以有限合伙形式运作，须有至少一名普通合伙人与一名有限合伙人、设有香港注册地址，并委任投资管理人；主要面向私募股权与创投基金。",
       "whyImportant": "LPF 是香港对标开曼豁免有限合伙（ELP）的本土方案，其注册地要求与申报口径与离岸有限合伙不同，直接影响设立地选择与后续合规成本。",
-      "scenario": ["Fund Setup", "Regulatory Filing"],
-      "aliases": ["Limited Partnership Fund", "香港有限合伙基金"],
-      "related": ["limited-partnership", "elp", "bvi-lp", "gp", "lp", "lpa", "fund-administrator"],
-      "source": ["blue-book", "sfc"],
-      "tags": ["香港", "私募股权", "有限合伙", "基金载体"],
+      "scenario": [
+        "Fund Setup",
+        "Regulatory Filing"
+      ],
+      "aliases": [
+        "Limited Partnership Fund",
+        "香港有限合伙基金"
+      ],
+      "related": [
+        "limited-partnership",
+        "elp",
+        "bvi-lp",
+        "gp",
+        "lp",
+        "lpa",
+        "fund-administrator"
+      ],
+      "source": [
+        "blue-book",
+        "sfc"
+      ],
+      "tags": [
+        "香港",
+        "私募股权",
+        "有限合伙",
+        "基金载体"
+      ],
       "brief": "香港的有限合伙基金制度，主要面向私募股权与创投基金。",
       "commonMistakes": [
         "把 LPF 与开曼 ELP、BVI LP 的注册地与申报义务等同",
@@ -50,14 +97,38 @@
       "zh": "私人投资基金（BVI）",
       "category": "regulatory",
       "level": "advanced",
-      "jurisdiction": ["BVI"],
+      "jurisdiction": [
+        "BVI"
+      ],
       "definition": "BVI《证券与投资业务法》下的基金类别，专门覆盖封闭式基金（依《Private Investment Funds Regulations》）：以「集合投资并分散投资组合风险」为目的、发行按资产净值比例计算权益的载体，常见于私募股权、创投、不动产与私人信贷基金。",
       "whyImportant": "该类别把 BVI 的封闭式基金纳入监管：判断一只 BVI PE/VC 基金是否需要向 FSC 注册，关键看是否落入 PIF 定义。仅投资单一标的的封闭式基金通常不符合「分散风险」要件，可不受监管——这条区分常被误判。",
-      "scenario": ["Fund Setup", "Regulatory Filing"],
-      "aliases": ["Private Investment Fund", "私人投资基金", "BVI PIF"],
-      "related": ["private-fund", "professional-fund", "fsc", "exempted-company", "bvi-lp", "closed-ended-fund", "spc"],
-      "source": ["blue-book"],
-      "tags": ["BVI", "封闭式基金", "私募股权", "FS 注册"],
+      "scenario": [
+        "Fund Setup",
+        "Regulatory Filing"
+      ],
+      "aliases": [
+        "Private Investment Fund",
+        "私人投资基金",
+        "BVI PIF"
+      ],
+      "related": [
+        "private-fund",
+        "professional-fund",
+        "fsc",
+        "exempted-company",
+        "bvi-lp",
+        "closed-ended-fund",
+        "spc"
+      ],
+      "source": [
+        "blue-book"
+      ],
+      "tags": [
+        "BVI",
+        "封闭式基金",
+        "私募股权",
+        "FS 注册"
+      ],
       "brief": "BVI 覆盖封闭式基金的监管类别，常见于 PE/VC 基金。",
       "commonMistakes": [
         "把 BVI 的 Private Investment Fund（封闭式）与 SIBA 下的 Private Fund / Professional Fund（开放式）当作同一类别",
@@ -71,14 +142,39 @@
       "zh": "另类投资载体",
       "category": "fund-structure",
       "level": "advanced",
-      "jurisdiction": ["Global", "USA"],
+      "jurisdiction": [
+        "Global",
+        "USA"
+      ],
       "definition": "主基金为特定投资机会或特定投资者群体另行设立的平行投资载体：与主基金投资策略一致，但单独设置投资人资格、费用或税务安排，常见于私募股权、创投与不动产基金。",
       "whyImportant": "关系到「同一策略、多个载体」下的出资、估值与分配如何处理：受 ERISA、税务居民身份或单笔投资上限约束的投资人常要求通过 AIV 参与，Fund Admin 需在资本账户、费用分摊与 NAV 层面分开核算，避免与主基金串账。",
-      "scenario": ["Fund Setup", "Fund Operations", "Investor Onboarding"],
-      "aliases": ["Alternative Investment Vehicle", "另类投资载体", "平行投资载体"],
-      "related": ["spv", "feeder-fund", "master-fund", "co-investment", "capital-account", "erisa"],
-      "source": ["blue-book"],
-      "tags": ["平行载体", "私募股权", "税务安排", "分户核算"],
+      "scenario": [
+        "Fund Setup",
+        "Fund Operations",
+        "Investor Onboarding"
+      ],
+      "aliases": [
+        "Alternative Investment Vehicle",
+        "另类投资载体",
+        "平行投资载体"
+      ],
+      "related": [
+        "spv",
+        "feeder-fund",
+        "master-fund",
+        "co-investment",
+        "capital-account",
+        "erisa"
+      ],
+      "source": [
+        "blue-book"
+      ],
+      "tags": [
+        "平行载体",
+        "私募股权",
+        "税务安排",
+        "分户核算"
+      ],
       "brief": "与主基金策略一致的平行载体，用于特定投资人参与。",
       "commonMistakes": [
         "把 AIV 与 SPV 混用：AIV 是平行基金载体，SPV 通常只承接单一投资标的",
@@ -92,14 +188,35 @@
       "zh": "注册基金管理公司（新加坡）",
       "category": "regulatory",
       "level": "expert",
-      "jurisdiction": ["Singapore"],
+      "jurisdiction": [
+        "Singapore"
+      ],
       "definition": "新加坡金管局曾设的轻监管基金管理人注册类别：可管理不超过 30 名合格投资人、且管理规模设有上限。该制度已于 2024 年 8 月 1 日被 MAS 废止，不再接受新注册；存量机构须转为持牌基金管理公司（A/I LFMC 或 Retail LFMC）。",
       "whyImportant": "判断一家新加坡管理人是否持牌、可服务哪类投资人，前提是知道 RFMC 已不存在。遇到旧架构文件、旧认购文件或旧合规备忘录里写 RFMC 的，应核查该管理人是否已完成转换。",
-      "scenario": ["Fund Setup", "Regulatory Filing"],
-      "aliases": ["Registered Fund Management Company", "注册基金管理公司", "新加坡 RFMC"],
-      "related": ["mas", "licensing", "aifmd", "investment-manager"],
-      "source": ["mas"],
-      "tags": ["新加坡", "牌照", "已废止", "基金管理人"],
+      "scenario": [
+        "Fund Setup",
+        "Regulatory Filing"
+      ],
+      "aliases": [
+        "Registered Fund Management Company",
+        "注册基金管理公司",
+        "新加坡 RFMC"
+      ],
+      "related": [
+        "mas",
+        "licensing",
+        "aifmd",
+        "investment-manager"
+      ],
+      "source": [
+        "mas"
+      ],
+      "tags": [
+        "新加坡",
+        "牌照",
+        "已废止",
+        "基金管理人"
+      ],
       "brief": "新加坡已废止的轻监管基金管理人注册类别。",
       "commonMistakes": [
         "沿用旧资料把 RFMC 当作现行可选牌照向客户推荐",
@@ -113,19 +230,44 @@
       "zh": "非金融实体",
       "category": "aeoi",
       "level": "advanced",
-      "jurisdiction": ["Global"],
+      "jurisdiction": [
+        "Global"
+      ],
       "definition": "CRS 下的实体分类：凡不属于「金融机构（FI）」的实体即为 NFE，按收入与资产构成分为主动型 NFE 与被动型 NFE。被动型 NFE 须穿透识别其控权人并纳入申报。",
       "whyImportant": "尽调中判断账户持有人是 FI 还是 NFE，直接决定是否需要做控权人穿透；把 CRS 的 NFE 与 FATCA 的 NFFE 混用，会导致自我证明表选错分类、后续申报口径错误。",
-      "scenario": ["Investor Onboarding", "AEOI / CRS / FATCA", "Periodic Review"],
-      "aliases": ["Non-Financial Entity", "Non Financial Entity", "非金融实体"],
-      "related": ["nffe", "active-nfe", "passive-nfe", "ffi", "controlling-person", "self-certification", "crs"],
-      "source": ["blue-book"],
-      "tags": ["CRS", "实体分类", "控权人", "自我证明"],
+      "scenario": [
+        "Investor Onboarding",
+        "AEOI / CRS / FATCA",
+        "Periodic Review"
+      ],
+      "aliases": [
+        "Non-Financial Entity",
+        "Non Financial Entity",
+        "非金融实体"
+      ],
+      "related": [
+        "nffe",
+        "active-nfe",
+        "passive-nfe",
+        "ffi",
+        "controlling-person",
+        "self-certification",
+        "crs"
+      ],
+      "source": [
+        "blue-book"
+      ],
+      "tags": [
+        "CRS",
+        "实体分类",
+        "控权人",
+        "自我证明"
+      ],
       "brief": "CRS 下不属于金融机构的实体，被动型须穿透控权人。",
       "commonMistakes": [
-      "把 CRS 的 NFE 与 FATCA 的 NFFE 当作同一概念：两套体系的最外层分类名不可互换——CRS 用 NFE（Non-Financial Entity），FATCA 用 NFFE（Non-Financial Foreign Entity），分类逻辑接近但适用法规与判断标准不同",
-      "在 CRS 自我证明表里填 NFFE、或在 FATCA 表格（如 W-8BEN-E）里填 NFE，导致分类与表格体系不匹配",
-      "对被动型 NFE 未穿透识别控权人即完成尽调"
+        "把 CRS 的 NFE 与 FATCA 的 NFFE 当作同一概念：两套体系的最外层分类名不可互换——CRS 用 NFE（Non-Financial Entity），FATCA 用 NFFE（Non-Financial Foreign Entity），分类逻辑接近但适用法规与判断标准不同",
+        "在 CRS 自我证明表里填 NFFE、或在 FATCA 表格（如 W-8BEN-E）里填 NFE，导致分类与表格体系不匹配",
+        "对被动型 NFE 未穿透识别控权人即完成尽调"
       ]
     },
     {
@@ -135,14 +277,39 @@
       "zh": "主要联系人",
       "category": "aeoi",
       "level": "expert",
-      "jurisdiction": ["Cayman"],
+      "jurisdiction": [
+        "Cayman"
+      ],
       "definition": "开曼税务信息主管当局（DITC）Portal 上的必备角色，与「授权人（Authorising Person）」配对：PPOC 持有 Portal 上的申报权限，负责提交与修改 FATCA/CRS 申报、管理次级用户等操作。两者不得由同一人担任，但由 CIMA 持牌实体担任时可例外；现行规则并已引入 PPOC 须为开曼居民的属地要求，存量机构设有过渡期。",
       "whyImportant": "开曼基金的 FATCA/CRS 申报权限绑定在 PPOC 上：更换基金行政管理人、开户服务商或合规负责人时，必须同步在 Portal 上变更 PPOC 与授权人角色，否则申报无法提交，进而产生逾期申报风险。",
-      "scenario": ["AEOI / CRS / FATCA", "Regulatory Filing", "Client Communication"],
-      "aliases": ["Principal Point of Contact", "主要联系人"],
-      "related": ["ditc-portal", "authorising-person", "crs-reporting", "fatca-reporting", "giin", "cima", "aeoi", "account-holder"],
-      "source": ["cima"],
-      "tags": ["开曼", "AEOI", "Portal", "申报权限"],
+      "scenario": [
+        "AEOI / CRS / FATCA",
+        "Regulatory Filing",
+        "Client Communication"
+      ],
+      "aliases": [
+        "Principal Point of Contact",
+        "主要联系人"
+      ],
+      "related": [
+        "ditc-portal",
+        "authorising-person",
+        "crs-reporting",
+        "fatca-reporting",
+        "giin",
+        "cima",
+        "aeoi",
+        "account-holder"
+      ],
+      "source": [
+        "cima"
+      ],
+      "tags": [
+        "开曼",
+        "AEOI",
+        "Portal",
+        "申报权限"
+      ],
       "brief": "开曼 DITC Portal 上持有申报权限的角色，与授权人配对。",
       "commonMistakes": [
         "更换行政管理人后只交接台账，忘记在 Portal 上变更 PPOC 与授权人",
@@ -156,14 +323,38 @@
       "zh": "美国财政部外国资产控制办公室",
       "category": "regulatory",
       "level": "advanced",
-      "jurisdiction": ["USA", "Global"],
+      "jurisdiction": [
+        "USA",
+        "Global"
+      ],
       "definition": "美国财政部下属机构，负责制定并执行针对特定国家、实体与个人的经济与贸易制裁清单（最广为引用的是 SDN 名单）。凡涉及美元清算、美国人参与或美国境内资产的交易，均可能落入其管辖。",
       "whyImportant": "OFAC 是「金融制裁」与「定向金融制裁」规则的主要来源之一。基金只要涉及美元汇款、美国投资人、美国银行或美国服务提供商，就须做 OFAC 筛查；命中时资金可能被冻结、交易被拒绝，且事后补救空间有限。",
-      "scenario": ["Investor Onboarding", "Periodic Review", "Fund Operations"],
-      "aliases": ["Office of Foreign Assets Control", "美国财政部外国资产控制办公室"],
-      "related": ["sanctions", "financial-sanctions", "tfs", "aml", "transaction-monitoring", "sec"],
-      "source": ["blue-book"],
-      "tags": ["美国", "制裁", "SDN", "美元清算"],
+      "scenario": [
+        "Investor Onboarding",
+        "Periodic Review",
+        "Fund Operations"
+      ],
+      "aliases": [
+        "Office of Foreign Assets Control",
+        "美国财政部外国资产控制办公室"
+      ],
+      "related": [
+        "sanctions",
+        "financial-sanctions",
+        "tfs",
+        "aml",
+        "transaction-monitoring",
+        "sec"
+      ],
+      "source": [
+        "blue-book"
+      ],
+      "tags": [
+        "美国",
+        "制裁",
+        "SDN",
+        "美元清算"
+      ],
       "brief": "美国财政部制裁执行机构，美元相关交易须筛查其清单。",
       "commonMistakes": [
         "只做名单筛查，不评估交易是否受美国管辖（美元清算 / 美国人参与）",
@@ -177,14 +368,37 @@
       "zh": "美国雇员退休收入保障法",
       "category": "regulatory",
       "level": "expert",
-      "jurisdiction": ["USA"],
+      "jurisdiction": [
+        "USA"
+      ],
       "definition": "美国规范雇员福利计划（含退休计划）的联邦法律。当基金投资人中包含 ERISA 计划时，基金管理人可能被视为该计划的受托人，从而受 ERISA 的受托责任与禁止交易规则约束，并须关注「计划资产」的认定。",
       "whyImportant": "决定基金是否需要设置 ERISA 计划投资人比例上限：一旦突破法定阈值，基金全部资产会被视为计划资产，连带触发受托责任、禁止交易与信息披露等额外义务。这也是设置 AIV 让养老金单独参与的常见动因。",
-      "scenario": ["Investor Onboarding", "Fund Governance", "Fund Setup"],
-      "aliases": ["Employee Retirement Income Security Act", "美国雇员退休收入保障法", "ERISA 计划"],
-      "related": ["aiv", "fiduciary-duty", "us-person", "conflicts-of-interest", "sma"],
-      "source": ["blue-book"],
-      "tags": ["美国", "养老金", "受托责任", "计划资产"],
+      "scenario": [
+        "Investor Onboarding",
+        "Fund Governance",
+        "Fund Setup"
+      ],
+      "aliases": [
+        "Employee Retirement Income Security Act",
+        "美国雇员退休收入保障法",
+        "ERISA 计划"
+      ],
+      "related": [
+        "aiv",
+        "fiduciary-duty",
+        "us-person",
+        "conflicts-of-interest",
+        "sma"
+      ],
+      "source": [
+        "blue-book"
+      ],
+      "tags": [
+        "美国",
+        "养老金",
+        "受托责任",
+        "计划资产"
+      ],
       "brief": "美国养老金计划法，投资人含 ERISA 计划时触发计划资产规则。",
       "commonMistakes": [
         "不跟踪 ERISA 计划投资人占比，触发计划资产规则而不自知",
@@ -198,14 +412,36 @@
       "zh": "美国外国投资委员会",
       "category": "regulatory",
       "level": "expert",
-      "jurisdiction": ["USA"],
+      "jurisdiction": [
+        "USA"
+      ],
       "definition": "美国跨部门委员会，负责审查外国主体对美国企业的投资是否影响国家安全，可要求采取缓解措施，或建议总统阻止交易；特定敏感领域的交易须强制申报。",
       "whyImportant": "涉及美国目标资产或美国业务的私募股权、创投交易，须在交割前评估是否触发 CFIUS 申报：未申报可能被要求撤回交易或附加条件，直接影响交割时间表。Fund Admin 在资金调度与交割条件核对时应确认该环节已完成。",
-      "scenario": ["Fund Operations", "Fund Setup", "Regulatory Filing"],
-      "aliases": ["Committee on Foreign Investment in the United States", "美国外国投资委员会"],
-      "related": ["regulatory-reporting", "spv", "co-investment", "permanent-establishment", "sec"],
-      "source": ["blue-book"],
-      "tags": ["美国", "国家安全审查", "跨境投资", "交割条件"],
+      "scenario": [
+        "Fund Operations",
+        "Fund Setup",
+        "Regulatory Filing"
+      ],
+      "aliases": [
+        "Committee on Foreign Investment in the United States",
+        "美国外国投资委员会"
+      ],
+      "related": [
+        "regulatory-reporting",
+        "spv",
+        "co-investment",
+        "permanent-establishment",
+        "sec"
+      ],
+      "source": [
+        "blue-book"
+      ],
+      "tags": [
+        "美国",
+        "国家安全审查",
+        "跨境投资",
+        "交割条件"
+      ],
       "brief": "美国外资安全审查机构，跨境并购可能需强制申报。",
       "commonMistakes": [
         "把 CFIUS 当作交割后的可选披露事项，未设为交割前置条件",
@@ -219,14 +455,38 @@
       "zh": "被动外国投资公司",
       "category": "tax",
       "level": "expert",
-      "jurisdiction": ["USA"],
+      "jurisdiction": [
+        "USA"
+      ],
       "definition": "美国税法下的公司分类：非美国公司若其收入的 75% 以上为被动收入，或其资产平均 50% 以上产生被动收入，即构成 PFIC。美国投资人持有 PFIC 股权须适用特殊税务处理（如合格选择基金或按市值计价选择），否则面临惩罚性税负。",
       "whyImportant": "直接决定美国投资人在基金中的税务成本与信息取得义务：基金一旦被认定为 PFIC，管理人通常须向美国投资人提供年度信息声明，以支持其完成申报；信息缺失会把税务风险转嫁给投资人。",
-      "scenario": ["AEOI / CRS / FATCA", "Investor Onboarding", "Fund Governance"],
-      "aliases": ["Passive Foreign Investment Company", "被动外国投资公司"],
-      "related": ["cfc", "tax-transparent-entity", "us-person", "eci", "ubti", "w9", "tin"],
-      "source": ["blue-book"],
-      "tags": ["美国税务", "被动收入", "美国投资人", "信息申报"],
+      "scenario": [
+        "AEOI / CRS / FATCA",
+        "Investor Onboarding",
+        "Fund Governance"
+      ],
+      "aliases": [
+        "Passive Foreign Investment Company",
+        "被动外国投资公司"
+      ],
+      "related": [
+        "cfc",
+        "tax-transparent-entity",
+        "us-person",
+        "eci",
+        "ubti",
+        "w9",
+        "tin"
+      ],
+      "source": [
+        "blue-book"
+      ],
+      "tags": [
+        "美国税务",
+        "被动收入",
+        "美国投资人",
+        "信息申报"
+      ],
       "brief": "美国税法下以被动收入为主的外国公司，美国投资人税负显著上升。",
       "commonMistakes": [
         "在认购阶段未识别美国投资人，导致后续 PFIC 信息义务无法履行",
@@ -240,14 +500,39 @@
       "zh": "DITC 门户",
       "category": "aeoi",
       "level": "advanced",
-      "jurisdiction": ["Cayman"],
+      "jurisdiction": [
+        "Cayman"
+      ],
       "definition": "开曼税务信息主管当局（TIA）通过国际税务合作部（DITC）运营的线上申报门户，是开曼金融机构履行 AEOI 义务的唯一线上通道：机构注册（Notification）、FATCA 与 CRS 年度申报、合规表（Compliance Form）与申报声明、PPOC 与授权人的变更，均须经该门户提交。",
       "whyImportant": "开曼的 AEOI 义务是「门户化」的：未完成 Notification 注册即无从申报，而门户权限绑定在登记用户账号上——行政管理人可以维护台账，但只有门户上的登记用户才能完成提交。DITC 隶税务信息主管当局，与 CIMA 分属两套体系，CIMA 牌照不能替代门户注册。",
-      "scenario": ["AEOI / CRS / FATCA", "Regulatory Filing", "Fund Setup"],
-      "aliases": ["DITC Portal", "TIA 门户", "TIA Portal", "Cayman AEOI Portal"],
-      "related": ["ppoc", "authorising-person", "crs-reporting", "fatca-reporting", "cima", "aeoi"],
-      "source": ["cima"],
-      "tags": ["开曼", "AEOI", "申报通道", "门户权限"],
+      "scenario": [
+        "AEOI / CRS / FATCA",
+        "Regulatory Filing",
+        "Fund Setup"
+      ],
+      "aliases": [
+        "DITC Portal",
+        "TIA 门户",
+        "TIA Portal",
+        "Cayman AEOI Portal"
+      ],
+      "related": [
+        "ppoc",
+        "authorising-person",
+        "crs-reporting",
+        "fatca-reporting",
+        "cima",
+        "aeoi"
+      ],
+      "source": [
+        "cima"
+      ],
+      "tags": [
+        "开曼",
+        "AEOI",
+        "申报通道",
+        "门户权限"
+      ],
       "brief": "开曼 AEOI 申报的唯一线上通道，申报权限绑定登记用户账号。",
       "commonMistakes": [
         "把 DITC 门户当作 CIMA 的系统：DITC 隶税务信息主管当局（TIA），与 CIMA 分属两套体系，牌照与门户注册互不替代",
@@ -261,14 +546,36 @@
       "zh": "授权人（开曼）",
       "category": "aeoi",
       "level": "expert",
-      "jurisdiction": ["Cayman"],
+      "jurisdiction": [
+        "Cayman"
+      ],
       "definition": "开曼 DITC 门户上与主要联系人（PPOC）配对任命的角色：授权人有权就 PPOC 的身份变更向税务信息主管当局发出变更通知，据此在 PPOC 离任或失联时保证申报权限可以交接。其权限范围小于 PPOC（PPOC 掌握申报提交权，授权人掌握 PPOC 变更权），两者须分别任命，除由 CIMA 持牌实体担任等特定情形外不得为同一人。",
       "whyImportant": "授权人是基金 AEOI 权限的「备用钥匙」：PPOC 一旦离任、失联或拒不配合，只有授权人能发起 PPOC 变更；若门户上只登记了 PPOC 而未登记授权人，基金将无人有权更换 PPOC，申报随即中断。任命须有董事、受托人或普通合伙人签署的授权函作为依据。",
-      "scenario": ["AEOI / CRS / FATCA", "Regulatory Filing", "Client Communication"],
-      "aliases": ["Authorising Person", "Authorizing Person"],
-      "related": ["ppoc", "ditc-portal", "crs-reporting", "fatca-reporting", "cima"],
-      "source": ["cima"],
-      "tags": ["开曼", "AEOI", "门户权限", "角色分离"],
+      "scenario": [
+        "AEOI / CRS / FATCA",
+        "Regulatory Filing",
+        "Client Communication"
+      ],
+      "aliases": [
+        "Authorising Person",
+        "Authorizing Person"
+      ],
+      "related": [
+        "ppoc",
+        "ditc-portal",
+        "crs-reporting",
+        "fatca-reporting",
+        "cima"
+      ],
+      "source": [
+        "cima"
+      ],
+      "tags": [
+        "开曼",
+        "AEOI",
+        "门户权限",
+        "角色分离"
+      ],
       "brief": "开曼门户上负责发起 PPOC 变更的角色，与 PPOC 配对且原则上不得同一人。",
       "commonMistakes": [
         "安排同一人同时担任 PPOC 与授权人，使角色分离失效（除由 CIMA 持牌实体担任等特定情形外不被允许）",
@@ -283,16 +590,44 @@
       "zh": "现金密集行业",
       "category": "aml-kyc",
       "level": "advanced",
-      "jurisdiction": ["Global"],
+      "jurisdiction": [
+        "Global"
+      ],
       "definition": "经营活动中大量以现金结算、难以追踪资金来源的行业，典型如餐饮、零售、娱乐、博彩、加油站、便利店与典当行。犯罪分子利用这类行业「现金进、账面出」的特征，把犯罪所得混入合法营收，构成洗钱放置阶段（placement）的常见入口。",
       "whyImportant": "现金密集行业是洗钱放置阶段的高风险地带：Fund Admin 若投资人或其资金来源涉及此类行业，应提高受益所有人穿透与资金来源核验的标准，现金交易无法留痕决定了尽调只能依赖更强的经营实质审查。",
-      "scenario": ["Investor Onboarding", "Periodic Review"],
-      "aliases": ["Cash Intensive Business", "Cash-Intensive Business", "现金密集型行业"],
-      "related": ["aml", "mlro", "str", "ubo", "sof", "transaction-monitoring", "private-banking", "third-party-payment-channel"],
-      "source": ["blue-book", "cima"],
-      "tags": ["洗钱放置", "现金", "高风险行业", "资金来源"],
+      "scenario": [
+        "Investor Onboarding",
+        "Periodic Review"
+      ],
+      "aliases": [
+        "Cash Intensive Business",
+        "Cash-Intensive Business",
+        "现金密集型行业"
+      ],
+      "related": [
+        "aml",
+        "mlro",
+        "str",
+        "ubo",
+        "sof",
+        "transaction-monitoring",
+        "private-banking",
+        "third-party-payment-channel"
+      ],
+      "source": [
+        "blue-book",
+        "cima"
+      ],
+      "tags": [
+        "洗钱放置",
+        "现金",
+        "高风险行业",
+        "资金来源"
+      ],
       "brief": "以现金结算为主、资金难留痕的行业，是洗钱放置阶段的常见入口。",
-      "commonMistakes": ["把现金密集行业一律判定为高风险，忽略其经营规模与合规成熟度的差异"]
+      "commonMistakes": [
+        "把现金密集行业一律判定为高风险，忽略其经营规模与合规成熟度的差异"
+      ]
     },
     {
       "id": "nested-account",
@@ -301,16 +636,42 @@
       "zh": "嵌套账户",
       "category": "aml-kyc",
       "level": "advanced",
-      "jurisdiction": ["Global"],
+      "jurisdiction": [
+        "Global"
+      ],
       "definition": "境外银行通过其在另一家银行开立的代理账户，向自己的下游客户「转租」银行服务所形成的多层级账户结构。下游客户的身份与交易对代理行不可见，资金可跨越多层离岸账户流转，制造追查断点。",
       "whyImportant": "嵌套账户是代理行业务的高风险形态：中间机构层层转手后，真正客户与资金用途完全脱离代理行的尽调视野。Fund Admin 在核查境外收款路径或代理行链路时，须警惕多层嵌套导致的受益所有人不明。",
-      "scenario": ["Investor Onboarding", "Fund Operations", "Periodic Review"],
-      "aliases": ["Nested Account", "嵌套账户", "转租账户"],
-      "related": ["correspondent-banking", "aml", "cdd", "ubo", "transaction-monitoring"],
-      "source": ["blue-book", "cima"],
-      "tags": ["代理行", "离析", "受益所有人", "账户层级"],
+      "scenario": [
+        "Investor Onboarding",
+        "Fund Operations",
+        "Periodic Review"
+      ],
+      "aliases": [
+        "Nested Account",
+        "嵌套账户",
+        "转租账户"
+      ],
+      "related": [
+        "correspondent-banking",
+        "aml",
+        "cdd",
+        "ubo",
+        "transaction-monitoring"
+      ],
+      "source": [
+        "blue-book",
+        "cima"
+      ],
+      "tags": [
+        "代理行",
+        "离析",
+        "受益所有人",
+        "账户层级"
+      ],
       "brief": "代理账户被中间机构层层转租形成的多层账户结构，客户与资金对代理行不可见。",
-      "commonMistakes": ["只尽调直接客户，忽略其通过嵌套账户向下游客户转租服务的风险"]
+      "commonMistakes": [
+        "只尽调直接客户，忽略其通过嵌套账户向下游客户转租服务的风险"
+      ]
     },
     {
       "id": "correspondent-banking",
@@ -319,16 +680,41 @@
       "zh": "代理行",
       "category": "aml-kyc",
       "level": "advanced",
-      "jurisdiction": ["Global"],
+      "jurisdiction": [
+        "Global"
+      ],
       "definition": "一家银行（代理行，correspondent bank）为另一家银行（委托行，respondent bank）提供账户与清算服务，使其客户得以在自身未设网点或清算渠道的辖区完成收付。代理行通常不直接接触委托行的客户，依赖委托行自行完成客户尽调。",
       "whyImportant": "代理行业务是跨境资金流转的基础设施，也是 FATF 点名的高风险领域：代理行对委托行客户「看不见」，若委托行尽调缺失，犯罪资金即可借道进入国际清算体系。Fund Admin 处理跨境收款时，应识别路径中是否涉及代理行及其尽调充分性。",
-      "scenario": ["Fund Operations", "Investor Onboarding"],
-      "aliases": ["Correspondent Banking", "代理行业务", "通汇业务"],
-      "related": ["nested-account", "aml", "cdd", "transaction-monitoring", "fatf"],
-      "source": ["blue-book", "cima"],
-      "tags": ["跨境清算", "代理行", "FATF", "银行"],
+      "scenario": [
+        "Fund Operations",
+        "Investor Onboarding"
+      ],
+      "aliases": [
+        "Correspondent Banking",
+        "代理行业务",
+        "通汇业务"
+      ],
+      "related": [
+        "nested-account",
+        "aml",
+        "cdd",
+        "transaction-monitoring",
+        "fatf"
+      ],
+      "source": [
+        "blue-book",
+        "cima"
+      ],
+      "tags": [
+        "跨境清算",
+        "代理行",
+        "FATF",
+        "银行"
+      ],
       "brief": "银行间互为代理提供清算服务的业务，代理行对委托行客户尽调不可见。",
-      "commonMistakes": ["把代理行与委托行客户尽调责任混同，误以为代理行应直接尽调终端客户"]
+      "commonMistakes": [
+        "把代理行与委托行客户尽调责任混同，误以为代理行应直接尽调终端客户"
+      ]
     },
     {
       "id": "private-banking",
@@ -337,16 +723,44 @@
       "zh": "私人银行",
       "category": "aml-kyc",
       "level": "advanced",
-      "jurisdiction": ["Global"],
+      "jurisdiction": [
+        "Global"
+      ],
       "definition": "面向高净值个人提供定制化财富管理、投资、信托与跨境资产配置等服务的银行业务。因客户关系高度个性化、客户与银行家（relationship manager）之间信任深、交易金额大且跨境频繁，长期被列为洗钱与逃税的高风险通道。",
       "whyImportant": "私人银行的「信任 + 定制 + 跨境」组合是 AML 的典型薄弱点：关系经理可能协助客户隐匿资产或规避审查。Fund Admin 在对接私人银行账户或高净值投资人时，须特别核验资金来源与实益所有人，防止被用作离析或整合环节。",
-      "scenario": ["Investor Onboarding", "Periodic Review"],
-      "aliases": ["Private Banking", "私人银行", "财富管理"],
-      "related": ["aml", "pep", "ubo", "sof", "sow", "edd", "cash-intensive-business", "correspondent-banking"],
-      "source": ["blue-book", "cima"],
-      "tags": ["高净值", "财富管理", "跨境", "高风险"],
+      "scenario": [
+        "Investor Onboarding",
+        "Periodic Review"
+      ],
+      "aliases": [
+        "Private Banking",
+        "私人银行",
+        "财富管理"
+      ],
+      "related": [
+        "aml",
+        "pep",
+        "ubo",
+        "sof",
+        "sow",
+        "edd",
+        "cash-intensive-business",
+        "correspondent-banking"
+      ],
+      "source": [
+        "blue-book",
+        "cima"
+      ],
+      "tags": [
+        "高净值",
+        "财富管理",
+        "跨境",
+        "高风险"
+      ],
       "brief": "面向高净值个人的定制化银行业务，跨境与信任关系构成高风险。",
-      "commonMistakes": ["把私人银行客户默认视为低风险，忽略关系经理与客户的深度绑定带来的审查盲区"]
+      "commonMistakes": [
+        "把私人银行客户默认视为低风险，忽略关系经理与客户的深度绑定带来的审查盲区"
+      ]
     },
     {
       "id": "insider-trading",
@@ -355,16 +769,45 @@
       "zh": "内幕交易",
       "category": "aml-kyc",
       "level": "advanced",
-      "jurisdiction": ["Global", "Hong Kong", "USA"],
+      "jurisdiction": [
+        "Global",
+        "Hong Kong",
+        "USA"
+      ],
       "definition": "掌握未公开、足以影响证券价格的内幕信息的人，在该信息公开前买卖相关证券或泄露该信息供他人交易的行为。内幕信息通常源于公司重大事件（并购、业绩、重大合同）或掌握信息的中介机构。",
       "whyImportant": "内幕交易是证券市场的典型金融犯罪，也是资金进入基金体系的常见来源之一：证券资管行业尤其暴露。Fund Admin 在核查投资人资金来源与交易行为时，若发现异常时点交易或内幕信息关联，应升级审查。",
-      "scenario": ["Investor Onboarding", "Periodic Review", "Fund Operations"],
-      "aliases": ["Insider Trading", "内幕交易", "内幕买卖"],
-      "related": ["market-manipulation", "sec", "aml", "regulatory-reporting", "sof"],
-      "source": ["blue-book", "sfc", "sec"],
-      "tags": ["证券", "内幕信息", "市场失当", "犯罪所得"],
+      "scenario": [
+        "Investor Onboarding",
+        "Periodic Review",
+        "Fund Operations"
+      ],
+      "aliases": [
+        "Insider Trading",
+        "内幕交易",
+        "内幕买卖"
+      ],
+      "related": [
+        "market-manipulation",
+        "sec",
+        "aml",
+        "regulatory-reporting",
+        "sof"
+      ],
+      "source": [
+        "blue-book",
+        "sfc",
+        "sec"
+      ],
+      "tags": [
+        "证券",
+        "内幕信息",
+        "市场失当",
+        "犯罪所得"
+      ],
       "brief": "利用未公开内幕信息买卖证券的行为，是证券市场典型金融犯罪。",
-      "commonMistakes": ["只关注上市公司内部人，忽略中介机构、关联方等「临时内幕人」同样可构成内幕交易"]
+      "commonMistakes": [
+        "只关注上市公司内部人，忽略中介机构、关联方等「临时内幕人」同样可构成内幕交易"
+      ]
     },
     {
       "id": "market-manipulation",
@@ -373,16 +816,45 @@
       "zh": "市场操纵",
       "category": "aml-kyc",
       "level": "advanced",
-      "jurisdiction": ["Global", "Hong Kong", "USA"],
+      "jurisdiction": [
+        "Global",
+        "Hong Kong",
+        "USA"
+      ],
       "definition": "通过虚假交易、误导性报价、散布不实信息或其他手段，人为扭曲证券价格或交易量、制造虚假市场活跃假象的行为。常见手法包括对倒（wash trading）、拉抬出货（pump and dump）、虚假申报等。",
       "whyImportant": "市场操纵制造虚假价格信号，直接损害市场完整性；操纵所得同样是犯罪所得，可借基金与资管产品进入体系。Fund Admin 对异常交易模式与可疑资金进出应保持警觉，必要时触发可疑交易报告。",
-      "scenario": ["Investor Onboarding", "Fund Operations", "Periodic Review"],
-      "aliases": ["Market Manipulation", "市场操纵", "操纵市场"],
-      "related": ["insider-trading", "sec", "aml", "str", "transaction-monitoring"],
-      "source": ["blue-book", "sfc", "sec"],
-      "tags": ["证券", "价格扭曲", "市场失当", "可疑交易"],
+      "scenario": [
+        "Investor Onboarding",
+        "Fund Operations",
+        "Periodic Review"
+      ],
+      "aliases": [
+        "Market Manipulation",
+        "市场操纵",
+        "操纵市场"
+      ],
+      "related": [
+        "insider-trading",
+        "sec",
+        "aml",
+        "str",
+        "transaction-monitoring"
+      ],
+      "source": [
+        "blue-book",
+        "sfc",
+        "sec"
+      ],
+      "tags": [
+        "证券",
+        "价格扭曲",
+        "市场失当",
+        "可疑交易"
+      ],
       "brief": "人为扭曲证券价格或交易量的行为，制造虚假市场假象。",
-      "commonMistakes": ["把市场操纵等同于内幕交易，二者行为要件与证据重点不同"]
+      "commonMistakes": [
+        "把市场操纵等同于内幕交易，二者行为要件与证据重点不同"
+      ]
     },
     {
       "id": "third-party-payment-channel",
@@ -391,16 +863,46 @@
       "zh": "第三方通道",
       "category": "aml-kyc",
       "level": "advanced",
-      "jurisdiction": ["Global"],
+      "jurisdiction": [
+        "Global"
+      ],
       "definition": "资金经由与交易无关的第三方账户或支付渠道完成划转，使名义付款人与实际资金受益人脱钩。MSB 与支付机构场景中，犯罪分子常把大额资金分拆到多个第三方通道划转，规避单一账户的额度与尽调触发点。",
       "whyImportant": "第三方通道分拆资金是规避交易监控的典型手法：Fund Admin 收款时若发现缴付主体与认购人名称不一致、多笔小额经不同第三方汇入，须澄清资金真实来源后再入账，否则可能承接来历不明资金。",
-      "scenario": ["Fund Operations", "Investor Onboarding", "Periodic Review"],
-      "aliases": ["Third Party Payment Channel", "Third Party Payment", "第三方通道", "第三方支付通道", "第三方代付"],
-      "related": ["aml", "sof", "transaction-monitoring", "str", "ubo", "fictitious-transaction", "overpayment-scheme"],
-      "source": ["blue-book", "ics"],
-      "tags": ["分拆资金", "第三方", "支付通道", "MSB"],
+      "scenario": [
+        "Fund Operations",
+        "Investor Onboarding",
+        "Periodic Review"
+      ],
+      "aliases": [
+        "Third Party Payment Channel",
+        "Third Party Payment",
+        "第三方通道",
+        "第三方支付通道",
+        "第三方代付"
+      ],
+      "related": [
+        "aml",
+        "sof",
+        "transaction-monitoring",
+        "str",
+        "ubo",
+        "fictitious-transaction",
+        "overpayment-scheme"
+      ],
+      "source": [
+        "blue-book",
+        "ics"
+      ],
+      "tags": [
+        "分拆资金",
+        "第三方",
+        "支付通道",
+        "MSB"
+      ],
       "brief": "资金经无关第三方账户划转使名义付款人与实际受益人脱钩的通道。",
-      "commonMistakes": ["把第三方通道一律当作技术问题处理，忽略其背后的资金分拆与受益人不明风险"]
+      "commonMistakes": [
+        "把第三方通道一律当作技术问题处理，忽略其背后的资金分拆与受益人不明风险"
+      ]
     },
     {
       "id": "fictitious-transaction",
@@ -409,16 +911,45 @@
       "zh": "虚构交易",
       "category": "aml-kyc",
       "level": "advanced",
-      "jurisdiction": ["Global"],
+      "jurisdiction": [
+        "Global"
+      ],
       "definition": "并无真实商业实质、仅为资金划转制造表面理由的交易。MSB 与支付场景中，犯罪分子以虚构的商品或服务交易为名，把非法资金包装成看似合法的收付，实现资金性质转换。",
       "whyImportant": "虚构交易是离析阶段「制造合法假象」的核心手段：没有真实货物或服务，资金进出就只是账面游戏。Fund Admin 在核查投资人业务背景与资金往来时，须关注交易对手、单据与资金流是否自洽，识别无商业实质的资金流转。",
-      "scenario": ["Fund Operations", "Investor Onboarding", "Periodic Review"],
-      "aliases": ["Fictitious Transaction", "虚拟交易", "虚构交易", "虚假交易"],
-      "related": ["aml", "transaction-monitoring", "sof", "str", "mlro", "trade-mispricing", "third-party-payment-channel"],
-      "source": ["blue-book", "cima"],
-      "tags": ["离析", "虚假交易", "商业实质", "MSB"],
+      "scenario": [
+        "Fund Operations",
+        "Investor Onboarding",
+        "Periodic Review"
+      ],
+      "aliases": [
+        "Fictitious Transaction",
+        "虚拟交易",
+        "虚构交易",
+        "虚假交易"
+      ],
+      "related": [
+        "aml",
+        "transaction-monitoring",
+        "sof",
+        "str",
+        "mlro",
+        "trade-mispricing",
+        "third-party-payment-channel"
+      ],
+      "source": [
+        "blue-book",
+        "cima"
+      ],
+      "tags": [
+        "离析",
+        "虚假交易",
+        "商业实质",
+        "MSB"
+      ],
       "brief": "无真实商业实质、仅为资金划转制造理由的交易。",
-      "commonMistakes": ["仅核对单据表面完整性，未验证交易背后的真实商业实质与资金流自洽性"]
+      "commonMistakes": [
+        "仅核对单据表面完整性，未验证交易背后的真实商业实质与资金流自洽性"
+      ]
     },
     {
       "id": "overpayment-scheme",
@@ -427,16 +958,44 @@
       "zh": "超额缴费",
       "category": "aml-kyc",
       "level": "advanced",
-      "jurisdiction": ["Global"],
+      "jurisdiction": [
+        "Global"
+      ],
       "definition": "以明显超出应缴金额的方式缴纳保费或款项，随后要求将超出部分退还至第三方账户或退款至与原始付款人无关的账户。保险场景中常表现为「趸缴大额保费后迅速退保」，把一笔资金从名义付款人转移到实际受益人。",
       "whyImportant": "超额缴费后退款至第三方，本质是把非法资金「洗白再分流」：缴费建立表面合法来源，退款完成受益转移。Fund Admin 对投资人超额缴款并指示退款至第三方的行为应高度警惕，须澄清退款对象与原始缴款人的关系。",
-      "scenario": ["Fund Operations", "Investor Onboarding"],
-      "aliases": ["Overpayment Scheme", "超额缴费", "超额缴款", "退保退款"],
-      "related": ["aml", "sof", "transaction-monitoring", "str", "ubo", "third-party-payment-channel", "fictitious-transaction"],
-      "source": ["blue-book", "cima"],
-      "tags": ["保险", "退款", "资金分流", "超额"],
+      "scenario": [
+        "Fund Operations",
+        "Investor Onboarding"
+      ],
+      "aliases": [
+        "Overpayment Scheme",
+        "超额缴费",
+        "超额缴款",
+        "退保退款"
+      ],
+      "related": [
+        "aml",
+        "sof",
+        "transaction-monitoring",
+        "str",
+        "ubo",
+        "third-party-payment-channel",
+        "fictitious-transaction"
+      ],
+      "source": [
+        "blue-book",
+        "cima"
+      ],
+      "tags": [
+        "保险",
+        "退款",
+        "资金分流",
+        "超额"
+      ],
       "brief": "超额缴费后要求退款至第三方，实现资金洗白与受益转移的手法。",
-      "commonMistakes": ["把超额缴款当作普通操作差错退款处理，未识别其退款对象与原始付款人脱钩的风险"]
+      "commonMistakes": [
+        "把超额缴款当作普通操作差错退款处理，未识别其退款对象与原始付款人脱钩的风险"
+      ]
     },
     {
       "id": "crypto-mixer",
@@ -445,16 +1004,43 @@
       "zh": "混币",
       "category": "aml-kyc",
       "level": "advanced",
-      "jurisdiction": ["Global"],
+      "jurisdiction": [
+        "Global"
+      ],
       "definition": "把多笔来源不同的虚拟资产汇集、打乱并重新分配，从而切断交易输入与输出之间可追踪关联的服务（又称混币服务，mixing / tumbling）。犯罪分子借此隐藏虚拟资产流向，规避链上分析与追踪。",
       "whyImportant": "混币器是虚拟资产领域离析阶段的核心工具：一旦资金经混币处理，链上追踪断点难以复原。Fund Admin 在受理虚拟资产出资或核查涉及虚拟资产的资金来源时，应识别是否经混币器流转，必要时拒绝或升级审查。",
-      "scenario": ["Investor Onboarding", "Fund Operations", "Periodic Review"],
-      "aliases": ["Crypto Mixer", "Mixer", "混币器", "混币服务"],
-      "related": ["aml", "privacy-coin", "transaction-monitoring", "str", "travel-rule"],
-      "source": ["blue-book", "cima"],
-      "tags": ["虚拟资产", "离析", "链上追踪", "匿名"],
+      "scenario": [
+        "Investor Onboarding",
+        "Fund Operations",
+        "Periodic Review"
+      ],
+      "aliases": [
+        "Crypto Mixer",
+        "Mixer",
+        "混币器",
+        "混币服务"
+      ],
+      "related": [
+        "aml",
+        "privacy-coin",
+        "transaction-monitoring",
+        "str",
+        "travel-rule"
+      ],
+      "source": [
+        "blue-book",
+        "cima"
+      ],
+      "tags": [
+        "虚拟资产",
+        "离析",
+        "链上追踪",
+        "匿名"
+      ],
       "brief": "汇集并打乱多笔虚拟资产以切断交易关联的服务，隐藏资金流向。",
-      "commonMistakes": ["把混币器当作普通的隐私工具，忽略其切断交易追踪、掩盖资金来源的洗钱功能"]
+      "commonMistakes": [
+        "把混币器当作普通的隐私工具，忽略其切断交易追踪、掩盖资金来源的洗钱功能"
+      ]
     },
     {
       "id": "privacy-coin",
@@ -463,16 +1049,42 @@
       "zh": "隐私币",
       "category": "aml-kyc",
       "level": "advanced",
-      "jurisdiction": ["Global"],
+      "jurisdiction": [
+        "Global"
+      ],
       "definition": "在协议层默认隐藏交易金额、发送方与接收方等链上信息的虚拟资产（典型如 Monero、Zcash 的遮蔽地址）。与比特币「伪匿名」不同，隐私币的链上交易信息对第三方不可见，追溯难度显著更高。",
       "whyImportant": "隐私币把虚拟资产从「伪匿名」推向「真匿名」：交易双方与金额均不可见，传统链上分析手段基本失效。Fund Admin 在涉及虚拟资产的尽调中，应识别是否使用隐私币并相应提高审查强度，多家监管机构已对隐私币交易采取限制。",
-      "scenario": ["Investor Onboarding", "Fund Operations", "Periodic Review"],
-      "aliases": ["Privacy Coin", "隐私币", "匿名币"],
-      "related": ["aml", "crypto-mixer", "transaction-monitoring", "travel-rule", "str"],
-      "source": ["blue-book", "cima"],
-      "tags": ["虚拟资产", "匿名", "链上不可见", "高风险"],
+      "scenario": [
+        "Investor Onboarding",
+        "Fund Operations",
+        "Periodic Review"
+      ],
+      "aliases": [
+        "Privacy Coin",
+        "隐私币",
+        "匿名币"
+      ],
+      "related": [
+        "aml",
+        "crypto-mixer",
+        "transaction-monitoring",
+        "travel-rule",
+        "str"
+      ],
+      "source": [
+        "blue-book",
+        "cima"
+      ],
+      "tags": [
+        "虚拟资产",
+        "匿名",
+        "链上不可见",
+        "高风险"
+      ],
       "brief": "协议层默认隐藏交易信息的虚拟资产，链上追溯难度显著更高。",
-      "commonMistakes": ["把隐私币与比特币等伪匿名币等同，低估其链上信息完全不可见带来的追溯失效"]
+      "commonMistakes": [
+        "把隐私币与比特币等伪匿名币等同，低估其链上信息完全不可见带来的追溯失效"
+      ]
     },
     {
       "id": "travel-rule",
@@ -481,16 +1093,43 @@
       "zh": "旅行规则",
       "category": "aml-kyc",
       "level": "advanced",
-      "jurisdiction": ["Global", "USA"],
+      "jurisdiction": [
+        "Global",
+        "USA"
+      ],
       "definition": "金融行动特别工作组（FATF）Recommendation 16 确立的规则：金融机构与虚拟资产服务提供商在办理资金划转时，须随交易传递并取得「发起人」与「受益人」的指定身份信息，使资金流转全程可追溯。",
       "whyImportant": "旅行规则是虚拟资产领域「让交易可追踪」的关键义务：传统电汇已有成熟报文体系，而虚拟资产转账的发起人与受益人信息传递长期缺失，构成匿名洗钱漏洞。Fund Admin 处理虚拟资产收付时应关注服务商是否履行旅行规则义务。",
-      "scenario": ["Fund Operations", "Investor Onboarding", "Regulatory Filing"],
-      "aliases": ["Travel Rule", "旅行规则", "FATF 旅行规则"],
-      "related": ["fatf", "aml", "transaction-monitoring", "crypto-mixer", "privacy-coin"],
-      "source": ["blue-book", "cima"],
-      "tags": ["FATF", "虚拟资产", "信息传递", "可追溯"],
+      "scenario": [
+        "Fund Operations",
+        "Investor Onboarding",
+        "Regulatory Filing"
+      ],
+      "aliases": [
+        "Travel Rule",
+        "旅行规则",
+        "FATF 旅行规则"
+      ],
+      "related": [
+        "fatf",
+        "aml",
+        "transaction-monitoring",
+        "crypto-mixer",
+        "privacy-coin"
+      ],
+      "source": [
+        "blue-book",
+        "cima"
+      ],
+      "tags": [
+        "FATF",
+        "虚拟资产",
+        "信息传递",
+        "可追溯"
+      ],
       "brief": "FATF 确立的资金划转须随附发起人与受益人身份信息的规则。",
-      "commonMistakes": ["把旅行规则仅理解为传统电汇义务，忽略其对虚拟资产转账的同等适用"]
+      "commonMistakes": [
+        "把旅行规则仅理解为传统电汇义务，忽略其对虚拟资产转账的同等适用"
+      ]
     },
     {
       "id": "trade-mispricing",
@@ -499,16 +1138,45 @@
       "zh": "价量失真",
       "category": "aml-kyc",
       "level": "advanced",
-      "jurisdiction": ["Global"],
+      "jurisdiction": [
+        "Global"
+      ],
       "definition": "在跨境贸易中人为高报或低报商品价格、数量或价值（over/under-invoicing），使实际资金流与真实货值脱节，实现资金跨境转移或隐藏利润。是贸易洗钱（Trade-based Money Laundering，TBML）的核心手段之一。",
       "whyImportant": "价量失真把资金转移隐藏在看似正常的贸易单据背后：发票金额与真实货值不符，资金差额即为被转移的非法资金。Fund Admin 在涉及贸易背景的投资人或资金往来中，应关注单据与货值是否自洽，识别 TBML 风险。",
-      "scenario": ["Investor Onboarding", "Fund Operations", "Periodic Review"],
-      "aliases": ["Trade Mispricing", "价量失真", "贸易价量失真", "高报低报"],
-      "related": ["aml", "sof", "transaction-monitoring", "str", "mlro", "fictitious-transaction", "shell-company"],
-      "source": ["blue-book", "cima"],
-      "tags": ["贸易洗钱", "TBML", "跨境贸易", "单据"],
+      "scenario": [
+        "Investor Onboarding",
+        "Fund Operations",
+        "Periodic Review"
+      ],
+      "aliases": [
+        "Trade Mispricing",
+        "价量失真",
+        "贸易价量失真",
+        "高报低报"
+      ],
+      "related": [
+        "aml",
+        "sof",
+        "transaction-monitoring",
+        "str",
+        "mlro",
+        "fictitious-transaction",
+        "shell-company"
+      ],
+      "source": [
+        "blue-book",
+        "cima"
+      ],
+      "tags": [
+        "贸易洗钱",
+        "TBML",
+        "跨境贸易",
+        "单据"
+      ],
       "brief": "跨境贸易中高报或低报价格数量使资金流与货值脱节，实现资金转移。",
-      "commonMistakes": ["只核对贸易单据形式完整性，未交叉验证发票金额与实际货值的合理性"]
+      "commonMistakes": [
+        "只核对贸易单据形式完整性，未交叉验证发票金额与实际货值的合理性"
+      ]
     },
     {
       "id": "gatekeeper",
@@ -517,16 +1185,45 @@
       "zh": "守门人",
       "category": "aml-kyc",
       "level": "advanced",
-      "jurisdiction": ["Global"],
+      "jurisdiction": [
+        "Global"
+      ],
       "definition": "掌握金融体系「入口」、其专业服务被犯罪分子利用来设立架构或掩饰资金的职业群体，典型如律师、会计师、公司服务提供商（TCSP）、信托与不动产中介。守门人可能被用于批量设立空壳公司、代名董事或不保存实益所有权。",
       "whyImportant": "守门人是 FATF 重点关注的「被利用节点」：他们掌握架构入口与专业声誉，一旦被渗透，可为犯罪资金提供规模化、专业化的清洗通道。Fund Admin 尽调时应关注客户架构是否经由守门人批量设立、是否配合穿透实益所有人。",
-      "scenario": ["Investor Onboarding", "Fund Setup", "Periodic Review"],
-      "aliases": ["Gatekeeper", "守门人", "门卫人", "专业守门人"],
-      "related": ["tcsp", "corporate-services-provider", "shell-company", "ubo", "mlro", "str"],
-      "source": ["blue-book", "cima"],
-      "tags": ["守门人", "律师", "会计师", "TCSP", "FATF"],
+      "scenario": [
+        "Investor Onboarding",
+        "Fund Setup",
+        "Periodic Review"
+      ],
+      "aliases": [
+        "Gatekeeper",
+        "守门人",
+        "门卫人",
+        "专业守门人"
+      ],
+      "related": [
+        "tcsp",
+        "corporate-services-provider",
+        "shell-company",
+        "ubo",
+        "mlro",
+        "str"
+      ],
+      "source": [
+        "blue-book",
+        "cima"
+      ],
+      "tags": [
+        "守门人",
+        "律师",
+        "会计师",
+        "TCSP",
+        "FATF"
+      ],
       "brief": "掌握金融体系入口、可能被利用来设立架构或掩饰资金的职业群体。",
-      "commonMistakes": ["把守门人当作普通服务商对待，忽略其批量设立空壳公司、代名董事等被利用风险"]
+      "commonMistakes": [
+        "把守门人当作普通服务商对待，忽略其批量设立空壳公司、代名董事等被利用风险"
+      ]
     },
     {
       "id": "tcsp",
@@ -535,16 +1232,48 @@
       "zh": "信托或公司服务提供商",
       "category": "legal-entity",
       "level": "advanced",
-      "jurisdiction": ["Hong Kong", "BVI", "Cayman", "Global"],
+      "jurisdiction": [
+        "Hong Kong",
+        "BVI",
+        "Cayman",
+        "Global"
+      ],
       "definition": "为他人提供信托设立、公司注册、注册地址、代名董事/股东、公司秘书等服务的专业机构（Trust or Company Service Provider）。TCSP 因能批量创设离岸架构，被多法域列为须持牌或注册并承担 AML 义务的主体。",
       "whyImportant": "TCSP 是「架构入口」的集大成者：一个 TCSP 可批量设立大量空壳公司与信托，成为守门人风险最集中的环节。Fund Admin 接触的基金架构若由 TCSP 搭建，须核验其牌照/注册与尽调质量，并穿透最终实益所有人。",
-      "scenario": ["Fund Setup", "Investor Onboarding", "Regulatory Filing"],
-      "aliases": ["TCSP", "Trust or Company Service Provider", "信托或公司服务提供商", "信托与公司服务商"],
-      "related": ["corporate-services-provider", "gatekeeper", "shell-company", "nominee", "registered-agent", "ubo"],
-      "source": ["blue-book", "sfc", "cima"],
-      "tags": ["TCSP", "牌照", "架构入口", "代名"],
+      "scenario": [
+        "Fund Setup",
+        "Investor Onboarding",
+        "Regulatory Filing"
+      ],
+      "aliases": [
+        "TCSP",
+        "Trust or Company Service Provider",
+        "信托或公司服务提供商",
+        "信托与公司服务商"
+      ],
+      "related": [
+        "corporate-services-provider",
+        "gatekeeper",
+        "shell-company",
+        "nominee",
+        "registered-agent",
+        "ubo"
+      ],
+      "source": [
+        "blue-book",
+        "sfc",
+        "cima"
+      ],
+      "tags": [
+        "TCSP",
+        "牌照",
+        "架构入口",
+        "代名"
+      ],
       "brief": "为他人提供信托设立与公司注册等服务的专业机构，多法域须持牌或注册。",
-      "commonMistakes": ["把 TCSP 与 Fund Administrator 混同，忽略其批量创设架构带来的守门人风险"]
+      "commonMistakes": [
+        "把 TCSP 与 Fund Administrator 混同，忽略其批量创设架构带来的守门人风险"
+      ]
     },
     {
       "id": "shell-company",
@@ -553,16 +1282,1511 @@
       "zh": "空壳公司",
       "category": "legal-entity",
       "level": "advanced",
-      "jurisdiction": ["Global", "BVI", "Cayman", "Hong Kong"],
+      "jurisdiction": [
+        "Global",
+        "BVI",
+        "Cayman",
+        "Hong Kong"
+      ],
       "definition": "不开展实际经营、无实质雇员或营业场所、仅作为持有资产或资金划转「外壳」而设立的法律实体。空壳公司本身合法，但常被用于隐匿实益所有人、规避审查或离析资金，成为守门人批量设立架构的常见载体。",
       "whyImportant": "空壳公司是受益所有人穿透的最大障碍之一：层层空壳叠加后，真实控制人深藏其后。Fund Admin 尽调时不能止步于空壳公司本身，须沿架构链向上穿透，识别最终实益所有人并评估其设立真实目的。",
-      "scenario": ["Investor Onboarding", "Fund Setup", "Periodic Review"],
-      "aliases": ["Shell Company", "空壳公司", "壳公司"],
-      "related": ["ubo", "nominee", "nominee-director", "gatekeeper", "tcsp", "corporate-services-provider"],
-      "source": ["blue-book", "cima"],
-      "tags": ["空壳", "穿透", "受益所有人", "架构"],
+      "scenario": [
+        "Investor Onboarding",
+        "Fund Setup",
+        "Periodic Review"
+      ],
+      "aliases": [
+        "Shell Company",
+        "空壳公司",
+        "壳公司"
+      ],
+      "related": [
+        "ubo",
+        "nominee",
+        "nominee-director",
+        "gatekeeper",
+        "tcsp",
+        "corporate-services-provider"
+      ],
+      "source": [
+        "blue-book",
+        "cima"
+      ],
+      "tags": [
+        "空壳",
+        "穿透",
+        "受益所有人",
+        "架构"
+      ],
       "brief": "无实际经营、仅作资产持有或资金划转外壳而设立的法律实体。",
-      "commonMistakes": ["把空壳公司一律视为违法，或反之止步于空壳公司而不向上穿透实益所有人"]
+      "commonMistakes": [
+        "把空壳公司一律视为违法，或反之止步于空壳公司而不向上穿透实益所有人"
+      ]
+    },
+    {
+      "id": "tbml",
+      "term": "TBML",
+      "fullName": "Trade-Based Money Laundering",
+      "zh": "贸易洗钱",
+      "category": "aml-kyc",
+      "level": "advanced",
+      "jurisdiction": [
+        "Global"
+      ],
+      "definition": "通过国际贸易交易掩盖非法资金流动并转移价值的洗钱方式，典型手法包括高报/低报货价、虚假发票、虚构货物、重复开票与错配运输；利用贸易单据的复杂性藏匿资金真实来源与去向。",
+      "whyImportant": "贸易洗钱是跨境资金流动中最难识别的洗钱类型之一，因其混在真实贸易流里、单据链条长、涉及多法域。基金行政涉及跨境结构、代收代付或贸易相关底层资产时，需能识别 TBML 信号而非只盯银行资金流。",
+      "scenario": [
+        "Periodic Review"
+      ],
+      "aliases": [
+        "贸易洗钱"
+      ],
+      "related": [
+        "trade-mispricing",
+        "transaction-monitoring",
+        "aml-cft",
+        "fatf",
+        "shell-company"
+      ],
+      "source": [
+        "internal"
+      ],
+      "tags": [
+        "贸易洗钱",
+        "跨境资金",
+        "AML"
+      ],
+      "brief": "利用贸易单据掩盖非法资金流动的洗钱方式，靠商业实质审查识别。",
+      "commonMistakes": [
+        "只盯资金流而忽略底层贸易单据的合理性（货价、运输、发票对应关系）",
+        "把 TBML 与一般贸易违规混淆——关键区别是「缺少真实商业实质」"
+      ],
+      "courses": [
+        "11"
+      ]
+    },
+    {
+      "id": "money-laundering",
+      "term": "ML",
+      "fullName": "Money Laundering",
+      "zh": "洗钱",
+      "category": "aml-kyc",
+      "level": "core",
+      "jurisdiction": [
+        "Global"
+      ],
+      "definition": "将犯罪所得通过处置、离析与整合等环节加以掩饰，使其看似来自合法来源的过程；是六类金融犯罪中最核心、监管资源投入最多的一类。",
+      "whyImportant": "洗钱是反洗钱合规要对抗的首要目标。基金行政必须理解 ML 的三阶段模型（放置/分层/整合），才能在客户准入、交易监控与异常报告各环节正确识别信号，而非把「可疑」当作空泛判断。",
+      "scenario": [
+        "Investor Onboarding",
+        "Periodic Review"
+      ],
+      "aliases": [
+        "洗钱"
+      ],
+      "related": [
+        "aml",
+        "aml-cft",
+        "tbml",
+        "terrorist-financing",
+        "str"
+      ],
+      "source": [
+        "internal"
+      ],
+      "tags": [
+        "洗钱",
+        "金融犯罪",
+        "AML"
+      ],
+      "brief": "掩饰犯罪所得来源使其看似合法的过程，反洗钱对抗的首要目标。",
+      "courses": [
+        "11"
+      ]
+    },
+    {
+      "id": "terrorist-financing",
+      "term": "TF",
+      "fullName": "Terrorist Financing",
+      "zh": "恐怖融资",
+      "category": "aml-kyc",
+      "level": "core",
+      "jurisdiction": [
+        "Global"
+      ],
+      "definition": "为恐怖活动或恐怖组织募集、提供资金的行为；与洗钱的关键区别在于资金本身可能来自合法来源，目的是支持恐怖活动，常表现为小额、多笔、多渠道的资金聚集。",
+      "whyImportant": "恐怖融资的资金来源可以是合法的，因此传统「资金来源是否干净」的判断标准失效。基金行政需针对 TF 的「小额多笔、目的导向」特征设计专门的筛查与监控信号，而非照搬洗钱识别逻辑。",
+      "scenario": [
+        "Investor Onboarding",
+        "Periodic Review"
+      ],
+      "aliases": [
+        "恐怖融资"
+      ],
+      "related": [
+        "aml-cft",
+        "money-laundering",
+        "financial-sanctions",
+        "fatf",
+        "str"
+      ],
+      "source": [
+        "internal"
+      ],
+      "tags": [
+        "恐怖融资",
+        "金融犯罪",
+        "AML"
+      ],
+      "brief": "为恐怖活动募集资金的行为，资金来源可能合法，与洗钱判断逻辑不同。",
+      "courses": [
+        "11"
+      ]
+    },
+    {
+      "id": "bsa",
+      "term": "BSA",
+      "fullName": "Bank Secrecy Act",
+      "zh": "美国银行保密法",
+      "category": "aml-kyc",
+      "level": "advanced",
+      "jurisdiction": [
+        "USA"
+      ],
+      "definition": "美国反洗钱体系的基石性联邦法律（1970 年），要求金融机构建立反洗钱计划、履行客户身份识别、交易记录保存与可疑活动报告（SAR）等义务；由 FinCEN 负责执行。",
+      "whyImportant": "BSA 是理解美国 AML 合规框架的起点，SAR、CTR（大额现金交易报告）、客户尽调等义务皆源于此。涉及美国连接点（US nexus）的基金或服务美国投资者的基金管理人，需把握 BSA 的域外适用边界。",
+      "scenario": [
+        "Regulatory Filing",
+        "Investor Onboarding"
+      ],
+      "aliases": [
+        "美国银行保密法",
+        "银行保密法"
+      ],
+      "related": [
+        "str",
+        "aml",
+        "fatf",
+        "ofac",
+        "money-laundering"
+      ],
+      "source": [
+        "internal"
+      ],
+      "tags": [
+        "美国",
+        "BSA",
+        "反洗钱",
+        "FinCEN"
+      ],
+      "brief": "美国反洗钱基石法律，SAR/客户尽调等义务的源头。",
+      "commonMistakes": [
+        "以为 BSA 仅约束美国境内银行，忽略其对有美国连接点的境外金融机构的域外适用",
+        "把 BSA 与 FATCA 混淆——前者是反洗钱法，后者是税务信息申报法"
+      ]
+    },
+    {
+      "id": "msb",
+      "term": "MSB",
+      "fullName": "Money Services Business",
+      "zh": "货币服务机构",
+      "category": "aml-kyc",
+      "level": "advanced",
+      "jurisdiction": [
+        "Global"
+      ],
+      "definition": "提供汇款、货币兑换、支票兑现、预付卡等货币服务的非银行机构；在多数法域属受 AML 监管的「金融机构」范畴，须履行注册、反洗钱计划与报告义务。",
+      "whyImportant": "货币服务机构是洗钱与恐怖融资的高风险通道，常被用于拆分资金、规避银行渠道审查。基金行政在涉及第三方支付、汇款或跨境资金渠道时，需识别 MSB 风险并对其做相应尽调。",
+      "scenario": [
+        "Investor Onboarding",
+        "Periodic Review"
+      ],
+      "aliases": [
+        "货币服务机构",
+        "资金服务业"
+      ],
+      "related": [
+        "aml",
+        "third-party-payment-channel",
+        "correspondent-banking",
+        "money-laundering",
+        "kyc"
+      ],
+      "source": [
+        "internal"
+      ],
+      "tags": [
+        "MSB",
+        "汇款",
+        "AML",
+        "非银金融机构"
+      ],
+      "brief": "提供汇款/兑换等货币服务的非银行机构，AML 高风险通道。",
+      "courses": [
+        "11"
+      ]
+    },
+    {
+      "id": "sdd",
+      "term": "SDD",
+      "fullName": "Simplified Due Diligence",
+      "zh": "简化尽职调查",
+      "category": "aml-kyc",
+      "level": "core",
+      "jurisdiction": [
+        "Global"
+      ],
+      "definition": "在低风险情形下允许金融机构采取比标准客户尽调（CDD）简化的身份核实与信息收集措施，但须能证明风险确属较低；与 CDD、EDD 共同构成基于风险的分层尽调体系。",
+      "whyImportant": "SDD 是基于风险方法（RBA）在客户尽调环节的体现：风险低可简化，风险高须强化。基金行政须准确判断何种情形可适用 SDD（如公开上市公司、低风险主权实体），避免「一刀切」或「该加强却简化」。",
+      "scenario": [
+        "Investor Onboarding",
+        "Periodic Review"
+      ],
+      "aliases": [
+        "简化尽职调查",
+        "简化尽调"
+      ],
+      "related": [
+        "cdd",
+        "edd",
+        "kyc",
+        "risk-based-approach",
+        "ubo"
+      ],
+      "source": [
+        "internal"
+      ],
+      "tags": [
+        "尽调",
+        "SDD",
+        "RBA",
+        "客户准入"
+      ],
+      "brief": "低风险情形下简化的客户尽调措施，与 CDD/EDD 构成分层体系。",
+      "courses": [
+        "02"
+      ]
+    },
+    {
+      "id": "four-eyes",
+      "term": "Four Eyes",
+      "fullName": "Four-Eyes Principle",
+      "zh": "四眼原则",
+      "category": "governance",
+      "level": "core",
+      "jurisdiction": [
+        "Global"
+      ],
+      "definition": "要求关键决策或操作由两名独立人员分别审查或批准的双人控制原则，通过职责分离降低单人舞弊或操作失误的风险，是基金治理与内控的常见安排。",
+      "whyImportant": "四眼原则是基金行政内控防线的核心机制之一，尤其适用于资金划拨、账户开立、交易审批与合规复核等高风险环节。缺少双人控制常是内控失效与舞弊事件的共同诱因。",
+      "scenario": [
+        "Fund Operations",
+        "Fund Governance"
+      ],
+      "aliases": [
+        "Four Eyes Principle",
+        "四眼原则",
+        "双人复核"
+      ],
+      "related": [
+        "fiduciary-duty",
+        "governing-body",
+        "board-of-directors",
+        "conflicts-of-interest",
+        "effective-compliance-programme"
+      ],
+      "source": [
+        "internal"
+      ],
+      "tags": [
+        "内控",
+        "双人复核",
+        "治理",
+        "职责分离"
+      ],
+      "brief": "关键操作须两名独立人员复核的双人控制原则，内控核心防线。",
+      "courses": [
+        "14"
+      ]
+    },
+    {
+      "id": "false-positive",
+      "term": "False Positive",
+      "fullName": "False Positive",
+      "zh": "误报",
+      "category": "aml-kyc",
+      "level": "core",
+      "jurisdiction": [
+        "Global"
+      ],
+      "definition": "交易监控或制裁筛查系统中，被规则或模型错误标记为可疑或命中、但实际并无风险的结果；与「漏报（False Negative）」相对，是评估监控系统有效性的核心指标。",
+      "whyImportant": "误报率过高会淹没真正风险信号、拖累运营效率并削弱团队对系统的信任。基金行政需在「减少误报」与「不放过真风险」之间调优阈值与场景，而非一味追求零误报或零漏报。",
+      "scenario": [
+        "Periodic Review"
+      ],
+      "aliases": [
+        "误报",
+        "假阳性"
+      ],
+      "related": [
+        "sanctions",
+        "transaction-monitoring",
+        "customer-risk-rating",
+        "ongoing-monitoring",
+        "risk-based-approach"
+      ],
+      "source": [
+        "internal"
+      ],
+      "tags": [
+        "误报",
+        "交易监控",
+        "制裁筛查",
+        "阈值调优"
+      ],
+      "brief": "被系统误判为可疑的正常结果，监控系统调优的核心指标。",
+      "courses": [
+        "13"
+      ]
+    },
+    {
+      "id": "atl",
+      "term": "ATL",
+      "fullName": "Above the Line",
+      "zh": "阈值触发法",
+      "category": "aml-kyc",
+      "level": "advanced",
+      "jurisdiction": [
+        "Global"
+      ],
+      "definition": "交易监控中的规则/阈值触发预警方式：当交易金额、频率等指标超过预设阈值时触发预警，是传统且直观的异常识别手段，须按风险细分设计差异化场景与阈值。",
+      "whyImportant": "ATL 是交易监控最基础的预警机制，阈值设置直接决定系统的灵敏度。基金行政须结合客户预期行为与风险细分设计阈值，并定期回溯测试调优，避免「一刀切」阈值导致漏报或误报泛滥。",
+      "scenario": [
+        "Periodic Review"
+      ],
+      "aliases": [
+        "阈值触发",
+        "规则预警"
+      ],
+      "related": [
+        "btl",
+        "transaction-monitoring",
+        "false-positive",
+        "customer-risk-rating",
+        "risk-based-approach"
+      ],
+      "source": [
+        "internal"
+      ],
+      "tags": [
+        "交易监控",
+        "阈值",
+        "预警",
+        "ATL"
+      ],
+      "brief": "交易监控中靠规则/阈值触发预警的传统方式。",
+      "courses": [
+        "13"
+      ]
+    },
+    {
+      "id": "btl",
+      "term": "BTL",
+      "fullName": "Below the Line",
+      "zh": "统计识别法",
+      "category": "aml-kyc",
+      "level": "advanced",
+      "jurisdiction": [
+        "Global"
+      ],
+      "definition": "交易监控中借助统计方法识别「低于阈值但偏离常态」交易的手段，例如发现结构化规避（structuring）等阈下异常；与 ATL 互补，能捕捉传统阈值规则漏掉的风险。",
+      "whyImportant": "刻意规避监控的洗钱者常把交易拆到阈值之下，仅靠 ATL 无法发现。BTL 通过统计偏离常态来捕捉结构化等阈下异常，是交易监控从「规则驱动」向「数据驱动」升级的关键。",
+      "scenario": [
+        "Periodic Review"
+      ],
+      "aliases": [
+        "统计识别",
+        "阈下识别"
+      ],
+      "related": [
+        "atl",
+        "transaction-monitoring",
+        "false-positive",
+        "money-laundering",
+        "risk-based-approach"
+      ],
+      "source": [
+        "internal"
+      ],
+      "tags": [
+        "交易监控",
+        "统计识别",
+        "结构化",
+        "BTL"
+      ],
+      "brief": "交易监控中靠统计方法识别阈下偏离常态交易的手段。",
+      "courses": [
+        "13"
+      ]
+    },
+    {
+      "id": "ctr",
+      "term": "CTR",
+      "fullName": "Currency Transaction Report",
+      "zh": "大额现金交易报告",
+      "category": "aml-kyc",
+      "level": "advanced",
+      "jurisdiction": [
+        "USA"
+      ],
+      "definition": "美国 BSA 项下要求金融机构对超过一定金额的现金交易向 FinCEN 提交的报告；与可疑活动报告（SAR）并列，是 BSA 报告义务的组成部分。",
+      "whyImportant": "CTR 与 SAR 是 BSA 报告义务的两大支柱：CTR 按金额阈值自动触发，SAR 按可疑判断触发。基金行政须理解二者触发逻辑不同、不可互相替代，才能正确履行报告义务。",
+      "scenario": [
+        "Regulatory Filing",
+        "Periodic Review"
+      ],
+      "aliases": [
+        "大额现金交易报告"
+      ],
+      "related": [
+        "str",
+        "bsa",
+        "aml",
+        "money-laundering",
+        "ofac"
+      ],
+      "source": [
+        "internal"
+      ],
+      "tags": [
+        "BSA",
+        "现金交易",
+        "报告义务",
+        "FinCEN"
+      ],
+      "brief": "美国 BSA 项下按金额阈值自动触发的大额现金交易报告。",
+      "courses": [
+        "11"
+      ]
+    },
+    {
+      "id": "crf",
+      "term": "CRF",
+      "fullName": "Cash Reporting Form",
+      "zh": "资产冻结报告",
+      "category": "aml-kyc",
+      "level": "advanced",
+      "jurisdiction": [
+        "Global"
+      ],
+      "definition": "在资产冻结（freeze）场景下向监管机构（如 FRA）提交的报告，用于披露被冻结资产及未遂交易；与可疑活动报告（SAR）相互独立，不可相互替代。",
+      "whyImportant": "资产冻结与可疑报告是两类不同义务：冻结按制裁命中即时执行，CRF 披露冻结事实；SAR 按可疑门槛另行提交。基金行政须在时间压力下正确区分两者，避免「用一个替代另一个」导致报告遗漏。",
+      "scenario": [
+        "Regulatory Filing",
+        "Periodic Review"
+      ],
+      "aliases": [
+        "资产冻结报告",
+        "冻结报告"
+      ],
+      "related": [
+        "financial-sanctions",
+        "ofac",
+        "str",
+        "sanctions",
+        "aml-cft"
+      ],
+      "source": [
+        "internal"
+      ],
+      "tags": [
+        "资产冻结",
+        "制裁",
+        "报告义务",
+        "CRF"
+      ],
+      "brief": "资产冻结场景下披露被冻结资产的报告，与 SAR 相互独立。"
+    },
+    {
+      "id": "esg",
+      "term": "ESG",
+      "fullName": "Environmental, Social and Governance",
+      "zh": "环境、社会与治理",
+      "category": "fund-operations",
+      "level": "core",
+      "jurisdiction": [
+        "Global"
+      ],
+      "definition": "将环境（Environmental）、社会（Social）与治理（Governance）因素纳入投资决策与基金运营的框架；ESG 基金据此设定策略或排除标准，产品标签须与实质一致。",
+      "whyImportant": "ESG 投资已成为基金产品的重要类别，但「标签与实质不符」是监管重点打击的漂绿（greenwashing）风险。基金行政须确保 ESG 基金的营销、披露与实际持仓/策略一致，避免夸大或误导。",
+      "scenario": [
+        "Fund Setup",
+        "Client Communication"
+      ],
+      "aliases": [
+        "环境社会与治理",
+        "环境、社会和治理"
+      ],
+      "related": [
+        "sri",
+        "sfdr",
+        "investment-manager",
+        "private-fund",
+        "regulatory-reporting"
+      ],
+      "source": [
+        "internal"
+      ],
+      "tags": [
+        "ESG",
+        "可持续投资",
+        "漂绿",
+        "基金策略"
+      ],
+      "brief": "把环境、社会与治理因素纳入投资决策的框架，须防漂绿风险。",
+      "courses": [
+        "E09",
+        "E02"
+      ]
+    },
+    {
+      "id": "sri",
+      "term": "SRI",
+      "fullName": "Socially Responsible Investing",
+      "zh": "社会责任投资",
+      "category": "fund-operations",
+      "level": "advanced",
+      "jurisdiction": [
+        "Global"
+      ],
+      "definition": "将社会、伦理与价值观因素纳入投资筛选或策略的投资方式，是 ESG 投资的早期形态与思想源头，常见做法包括负面筛选（剔除特定行业）与正面筛选（优先布局）。",
+      "whyImportant": "SRI 是理解 ESG 投资谱系的关键一环：从早期的伦理排除到今天的 ESG 整合。基金行政需区分 SRI、ESG、影响力投资等概念边界，避免在营销与披露中混淆客户预期。",
+      "scenario": [
+        "Fund Setup",
+        "Client Communication"
+      ],
+      "aliases": [
+        "社会责任投资",
+        "社会负责任投资"
+      ],
+      "related": [
+        "esg",
+        "sfdr",
+        "investment-manager",
+        "private-fund",
+        "distribution"
+      ],
+      "source": [
+        "internal"
+      ],
+      "tags": [
+        "SRI",
+        "社会责任",
+        "伦理投资",
+        "ESG"
+      ],
+      "brief": "把社会伦理因素纳入投资筛选的投资方式，ESG 的思想源头。",
+      "courses": [
+        "E09"
+      ]
+    },
+    {
+      "id": "sfdr",
+      "term": "SFDR",
+      "fullName": "Sustainable Finance Disclosure Regulation",
+      "zh": "可持续金融披露条例",
+      "category": "regulatory",
+      "level": "advanced",
+      "jurisdiction": [
+        "EU"
+      ],
+      "definition": "欧盟关于可持续金融信息披露的条例，要求金融市场参与者与财务顾问披露可持续性风险、不利影响及产品可持续性特征，并对基金做第 6/8/9 条分类披露。",
+      "whyImportant": "SFDR 是欧盟反漂绿的核心监管框架，向欧盟投资者募资的基金须按其分类（第 8/9 条）履行披露义务。基金行政需理解产品分类与披露要求的对应关系，避免因披露不足或标签不当触犯监管。",
+      "scenario": [
+        "Regulatory Filing",
+        "Client Communication"
+      ],
+      "aliases": [
+        "可持续金融披露条例",
+        "欧盟可持续披露条例"
+      ],
+      "related": [
+        "esg",
+        "sri",
+        "aifmd",
+        "regulatory-reporting",
+        "distribution"
+      ],
+      "source": [
+        "internal"
+      ],
+      "tags": [
+        "SFDR",
+        "欧盟",
+        "可持续披露",
+        "反漂绿"
+      ],
+      "brief": "欧盟可持续金融披露条例，反漂绿的核心监管框架。",
+      "courses": [
+        "E09"
+      ]
+    },
+    {
+      "id": "gdpr",
+      "term": "GDPR",
+      "fullName": "General Data Protection Regulation",
+      "zh": "通用数据保护条例",
+      "category": "regulatory",
+      "level": "advanced",
+      "jurisdiction": [
+        "EU"
+      ],
+      "definition": "欧盟关于个人数据保护与隐私的条例，规范个人数据的收集、处理、存储与跨境传输，赋予数据主体广泛权利，并对违规设高额罚款。",
+      "whyImportant": "基金行政处理大量投资人个人数据（身份、账户、税务信息），涉及欧盟居民或数据处理时须遵守 GDPR。数据跨境传输与第三方处理（如外包、云服务）的合规安排直接影响运营合法性。",
+      "scenario": [
+        "Client Communication",
+        "Fund Operations"
+      ],
+      "aliases": [
+        "通用数据保护条例",
+        "欧盟数据保护条例"
+      ],
+      "related": [
+        "identity-verification",
+        "kyc",
+        "self-certification",
+        "investor-register",
+        "regulatory-reporting"
+      ],
+      "source": [
+        "internal"
+      ],
+      "tags": [
+        "GDPR",
+        "数据保护",
+        "隐私",
+        "欧盟"
+      ],
+      "brief": "欧盟个人数据保护条例，基金行政处理投资人数据的合规基准。",
+      "courses": [
+        "E07"
+      ]
+    },
+    {
+      "id": "ria",
+      "term": "RIA",
+      "fullName": "Registered Investment Adviser",
+      "zh": "注册投资顾问",
+      "category": "regulatory",
+      "level": "advanced",
+      "jurisdiction": [
+        "USA"
+      ],
+      "definition": "在美国证券交易委员会（SEC）或州注册、提供投资咨询服务的机构；须履行信义义务，向客户披露利益冲突，并遵守投资顾问法的记录与报告要求。",
+      "whyImportant": "涉及美国投资者的基金结构常需识别投资顾问的注册状态与豁免情形。RIA 与 ERISA、私募发售规则交织，是判断美国连接点合规义务的关键概念。",
+      "scenario": [
+        "Fund Setup",
+        "Regulatory Filing"
+      ],
+      "aliases": [
+        "Registered Investment Advisor",
+        "注册投资顾问"
+      ],
+      "related": [
+        "investment-advisor",
+        "investment-manager",
+        "sec",
+        "erisa",
+        "fiduciary-duty"
+      ],
+      "source": [
+        "internal"
+      ],
+      "tags": [
+        "美国",
+        "RIA",
+        "投资顾问",
+        "SEC"
+      ],
+      "brief": "在美国 SEC/州注册的投资顾问，须履行信义义务。",
+      "courses": [
+        "E04"
+      ]
+    },
+    {
+      "id": "ima",
+      "term": "IMA",
+      "fullName": "Investment Management Agreement",
+      "zh": "投资管理协议",
+      "category": "governance",
+      "level": "core",
+      "jurisdiction": [
+        "Global"
+      ],
+      "definition": "基金（或其普通合伙人/受托人）与投资管理人之间订立的协议，界定管理人的投资权限、管理费与业绩报酬、报告义务、责任限制与终止安排。",
+      "whyImportant": "IMA 是基金治理的核心文件，直接决定管理人权限边界与收费安排。基金行政须据此执行费用计提、交易授权与报告流程，确保运营动作不越权、收费口径与协议一致。",
+      "scenario": [
+        "Fund Setup",
+        "Fund Governance"
+      ],
+      "aliases": [
+        "投资管理协议"
+      ],
+      "related": [
+        "investment-manager",
+        "management-fee",
+        "performance-fee",
+        "lpa",
+        "fund-administrator"
+      ],
+      "source": [
+        "internal"
+      ],
+      "tags": [
+        "投资管理协议",
+        "管理人",
+        "费用",
+        "治理"
+      ],
+      "brief": "基金与管理人之间的协议，界定投资权限与收费安排。",
+      "courses": [
+        "01"
+      ]
+    },
+    {
+      "id": "sla",
+      "term": "SLA",
+      "fullName": "Service Level Agreement",
+      "zh": "服务水平协议",
+      "category": "fund-operations",
+      "level": "core",
+      "jurisdiction": [
+        "Global"
+      ],
+      "definition": "基金行政管理人与基金或其管理人之间约定的服务标准协议，明确服务范围、交付时限（如 NAV 出具时间、报告期限）、质量指标与违约处理。",
+      "whyImportant": "SLA 是基金管理人衡量行政服务质量、追究责任的依据。基金行政须按 SLA 承诺的时限与质量交付（净值计算、报告、付款），否则面临违约与客户流失风险。",
+      "scenario": [
+        "Fund Operations",
+        "Fund Setup"
+      ],
+      "aliases": [
+        "服务水平协议",
+        "服务级别协议"
+      ],
+      "related": [
+        "fund-administrator",
+        "nav",
+        "regulatory-reporting",
+        "valuation",
+        "investment-manager"
+      ],
+      "source": [
+        "internal"
+      ],
+      "tags": [
+        "SLA",
+        "服务标准",
+        "基金行政",
+        "交付"
+      ],
+      "brief": "基金管理人与行政人之间的服务标准与时限协议。",
+      "courses": [
+        "E01"
+      ]
+    },
+    {
+      "id": "isae",
+      "term": "ISAE",
+      "fullName": "International Standard on Assurance Engagements",
+      "zh": "国际鉴证业务准则",
+      "category": "fund-operations",
+      "level": "advanced",
+      "jurisdiction": [
+        "Global"
+      ],
+      "definition": "国际审计与鉴证准则委员会发布的一系列鉴证业务准则，其中 ISAE 3402 用于服务组织内部控制（如基金行政、托管、数据处理）的报告，供客户审计师依赖。",
+      "whyImportant": "基金行政作为服务组织，常须向客户及其审计师提供 ISAE 3402 报告以证明内控有效性。理解该准则有助于行政人建立可审计的控制体系并满足客户尽调需求。",
+      "scenario": [
+        "Fund Operations",
+        "Regulatory Filing"
+      ],
+      "aliases": [
+        "国际鉴证准则",
+        "ISAE 3402"
+      ],
+      "related": [
+        "soc",
+        "auditor",
+        "effective-compliance-programme",
+        "fund-administrator",
+        "custody"
+      ],
+      "source": [
+        "internal"
+      ],
+      "tags": [
+        "鉴证",
+        "内控报告",
+        "ISAE 3402",
+        "服务组织"
+      ],
+      "brief": "服务组织内控的鉴证准则，ISAE 3402 报告即源于此。",
+      "courses": [
+        "E01"
+      ]
+    },
+    {
+      "id": "soc",
+      "term": "SOC",
+      "fullName": "System and Organization Controls",
+      "zh": "系统与组织控制报告",
+      "category": "fund-operations",
+      "level": "advanced",
+      "jurisdiction": [
+        "USA"
+      ],
+      "definition": "美国注册会计师协会（AICPA）制定的服务组织控制报告框架，其中 SOC 1 关注与财务报告相关的内部控制，SOC 2 关注安全性、可用性、保密性等信任服务标准。",
+      "whyImportant": "基金行政、托管、软件等服务提供商常以 SOC 报告证明内控与数据安全水平，供客户及审计师评估。理解 SOC 1 与 SOC 2 的差异有助于正确解读服务商的合规能力。",
+      "scenario": [
+        "Fund Operations",
+        "Regulatory Filing"
+      ],
+      "aliases": [
+        "SOC 1",
+        "SOC 2",
+        "系统与组织控制"
+      ],
+      "related": [
+        "isae",
+        "auditor",
+        "fund-administrator",
+        "custody",
+        "effective-compliance-programme"
+      ],
+      "source": [
+        "internal"
+      ],
+      "tags": [
+        "SOC",
+        "内控",
+        "AICPA",
+        "服务组织"
+      ],
+      "brief": "美国 AICPA 的服务组织控制报告框架，SOC 1/2 分述内控与数据安全。",
+      "courses": [
+        "E01"
+      ]
+    },
+    {
+      "id": "swift",
+      "term": "SWIFT",
+      "fullName": "Society for Worldwide Interbank Financial Telecommunication",
+      "zh": "环球银行金融电讯协会",
+      "category": "fund-operations",
+      "level": "core",
+      "jurisdiction": [
+        "Global"
+      ],
+      "definition": "提供跨境金融报文传输服务的合作组织，其报文标准（如 MT、ISO 20022）是全球银行与金融机构间资金划拨、结算与信息传递的基础设施。",
+      "whyImportant": "基金行政的资金划拨、结算与对账大量依赖 SWIFT 报文。理解 SWIFT 报文字段与格式，有助于准确执行付款指令、追踪资金与排查支付异常。",
+      "scenario": [
+        "Fund Operations",
+        "Transfer"
+      ],
+      "aliases": [
+        "环球银行金融电讯协会",
+        "环球同业银行金融电讯协会"
+      ],
+      "related": [
+        "fund-administrator",
+        "transfer",
+        "redemption",
+        "custody",
+        "prime-broker"
+      ],
+      "source": [
+        "internal"
+      ],
+      "tags": [
+        "SWIFT",
+        "支付",
+        "结算",
+        "报文"
+      ],
+      "brief": "跨境金融报文传输基础设施，基金行政资金划拨依赖其报文标准。",
+      "courses": [
+        "13"
+      ]
+    },
+    {
+      "id": "etf",
+      "term": "ETF",
+      "fullName": "Exchange Traded Fund",
+      "zh": "交易所交易基金",
+      "category": "fund-structure",
+      "level": "core",
+      "jurisdiction": [
+        "Global"
+      ],
+      "definition": "在证券交易所上市交易、可像股票一样买卖的基金，通常追踪指数或特定策略，兼具基金分散投资与证券流动性特点。",
+      "whyImportant": "ETF 是基金产品谱系的重要成员，其创设/赎回机制、做市与净值跟踪与普通开放式基金不同。基金行政需理解 ETF 的独特运营与估值安排，避免套用普通基金流程。",
+      "scenario": [
+        "Fund Setup",
+        "Fund Operations"
+      ],
+      "aliases": [
+        "交易所交易基金",
+        "交易型开放式指数基金"
+      ],
+      "related": [
+        "open-ended-fund",
+        "mutual-fund",
+        "nav",
+        "valuation",
+        "distribution"
+      ],
+      "source": [
+        "internal"
+      ],
+      "tags": [
+        "ETF",
+        "交易所",
+        "基金产品",
+        "流动性"
+      ],
+      "brief": "在交易所上市交易的基金，兼具分散投资与证券流动性。",
+      "courses": [
+        "E03"
+      ]
+    },
+    {
+      "id": "mutual-fund",
+      "term": "Mutual Fund",
+      "fullName": "Mutual Fund",
+      "zh": "共同基金",
+      "category": "fund-structure",
+      "level": "core",
+      "jurisdiction": [
+        "Global"
+      ],
+      "definition": "集合众多投资者资金、由专业管理人投资于证券组合的开放式投资工具，投资者按份额持有、可通常按净值申购赎回；在美国语境下对应 1940 年投资公司法项下的注册投资公司。",
+      "whyImportant": "共同基金是理解「集合投资」概念的基础载体，与私募基金在投资者门槛、监管注册与流动性安排上差异显著。基金行政需区分公募共同基金与私募基金的合规与运营差异。",
+      "scenario": [
+        "Fund Setup",
+        "Fund Operations"
+      ],
+      "aliases": [
+        "共同基金",
+        "互惠基金"
+      ],
+      "related": [
+        "open-ended-fund",
+        "etf",
+        "nav",
+        "subscription",
+        "redemption"
+      ],
+      "source": [
+        "internal"
+      ],
+      "tags": [
+        "共同基金",
+        "开放式",
+        "公募",
+        "集合投资"
+      ],
+      "brief": "集合投资者资金的开放式投资工具，与私募基金在监管上差异显著。",
+      "courses": [
+        "02",
+        "14",
+        "15"
+      ]
+    },
+    {
+      "id": "blocker",
+      "term": "Blocker",
+      "fullName": "Blocker Corporation",
+      "zh": "隔离公司",
+      "category": "tax",
+      "level": "advanced",
+      "jurisdiction": [
+        "Global"
+      ],
+      "definition": "跨境基金结构中插入在投资者与标的之间的公司型实体，用于阻断税透、延迟或重新定性所得，使特定投资者（如美国应税投资者、免税投资者）获得更优或更清晰的税务处理。",
+      "whyImportant": "Blocker 是跨境私募基金结构设计的核心工具，直接影响美国应税/免税投资者的税务结果（如避免 UBTI、ECI）。基金行政需理解 Blocker 在架构中的位置与税务意图，才能正确核算与申报。",
+      "scenario": [
+        "Fund Setup",
+        "Fund Operations"
+      ],
+      "aliases": [
+        "Blocker 公司",
+        "隔离公司",
+        "税务隔离实体"
+      ],
+      "related": [
+        "tax-transparent-entity",
+        "ubti",
+        "eci",
+        "erisa",
+        "master-fund"
+      ],
+      "source": [
+        "internal"
+      ],
+      "tags": [
+        "税务",
+        "结构设计",
+        "美国投资者",
+        "Blocker"
+      ],
+      "brief": "插入投资人与标的之间的公司，用于阻断税透、优化税务处理。",
+      "courses": [
+        "E03",
+        "E04"
+      ]
+    },
+    {
+      "id": "investment-entity",
+      "term": "Investment Entity",
+      "fullName": "Investment Entity",
+      "zh": "投资实体",
+      "category": "aeoi",
+      "level": "advanced",
+      "jurisdiction": [
+        "Global"
+      ],
+      "definition": "FATCA 与 CRS 项下的金融机构类别之一，指主要业务为以客户名义从事证券投资、组合管理或代表客户交易/管理金融资产的实体，或被金融机构管理的投资工具；须据此履行尽调与申报义务。",
+      "whyImportant": "是否构成「投资实体」直接决定基金在 FATCA/CRS 下的分类与申报义务（如是否为报告金融机构 FFI）。基金行政须准确判断基金与管理人的分类，避免漏报或错报账户信息。",
+      "scenario": [
+        "AEOI / CRS / FATCA",
+        "Regulatory Filing"
+      ],
+      "aliases": [
+        "投资实体"
+      ],
+      "related": [
+        "financial-institution",
+        "ffi",
+        "nfe",
+        "fatca",
+        "crs"
+      ],
+      "source": [
+        "internal"
+      ],
+      "tags": [
+        "FATCA",
+        "CRS",
+        "投资实体",
+        "金融机构分类"
+      ],
+      "brief": "FATCA/CRS 项下的金融机构类别，决定基金申报义务。",
+      "courses": [
+        "12"
+      ]
+    },
+    {
+      "id": "financial-institution",
+      "term": "Financial Institution",
+      "fullName": "Financial Institution",
+      "zh": "金融机构",
+      "category": "aeoi",
+      "level": "advanced",
+      "jurisdiction": [
+        "Global"
+      ],
+      "definition": "FATCA/CRS 项下需履行账户尽调与信息申报义务的主体类别，包括托管机构、存款机构、投资实体与特定保险机构；判定以「业务实质」而非牌照名称为准。",
+      "whyImportant": "金融机构（FI）分类是 FATCA/CRS 义务的起点：被认定为 FI 即须开展账户尽调、识别美国账户/可申报账户并申报。基金行政须先正确判定自身及对手方的 FI 地位，再谈具体义务。",
+      "scenario": [
+        "AEOI / CRS / FATCA",
+        "Regulatory Filing"
+      ],
+      "aliases": [
+        "金融机构",
+        "FI"
+      ],
+      "related": [
+        "investment-entity",
+        "ffi",
+        "nfe",
+        "fatca",
+        "crs"
+      ],
+      "source": [
+        "internal"
+      ],
+      "tags": [
+        "FATCA",
+        "CRS",
+        "金融机构",
+        "分类"
+      ],
+      "brief": "FATCA/CRS 项下须履行尽调申报义务的主体类别。",
+      "courses": [
+        "12"
+      ]
+    },
+    {
+      "id": "iga",
+      "term": "IGA",
+      "fullName": "Intergovernmental Agreement",
+      "zh": "政府间协议",
+      "category": "aeoi",
+      "level": "advanced",
+      "jurisdiction": [
+        "Global"
+      ],
+      "definition": "美国与其他国家（或法域）为实施 FATCA 而签署的政府间协议，分为模式 1（由当地税务当局收集并交换信息）与模式 2（金融机构直接向美国 IRS 报告）；确定当地 FATCA 的具体落地方式。",
+      "whyImportant": "IGA 模式（1 或 2）直接决定金融机构的 FATCA 申报路径：是向当地税务机关还是直接向 IRS 报告。基金行政须识别所属法域的 IGA 模式，才能正确履行 FATCA 义务。",
+      "scenario": [
+        "AEOI / CRS / FATCA",
+        "Regulatory Filing"
+      ],
+      "aliases": [
+        "政府间协议"
+      ],
+      "related": [
+        "fatca",
+        "model-1-iga",
+        "irs",
+        "ffi",
+        "crs"
+      ],
+      "source": [
+        "internal"
+      ],
+      "tags": [
+        "FATCA",
+        "IGA",
+        "政府间协议",
+        "申报路径"
+      ],
+      "brief": "实施 FATCA 的政府间协议，决定金融机构申报路径。",
+      "courses": [
+        "12"
+      ]
+    },
+    {
+      "id": "irs",
+      "term": "IRS",
+      "fullName": "Internal Revenue Service",
+      "zh": "美国国税局",
+      "category": "tax",
+      "level": "core",
+      "jurisdiction": [
+        "USA"
+      ],
+      "definition": "美国联邦税务机构，负责征收联邦税、执行税法并管理税务申报（含 FATCA 项下的信息交换与 W 系列表格）。",
+      "whyImportant": "IRS 是美国税务合规的核心监管方，FATCA 申报、W-8/W-9 表格与税务信息交换均与其对接。基金行政处理美国税务相关表格与申报时需了解 IRS 要求。",
+      "scenario": [
+        "AEOI / CRS / FATCA",
+        "Regulatory Filing"
+      ],
+      "aliases": [
+        "美国国税局",
+        "美国税务局"
+      ],
+      "related": [
+        "fatca",
+        "iga",
+        "w8ben",
+        "w9",
+        "tax-residency"
+      ],
+      "source": [
+        "internal"
+      ],
+      "tags": [
+        "IRS",
+        "美国税务",
+        "FATCA",
+        "申报"
+      ],
+      "brief": "美国联邦税务机构，FATCA 申报与 W 表格的对接方。",
+      "courses": [
+        "12"
+      ]
+    },
+    {
+      "id": "indicia",
+      "term": "Indicia",
+      "fullName": "US Indicia",
+      "zh": "美国迹象",
+      "category": "aeoi",
+      "level": "advanced",
+      "jurisdiction": [
+        "USA"
+      ],
+      "definition": "FATCA 项下用于识别账户持有人是否可能为美国人士的迹象清单，如美国出生地、美国地址、美国电话号码、美国汇款指令等；命中迹象即触发进一步的记录核实或自证。",
+      "whyImportant": "US Indicia 是 FATCA 账户尽调的核心工具：通过迹象清单筛查潜在美国账户，再依自证或记录核实排除。基金行政须掌握迹象清单的命中与治愈流程，确保美国账户不被漏识别。",
+      "scenario": [
+        "AEOI / CRS / FATCA",
+        "Investor Onboarding"
+      ],
+      "aliases": [
+        "美国迹象",
+        "迹象清单"
+      ],
+      "related": [
+        "us-person",
+        "fatca",
+        "self-certification",
+        "w8ben",
+        "w9"
+      ],
+      "source": [
+        "internal"
+      ],
+      "tags": [
+        "FATCA",
+        "美国迹象",
+        "账户尽调",
+        "US Indicia"
+      ],
+      "brief": "FATCA 识别潜在美国账户的迹象清单，命中须核实或自证。",
+      "courses": [
+        "12"
+      ]
+    },
+    {
+      "id": "identity-verification",
+      "term": "Identity Verification",
+      "fullName": "Identity Verification",
+      "zh": "身份核验",
+      "category": "aml-kyc",
+      "level": "core",
+      "jurisdiction": [
+        "Global"
+      ],
+      "definition": "核实客户身份真实性的过程，通过核验身份文件、比对信息或借助可靠数据源确认「客户即其所声称之人」，是客户尽调（CDD）的第一步。",
+      "whyImportant": "身份核验是客户准入的起点，核验不实将导致整个尽调链条失效。基金行政须掌握身份文件的核验要点与防伪意识，确保投资人是真实、可追溯的主体。",
+      "scenario": [
+        "Investor Onboarding"
+      ],
+      "aliases": [
+        "身份核验",
+        "身份核实"
+      ],
+      "related": [
+        "kyc",
+        "cdd",
+        "identity-document",
+        "ubo",
+        "certified-copy"
+      ],
+      "source": [
+        "internal"
+      ],
+      "tags": [
+        "身份核验",
+        "KYC",
+        "客户准入",
+        "尽调"
+      ],
+      "brief": "核实客户身份真实性的过程，客户尽调的第一步。"
+    },
+    {
+      "id": "crypto-fund",
+      "term": "Crypto Fund",
+      "fullName": "Crypto Fund",
+      "zh": "加密基金",
+      "category": "fund-structure",
+      "level": "advanced",
+      "jurisdiction": [
+        "Global"
+      ],
+      "definition": "投资于加密资产（数字代币、加密货币及相关工具）的基金，通常以对冲基金或私募基金形式运作，面临价格波动、托管安全与监管不确定性等独特风险。",
+      "whyImportant": "加密基金在估值、托管、反洗钱（加密资产匿名性）与跨法域监管上与传统基金差异显著。基金行政服务加密基金时须应对数字资产估值、钱包托管与交易合规等新挑战。",
+      "scenario": [
+        "Fund Setup",
+        "Fund Operations"
+      ],
+      "aliases": [
+        "加密基金",
+        "加密货币基金",
+        "数字资产基金"
+      ],
+      "related": [
+        "crypto-mixer",
+        "privacy-coin",
+        "hedge-fund",
+        "valuation",
+        "custody"
+      ],
+      "source": [
+        "internal"
+      ],
+      "tags": [
+        "加密资产",
+        "数字资产",
+        "基金",
+        "托管"
+      ],
+      "brief": "投资加密资产的基金，在估值托管与 AML 上挑战独特。",
+      "courses": [
+        "E11"
+      ]
+    },
+    {
+      "id": "approved-manager",
+      "term": "Approved Manager",
+      "fullName": "Approved Manager",
+      "zh": "获批管理人",
+      "category": "regulatory",
+      "level": "advanced",
+      "jurisdiction": [
+        "BVI"
+      ],
+      "definition": "BVI 面向特定基金提供管理服务的简化监管制度：受基金范围、业务规模限制并须满足董事、授权代表、财务报表、年度申报等义务；比全面持牌更轻，但仍是受监管安排。",
+      "whyImportant": "Approved Manager 是 BVI 基金合规的关键概念：它是「简化监管」而非「无监管」，且不替代基金本身的 AML、AEOI 义务。基金行政须据此区分其与持牌管理人、注册代理的角色边界。",
+      "scenario": [
+        "Fund Setup",
+        "Regulatory Filing"
+      ],
+      "aliases": [
+        "获批管理人",
+        "BVI 获批管理人"
+      ],
+      "related": [
+        "bvi-lp",
+        "fsc",
+        "investment-manager",
+        "licensing",
+        "economic-substance"
+      ],
+      "source": [
+        "internal"
+      ],
+      "tags": [
+        "BVI",
+        "获批管理人",
+        "简化监管",
+        "FSC"
+      ],
+      "brief": "BVI 的简化监管管理人制度，比持牌轻但非无监管。",
+      "commonMistakes": [
+        "把 Approved Manager 当作无监管安排——它仍有范围、规模、董事与年度申报等持续义务",
+        "以为 Approved Manager 可替代基金的 AML、AEOI 合规义务"
+      ],
+      "courses": [
+        "15"
+      ]
+    },
+    {
+      "id": "collective-investment-arrangement",
+      "term": "Collective Investment Arrangement",
+      "fullName": "Collective Investment Arrangement",
+      "zh": "集合投资安排",
+      "category": "fund-structure",
+      "level": "core",
+      "jurisdiction": [
+        "Global"
+      ],
+      "definition": "集合多位投资者资金、按共同投资目的进行投资运作的安排或载体，是基金、集合投资计划等概念的统称，通常需判断是否落入法定的「集合投资计划」定义以确定监管适用。",
+      "whyImportant": "是否构成「集合投资安排/计划」是判断某结构是否受基金监管（注册、牌照、披露）的前提。基金行政须理解该定义的构成要件，避免结构被误判为不受监管或反之。",
+      "scenario": [
+        "Fund Setup",
+        "Regulatory Filing"
+      ],
+      "aliases": [
+        "Collective Investment Scheme",
+        "集合投资安排",
+        "集合投资计划"
+      ],
+      "related": [
+        "mutual-fund",
+        "private-fund",
+        "umbrella-fund",
+        "fund-administrator",
+        "distribution"
+      ],
+      "source": [
+        "internal"
+      ],
+      "tags": [
+        "集合投资",
+        "基金监管",
+        "结构判定",
+        "CIS"
+      ],
+      "brief": "集合投资者资金共同投资的安排，监管适用的判定起点。",
+      "courses": [
+        "14"
+      ]
+    },
+    {
+      "id": "reference-letter",
+      "term": "Reference Letter",
+      "fullName": "Reference Letter",
+      "zh": "推荐信",
+      "category": "aml-kyc",
+      "level": "core",
+      "jurisdiction": [
+        "Global"
+      ],
+      "definition": "客户尽调中由第三方（如银行、专业机构）出具的、用于佐证客户身份、资信或业务关系的证明文件；在部分法域可作为身份核验或声誉佐证材料。",
+      "whyImportant": "推荐信是客户尽调中常见的辅助佐证材料，尤其在缺乏标准身份文件或新设实体场景。基金行政需评估推荐信的来源可靠性与证明力，避免过度依赖单一第三方陈述。",
+      "scenario": [
+        "Investor Onboarding"
+      ],
+      "aliases": [
+        "推荐信",
+        "银行推荐信"
+      ],
+      "related": [
+        "cdd",
+        "kyc",
+        "identity-verification",
+        "introducer",
+        "beneficiary"
+      ],
+      "source": [
+        "internal"
+      ],
+      "tags": [
+        "推荐信",
+        "客户尽调",
+        "佐证",
+        "KYC"
+      ],
+      "brief": "尽调中第三方出具的客户身份或资信佐证文件。"
+    },
+    {
+      "id": "cayman-fund",
+      "term": "Cayman Fund",
+      "fullName": "Cayman Fund",
+      "zh": "开曼基金",
+      "category": "fund-structure",
+      "level": "core",
+      "jurisdiction": [
+        "Cayman"
+      ],
+      "definition": "依开曼群岛法律设立的基金，通常以豁免公司、豁免有限合伙（ELP）或单位信托形式运作，受 CIMA 监管，是离岸私募基金最主流的注册地选择之一。",
+      "whyImportant": "开曼是全球离岸基金的最主要注册地，其注册、监管、AML 与 AEOI 义务构成基金行政日常工作的核心场景。理解开曼基金的类型与 CIMA 要求是服务离岸基金的基础。",
+      "scenario": [
+        "Fund Setup",
+        "Regulatory Filing"
+      ],
+      "aliases": [
+        "开曼基金"
+      ],
+      "related": [
+        "cima",
+        "elp",
+        "exempted-company",
+        "registered-fund",
+        "professional-fund"
+      ],
+      "source": [
+        "internal"
+      ],
+      "tags": [
+        "开曼",
+        "离岸基金",
+        "CIMA",
+        "注册地"
+      ],
+      "brief": "依开曼法律设立的离岸基金，受 CIMA 监管的主流注册地选择。"
     }
   ]
 }
