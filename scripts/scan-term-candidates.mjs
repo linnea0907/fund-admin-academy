@@ -36,10 +36,14 @@ import fs from "node:fs";
 import path from "node:path";
 import { register } from "node:module";
 import { pathToFileURL } from "node:url";
+import { scoreTerm, scanRegulatorySystems, listRegulatorySystems } from "./lib/term-scoring.mjs";
 
 const ROOT = process.cwd();
 const OUT_JSON = path.join(ROOT, "content", "glossary", "candidates.json");
 const LIMIT = Number(process.env.FAA_SCAN_LIMIT || 200);
+
+/** V1.20.11：价值评分阈值——低于此分的候选标记为「低价值」（不删除，供审核页过滤） */
+const VALUE_FLOOR = Number(process.env.FAA_VALUE_FLOOR || 0);
 
 /* ================================================================
  * 0. 直载项目 TS 源码（与站点共用同一数据层，杜绝口径漂移）
@@ -52,7 +56,7 @@ try {
   process.exit(0);
 }
 
-let orderedAllLessons, listCaseIds, readCase, GLOSSARY_TERMS, annotateSegments;
+let orderedAllLessons, listCaseIds, readCase, GLOSSARY_TERMS, annotateSegments, AML_TOOLKIT;
 try {
   ({ orderedAllLessons } = await import(
     pathToFileURL(path.join(ROOT, "src", "lib", "ordering.ts")).href
@@ -62,6 +66,9 @@ try {
   ));
   ({ GLOSSARY_TERMS, annotateSegments } = await import(
     pathToFileURL(path.join(ROOT, "src", "lib", "glossary.ts")).href
+  ));
+  ({ AML_TOOLKIT } = await import(
+    pathToFileURL(path.join(ROOT, "src", "data", "aml-toolkit.ts")).href
   ));
 } catch (err) {
   // 非阻断：保留旧候选池，不拦构建
@@ -216,6 +223,66 @@ function buildCorpus() {
     }
   }
 
+  // V1.20.12：纳入实务工具包语料（监管系统名大量出现在 SOP/清单/对照类内容里，
+  // 此前 buildCorpus 只扫课程 + 案例，导致 REEFS 等系统名成为扫描盲区）。
+  // ⚠️ 工具包有三种 kind，文本字段各不相同，须全部覆盖：
+  //   checklist → sections[].items[]；sop → steps[].detail/note + outcomes[].detail；
+  //   comparison → rows[].cells[] + reminders[]；公共 → summary/purpose/pitfalls/tags。
+  for (const item of AML_TOOLKIT ?? []) {
+    const href = `/toolkit/${item.id}`;
+    const label = `工具包 · ${item.title}`;
+    const base = [item.title, item.zh, item.summary, item.purpose, ...(item.tags ?? [])];
+
+    // 公共主体
+    out.push({ kind: "toolkit", label, href, text: base.join("\n") });
+
+    // checklist：sections
+    for (const sec of item.sections ?? []) {
+      out.push({
+        kind: "toolkit",
+        label: `${label} · ${sec.title}`,
+        href,
+        text: [sec.title, sec.zh, ...(sec.items ?? [])].join("\n"),
+      });
+    }
+    // sop：steps + outcomes
+    for (const step of item.steps ?? []) {
+      out.push({
+        kind: "toolkit",
+        label: `${label} · ${step.title}`,
+        href,
+        text: [step.title, step.zh, step.detail, step.note, step.warning].filter(Boolean).join("\n"),
+      });
+    }
+    for (const oc of item.outcomes ?? []) {
+      out.push({
+        kind: "toolkit",
+        label: `${label} · ${oc.title}`,
+        href,
+        text: [oc.title, oc.zh, oc.detail].filter(Boolean).join("\n"),
+      });
+    }
+    // comparison：rows.cells + reminders
+    if (item.comparison) {
+      const cells = (item.comparison.rows ?? []).flatMap((r) => [r.label, ...(r.cells ?? [])]);
+      out.push({
+        kind: "toolkit",
+        label: `${label} · 对照表`,
+        href,
+        text: [...(item.comparison.columns ?? []), ...cells, ...(item.comparison.reminders ?? [])].join("\n"),
+      });
+    }
+    // pitfalls
+    if (item.pitfalls?.length) {
+      out.push({
+        kind: "toolkit",
+        label: `${label} · 常见误区`,
+        href,
+        text: item.pitfalls.join("\n"),
+      });
+    }
+  }
+
   return out;
 }
 
@@ -331,6 +398,8 @@ function scan() {
 
           let e = map.get(key);
           if (!e) {
+            // V1.20.11：创建条目时即打分（价值评分层）
+            const scoring = scoreTerm(raw);
             e = {
               key,
               text: raw,
@@ -343,6 +412,10 @@ function scan() {
               samples: [],
               zh: "",
               fullName: "",
+              valueScore: scoring.score,
+              valueReasons: scoring.reasons,
+              valueCategory: scoring.categories,
+              isRegulatorySystem: scoring.isRegulatorySystem,
             };
             map.set(key, e);
           }
@@ -359,9 +432,10 @@ function scan() {
             e.courses.add(doc.label.split(" · ")[0]);
             const refId = refIdOf(doc);
             if (refId) e.courseIds.add(refId);
-          } else {
+          } else if (doc.kind === "case") {
             e.cases.add(doc.label.split(" · ")[0]);
           }
+          // toolkit 语料只计入 docs（供「来源」展示），不进入 courses/cases 关联
           if (e.samples.length < 3) {
             e.samples.push({
               kind: doc.kind,
@@ -396,6 +470,13 @@ function scan() {
     fullName: v.fullName,
     // 课程 id（"02" / "E04"）：与术语数据 courses 字段同口径，供补全包直接使用
     courseIds: [...v.courseIds].sort(),
+    // V1.20.11 价值评分（价值密度过滤）
+    valueScore: v.valueScore ?? 0,
+    valueReasons: v.valueReasons ?? [],
+    valueCategory: v.valueCategory ?? [],
+    lowValue: (v.valueScore ?? 0) < VALUE_FLOOR,
+    // V1.20.12 监管系统标记
+    isRegulatorySystem: v.isRegulatorySystem ?? false,
   }));
 
   list.sort((a, b) => {
@@ -408,6 +489,63 @@ function scan() {
   });
 
   return { corpus, list };
+}
+
+/* ================================================================
+ * 5b. 监管系统发现报告（V1.20.12）
+ * ================================================================ */
+
+/**
+ * 扫描语料全文，识别监管系统/平台名称，产出发现报告。
+ * 口径：
+ *   - 发现 = 在语料中命中（scanRegulatorySystems）
+ *   - 已存在 = 命中且该名称已在 GLOSSARY_TERMS 的 term/alias 中
+ *   - 遗漏 = 词典里有、但语料中未出现（提示「词典覆盖但正文未引用」，或「正文未提及」）
+ */
+function buildRegulatoryReport(corpus) {
+  // 已存在术语的匹配文本（term/fullName/aliases 归一）
+  const registered = new Set();
+  for (const t of GLOSSARY_TERMS) {
+    if (t.term) registered.add(t.term.toLowerCase());
+    if (t.fullName) registered.add(t.fullName.toLowerCase());
+    for (const a of t.aliases ?? []) registered.add(a.toLowerCase());
+  }
+
+  // 遍历语料全文，命中监管系统
+  const found = new Map(); // name -> { name, jurisdiction, note, matched, docs: Set }
+  for (const doc of corpus) {
+    const hits = scanRegulatorySystems(doc.text);
+    for (const h of hits) {
+      if (!found.has(h.name)) {
+        found.set(h.name, { ...h, docs: new Set() });
+      }
+      found.get(h.name).docs.add(doc.label);
+    }
+  }
+
+  const foundList = [...found.values()].map((f) => ({
+    jurisdiction: f.jurisdiction,
+    name: f.name,
+    note: f.note,
+    matched: f.matched,
+    docs: f.docs.size,
+    samples: [...f.docs].slice(0, 3),
+    exists: registered.has(f.name.toLowerCase()),
+  }));
+
+  // 词典全量（含未命中的），计算遗漏
+  const allSystems = listRegulatorySystems();
+  const foundNames = new Set(foundList.map((f) => f.name.toLowerCase()));
+  const missing = allSystems.filter((s) => !foundNames.has(s.name.toLowerCase()));
+
+  return {
+    discovered: foundList.length,
+    newSystems: foundList.filter((f) => !f.exists).length,
+    existing: foundList.filter((f) => f.exists).length,
+    missing: missing.length,
+    found: foundList,
+    missingList: missing,
+  };
 }
 
 /* ================================================================
@@ -445,6 +583,9 @@ function signatureOf(c) {
     c.fullName ?? "",
     c.courseIds ?? [],
     c.samples.map((s) => [s.label, s.context]),
+    c.valueScore ?? 0,
+    c.valueReasons ?? [],
+    c.isRegulatorySystem ?? false,
   ]);
 }
 
@@ -481,6 +622,9 @@ try {
     existing.candidates.length !== candidates.length ||
     existing.candidates.some((c, i) => c.key !== candidates[i]?.key);
 
+  // V1.20.12：监管系统专项识别（遍历语料全文，独立于候选抽取）
+  const regulatoryReport = buildRegulatoryReport(corpus);
+
   payload = {
     version: 1,
     generatedAt: setChanged ? now : existing.generatedAt || now,
@@ -491,6 +635,7 @@ try {
       cases: corpus.filter((d) => d.kind === "case").length,
     },
     candidates,
+    regulatorySystems: regulatoryReport,
   };
   stats = { fresh, changed, setChanged };
 } catch (err) {
@@ -507,6 +652,9 @@ if (touched) fs.writeFileSync(OUT_JSON, after, "utf8");
 const byConf = (k) => payload.candidates.filter((c) => c.confidence === k).length;
 const withZh = payload.candidates.filter((c) => c.zh).length;
 const withFull = payload.candidates.filter((c) => c.fullName).length;
+const highValue = payload.candidates.filter((c) => (c.valueScore ?? 0) >= 5).length;
+const lowValue = payload.candidates.filter((c) => (c.valueScore ?? 0) < VALUE_FLOOR).length;
+const regSys = payload.candidates.filter((c) => c.isRegulatorySystem).length;
 console.log(
   `[scan:terms] 语料 ${payload.baseline.documents} 篇（课程 ${payload.baseline.courses} / 案例 ${payload.baseline.cases}）` +
     ` · 已有术语 ${GLOSSARY_TERMS.length} 条 · 候选 ${payload.candidates.length} 个` +
@@ -515,3 +663,14 @@ console.log(
     ` · 新增 ${stats.fresh} / 更新 ${stats.changed}` +
     ` → content/glossary/candidates.json${touched ? "" : "（无变化，未改动文件）"}`
 );
+// V1.20.11 / V1.20.12 附加统计
+console.log(
+  `[scan:terms][value] 高价值(≥+5) ${highValue} · 低价值(<${VALUE_FLOOR}) ${lowValue} · 监管系统命中 ${regSys} 个`
+);
+if (payload.regulatorySystems) {
+  const r = payload.regulatorySystems;
+  console.log(
+    `[scan:terms][regulatory] 发现 ${r.discovered} · 新增 ${r.newSystems} · 已存在 ${r.existing} · 遗漏 ${r.missing}` +
+      (r.missing > 0 ? `（遗漏：${r.missingList.map((m) => m.name).join(" / ")}）` : "")
+  );
+}

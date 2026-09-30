@@ -48,7 +48,7 @@ function normalizeCandidate(raw: unknown): TermCandidate | null {
           const href = typeof r.href === "string" ? r.href : "";
           if (!label || !href) return null;
           return {
-            kind: r.kind === "case" ? ("case" as const) : ("course" as const),
+            kind: r.kind === "case" ? ("case" as const) : r.kind === "toolkit" ? ("toolkit" as const) : ("course" as const),
             label,
             href,
             context: typeof r.context === "string" ? r.context : "",
@@ -75,6 +75,11 @@ function normalizeCandidate(raw: unknown): TermCandidate | null {
     samples,
     firstSeenAt: typeof o.firstSeenAt === "string" ? o.firstSeenAt : "",
     lastSeenAt: typeof o.lastSeenAt === "string" ? o.lastSeenAt : "",
+    valueScore: typeof o.valueScore === "number" ? o.valueScore : undefined,
+    valueReasons: strArr(o.valueReasons),
+    valueCategory: strArr(o.valueCategory),
+    lowValue: o.lowValue === true,
+    isRegulatorySystem: o.isRegulatorySystem === true,
   };
 }
 
@@ -113,6 +118,7 @@ export function loadCandidatePool(): TermCandidatePool {
         cases: num(b.cases),
       },
       candidates,
+      regulatorySystems: normalizeRegulatoryReport(parsed.regulatorySystems),
     };
     return cache;
   } catch (err) {
@@ -120,4 +126,53 @@ export function loadCandidatePool(): TermCandidatePool {
     cache = EMPTY_CANDIDATE_POOL;
     return cache;
   }
+}
+
+/** V1.20.12 监管系统报告正常化（脏数据丢弃，缺省返回 undefined） */
+function normalizeRegulatoryReport(raw: unknown) {
+  if (!raw || typeof raw !== "object") return undefined;
+  const o = raw as Record<string, unknown>;
+  const foundRaw = Array.isArray(o.found) ? o.found : [];
+  const found = foundRaw
+    .map((f) => {
+      if (!f || typeof f !== "object") return null;
+      const r = f as Record<string, unknown>;
+      return {
+        jurisdiction: typeof r.jurisdiction === "string" ? r.jurisdiction : "",
+        name: typeof r.name === "string" ? r.name : "",
+        note: typeof r.note === "string" ? r.note : "",
+        matched: typeof r.matched === "string" ? r.matched : "",
+        docs: typeof r.docs === "number" ? r.docs : 0,
+        samples: Array.isArray(r.samples)
+          ? r.samples.filter((x): x is string => typeof x === "string").slice(0, 3)
+          : [],
+        exists: r.exists === true,
+      };
+    })
+    .filter((x): x is NonNullable<typeof x> => x !== null);
+
+  const missingRaw = Array.isArray(o.missingList) ? o.missingList : [];
+  const missingList = missingRaw
+    .map((m) => {
+      if (!m || typeof m !== "object") return null;
+      const r = m as Record<string, unknown>;
+      return {
+        jurisdiction: typeof r.jurisdiction === "string" ? r.jurisdiction : "",
+        name: typeof r.name === "string" ? r.name : "",
+        aliases: Array.isArray(r.aliases)
+          ? r.aliases.filter((x): x is string => typeof x === "string")
+          : [],
+        note: typeof r.note === "string" ? r.note : "",
+      };
+    })
+    .filter((x): x is NonNullable<typeof x> => x !== null);
+
+  return {
+    discovered: typeof o.discovered === "number" ? o.discovered : found.length,
+    newSystems: typeof o.newSystems === "number" ? o.newSystems : 0,
+    existing: typeof o.existing === "number" ? o.existing : 0,
+    missing: typeof o.missing === "number" ? o.missing : missingList.length,
+    found,
+    missingList,
+  };
 }

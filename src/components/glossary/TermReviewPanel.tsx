@@ -36,7 +36,7 @@ function chip(active: boolean, extra = ""): string {
 
 /** 置信档筛选：三档 + 「高置信」合并档 + 全部（默认高置信，见下） */
 type ConfFilter = "high" | "all" | CandidateConfidence;
-type SourceFilter = "all" | "course" | "case";
+type SourceFilter = "all" | "course" | "case" | "toolkit";
 /** 审核三态（V1.20.6：原「待审核 / 已发布」改为「待审核 / 已采纳 / 已忽略」） */
 type Panel = "pending" | "adopted" | "ignored";
 
@@ -307,6 +307,14 @@ export default function TermReviewPanel({ pool }: { pool: TermCandidatePool }) {
               className={chip(source === "case")}
             >
               案例
+            </button>
+            <button
+              type="button"
+              data-source-filter="toolkit"
+              onClick={() => setSource("toolkit")}
+              className={chip(source === "toolkit")}
+            >
+              工具包
             </button>
             {/* 消歧：分段徽标是「状态总数」，列表受筛选收窄 —— 两个数字都要能看见 */}
             <span data-count-hint className="ml-auto text-[11px] text-slate-400">

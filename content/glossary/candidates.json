@@ -1,23 +1,22 @@
 {
   "version": 1,
-  "generatedAt": "2026-09-21T07:03:28.709Z",
+  "generatedAt": "2026-09-28T11:15:34.376Z",
   "baseline": {
-    "glossaryTerms": 199,
-    "documents": 275,
+    "glossaryTerms": 235,
+    "documents": 302,
     "courses": 128,
     "cases": 147
   },
   "candidates": [
     {
-      "key": "sar",
-      "text": "SAR",
-      "confidence": "declared",
+      "key": "fra",
+      "text": "FRA",
+      "confidence": "acronym",
       "acronym": true,
-      "docs": 6,
+      "docs": 3,
       "courses": [],
       "cases": [
-        "Case-027",
-        "Case-029"
+        "Case-027"
       ],
       "count": 7,
       "samples": [
@@ -25,339 +24,75 @@
           "kind": "case",
           "label": "Case-027 · standard_answer",
           "href": "/cases/case-027",
-          "context": "… 3. 向 FRA 提交 **CRF**（资产冻结报告），披露被冻结资产及未遂交易 4. 若同时达到可疑门槛，**另行提交可疑活动报告（SAR）**，不与 CRF 相互替代 5. 完整记录时间线、判断依据、审批、对外沟通与后续动作 6…"
+          "context": "… / 服务 2. 冻结**不是没收**，不得处置或动用被冻结资金 / 经济资源 3. 向 FRA 提交 **"
         },
         {
           "kind": "case",
           "label": "Case-027 · standard_answer",
           "href": "/cases/case-027",
-          "context": "…冻结报告），披露被冻结资产及未遂交易 4. 若同时达到可疑门槛，**另行提交可疑活动报告（SAR）**，不与 CRF 相互替代 5. 完整记录时间线、判断依据、审批、对外沟通与后续动作 …"
+          "context": " 相互替代 5. 完整记录时间线、判断依据、审批、对外沟通与后续动作 6. 后续解冻依 FRA 指引办理；许可须向总督申请，并按指定表格抄送 FRA ## Q5 "
         },
         {
           "kind": "case",
-          "label": "Case-027 · reasoning",
+          "label": "Case-027 · standard_answer",
           "href": "/cases/case-027",
-          "context": " ↓ 静默核验全部身份要素 ↓ ┌─ 真实命中 → 冻结 → CRF / SAR → 记录 └─ 误报 → 记录排除理由 → 归档留痕 ``` **时间压力不能…"
+          "context": "…外沟通与后续动作 6. 后续解冻依 FRA 指引办理；许可须向总督申请，并按指定表格抄送 FRA ## Q5 "
         }
       ],
-      "zh": "提交可疑活动报告",
+      "zh": "",
       "fullName": "",
       "courseIds": [],
+      "valueScore": 0,
+      "valueReasons": [],
+      "valueCategory": [],
+      "lowValue": false,
+      "isRegulatorySystem": false,
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T08:38:00.339Z"
+      "lastSeenAt": "2026-09-28T11:12:33.146Z"
     },
     {
-      "key": "tbml",
-      "text": "TBML",
-      "confidence": "declared",
+      "key": "reefs",
+      "text": "REEFS",
+      "confidence": "acronym",
       "acronym": true,
-      "docs": 2,
-      "courses": [
-        "第 11 讲"
-      ],
-      "cases": [],
-      "count": 4,
-      "samples": [
-        {
-          "kind": "course",
-          "label": "第 11 讲 · 4.4 高风险形态的识别信号",
-          "href": "/courses/aml-foundations#m4",
-          "context": "…核心是穿透到最终实益所有人。 回流投资（round-tripping）指资金先离岸化再以「外资」名义回流，核心问题是缺少商业实质。贸易洗钱（TBML）靠"
-        },
-        {
-          "kind": "course",
-          "label": "第 11 讲 · 4.4 高风险形态的识别信号",
-          "href": "/courses/aml-foundations#m4",
-          "context": "…-tripping）指资金先离岸化再以「外资」名义回流，核心问题是缺少商业实质。贸易洗钱（TBML）靠"
-        },
-        {
-          "kind": "course",
-          "label": "第 11 讲 · 4.4 高风险形态的识别信号",
-          "href": "/courses/aml-foundations#m4",
-          "context": " 回流投资、TBML 的共性是「缺少真实商业实质」"
-        }
-      ],
-      "zh": "贸易洗钱",
-      "fullName": "",
-      "courseIds": [
-        "11"
-      ],
-      "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-21T07:03:28.709Z"
-    },
-    {
-      "key": "atl",
-      "text": "ATL",
-      "confidence": "declared",
-      "acronym": true,
-      "docs": 1,
-      "courses": [
-        "第 13 讲"
-      ],
+      "docs": 3,
+      "courses": [],
       "cases": [],
       "count": 3,
       "samples": [
         {
-          "kind": "course",
-          "label": "第 13 讲 · 6.4 交易监控与模型治理",
-          "href": "/courses/aml-technology-monitoring#m4",
-          "context": "须按风险细分设计差异化的场景与阈值，并结合客户预期行为判断异常。ATL（Above the Line）是规则/阈值触发预警的传统方式；BTL（Below the Line）借助统计识别低于阈值…"
+          "kind": "toolkit",
+          "label": "工具包 · AMLCO / MLRO / DMLRO",
+          "href": "/toolkit/aml-roles-comparison",
+          "context": " 独立性 兼任 REEFS"
         },
         {
-          "kind": "course",
-          "label": "第 13 讲 · 6.4 交易监控与模型治理",
-          "href": "/courses/aml-technology-monitoring#m4",
-          "context": "须按风险细分设计差异化的场景与阈值，并结合客户预期行为判断异常。ATL（Above the Line）是规则/阈值触发预警的传统方式；BTL（Below the…"
+          "kind": "toolkit",
+          "label": "工具包 · AMLCO / MLRO / DMLRO · 对照表",
+          "href": "/toolkit/aml-roles-comparison",
+          "context": " 的委任及任何变更，均须通过 REEFS 系统向 "
         },
         {
-          "kind": "course",
-          "label": "第 13 讲 · 6.4 交易监控与模型治理",
-          "href": "/courses/aml-technology-monitoring#m4",
-          "context": "…的资金网络与共同控制人。 按风险细分设计场景，用回溯测试（back-testing）调优 ATL 规则触发 / BTL 统计识别偏离常态（结构化） 规则引擎与 AI/ML 互补，非替代关…"
-        }
-      ],
-      "zh": "",
-      "fullName": "Above the Line",
-      "courseIds": [
-        "13"
-      ],
-      "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T08:37:26.005Z"
-    },
-    {
-      "key": "btl",
-      "text": "BTL",
-      "confidence": "declared",
-      "acronym": true,
-      "docs": 1,
-      "courses": [
-        "第 13 讲"
-      ],
-      "cases": [],
-      "count": 3,
-      "samples": [
-        {
-          "kind": "course",
-          "label": "第 13 讲 · 6.4 交易监控与模型治理",
-          "href": "/courses/aml-technology-monitoring#m4",
-          "context": "…户预期行为判断异常。ATL（Above the Line）是规则/阈值触发预警的传统方式；BTL（Below the Line）借助统计识别低于阈值但偏离常态的交易（如结构化规避）。误报偏高时应调优（tuning）而非…"
-        },
-        {
-          "kind": "course",
-          "label": "第 13 讲 · 6.4 交易监控与模型治理",
-          "href": "/courses/aml-technology-monitoring#m4",
-          "context": "…户预期行为判断异常。ATL（Above the Line）是规则/阈值触发预警的传统方式；BTL（Below the Line）借助统计识别低于阈值但偏离常态的交易（如结构化规避）。误报…"
-        },
-        {
-          "kind": "course",
-          "label": "第 13 讲 · 6.4 交易监控与模型治理",
-          "href": "/courses/aml-technology-monitoring#m4",
-          "context": "…。 按风险细分设计场景，用回溯测试（back-testing）调优 ATL 规则触发 / BTL 统计识别偏离常态（结构化） 规则引擎与 AI/ML 互补，非替代关系 模型治理：数据、验…"
-        }
-      ],
-      "zh": "",
-      "fullName": "Below the Line",
-      "courseIds": [
-        "13"
-      ],
-      "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T08:37:26.005Z"
-    },
-    {
-      "key": "bsa",
-      "text": "BSA",
-      "confidence": "declared",
-      "acronym": true,
-      "docs": 1,
-      "courses": [],
-      "cases": [
-        "Case-012"
-      ],
-      "count": 2,
-      "samples": [
-        {
-          "kind": "case",
-          "label": "Case-012 · standard_answer",
-          "href": "/cases/case-012",
-          "context": " Agent 并非美国 Bank Secrecy Act（BSA）项下必须建立完整 "
-        },
-        {
-          "kind": "case",
-          "label": "Case-012 · standard_answer",
-          "href": "/cases/case-012",
-          "context": " Agent 并非美国 Bank Secrecy Act（BSA）项下必须建立完整 "
+          "kind": "toolkit",
+          "label": "工具包 · AMLCO / MLRO / DMLRO · 常见误区",
+          "href": "/toolkit/aml-roles-comparison",
+          "context": " 亲自对自己的控制做独立审计 委任与变更未通过 REEFS 报备 "
         }
       ],
       "zh": "",
       "fullName": "",
       "courseIds": [],
-      "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
-    },
-    {
-      "key": "sri",
-      "text": "SRI",
-      "confidence": "declared",
-      "acronym": true,
-      "docs": 1,
-      "courses": [
-        "选修 E09"
+      "valueScore": 10,
+      "valueReasons": [
+        "+10 监管系统（Cayman · REEFS）"
       ],
-      "cases": [],
-      "count": 2,
-      "samples": [
-        {
-          "kind": "course",
-          "label": "选修 E09 · 1.1 ESG 基金是什么",
-          "href": "/courses/e09-esg#m1",
-          "context": "1.1 ESG 基金是什么 社会责任投资（SRI）/ESG 基金把环境、社会与治理因素纳入策略或排除标准。产品标签（如可持续、绿色）应与其实…"
-        },
-        {
-          "kind": "course",
-          "label": "选修 E09 · 1.1 ESG 基金是什么",
-          "href": "/courses/e09-esg#m1",
-          "context": "1.1 ESG 基金是什么 社会责任投资（SRI）/ESG 基金把环境、社会与治理因素纳入策略或排除标准。产品标签（如可持续、绿色）应与其…"
-        }
+      "valueCategory": [
+        "监管系统"
       ],
-      "zh": "社会责任投资",
-      "fullName": "",
-      "courseIds": [
-        "E09"
-      ],
-      "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T08:37:26.005Z"
-    },
-    {
-      "key": "ml",
-      "text": "ML",
-      "confidence": "declared",
-      "acronym": true,
-      "docs": 1,
-      "courses": [
-        "第 11 讲"
-      ],
-      "cases": [],
-      "count": 1,
-      "samples": [
-        {
-          "kind": "course",
-          "label": "第 11 讲 · 4.2 六类金融犯罪的区别",
-          "href": "/courses/aml-foundations#m2",
-          "context": "4.2 六类金融犯罪的区别 金融犯罪不是单一概念。洗钱（ML）关注「"
-        }
-      ],
-      "zh": "洗钱",
-      "fullName": "",
-      "courseIds": [
-        "11"
-      ],
-      "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T08:37:26.005Z"
-    },
-    {
-      "key": "tf",
-      "text": "TF",
-      "confidence": "declared",
-      "acronym": true,
-      "docs": 1,
-      "courses": [
-        "第 11 讲"
-      ],
-      "cases": [],
-      "count": 1,
-      "samples": [
-        {
-          "kind": "course",
-          "label": "第 11 讲 · 4.2 六类金融犯罪的区别",
-          "href": "/courses/aml-foundations#m2",
-          "context": "是否违法」；恐怖融资（TF）的资金**可能来自合法来源**，目的是支持恐怖活动，常表现为小额、多笔、多渠道；制裁（sa…"
-        }
-      ],
-      "zh": "恐怖融资",
-      "fullName": "",
-      "courseIds": [
-        "11"
-      ],
-      "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T08:37:26.005Z"
-    },
-    {
-      "key": "esg",
-      "text": "ESG",
-      "confidence": "acronym",
-      "acronym": true,
-      "docs": 6,
-      "courses": [
-        "选修 E02",
-        "选修 E09"
-      ],
-      "cases": [],
-      "count": 16,
-      "samples": [
-        {
-          "kind": "course",
-          "label": "选修 E02 · 1.2 投资人诉求如何影响运营",
-          "href": "/courses/e02-investor-landscape#m2",
-          "context": "/转让限制、ESG 披露、"
-        },
-        {
-          "kind": "course",
-          "label": "选修 E09 · ESG",
-          "href": "/courses/e09-esg",
-          "context": "ESG 社会责任投资与披露：从基金文件到运营落地 理解 ESG 在基金产品设计与募集文件中的位置…"
-        },
-        {
-          "kind": "course",
-          "label": "选修 E09 · ESG",
-          "href": "/courses/e09-esg",
-          "context": "ESG 社会责任投资与披露：从基金文件到运营落地 理解 ESG 在基金产品设计与募集文件中的位置 认识 ESG 披露义务的适用与审慎表述（SFDR 等按…"
-        }
-      ],
-      "zh": "",
-      "fullName": "",
-      "courseIds": [
-        "E02",
-        "E09"
-      ],
-      "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T08:37:26.005Z"
-    },
-    {
-      "key": "crf",
-      "text": "CRF",
-      "confidence": "acronym",
-      "acronym": true,
-      "docs": 4,
-      "courses": [],
-      "cases": [
-        "Case-027"
-      ],
-      "count": 5,
-      "samples": [
-        {
-          "kind": "case",
-          "label": "Case-027 · standard_answer",
-          "href": "/cases/case-027",
-          "context": "…冻结**不是没收**，不得处置或动用被冻结资金 / 经济资源 3. 向 FRA 提交 **CRF**（资产冻结报告），披露被冻结资产及未遂交易 4. 若同时达到可疑门槛，**另行提交可疑…"
-        },
-        {
-          "kind": "case",
-          "label": "Case-027 · standard_answer",
-          "href": "/cases/case-027",
-          "context": "…结资产及未遂交易 4. 若同时达到可疑门槛，**另行提交可疑活动报告（SAR）**，不与 CRF 相互替代 5. 完整记录时间线、判断依据、审批、对外沟通与后续动作 6. 后续解冻依 F…"
-        },
-        {
-          "kind": "case",
-          "label": "Case-027 · reasoning",
-          "href": "/cases/case-027",
-          "context": " ↓ 静默核验全部身份要素 ↓ ┌─ 真实命中 → 冻结 → CRF / SAR → 记录 └─ 误报 → 记录排除理由 → 归档留痕 ``` **…"
-        }
-      ],
-      "zh": "",
-      "fullName": "",
-      "courseIds": [],
-      "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lowValue": false,
+      "isRegulatorySystem": true,
+      "firstSeenAt": "2026-09-28T11:12:33.146Z",
+      "lastSeenAt": "2026-09-28T11:12:33.146Z"
     },
     {
       "key": "cpa",
@@ -393,227 +128,49 @@
       "zh": "",
       "fullName": "",
       "courseIds": [],
+      "valueScore": 0,
+      "valueReasons": [],
+      "valueCategory": [],
+      "lowValue": false,
+      "isRegulatorySystem": false,
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
       "lastSeenAt": "2026-09-20T07:00:35.831Z"
     },
     {
-      "key": "ria",
-      "text": "RIA",
-      "confidence": "acronym",
-      "acronym": true,
-      "docs": 2,
-      "courses": [
-        "选修 E04"
-      ],
-      "cases": [],
-      "count": 3,
-      "samples": [
-        {
-          "kind": "course",
-          "label": "选修 E04 · 美国基金基础",
-          "href": "/courses/e04-us-fund-basics",
-          "context": "美国基金基础 RIA、Blocker、"
-        },
-        {
-          "kind": "course",
-          "label": "选修 E04 · 1.1 美国连接点识别",
-          "href": "/courses/e04-us-fund-basics#m1",
-          "context": "在美国（受 RIA 注册/豁免规则影响）、投资者为"
-        },
-        {
-          "kind": "course",
-          "label": "选修 E04 · 1.1 美国连接点识别",
-          "href": "/courses/e04-us-fund-basics#m1",
-          "context": "…识别连接点并升级：投资者问卷中的美国身份信号、管理团队美国地点、标的国别等。 管理人连接：RIA 注册与豁免分析属美国法律意见 投资者连接："
-        }
-      ],
-      "zh": "",
-      "fullName": "",
-      "courseIds": [
-        "E04"
-      ],
-      "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-21T02:22:18.966Z"
-    },
-    {
-      "key": "sdd",
-      "text": "SDD",
+      "key": "kpi",
+      "text": "KPI",
       "confidence": "acronym",
       "acronym": true,
       "docs": 2,
       "courses": [],
       "cases": [
-        "Case-027",
-        "Case-029"
+        "Case-028"
       ],
-      "count": 3,
+      "count": 2,
       "samples": [
         {
           "kind": "case",
-          "label": "Case-027 · reasoning",
-          "href": "/cases/case-027",
-          "context": " 规则）要求： - 名单更新后对**所有客户及关联人员立刻重筛**，SDD 或低风险**不构成豁免** - 潜在命中须**不延迟**核验 - 真实命中须**立即、无…"
+          "label": "Case-028 · standard_answer",
+          "href": "/cases/case-028",
+          "context": "…** —— 期间发生的异常、命中、逾期事项及其整改状态 5. **外包监督记录** —— KPI、例外、抽样、事件与整改 目标是能够**随时提供**\"及时、充分的证据，说明本基金如何持…"
         },
         {
-          "kind": "case",
-          "label": "Case-029 · reasoning",
-          "href": "/cases/case-029",
-          "context": "… 暂停 → 升级 → 内部 SAR → 留存记录 ``` 三个容易误解的点： **① SDD ≠ 不做尽调。** 低风险不代表可以省掉核查；本案投资者本就是高风险，更不存在简化空间。…"
-        },
-        {
-          "kind": "case",
-          "label": "Case-029 · reasoning",
-          "href": "/cases/case-029",
-          "context": " / SDD，无论风险等级，"
+          "kind": "toolkit",
+          "label": "工具包 · Outsourcing Oversight Checklist · 4. Ongoing Oversight",
+          "href": "/toolkit/outsourcing-oversight",
+          "context": "4. Ongoing Oversight 四、持续监督 KPI：是否设定了可测量的服务水平指标？ 例外：例外事项是否定期上报并解释？ 抽样：是否对本基金…"
         }
       ],
       "zh": "",
       "fullName": "",
       "courseIds": [],
+      "valueScore": 0,
+      "valueReasons": [],
+      "valueCategory": [],
+      "lowValue": false,
+      "isRegulatorySystem": false,
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
-    },
-    {
-      "key": "msb",
-      "text": "MSB",
-      "confidence": "acronym",
-      "acronym": true,
-      "docs": 2,
-      "courses": [
-        "第 11 讲"
-      ],
-      "cases": [],
-      "count": 2,
-      "samples": [
-        {
-          "kind": "course",
-          "label": "第 11 讲 · AML Foundations",
-          "href": "/courses/aml-foundations",
-          "context": "…怖融资、制裁、贿赂与腐败、逃税、欺诈六类金融犯罪的本质差异 识别金融犯罪在银行、证券资管、MSB、保险、虚拟资产、房地产等行业的典型表现方式 掌握 "
-        },
-        {
-          "kind": "course",
-          "label": "第 11 讲 · 4.3 各行业的犯罪表现方式",
-          "href": "/courses/aml-foundations#m3",
-          "context": " 最直接的暴露面。 MSB 与支付：钱骡（money mule）账户、"
-        }
-      ],
-      "zh": "",
-      "fullName": "",
-      "courseIds": [
-        "11"
-      ],
-      "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-21T07:03:28.709Z"
-    },
-    {
-      "key": "sfdr",
-      "text": "SFDR",
-      "confidence": "acronym",
-      "acronym": true,
-      "docs": 2,
-      "courses": [
-        "选修 E09"
-      ],
-      "cases": [],
-      "count": 2,
-      "samples": [
-        {
-          "kind": "course",
-          "label": "选修 E09 · ESG",
-          "href": "/courses/e09-esg",
-          "context": "… 理解 ESG 在基金产品设计与募集文件中的位置 认识 ESG 披露义务的适用与审慎表述（SFDR 等按适用法域） 把 ESG 承诺映射到投资流程与报告动作"
-        },
-        {
-          "kind": "course",
-          "label": "选修 E09 · 1.1 ESG 基金是什么",
-          "href": "/courses/e09-esg#m1",
-          "context": "…与其实际策略一致，避免漂绿（greenwashing）风险。 欧洲等地有专门披露规则（如 SFDR 等），对金融产品的可持续披露提出分类与模板要求；是否适用取决于产品在当地的销售与法律安排…"
-        }
-      ],
-      "zh": "",
-      "fullName": "",
-      "courseIds": [
-        "E09"
-      ],
-      "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T08:37:26.005Z"
-    },
-    {
-      "key": "fra",
-      "text": "FRA",
-      "confidence": "acronym",
-      "acronym": true,
-      "docs": 1,
-      "courses": [],
-      "cases": [
-        "Case-027"
-      ],
-      "count": 3,
-      "samples": [
-        {
-          "kind": "case",
-          "label": "Case-027 · standard_answer",
-          "href": "/cases/case-027",
-          "context": "… / 服务 2. 冻结**不是没收**，不得处置或动用被冻结资金 / 经济资源 3. 向 FRA 提交 **CRF**（资产冻结报告），披露被冻结资产及未遂交易 4. 若同时达到可疑门槛…"
-        },
-        {
-          "kind": "case",
-          "label": "Case-027 · standard_answer",
-          "href": "/cases/case-027",
-          "context": "…F 相互替代 5. 完整记录时间线、判断依据、审批、对外沟通与后续动作 6. 后续解冻依 FRA 指引办理；许可须向总督申请，并按指定表格抄送 FRA ## Q5 误报（False …"
-        },
-        {
-          "kind": "case",
-          "label": "Case-027 · standard_answer",
-          "href": "/cases/case-027",
-          "context": "…外沟通与后续动作 6. 后续解冻依 FRA 指引办理；许可须向总督申请，并按指定表格抄送 FRA ## Q5 误报（False Positive）也要**留痕**： - 记录命中项…"
-        }
-      ],
-      "zh": "",
-      "fullName": "",
-      "courseIds": [],
-      "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
-    },
-    {
-      "key": "ima",
-      "text": "IMA",
-      "confidence": "acronym",
-      "acronym": true,
-      "docs": 1,
-      "courses": [
-        "第 01 讲"
-      ],
-      "cases": [],
-      "count": 3,
-      "samples": [
-        {
-          "kind": "course",
-          "label": "第 01 讲 · 1.2 判断链：从载体到实际履职",
-          "href": "/courses/fund-lifecycle#m2",
-          "context": "、投资管理协议 IMA、服务协议 "
-        },
-        {
-          "kind": "course",
-          "label": "第 01 讲 · 1.2 判断链：从载体到实际履职",
-          "href": "/courses/fund-lifecycle#m2",
-          "context": "…）。 Manager 依据投资管理协议和授权范围履职：投资决策、投后管理、交易执行等，以 IMA 约定与实际授权为准。"
-        },
-        {
-          "kind": "course",
-          "label": "第 01 讲 · 1.2 判断链：从载体到实际履职",
-          "href": "/courses/fund-lifecycle#m2",
-          "context": "或监管责任。 授权文件是责任边界的起点：没写在 IMA/"
-        }
-      ],
-      "zh": "",
-      "fullName": "",
-      "courseIds": [
-        "01"
-      ],
-      "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T08:37:26.005Z"
+      "lastSeenAt": "2026-09-28T11:11:15.191Z"
     },
     {
       "key": "ctc",
@@ -639,168 +196,13 @@
       "courseIds": [
         "10"
       ],
+      "valueScore": 0,
+      "valueReasons": [],
+      "valueCategory": [],
+      "lowValue": false,
+      "isRegulatorySystem": false,
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
       "lastSeenAt": "2026-09-20T08:37:26.005Z"
-    },
-    {
-      "key": "etf",
-      "text": "ETF",
-      "confidence": "acronym",
-      "acronym": true,
-      "docs": 1,
-      "courses": [
-        "选修 E03"
-      ],
-      "cases": [],
-      "count": 1,
-      "samples": [
-        {
-          "kind": "course",
-          "label": "选修 E03 · 1.1 设立地税制概览",
-          "href": "/courses/e03-tax-framework#m1",
-          "context": "…域来源原则与基金豁免安排（现行复核） 新加坡：基金免税与激励计划等安排（现行复核） 美国：ETF/"
-        }
-      ],
-      "zh": "",
-      "fullName": "",
-      "courseIds": [
-        "E03"
-      ],
-      "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-21T02:22:18.966Z"
-    },
-    {
-      "key": "gdpr",
-      "text": "GDPR",
-      "confidence": "acronym",
-      "acronym": true,
-      "docs": 1,
-      "courses": [
-        "选修 E07"
-      ],
-      "cases": [],
-      "count": 1,
-      "samples": [
-        {
-          "kind": "course",
-          "label": "选修 E07 · 1.1 处理什么数据、适用什么规则",
-          "href": "/courses/e07-data-protection#m1",
-          "context": "…取决于数据处理者所在地、投资者所在地与数据传输路径（如香港《个人资料（私隐）条例》、欧盟 GDPR、开曼《数据保护法》等，范围按个案判断）。 是否构成受规管处理、谁是控制者/处理者，属专业…"
-        }
-      ],
-      "zh": "",
-      "fullName": "",
-      "courseIds": [
-        "E07"
-      ],
-      "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T08:37:26.005Z"
-    },
-    {
-      "key": "iga",
-      "text": "IGA",
-      "confidence": "acronym",
-      "acronym": true,
-      "docs": 1,
-      "courses": [
-        "第 12 讲"
-      ],
-      "cases": [],
-      "count": 1,
-      "samples": [
-        {
-          "kind": "course",
-          "label": "第 12 讲 · 5.2 第二层：注册与角色安排",
-          "href": "/courses/fatca-crs#m2",
-          "context": "（依 IGA 或 "
-        }
-      ],
-      "zh": "",
-      "fullName": "",
-      "courseIds": [
-        "12"
-      ],
-      "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T08:37:26.005Z"
-    },
-    {
-      "key": "irs",
-      "text": "IRS",
-      "confidence": "acronym",
-      "acronym": true,
-      "docs": 1,
-      "courses": [
-        "第 12 讲"
-      ],
-      "cases": [],
-      "count": 1,
-      "samples": [
-        {
-          "kind": "course",
-          "label": "第 12 讲 · 5.2 第二层：注册与角色安排",
-          "href": "/courses/fatca-crs#m2",
-          "context": " 下可能涉及向 IRS 注册取得 "
-        }
-      ],
-      "zh": "",
-      "fullName": "",
-      "courseIds": [
-        "12"
-      ],
-      "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T08:37:26.005Z"
-    },
-    {
-      "key": "isae",
-      "text": "ISAE",
-      "confidence": "acronym",
-      "acronym": true,
-      "docs": 1,
-      "courses": [
-        "选修 E01"
-      ],
-      "cases": [],
-      "count": 1,
-      "samples": [
-        {
-          "kind": "course",
-          "label": "选修 E01 · 1.2 服务商交接点：Fund Admin 的工作台",
-          "href": "/courses/e01-service-provider-ecosystem#m2",
-          "context": "…投资者变更、服务商变更全部归档 外包评估：年度回顾服务商 SLA 与内控报告（如 SOC/ISAE 类报告按需索取） 服务商变更 = 需通知相关方并办理法定备案（按法域规则）"
-        }
-      ],
-      "zh": "",
-      "fullName": "",
-      "courseIds": [
-        "E01"
-      ],
-      "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T08:37:26.005Z"
-    },
-    {
-      "key": "kpi",
-      "text": "KPI",
-      "confidence": "acronym",
-      "acronym": true,
-      "docs": 1,
-      "courses": [],
-      "cases": [
-        "Case-028"
-      ],
-      "count": 1,
-      "samples": [
-        {
-          "kind": "case",
-          "label": "Case-028 · standard_answer",
-          "href": "/cases/case-028",
-          "context": "…** —— 期间发生的异常、命中、逾期事项及其整改状态 5. **外包监督记录** —— KPI、例外、抽样、事件与整改 目标是能够**随时提供**\"及时、充分的证据，说明本基金如何持…"
-        }
-      ],
-      "zh": "",
-      "fullName": "",
-      "courseIds": [],
-      "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
     },
     {
       "key": "scc",
@@ -826,127 +228,13 @@
       "courseIds": [
         "E07"
       ],
+      "valueScore": 0,
+      "valueReasons": [],
+      "valueCategory": [],
+      "lowValue": false,
+      "isRegulatorySystem": false,
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
       "lastSeenAt": "2026-09-20T08:37:26.005Z"
-    },
-    {
-      "key": "sla",
-      "text": "SLA",
-      "confidence": "acronym",
-      "acronym": true,
-      "docs": 1,
-      "courses": [
-        "选修 E01"
-      ],
-      "cases": [],
-      "count": 1,
-      "samples": [
-        {
-          "kind": "course",
-          "label": "选修 E01 · 1.2 服务商交接点：Fund Admin 的工作台",
-          "href": "/courses/e01-service-provider-ecosystem#m2",
-          "context": "、投资者变更、服务商变更全部归档 外包评估：年度回顾服务商 SLA 与内控报告（如 SOC/ISAE 类报告按需索取） 服务商变更 = 需通知相关方并办理法…"
-        }
-      ],
-      "zh": "",
-      "fullName": "",
-      "courseIds": [
-        "E01"
-      ],
-      "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T08:37:26.005Z"
-    },
-    {
-      "key": "soc",
-      "text": "SOC",
-      "confidence": "acronym",
-      "acronym": true,
-      "docs": 1,
-      "courses": [
-        "选修 E01"
-      ],
-      "cases": [],
-      "count": 1,
-      "samples": [
-        {
-          "kind": "course",
-          "label": "选修 E01 · 1.2 服务商交接点：Fund Admin 的工作台",
-          "href": "/courses/e01-service-provider-ecosystem#m2",
-          "context": "、投资者变更、服务商变更全部归档 外包评估：年度回顾服务商 SLA 与内控报告（如 SOC/ISAE 类报告按需索取） 服务商变更 = 需通知相关方并办理法定备案（按法域规则）"
-        }
-      ],
-      "zh": "",
-      "fullName": "",
-      "courseIds": [
-        "E01"
-      ],
-      "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T08:37:26.005Z"
-    },
-    {
-      "key": "swift",
-      "text": "SWIFT",
-      "confidence": "acronym",
-      "acronym": true,
-      "docs": 1,
-      "courses": [
-        "第 13 讲"
-      ],
-      "cases": [],
-      "count": 1,
-      "samples": [
-        {
-          "kind": "course",
-          "label": "第 13 讲 · 6.2 名单筛查与交易筛查",
-          "href": "/courses/aml-technology-monitoring#m2",
-          "context": "…配处理拼写变体、音译差异与别名。交易/支付筛查解决「这笔资金是否涉及受制裁主体」，需解析 SWIFT 报文、支付指令、区块链交易中的付款人、收款人、"
-        }
-      ],
-      "zh": "",
-      "fullName": "",
-      "courseIds": [
-        "13"
-      ],
-      "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-21T07:03:28.709Z"
-    },
-    {
-      "key": "reference letter",
-      "text": "Reference Letter",
-      "confidence": "phrase",
-      "acronym": false,
-      "docs": 11,
-      "courses": [],
-      "cases": [
-        "Case-002",
-        "Case-004"
-      ],
-      "count": 12,
-      "samples": [
-        {
-          "kind": "case",
-          "label": "Case-002 · standard_answer",
-          "href": "/cases/case-002",
-          "context": "…效租赁协议； - 金融机构 / 会计师事务所 / 律师事务所 / 受监管或持牌实体出具的 Reference Letter（推荐信）； - 含居住地址的有效身份证件（注意：身份证上的地址须为**居住地址**，如为…"
-        },
-        {
-          "kind": "case",
-          "label": "Case-004 · 标题",
-          "href": "/cases/case-004",
-          "context": "Reference Letter 作为"
-        },
-        {
-          "kind": "case",
-          "label": "Case-004 · scenario",
-          "href": "/cases/case-004",
-          "context": "…人 Cheung Man Ho 因长期在外工作、名下没有常规账单，提出用一份「推荐信 / Reference Letter」作为"
-        }
-      ],
-      "zh": "",
-      "fullName": "",
-      "courseIds": [],
-      "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
     },
     {
       "key": "compliance",
@@ -987,143 +275,29 @@
       "zh": "",
       "fullName": "",
       "courseIds": [],
+      "valueScore": -10,
+      "valueReasons": [
+        "-10 通用英文词（精确命中）"
+      ],
+      "valueCategory": [
+        "通用英文词"
+      ],
+      "lowValue": true,
+      "isRegulatorySystem": false,
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
-    },
-    {
-      "key": "mutual fund",
-      "text": "Mutual Fund",
-      "confidence": "phrase",
-      "acronym": false,
-      "docs": 8,
-      "courses": [
-        "第 02 讲",
-        "第 14 讲",
-        "第 15 讲"
-      ],
-      "cases": [],
-      "count": 12,
-      "samples": [
-        {
-          "kind": "course",
-          "label": "第 02 讲 · 2.4 维度四：监管分类与税务/AEOI 分层判断",
-          "href": "/courses/fund-structure#m4",
-          "context": " 分层判断 监管分类由各司法辖区的正式制度定义（如开曼的 Mutual Fund/"
-        },
-        {
-          "kind": "course",
-          "label": "第 14 讲 · Cayman 基金核心框架",
-          "href": "/courses/cayman-framework",
-          "context": " / Mutual Fund 框架 → 分主体判断 → 注册及持续合规 理解 "
-        },
-        {
-          "kind": "course",
-          "label": "第 14 讲 · 7.1 判断链起点：它是不是集合投资安排",
-          "href": "/courses/cayman-framework#m1",
-          "context": "的共同基金安排进入 Mutual Fund 分析。该判断以实际安排与现行法律为准。 第一步：集合投资安排（Collective In…"
-        }
-      ],
-      "zh": "",
-      "fullName": "",
-      "courseIds": [
-        "02",
-        "14",
-        "15"
-      ],
-      "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T08:37:26.005Z"
-    },
-    {
-      "key": "approved manager",
-      "text": "Approved Manager",
-      "confidence": "phrase",
-      "acronym": false,
-      "docs": 5,
-      "courses": [
-        "第 15 讲"
-      ],
-      "cases": [],
-      "count": 10,
-      "samples": [
-        {
-          "kind": "course",
-          "label": "第 15 讲 · BVI 基金与管理人",
-          "href": "/courses/bvi-fund-manager",
-          "context": "BVI 基金与管理人 区分基金类别、Approved Manager 与 BVI 独特治理：不按名称下判断 区分 BVI "
-        },
-        {
-          "kind": "course",
-          "label": "第 15 讲 · BVI 基金与管理人",
-          "href": "/courses/bvi-fund-manager",
-          "context": "、审计与变更通知 理解 Approved Manager 是简化监管制度而非“无监管”；区分投资基金、基金管理与持股业务的"
-        },
-        {
-          "kind": "course",
-          "label": "第 15 讲 · 8.3 Approved Manager：简化监管不是无监管",
-          "href": "/courses/bvi-fund-manager#m3",
-          "context": "8.3 Approved Manager：简化监管不是无监管 BVI 获批管理人（Approved Manager）是面向 BVI…"
-        }
-      ],
-      "zh": "",
-      "fullName": "",
-      "courseIds": [
-        "15"
-      ],
-      "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T08:37:26.005Z"
-    },
-    {
-      "key": "blocker",
-      "text": "Blocker",
-      "confidence": "phrase",
-      "acronym": false,
-      "docs": 3,
-      "courses": [
-        "选修 E03",
-        "选修 E04"
-      ],
-      "cases": [],
-      "count": 8,
-      "samples": [
-        {
-          "kind": "course",
-          "label": "选修 E03 · 1.2 税透、Blocker 与所得定性",
-          "href": "/courses/e03-tax-framework#m2",
-          "context": "1.2 税透、Blocker 与所得定性 "
-        },
-        {
-          "kind": "course",
-          "label": "选修 E03 · 1.2 税透、Blocker 与所得定性",
-          "href": "/courses/e03-tax-framework#m2",
-          "context": "…接归属合伙人/投资者各自申报。公司型基金作为纳税主体可能出现额外税负，因此跨境结构中常见“Blocker”（在投资者与标的之间插入公司以延迟/定性所得）。 投资所得定性（股息、利息、资本利得、贸…"
-        },
-        {
-          "kind": "course",
-          "label": "选修 E03 · 1.2 税透、Blocker 与所得定性",
-          "href": "/courses/e03-tax-framework#m2",
-          "context": "…报规则随时间与辖区变化，必须结合税务顾问意见。 税透：合伙层面不缴所得税、所得过到投资者 Blocker：公司层阻断税透，用于延迟与定性 预提税：股息/利息/特许权使用费按双边安排 PE/"
-        }
-      ],
-      "zh": "",
-      "fullName": "",
-      "courseIds": [
-        "E03",
-        "E04"
-      ],
-      "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T08:37:26.005Z"
+      "lastSeenAt": "2026-09-28T11:15:34.376Z"
     },
     {
       "key": "audit",
       "text": "Audit",
       "confidence": "phrase",
       "acronym": false,
-      "docs": 3,
+      "docs": 4,
       "courses": [],
       "cases": [
         "Case-028"
       ],
-      "count": 7,
+      "count": 8,
       "samples": [
         {
           "kind": "case",
@@ -1147,47 +321,59 @@
       "zh": "",
       "fullName": "",
       "courseIds": [],
+      "valueScore": -10,
+      "valueReasons": [
+        "-10 通用英文词（精确命中）"
+      ],
+      "valueCategory": [
+        "通用英文词"
+      ],
+      "lowValue": true,
+      "isRegulatorySystem": false,
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-28T11:15:34.376Z"
     },
     {
-      "key": "investment entity",
-      "text": "Investment Entity",
+      "key": "potential match",
+      "text": "Potential Match",
       "confidence": "phrase",
       "acronym": false,
       "docs": 3,
-      "courses": [
-        "第 12 讲"
+      "courses": [],
+      "cases": [
+        "Case-027"
       ],
-      "cases": [],
-      "count": 5,
+      "count": 4,
       "samples": [
         {
-          "kind": "course",
-          "label": "第 12 讲 · 5.1 第一层：基金自身分类",
-          "href": "/courses/fatca-crs#m1",
-          "context": "…金自身分类开始：是否属于 Financial Institution（金融机构）及其下的 Investment Entity（投资实体），是否可归入 Non-Reporting FI，或属于 "
+          "kind": "case",
+          "label": "Case-027 · scenario",
+          "href": "/cases/case-027",
+          "context": "…，经枢密院令延伸适用于开曼）。 系统在当晚批筛中把一名**存量投资者**标记为潜在命中（Potential Match）： - 姓名与名单主体**完全一致**（含中间名拼写） - 出生年份**不同**（名单…"
         },
         {
-          "kind": "course",
-          "label": "第 12 讲 · 5.1 第一层：基金自身分类",
-          "href": "/courses/fatca-crs#m1",
-          "context": " 多边规则）下可能有不同处理，必须分别读取适用文本，不能以“基金”二字直接下结论。 Investment Entity 判断：以金融资产投资/管理为主业等测试为准 Non-Reporting FI 与 "
+          "kind": "toolkit",
+          "label": "工具包 · Sanctions Hit SOP",
+          "href": "/toolkit/sanctions-hit-sop",
+          "context": "… 冻结 / 限制 → 报告 → 记录。时间压力不能改变顺序。 名单更新后可能出现潜在命中（Potential Match）。本 SOP 规定从识别到归档的动作顺序、责任归属与禁止事项，避免「先放款、后核验」这类…"
         },
         {
-          "kind": "course",
-          "label": "第 12 讲 · 5.5 实务手册：FI / NFE 分类、Passive NFE、Controlling Person 与 GIIN",
-          "href": "/courses/fatca-crs#m5",
-          "context": " 分类速查：Financial Institution（金融机构）含 Investment Entity（投资实体）等子类；Non-Reporting FI 需满足特定条件；"
+          "kind": "toolkit",
+          "label": "工具包 · Sanctions Hit SOP",
+          "href": "/toolkit/sanctions-hit-sop",
+          "context": "…款、后核验」这类不可逆错误。 制裁 Sanctions Screening 冻结 零容忍 Potential Match"
         }
       ],
       "zh": "",
       "fullName": "",
-      "courseIds": [
-        "12"
-      ],
+      "courseIds": [],
+      "valueScore": 0,
+      "valueReasons": [],
+      "valueCategory": [],
+      "lowValue": false,
+      "isRegulatorySystem": false,
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-21T02:22:18.966Z"
+      "lastSeenAt": "2026-09-28T11:12:33.146Z"
     },
     {
       "key": "fund manager",
@@ -1223,8 +409,17 @@
       "zh": "",
       "fullName": "",
       "courseIds": [],
+      "valueScore": -10,
+      "valueReasons": [
+        "-10 通用英文词（精确命中）"
+      ],
+      "valueCategory": [
+        "通用英文词"
+      ],
+      "lowValue": true,
+      "isRegulatorySystem": false,
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-28T11:15:34.376Z"
     },
     {
       "key": "tipping",
@@ -1262,6 +457,11 @@
       "courseIds": [
         "10"
       ],
+      "valueScore": 0,
+      "valueReasons": [],
+      "valueCategory": [],
+      "lowValue": false,
+      "isRegulatorySystem": false,
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
       "lastSeenAt": "2026-09-20T08:37:26.005Z"
     },
@@ -1293,40 +493,17 @@
       "zh": "",
       "fullName": "",
       "courseIds": [],
-      "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
-    },
-    {
-      "key": "cayman fund",
-      "text": "Cayman Fund",
-      "confidence": "phrase",
-      "acronym": false,
-      "docs": 2,
-      "courses": [],
-      "cases": [
-        "Case-001",
-        "Case-005"
+      "valueScore": 5,
+      "valueReasons": [
+        "+5 运营流程（含关键词）"
       ],
-      "count": 2,
-      "samples": [
-        {
-          "kind": "case",
-          "label": "Case-001 · scenario",
-          "href": "/cases/case-001",
-          "context": "某开曼基金（Cayman Fund）首次交割前，个人投资人 Chan Tai Man 通过"
-        },
-        {
-          "kind": "case",
-          "label": "Case-005 · scenario",
-          "href": "/cases/case-005",
-          "context": "某开曼基金（Cayman Fund）个人投资人 Tan Wei Ming（新加坡永久居民）提交"
-        }
+      "valueCategory": [
+        "运营流程"
       ],
-      "zh": "",
-      "fullName": "",
-      "courseIds": [],
+      "lowValue": false,
+      "isRegulatorySystem": false,
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-28T11:07:35.585Z"
     },
     {
       "key": "cayman guidance note",
@@ -1356,6 +533,11 @@
       "zh": "",
       "fullName": "",
       "courseIds": [],
+      "valueScore": 0,
+      "valueReasons": [],
+      "valueCategory": [],
+      "lowValue": false,
+      "isRegulatorySystem": false,
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
       "lastSeenAt": "2026-09-20T07:00:35.831Z"
     },
@@ -1387,8 +569,17 @@
       "zh": "",
       "fullName": "",
       "courseIds": [],
+      "valueScore": -10,
+      "valueReasons": [
+        "-10 通用英文词（精确命中）"
+      ],
+      "valueCategory": [
+        "通用英文词"
+      ],
+      "lowValue": true,
+      "isRegulatorySystem": false,
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-28T11:15:34.376Z"
     },
     {
       "key": "chan tai man",
@@ -1406,7 +597,7 @@
           "kind": "case",
           "label": "Case-001 · scenario",
           "href": "/cases/case-001",
-          "context": "某开曼基金（Cayman Fund）首次交割前，个人投资人 Chan Tai Man 通过"
+          "context": "）首次交割前，个人投资人 Chan Tai Man 通过"
         },
         {
           "kind": "case",
@@ -1418,12 +609,95 @@
       "zh": "",
       "fullName": "",
       "courseIds": [],
+      "valueScore": 0,
+      "valueReasons": [],
+      "valueCategory": [],
+      "lowValue": false,
+      "isRegulatorySystem": false,
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-28T09:23:40.629Z"
     },
     {
-      "key": "false positive",
-      "text": "False Positive",
+      "key": "common",
+      "text": "Common",
+      "confidence": "phrase",
+      "acronym": false,
+      "docs": 2,
+      "courses": [],
+      "cases": [],
+      "count": 2,
+      "samples": [
+        {
+          "kind": "toolkit",
+          "label": "工具包 · AMLCO / MLRO / DMLRO · 对照表",
+          "href": "/toolkit/aml-roles-comparison",
+          "context": " 独立判断，不因业务压力改变结论 能力与权限须足以保证连续性 常见误区 / Common mistake 把 "
+        },
+        {
+          "kind": "toolkit",
+          "label": "工具包 · CDD / EDD / SDD · 对照表",
+          "href": "/toolkit/cdd-edd-sdd-comparison",
+          "context": " 常见误区 / Common mistake 资料真实性存疑时未重新识别 把 "
+        }
+      ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [],
+      "valueScore": -10,
+      "valueReasons": [
+        "-10 通用英文词（精确命中）"
+      ],
+      "valueCategory": [
+        "通用英文词"
+      ],
+      "lowValue": true,
+      "isRegulatorySystem": false,
+      "firstSeenAt": "2026-09-28T11:12:33.146Z",
+      "lastSeenAt": "2026-09-28T11:15:34.376Z"
+    },
+    {
+      "key": "evidence",
+      "text": "Evidence",
+      "confidence": "phrase",
+      "acronym": false,
+      "docs": 2,
+      "courses": [],
+      "cases": [
+        "Case-028"
+      ],
+      "count": 2,
+      "samples": [
+        {
+          "kind": "case",
+          "label": "Case-028 · standard_answer",
+          "href": "/cases/case-028",
+          "context": " | **Evidence**（执行证据） | | "
+        },
+        {
+          "kind": "toolkit",
+          "label": "工具包 · Board AML Oversight Checklist · Evidence to put on the record",
+          "href": "/toolkit/board-aml-oversight",
+          "context": "Evidence to put on the record 应进入会议记录的证据 合规官 / 报告官指标、…"
+        }
+      ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [],
+      "valueScore": -10,
+      "valueReasons": [
+        "-10 通用英文词（精确命中）"
+      ],
+      "valueCategory": [
+        "通用英文词"
+      ],
+      "lowValue": true,
+      "isRegulatorySystem": false,
+      "firstSeenAt": "2026-09-20T07:00:35.831Z",
+      "lastSeenAt": "2026-09-28T11:15:34.376Z"
+    },
+    {
+      "key": "freeze",
+      "text": "Freeze",
       "confidence": "phrase",
       "acronym": false,
       "docs": 2,
@@ -1435,55 +709,31 @@
       "samples": [
         {
           "kind": "case",
-          "label": "Case-027 · questions",
-          "href": "/cases/case-027",
-          "context": "…（True Match），处置顺序是什么？ ## Q5 如果核验后确认是**误报**（False Positive），需要做什么？"
-        },
-        {
-          "kind": "case",
           "label": "Case-027 · standard_answer",
           "href": "/cases/case-027",
-          "context": "…冻依 FRA 指引办理；许可须向总督申请，并按指定表格抄送 FRA ## Q5 误报（False Positive）也要**留痕**： - 记录命中项、核验要素、排除理由、核验人、审批人与时间 - 保存…"
+          "context": "…置顺序： **① 核验 Verify** → **② 限制或冻结 Restrict / Freeze** → **③ 报告 Report** → **④ 记录 Document** 1. …"
+        },
+        {
+          "kind": "toolkit",
+          "label": "工具包 · Sanctions Hit SOP · Freeze / Restrict",
+          "href": "/toolkit/sanctions-hit-sop",
+          "context": "Freeze / Restrict 冻结 / 限制 确认真实命中后，立即、无事先通知地冻结资产，不得再…"
         }
       ],
       "zh": "",
       "fullName": "",
       "courseIds": [],
+      "valueScore": -10,
+      "valueReasons": [
+        "-10 通用英文词（精确命中）"
+      ],
+      "valueCategory": [
+        "通用英文词"
+      ],
+      "lowValue": true,
+      "isRegulatorySystem": false,
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
-    },
-    {
-      "key": "financial institution",
-      "text": "Financial Institution",
-      "confidence": "phrase",
-      "acronym": false,
-      "docs": 2,
-      "courses": [
-        "第 12 讲"
-      ],
-      "cases": [],
-      "count": 2,
-      "samples": [
-        {
-          "kind": "course",
-          "label": "第 12 讲 · 5.1 第一层：基金自身分类",
-          "href": "/courses/fatca-crs#m1",
-          "context": " 分析从基金自身分类开始：是否属于 Financial Institution（金融机构）及其下的 Investment Entity（投资实体），是否可归入 Non-…"
-        },
-        {
-          "kind": "course",
-          "label": "第 12 讲 · 5.5 实务手册：FI / NFE 分类、Passive NFE、Controlling Person 与 GIIN",
-          "href": "/courses/fatca-crs#m5",
-          "context": " 分类速查：Financial Institution（金融机构）含 Investment Entity（投资实体）等子类；Non-Report…"
-        }
-      ],
-      "zh": "",
-      "fullName": "",
-      "courseIds": [
-        "12"
-      ],
-      "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T08:37:26.005Z"
+      "lastSeenAt": "2026-09-28T11:15:34.376Z"
     },
     {
       "key": "fund administration team",
@@ -1508,14 +758,27 @@
           "kind": "case",
           "label": "Case-029 · client_email",
           "href": "/cases/case-029",
-          "context": "…w process at this stage. > > Kind regards, > Fund Administration Team **不得**使用以下表述：疑似洗钱 / 我们已上报 / 该账户可能被制裁 / 你为何要…"
+          "context": "…w process at this stage. > > Kind regards, > Fund Administration Team **不得**使用以下表述：疑似"
         }
       ],
       "zh": "",
       "fullName": "",
       "courseIds": [],
+      "valueScore": -10,
+      "valueReasons": [
+        "+5 基金实务（含关键词）",
+        "-5 课程主题词（含关键词）",
+        "-10 页面标题类（含关键词）"
+      ],
+      "valueCategory": [
+        "基金实务",
+        "课程主题词",
+        "页面标题类"
+      ],
+      "lowValue": true,
+      "isRegulatorySystem": false,
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-28T11:07:35.585Z"
     },
     {
       "key": "investor onboarding",
@@ -1546,48 +809,26 @@
       "zh": "",
       "fullName": "",
       "courseIds": [],
+      "valueScore": -5,
+      "valueReasons": [
+        "+5 KYC/CDD（含关键词）",
+        "-10 页面标题类（含关键词）"
+      ],
+      "valueCategory": [
+        "KYC/CDD",
+        "页面标题类"
+      ],
+      "lowValue": true,
+      "isRegulatorySystem": false,
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-28T11:07:35.585Z"
     },
     {
-      "key": "four eyes",
-      "text": "Four Eyes",
+      "key": "monitoring",
+      "text": "Monitoring",
       "confidence": "phrase",
       "acronym": false,
-      "docs": 1,
-      "courses": [
-        "第 14 讲"
-      ],
-      "cases": [],
-      "count": 2,
-      "samples": [
-        {
-          "kind": "course",
-          "label": "第 14 讲 · 7.3 治理与服务商：董事、注册代理与运营者结构",
-          "href": "/courses/cayman-framework#m3",
-          "context": "与行政管理员等安排。所谓 Four Eyes（双人审批）等机制，应结合基金法律形式与运营者结构核查是否适用，而非简单表述为所有基金统一…"
-        },
-        {
-          "kind": "course",
-          "label": "第 14 讲 · 7.3 治理与服务商：董事、注册代理与运营者结构",
-          "href": "/courses/cayman-framework#m3",
-          "context": " 现行规则办理。 Four Eyes 等治理机制是否适用：取决于法律形式与运营者结构 "
-        }
-      ],
-      "zh": "",
-      "fullName": "",
-      "courseIds": [
-        "14"
-      ],
-      "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T08:37:26.005Z"
-    },
-    {
-      "key": "line",
-      "text": "Line",
-      "confidence": "phrase",
-      "acronym": false,
-      "docs": 1,
+      "docs": 2,
       "courses": [
         "第 13 讲"
       ],
@@ -1596,15 +837,15 @@
       "samples": [
         {
           "kind": "course",
-          "label": "第 13 讲 · 6.4 交易监控与模型治理",
-          "href": "/courses/aml-technology-monitoring#m4",
-          "context": "…按风险细分设计差异化的场景与阈值，并结合客户预期行为判断异常。ATL（Above the Line）是规则/阈值触发预警的传统方式；BTL（Below the Line）借助统计识别低于阈…"
+          "label": "第 13 讲 · AML Technology & Monitoring",
+          "href": "/courses/aml-technology-monitoring",
+          "context": " Technology & Monitoring 反金融犯罪工具与技术：名单筛查、数字 "
         },
         {
-          "kind": "course",
-          "label": "第 13 讲 · 6.4 交易监控与模型治理",
-          "href": "/courses/aml-technology-monitoring#m4",
-          "context": "…Above the Line）是规则/阈值触发预警的传统方式；BTL（Below the Line）借助统计识别低于阈值但偏离常态的交易（如结构化规避）。误报偏高时应调优（tuning）而…"
+          "kind": "toolkit",
+          "label": "工具包 · CDD / EDD / SDD · 对照表",
+          "href": "/toolkit/cdd-edd-sdd-comparison",
+          "context": "…目的、加强审批与加强监控 仍须完成基线识别与核验，并持续重估是否仍属低风险 监控强度 / Monitoring "
         }
       ],
       "zh": "",
@@ -1612,8 +853,93 @@
       "courseIds": [
         "13"
       ],
+      "valueScore": -10,
+      "valueReasons": [
+        "-10 通用英文词（精确命中）"
+      ],
+      "valueCategory": [
+        "通用英文词"
+      ],
+      "lowValue": true,
+      "isRegulatorySystem": false,
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T08:37:26.005Z"
+      "lastSeenAt": "2026-09-28T11:15:34.376Z"
+    },
+    {
+      "key": "restrict",
+      "text": "Restrict",
+      "confidence": "phrase",
+      "acronym": false,
+      "docs": 2,
+      "courses": [],
+      "cases": [
+        "Case-027"
+      ],
+      "count": 2,
+      "samples": [
+        {
+          "kind": "case",
+          "label": "Case-027 · standard_answer",
+          "href": "/cases/case-027",
+          "context": "… Q4 真实命中的处置顺序： **① 核验 Verify** → **② 限制或冻结 Restrict / Freeze** → **③ 报告 Report** → **④ 记录 Docume…"
+        },
+        {
+          "kind": "toolkit",
+          "label": "工具包 · Sanctions Hit SOP · Freeze / Restrict",
+          "href": "/toolkit/sanctions-hit-sop",
+          "context": "Freeze / Restrict 冻结 / 限制 确认真实命中后，立即、无事先通知地冻结资产，不得再交易或提供资产 / 服…"
+        }
+      ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [],
+      "valueScore": -10,
+      "valueReasons": [
+        "-10 通用英文词（精确命中）"
+      ],
+      "valueCategory": [
+        "通用英文词"
+      ],
+      "lowValue": true,
+      "isRegulatorySystem": false,
+      "firstSeenAt": "2026-09-20T07:00:35.831Z",
+      "lastSeenAt": "2026-09-28T11:15:34.376Z"
+    },
+    {
+      "key": "true match",
+      "text": "True Match",
+      "confidence": "phrase",
+      "acronym": false,
+      "docs": 2,
+      "courses": [],
+      "cases": [
+        "Case-027"
+      ],
+      "count": 2,
+      "samples": [
+        {
+          "kind": "case",
+          "label": "Case-027 · questions",
+          "href": "/cases/case-027",
+          "context": "… ## Q3 核验需要做哪些动作？ ## Q4 如果核验后确认是**真实命中**（True Match），处置顺序是什么？ ## Q5 如果核验后确认是**"
+        },
+        {
+          "kind": "toolkit",
+          "label": "工具包 · Sanctions Hit SOP · True Match",
+          "href": "/toolkit/sanctions-hit-sop",
+          "context": "True Match 真实命中 立即（无事先通知）冻结 → 提交 "
+        }
+      ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [],
+      "valueScore": 0,
+      "valueReasons": [],
+      "valueCategory": [],
+      "lowValue": false,
+      "isRegulatorySystem": false,
+      "firstSeenAt": "2026-09-20T07:00:35.831Z",
+      "lastSeenAt": "2026-09-28T11:12:33.146Z"
     },
     {
       "key": "active",
@@ -1639,8 +965,17 @@
       "courseIds": [
         "12"
       ],
+      "valueScore": -10,
+      "valueReasons": [
+        "-10 通用英文词（精确命中）"
+      ],
+      "valueCategory": [
+        "通用英文词"
+      ],
+      "lowValue": true,
+      "isRegulatorySystem": false,
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-21T02:22:18.966Z"
+      "lastSeenAt": "2026-09-28T11:15:34.376Z"
     },
     {
       "key": "advisor",
@@ -1666,8 +1001,17 @@
       "courseIds": [
         "01"
       ],
+      "valueScore": -10,
+      "valueReasons": [
+        "-10 通用英文词（精确命中）"
+      ],
+      "valueCategory": [
+        "通用英文词"
+      ],
+      "lowValue": true,
+      "isRegulatorySystem": false,
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T08:37:26.005Z"
+      "lastSeenAt": "2026-09-28T11:15:34.376Z"
     },
     {
       "key": "alert",
@@ -1691,8 +1035,49 @@
       "zh": "",
       "fullName": "",
       "courseIds": [],
+      "valueScore": -10,
+      "valueReasons": [
+        "-10 通用英文词（精确命中）"
+      ],
+      "valueCategory": [
+        "通用英文词"
+      ],
+      "lowValue": true,
+      "isRegulatorySystem": false,
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-28T11:15:34.376Z"
+    },
+    {
+      "key": "annual reporting",
+      "text": "Annual Reporting",
+      "confidence": "phrase",
+      "acronym": false,
+      "docs": 1,
+      "courses": [],
+      "cases": [],
+      "count": 1,
+      "samples": [
+        {
+          "kind": "toolkit",
+          "label": "工具包 · AMLCO / MLRO / DMLRO · 对照表",
+          "href": "/toolkit/aml-roles-comparison",
+          "context": " Backup） 主要产出 / Key output 框架有效性评估 + 年度报告（Annual Reporting） 是否对外报告的判断与理由（External Reporting Decision） 在…"
+        }
+      ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [],
+      "valueScore": 5,
+      "valueReasons": [
+        "+5 运营流程（含关键词）"
+      ],
+      "valueCategory": [
+        "运营流程"
+      ],
+      "lowValue": false,
+      "isRegulatorySystem": false,
+      "firstSeenAt": "2026-09-28T11:12:33.146Z",
+      "lastSeenAt": "2026-09-28T11:12:33.146Z"
     },
     {
       "key": "approved representative",
@@ -1718,8 +1103,17 @@
       "courseIds": [
         "15"
       ],
+      "valueScore": 5,
+      "valueReasons": [
+        "+5 监管术语（含关键词）"
+      ],
+      "valueCategory": [
+        "监管术语"
+      ],
+      "lowValue": false,
+      "isRegulatorySystem": false,
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T08:37:26.005Z"
+      "lastSeenAt": "2026-09-28T11:07:35.585Z"
     },
     {
       "key": "authorisation",
@@ -1743,33 +1137,45 @@
       "zh": "",
       "fullName": "",
       "courseIds": [],
+      "valueScore": 5,
+      "valueReasons": [
+        "+5 监管术语（含关键词）"
+      ],
+      "valueCategory": [
+        "监管术语"
+      ],
+      "lowValue": false,
+      "isRegulatorySystem": false,
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-28T11:07:35.585Z"
     },
     {
-      "key": "bank secrecy act",
-      "text": "Bank Secrecy Act",
+      "key": "backup",
+      "text": "Backup",
       "confidence": "phrase",
       "acronym": false,
       "docs": 1,
       "courses": [],
-      "cases": [
-        "Case-012"
-      ],
+      "cases": [],
       "count": 1,
       "samples": [
         {
-          "kind": "case",
-          "label": "Case-012 · standard_answer",
-          "href": "/cases/case-012",
-          "context": " Agent 并非美国 Bank Secrecy Act（BSA）项下必须建立完整 "
+          "kind": "toolkit",
+          "label": "工具包 · AMLCO / MLRO / DMLRO · 对照表",
+          "href": "/toolkit/aml-roles-comparison",
+          "context": " Backup） 主要产出 / Key output 框架有效性评估 + 年度报告（Annual Rep…"
         }
       ],
       "zh": "",
       "fullName": "",
       "courseIds": [],
-      "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "valueScore": 0,
+      "valueReasons": [],
+      "valueCategory": [],
+      "lowValue": false,
+      "isRegulatorySystem": false,
+      "firstSeenAt": "2026-09-28T11:12:33.146Z",
+      "lastSeenAt": "2026-09-28T11:12:33.146Z"
     },
     {
       "key": "call",
@@ -1795,8 +1201,45 @@
       "courseIds": [
         "E10"
       ],
+      "valueScore": -10,
+      "valueReasons": [
+        "-10 通用英文词（精确命中）"
+      ],
+      "valueCategory": [
+        "通用英文词"
+      ],
+      "lowValue": true,
+      "isRegulatorySystem": false,
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T08:37:26.005Z"
+      "lastSeenAt": "2026-09-28T11:15:34.376Z"
+    },
+    {
+      "key": "capability assessment",
+      "text": "Capability Assessment",
+      "confidence": "phrase",
+      "acronym": false,
+      "docs": 1,
+      "courses": [],
+      "cases": [],
+      "count": 1,
+      "samples": [
+        {
+          "kind": "toolkit",
+          "label": "工具包 · Outsourcing Oversight Checklist · 2. Capability Assessment",
+          "href": "/toolkit/outsourcing-oversight",
+          "context": "2. Capability Assessment 二、能力评估 资质：是否持有必要牌照与专业人员？ 资源：人员配置与工作量是否匹配？ 系统…"
+        }
+      ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [],
+      "valueScore": 0,
+      "valueReasons": [],
+      "valueCategory": [],
+      "lowValue": false,
+      "isRegulatorySystem": false,
+      "firstSeenAt": "2026-09-28T11:11:15.191Z",
+      "lastSeenAt": "2026-09-28T11:11:15.191Z"
     },
     {
       "key": "certified true copy",
@@ -1820,8 +1263,17 @@
       "zh": "",
       "fullName": "",
       "courseIds": [],
+      "valueScore": -10,
+      "valueReasons": [
+        "-10 通用英文词（精确命中）"
+      ],
+      "valueCategory": [
+        "通用英文词"
+      ],
+      "lowValue": true,
+      "isRegulatorySystem": false,
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-28T11:15:34.376Z"
     },
     {
       "key": "cheung man",
@@ -1839,68 +1291,47 @@
           "kind": "case",
           "label": "Case-004 · scenario",
           "href": "/cases/case-004",
-          "context": "某开曼基金个人投资人 Cheung Man Ho 因长期在外工作、名下没有常规账单，提出用一份「推荐信 / Reference Le…"
+          "context": "个人投资人 Cheung Man Ho 因长期在外工作、名下没有常规账单，提出用一份「"
         }
       ],
       "zh": "",
       "fullName": "",
       "courseIds": [],
+      "valueScore": 0,
+      "valueReasons": [],
+      "valueCategory": [],
+      "lowValue": false,
+      "isRegulatorySystem": false,
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-28T09:23:40.629Z"
     },
     {
-      "key": "collective investment arrangement",
-      "text": "Collective Investment Arrangement",
+      "key": "contract rights",
+      "text": "Contract Rights",
       "confidence": "phrase",
       "acronym": false,
       "docs": 1,
-      "courses": [
-        "第 14 讲"
-      ],
+      "courses": [],
       "cases": [],
       "count": 1,
       "samples": [
         {
-          "kind": "course",
-          "label": "第 14 讲 · 7.1 判断链起点：它是不是集合投资安排",
-          "href": "/courses/cayman-framework#m1",
-          "context": "…入 Mutual Fund 分析。该判断以实际安排与现行法律为准。 第一步：集合投资安排（Collective Investment Arrangement）与否 第二步：non-fund arrangement 或其他排除情形 第三步：按投资者…"
+          "kind": "toolkit",
+          "label": "工具包 · Outsourcing Oversight Checklist · 3. Contract Rights",
+          "href": "/toolkit/outsourcing-oversight",
+          "context": "3. Contract Rights 三、合同权利 信息权：能否按本基金维度取得数据与档案？ 审计权：能否审计或要求提供审计证…"
         }
       ],
       "zh": "",
       "fullName": "",
-      "courseIds": [
-        "14"
-      ],
-      "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T08:37:26.005Z"
-    },
-    {
-      "key": "crypto fund",
-      "text": "Crypto Fund",
-      "confidence": "phrase",
-      "acronym": false,
-      "docs": 1,
-      "courses": [
-        "选修 E11"
-      ],
-      "cases": [],
-      "count": 1,
-      "samples": [
-        {
-          "kind": "course",
-          "label": "选修 E11 · Crypto Fund",
-          "href": "/courses/e11-crypto-fund",
-          "context": "Crypto Fund 区块链与数字货币基金：托管、"
-        }
-      ],
-      "zh": "",
-      "fullName": "",
-      "courseIds": [
-        "E11"
-      ],
-      "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T08:37:26.005Z"
+      "courseIds": [],
+      "valueScore": 0,
+      "valueReasons": [],
+      "valueCategory": [],
+      "lowValue": false,
+      "isRegulatorySystem": false,
+      "firstSeenAt": "2026-09-28T11:11:15.191Z",
+      "lastSeenAt": "2026-09-28T11:11:15.191Z"
     },
     {
       "key": "dear investor",
@@ -1924,8 +1355,17 @@
       "zh": "",
       "fullName": "",
       "courseIds": [],
+      "valueScore": -10,
+      "valueReasons": [
+        "-10 非专业场景词（含关键词）"
+      ],
+      "valueCategory": [
+        "非专业场景词"
+      ],
+      "lowValue": true,
+      "isRegulatorySystem": false,
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-28T11:07:35.585Z"
     },
     {
       "key": "discretionary account",
@@ -1949,33 +1389,17 @@
       "zh": "",
       "fullName": "",
       "courseIds": [],
-      "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
-    },
-    {
-      "key": "evidence",
-      "text": "Evidence",
-      "confidence": "phrase",
-      "acronym": false,
-      "docs": 1,
-      "courses": [],
-      "cases": [
-        "Case-028"
+      "valueScore": -10,
+      "valueReasons": [
+        "-10 通用英文词（精确命中）"
       ],
-      "count": 1,
-      "samples": [
-        {
-          "kind": "case",
-          "label": "Case-028 · standard_answer",
-          "href": "/cases/case-028",
-          "context": " | **Evidence**（执行证据） | | "
-        }
+      "valueCategory": [
+        "通用英文词"
       ],
-      "zh": "",
-      "fullName": "",
-      "courseIds": [],
+      "lowValue": true,
+      "isRegulatorySystem": false,
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-28T11:15:34.376Z"
     },
     {
       "key": "existing client",
@@ -1999,8 +1423,17 @@
       "zh": "",
       "fullName": "",
       "courseIds": [],
+      "valueScore": -10,
+      "valueReasons": [
+        "-10 非专业场景词（含关键词）"
+      ],
+      "valueCategory": [
+        "非专业场景词"
+      ],
+      "lowValue": true,
+      "isRegulatorySystem": false,
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-28T11:07:35.585Z"
     },
     {
       "key": "external audit",
@@ -2024,8 +1457,81 @@
       "zh": "",
       "fullName": "",
       "courseIds": [],
+      "valueScore": 5,
+      "valueReasons": [
+        "+5 运营流程（含关键词）"
+      ],
+      "valueCategory": [
+        "运营流程"
+      ],
+      "lowValue": false,
+      "isRegulatorySystem": false,
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-28T11:07:35.585Z"
+    },
+    {
+      "key": "external reporting decision",
+      "text": "External Reporting Decision",
+      "confidence": "phrase",
+      "acronym": false,
+      "docs": 1,
+      "courses": [],
+      "cases": [],
+      "count": 1,
+      "samples": [
+        {
+          "kind": "toolkit",
+          "label": "工具包 · AMLCO / MLRO / DMLRO · 对照表",
+          "href": "/toolkit/aml-roles-comparison",
+          "context": "…架有效性评估 + 年度报告（Annual Reporting） 是否对外报告的判断与理由（External Reporting Decision） 在 "
+        }
+      ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [],
+      "valueScore": 5,
+      "valueReasons": [
+        "+5 运营流程（含关键词）"
+      ],
+      "valueCategory": [
+        "运营流程"
+      ],
+      "lowValue": false,
+      "isRegulatorySystem": false,
+      "firstSeenAt": "2026-09-28T11:12:33.146Z",
+      "lastSeenAt": "2026-09-28T11:12:33.146Z"
+    },
+    {
+      "key": "focus",
+      "text": "Focus",
+      "confidence": "phrase",
+      "acronym": false,
+      "docs": 1,
+      "courses": [],
+      "cases": [],
+      "count": 1,
+      "samples": [
+        {
+          "kind": "toolkit",
+          "label": "工具包 · AMLCO / MLRO / DMLRO · 对照表",
+          "href": "/toolkit/aml-roles-comparison",
+          "context": " 核心定位 / Focus 监督整体合规框架（Framework Oversight） 接收与评估内部报告（Inte…"
+        }
+      ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [],
+      "valueScore": -10,
+      "valueReasons": [
+        "-10 通用英文词（精确命中）"
+      ],
+      "valueCategory": [
+        "通用英文词"
+      ],
+      "lowValue": true,
+      "isRegulatorySystem": false,
+      "firstSeenAt": "2026-09-28T11:12:33.146Z",
+      "lastSeenAt": "2026-09-28T11:15:34.376Z"
     },
     {
       "key": "foundations",
@@ -2043,7 +1549,7 @@
           "kind": "course",
           "label": "第 11 讲 · AML Foundations",
           "href": "/courses/aml-foundations",
-          "context": " Foundations 金融犯罪全景：洗钱、恐怖融资、制裁、贿赂、逃税与欺诈的类型学与风险识别 理解洗钱的三个经…"
+          "context": " Foundations 金融犯罪全景："
         }
       ],
       "zh": "",
@@ -2051,8 +1557,17 @@
       "courseIds": [
         "11"
       ],
+      "valueScore": -10,
+      "valueReasons": [
+        "-10 通用英文词（精确命中）"
+      ],
+      "valueCategory": [
+        "通用英文词"
+      ],
+      "lowValue": true,
+      "isRegulatorySystem": false,
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T08:37:26.005Z"
+      "lastSeenAt": "2026-09-28T11:15:34.376Z"
     },
     {
       "key": "framework",
@@ -2076,33 +1591,45 @@
       "zh": "",
       "fullName": "",
       "courseIds": [],
+      "valueScore": -10,
+      "valueReasons": [
+        "-10 通用英文词（精确命中）"
+      ],
+      "valueCategory": [
+        "通用英文词"
+      ],
+      "lowValue": true,
+      "isRegulatorySystem": false,
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-28T11:15:34.376Z"
     },
     {
-      "key": "freeze",
-      "text": "Freeze",
+      "key": "framework oversight",
+      "text": "Framework Oversight",
       "confidence": "phrase",
       "acronym": false,
       "docs": 1,
       "courses": [],
-      "cases": [
-        "Case-027"
-      ],
+      "cases": [],
       "count": 1,
       "samples": [
         {
-          "kind": "case",
-          "label": "Case-027 · standard_answer",
-          "href": "/cases/case-027",
-          "context": "…置顺序： **① 核验 Verify** → **② 限制或冻结 Restrict / Freeze** → **③ 报告 Report** → **④ 记录 Document** 1. …"
+          "kind": "toolkit",
+          "label": "工具包 · AMLCO / MLRO / DMLRO · 对照表",
+          "href": "/toolkit/aml-roles-comparison",
+          "context": " 核心定位 / Focus 监督整体合规框架（Framework Oversight） 接收与评估内部报告（Internal "
         }
       ],
       "zh": "",
       "fullName": "",
       "courseIds": [],
-      "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "valueScore": 0,
+      "valueReasons": [],
+      "valueCategory": [],
+      "lowValue": false,
+      "isRegulatorySystem": false,
+      "firstSeenAt": "2026-09-28T11:12:33.146Z",
+      "lastSeenAt": "2026-09-28T11:12:33.146Z"
     },
     {
       "key": "historical records review",
@@ -2126,33 +1653,45 @@
       "zh": "",
       "fullName": "",
       "courseIds": [],
+      "valueScore": 0,
+      "valueReasons": [],
+      "valueCategory": [],
+      "lowValue": false,
+      "isRegulatorySystem": false,
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
       "lastSeenAt": "2026-09-20T07:00:35.831Z"
     },
     {
-      "key": "identity verification",
-      "text": "Identity Verification",
+      "key": "independence",
+      "text": "Independence",
       "confidence": "phrase",
       "acronym": false,
       "docs": 1,
       "courses": [],
-      "cases": [
-        "Case-026"
-      ],
+      "cases": [],
       "count": 1,
       "samples": [
         {
-          "kind": "case",
-          "label": "Case-026 · sop_reference",
-          "href": "/cases/case-026",
-          "context": "Identity Verification BVI 与 Cayman 对"
+          "kind": "toolkit",
+          "label": "工具包 · AMLCO / MLRO / DMLRO · 对照表",
+          "href": "/toolkit/aml-roles-comparison",
+          "context": " 同一报告线 独立性要求 / Independence 独立、具备相应资历、可直达"
         }
       ],
       "zh": "",
       "fullName": "",
       "courseIds": [],
-      "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "valueScore": -10,
+      "valueReasons": [
+        "-10 通用英文词（精确命中）"
+      ],
+      "valueCategory": [
+        "通用英文词"
+      ],
+      "lowValue": true,
+      "isRegulatorySystem": false,
+      "firstSeenAt": "2026-09-28T11:12:33.146Z",
+      "lastSeenAt": "2026-09-28T11:15:34.376Z"
     },
     {
       "key": "independent conclusion",
@@ -2176,35 +1715,13 @@
       "zh": "",
       "fullName": "",
       "courseIds": [],
+      "valueScore": 0,
+      "valueReasons": [],
+      "valueCategory": [],
+      "lowValue": false,
+      "isRegulatorySystem": false,
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
       "lastSeenAt": "2026-09-20T07:00:35.831Z"
-    },
-    {
-      "key": "indicia",
-      "text": "Indicia",
-      "confidence": "phrase",
-      "acronym": false,
-      "docs": 1,
-      "courses": [
-        "第 12 讲"
-      ],
-      "cases": [],
-      "count": 1,
-      "samples": [
-        {
-          "kind": "course",
-          "label": "第 12 讲 · 常见错误",
-          "href": "/courses/fatca-crs",
-          "context": "直接放行 US Indicia 等矛盾信号必须先澄清取证。 零申报即零工作 分类、校验、申报与留痕的年度流程必须完整。"
-        }
-      ],
-      "zh": "",
-      "fullName": "",
-      "courseIds": [
-        "12"
-      ],
-      "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T08:37:26.005Z"
     },
     {
       "key": "internal audit",
@@ -2228,8 +1745,49 @@
       "zh": "",
       "fullName": "",
       "courseIds": [],
+      "valueScore": 5,
+      "valueReasons": [
+        "+5 运营流程（含关键词）"
+      ],
+      "valueCategory": [
+        "运营流程"
+      ],
+      "lowValue": false,
+      "isRegulatorySystem": false,
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-28T11:07:35.585Z"
+    },
+    {
+      "key": "key",
+      "text": "Key",
+      "confidence": "phrase",
+      "acronym": false,
+      "docs": 1,
+      "courses": [],
+      "cases": [],
+      "count": 1,
+      "samples": [
+        {
+          "kind": "toolkit",
+          "label": "工具包 · AMLCO / MLRO / DMLRO · 对照表",
+          "href": "/toolkit/aml-roles-comparison",
+          "context": " Backup） 主要产出 / Key output 框架有效性评估 + 年度报告（Annual Reporting） 是否对外…"
+        }
+      ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [],
+      "valueScore": -10,
+      "valueReasons": [
+        "-10 通用英文词（精确命中）"
+      ],
+      "valueCategory": [
+        "通用英文词"
+      ],
+      "lowValue": true,
+      "isRegulatorySystem": false,
+      "firstSeenAt": "2026-09-28T11:12:33.146Z",
+      "lastSeenAt": "2026-09-28T11:15:34.376Z"
     },
     {
       "key": "lee",
@@ -2253,6 +1811,11 @@
       "zh": "",
       "fullName": "",
       "courseIds": [],
+      "valueScore": 0,
+      "valueReasons": [],
+      "valueCategory": [],
+      "lowValue": false,
+      "isRegulatorySystem": false,
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
       "lastSeenAt": "2026-09-20T07:00:35.831Z"
     },
@@ -2278,8 +1841,17 @@
       "zh": "",
       "fullName": "",
       "courseIds": [],
+      "valueScore": -10,
+      "valueReasons": [
+        "-10 通用英文词（精确命中）"
+      ],
+      "valueCategory": [
+        "通用英文词"
+      ],
+      "lowValue": true,
+      "isRegulatorySystem": false,
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-28T11:15:34.376Z"
     },
     {
       "key": "mainland travel permit",
@@ -2303,6 +1875,11 @@
       "zh": "",
       "fullName": "",
       "courseIds": [],
+      "valueScore": 0,
+      "valueReasons": [],
+      "valueCategory": [],
+      "lowValue": false,
+      "isRegulatorySystem": false,
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
       "lastSeenAt": "2026-09-20T07:00:35.831Z"
     },
@@ -2328,35 +1905,13 @@
       "zh": "",
       "fullName": "",
       "courseIds": [],
+      "valueScore": 0,
+      "valueReasons": [],
+      "valueCategory": [],
+      "lowValue": false,
+      "isRegulatorySystem": false,
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
       "lastSeenAt": "2026-09-20T07:00:35.831Z"
-    },
-    {
-      "key": "monitoring",
-      "text": "Monitoring",
-      "confidence": "phrase",
-      "acronym": false,
-      "docs": 1,
-      "courses": [
-        "第 13 讲"
-      ],
-      "cases": [],
-      "count": 1,
-      "samples": [
-        {
-          "kind": "course",
-          "label": "第 13 讲 · AML Technology & Monitoring",
-          "href": "/courses/aml-technology-monitoring",
-          "context": " Technology & Monitoring 反金融犯罪工具与技术：名单筛查、数字 "
-        }
-      ],
-      "zh": "",
-      "fullName": "",
-      "courseIds": [
-        "13"
-      ],
-      "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T08:37:26.005Z"
     },
     {
       "key": "mutual",
@@ -2382,8 +1937,17 @@
       "courseIds": [
         "14"
       ],
+      "valueScore": -10,
+      "valueReasons": [
+        "-10 通用英文词（精确命中）"
+      ],
+      "valueCategory": [
+        "通用英文词"
+      ],
+      "lowValue": true,
+      "isRegulatorySystem": false,
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T08:37:26.005Z"
+      "lastSeenAt": "2026-09-28T11:15:34.376Z"
     },
     {
       "key": "mutual funds act",
@@ -2401,7 +1965,7 @@
           "kind": "course",
           "label": "第 15 讲 · 8.1 先分清名称：Private Fund vs Private Investment Fund",
           "href": "/courses/bvi-fund-manager#m1",
-          "context": "（私人基金）是 BVI 共同基金体系（Mutual Funds Act）下面向专业投资者的类别；"
+          "context": "体系（Mutual Funds Act）下面向专业投资者的类别；"
         }
       ],
       "zh": "",
@@ -2409,8 +1973,81 @@
       "courseIds": [
         "15"
       ],
+      "valueScore": 5,
+      "valueReasons": [
+        "+5 基金实务（含关键词）",
+        "+5 基金架构（含关键词）",
+        "-5 课程主题词（含关键词）"
+      ],
+      "valueCategory": [
+        "基金实务",
+        "基金架构",
+        "课程主题词"
+      ],
+      "lowValue": false,
+      "isRegulatorySystem": false,
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-21T02:22:18.966Z"
+      "lastSeenAt": "2026-09-28T11:07:35.585Z"
+    },
+    {
+      "key": "ongoing oversight",
+      "text": "Ongoing Oversight",
+      "confidence": "phrase",
+      "acronym": false,
+      "docs": 1,
+      "courses": [],
+      "cases": [],
+      "count": 1,
+      "samples": [
+        {
+          "kind": "toolkit",
+          "label": "工具包 · Outsourcing Oversight Checklist · 4. Ongoing Oversight",
+          "href": "/toolkit/outsourcing-oversight",
+          "context": "4. Ongoing Oversight 四、持续监督 KPI：是否设定了可测量的服务水平指标？ 例外：例外事项是否定期上报并解释…"
+        }
+      ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [],
+      "valueScore": 0,
+      "valueReasons": [],
+      "valueCategory": [],
+      "lowValue": false,
+      "isRegulatorySystem": false,
+      "firstSeenAt": "2026-09-28T11:11:15.191Z",
+      "lastSeenAt": "2026-09-28T11:11:15.191Z"
+    },
+    {
+      "key": "outsourcing oversight checklist",
+      "text": "Outsourcing Oversight Checklist",
+      "confidence": "phrase",
+      "acronym": false,
+      "docs": 1,
+      "courses": [],
+      "cases": [],
+      "count": 1,
+      "samples": [
+        {
+          "kind": "toolkit",
+          "label": "工具包 · Outsourcing Oversight Checklist",
+          "href": "/toolkit/outsourcing-oversight",
+          "context": "Outsourcing Oversight Checklist 外包监督清单 四个部分：风险评估、能力评估、合同权利、持续监督。执行可委托，责任与可见性…"
+        }
+      ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [],
+      "valueScore": -10,
+      "valueReasons": [
+        "-10 非专业场景词（含关键词）"
+      ],
+      "valueCategory": [
+        "非专业场景词"
+      ],
+      "lowValue": true,
+      "isRegulatorySystem": false,
+      "firstSeenAt": "2026-09-28T11:11:15.191Z",
+      "lastSeenAt": "2026-09-28T11:11:15.191Z"
     },
     {
       "key": "ownership",
@@ -2434,8 +2071,17 @@
       "zh": "",
       "fullName": "",
       "courseIds": [],
+      "valueScore": -10,
+      "valueReasons": [
+        "-10 通用英文词（精确命中）"
+      ],
+      "valueCategory": [
+        "通用英文词"
+      ],
+      "lowValue": true,
+      "isRegulatorySystem": false,
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-28T11:15:34.376Z"
     },
     {
       "key": "passive",
@@ -2461,8 +2107,17 @@
       "courseIds": [
         "12"
       ],
+      "valueScore": -10,
+      "valueReasons": [
+        "-10 通用英文词（精确命中）"
+      ],
+      "valueCategory": [
+        "通用英文词"
+      ],
+      "lowValue": true,
+      "isRegulatorySystem": false,
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-21T02:22:18.966Z"
+      "lastSeenAt": "2026-09-28T11:15:34.376Z"
     },
     {
       "key": "permanent resident identity",
@@ -2486,31 +2141,11 @@
       "zh": "",
       "fullName": "",
       "courseIds": [],
-      "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
-    },
-    {
-      "key": "potential match",
-      "text": "Potential Match",
-      "confidence": "phrase",
-      "acronym": false,
-      "docs": 1,
-      "courses": [],
-      "cases": [
-        "Case-027"
-      ],
-      "count": 1,
-      "samples": [
-        {
-          "kind": "case",
-          "label": "Case-027 · scenario",
-          "href": "/cases/case-027",
-          "context": "…，经枢密院令延伸适用于开曼）。 系统在当晚批筛中把一名**存量投资者**标记为潜在命中（Potential Match）： - 姓名与名单主体**完全一致**（含中间名拼写） - 出生年份**不同**（名单…"
-        }
-      ],
-      "zh": "",
-      "fullName": "",
-      "courseIds": [],
+      "valueScore": 0,
+      "valueReasons": [],
+      "valueCategory": [],
+      "lowValue": false,
+      "isRegulatorySystem": false,
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
       "lastSeenAt": "2026-09-20T07:00:35.831Z"
     },
@@ -2538,8 +2173,17 @@
       "courseIds": [
         "14"
       ],
+      "valueScore": -10,
+      "valueReasons": [
+        "-10 通用英文词（精确命中）"
+      ],
+      "valueCategory": [
+        "通用英文词"
+      ],
+      "lowValue": true,
+      "isRegulatorySystem": false,
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T08:37:26.005Z"
+      "lastSeenAt": "2026-09-28T11:15:34.376Z"
     },
     {
       "key": "program",
@@ -2563,8 +2207,17 @@
       "zh": "",
       "fullName": "",
       "courseIds": [],
+      "valueScore": -10,
+      "valueReasons": [
+        "-10 通用英文词（精确命中）"
+      ],
+      "valueCategory": [
+        "通用英文词"
+      ],
+      "lowValue": true,
+      "isRegulatorySystem": false,
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-28T11:15:34.376Z"
     },
     {
       "key": "rationale",
@@ -2588,8 +2241,17 @@
       "zh": "",
       "fullName": "",
       "courseIds": [],
+      "valueScore": -10,
+      "valueReasons": [
+        "-10 通用英文词（精确命中）"
+      ],
+      "valueCategory": [
+        "通用英文词"
+      ],
+      "lowValue": true,
+      "isRegulatorySystem": false,
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-28T11:15:34.376Z"
     },
     {
       "key": "reg",
@@ -2615,33 +2277,143 @@
       "courseIds": [
         "E04"
       ],
+      "valueScore": -10,
+      "valueReasons": [
+        "-10 通用英文词（精确命中）"
+      ],
+      "valueCategory": [
+        "通用英文词"
+      ],
+      "lowValue": true,
+      "isRegulatorySystem": false,
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-21T02:22:18.966Z"
+      "lastSeenAt": "2026-09-28T11:15:34.376Z"
     },
     {
-      "key": "restrict",
-      "text": "Restrict",
+      "key": "requirements",
+      "text": "Requirements",
       "confidence": "phrase",
       "acronym": false,
       "docs": 1,
       "courses": [],
-      "cases": [
-        "Case-027"
-      ],
+      "cases": [],
       "count": 1,
       "samples": [
         {
-          "kind": "case",
-          "label": "Case-027 · standard_answer",
-          "href": "/cases/case-027",
-          "context": "… Q4 真实命中的处置顺序： **① 核验 Verify** → **② 限制或冻结 Restrict / Freeze** → **③ 报告 Report** → **④ 记录 Docume…"
+          "kind": "toolkit",
+          "label": "工具包 · CDD / EDD / SDD · 对照表",
+          "href": "/toolkit/cdd-edd-sdd-comparison",
+          "context": "…、非面对面、第三方付款等） 仅在经评估确认的低风险情形下，且须记录适用理由 必要要求 / Requirements 客户、"
         }
       ],
       "zh": "",
       "fullName": "",
       "courseIds": [],
-      "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "valueScore": -10,
+      "valueReasons": [
+        "-10 通用英文词（精确命中）"
+      ],
+      "valueCategory": [
+        "通用英文词"
+      ],
+      "lowValue": true,
+      "isRegulatorySystem": false,
+      "firstSeenAt": "2026-09-28T11:12:33.146Z",
+      "lastSeenAt": "2026-09-28T11:15:34.376Z"
+    },
+    {
+      "key": "risk assessment",
+      "text": "Risk Assessment",
+      "confidence": "phrase",
+      "acronym": false,
+      "docs": 1,
+      "courses": [],
+      "cases": [],
+      "count": 1,
+      "samples": [
+        {
+          "kind": "toolkit",
+          "label": "工具包 · Outsourcing Oversight Checklist · 1. Risk Assessment",
+          "href": "/toolkit/outsourcing-oversight",
+          "context": "1. Risk Assessment 一、风险评估 该职能被外包后，剩余风险如何评估？ 服务地点与国家风险是否纳入判断？ 是否…"
+        }
+      ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [],
+      "valueScore": 0,
+      "valueReasons": [],
+      "valueCategory": [],
+      "lowValue": false,
+      "isRegulatorySystem": false,
+      "firstSeenAt": "2026-09-28T11:11:15.191Z",
+      "lastSeenAt": "2026-09-28T11:11:15.191Z"
+    },
+    {
+      "key": "sanctions\nscreening",
+      "text": "Sanctions\nScreening",
+      "confidence": "phrase",
+      "acronym": false,
+      "docs": 1,
+      "courses": [],
+      "cases": [],
+      "count": 1,
+      "samples": [
+        {
+          "kind": "toolkit",
+          "label": "工具包 · Sanctions Hit SOP",
+          "href": "/toolkit/sanctions-hit-sop",
+          "context": "…从识别到归档的动作顺序、责任归属与禁止事项，避免「先放款、后核验」这类不可逆错误。 制裁 Sanctions Screening 冻结 零容忍 Potential Match"
+        }
+      ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [],
+      "valueScore": 10,
+      "valueReasons": [
+        "+5 监管术语（含关键词）",
+        "+5 AML（含关键词）"
+      ],
+      "valueCategory": [
+        "监管术语",
+        "AML"
+      ],
+      "lowValue": false,
+      "isRegulatorySystem": false,
+      "firstSeenAt": "2026-09-28T11:12:33.146Z",
+      "lastSeenAt": "2026-09-28T11:12:33.146Z"
+    },
+    {
+      "key": "sanctions hit",
+      "text": "Sanctions Hit",
+      "confidence": "phrase",
+      "acronym": false,
+      "docs": 1,
+      "courses": [],
+      "cases": [],
+      "count": 1,
+      "samples": [
+        {
+          "kind": "toolkit",
+          "label": "工具包 · Sanctions Hit SOP",
+          "href": "/toolkit/sanctions-hit-sop",
+          "context": "Sanctions Hit SOP 制裁命中处置标准流程 潜在命中 → 核验 → 升级 → 冻结 / 限制 → 报告…"
+        }
+      ],
+      "zh": "",
+      "fullName": "",
+      "courseIds": [],
+      "valueScore": 5,
+      "valueReasons": [
+        "+5 监管术语（含关键词）"
+      ],
+      "valueCategory": [
+        "监管术语"
+      ],
+      "lowValue": false,
+      "isRegulatorySystem": false,
+      "firstSeenAt": "2026-09-28T11:11:15.191Z",
+      "lastSeenAt": "2026-09-28T11:11:15.191Z"
     },
     {
       "key": "signature page",
@@ -2665,8 +2437,17 @@
       "zh": "",
       "fullName": "",
       "courseIds": [],
+      "valueScore": -10,
+      "valueReasons": [
+        "-10 通用英文词（精确命中）"
+      ],
+      "valueCategory": [
+        "通用英文词"
+      ],
+      "lowValue": true,
+      "isRegulatorySystem": false,
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-28T11:15:34.376Z"
     },
     {
       "key": "singapore permanent resident",
@@ -2690,6 +2471,11 @@
       "zh": "",
       "fullName": "",
       "courseIds": [],
+      "valueScore": 0,
+      "valueReasons": [],
+      "valueCategory": [],
+      "lowValue": false,
+      "isRegulatorySystem": false,
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
       "lastSeenAt": "2026-09-20T07:00:35.831Z"
     },
@@ -2715,8 +2501,17 @@
       "zh": "",
       "fullName": "",
       "courseIds": [],
+      "valueScore": -10,
+      "valueReasons": [
+        "-10 通用英文词（精确命中）"
+      ],
+      "valueCategory": [
+        "通用英文词"
+      ],
+      "lowValue": true,
+      "isRegulatorySystem": false,
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-28T11:15:34.376Z"
     },
     {
       "key": "tan wei ming",
@@ -2734,14 +2529,19 @@
           "kind": "case",
           "label": "Case-005 · scenario",
           "href": "/cases/case-005",
-          "context": "某开曼基金（Cayman Fund）个人投资人 Tan Wei Ming（新加坡永久居民）提交"
+          "context": "）个人投资人 Tan Wei Ming（新加坡永久居民）提交"
         }
       ],
       "zh": "",
       "fullName": "",
       "courseIds": [],
+      "valueScore": 0,
+      "valueReasons": [],
+      "valueCategory": [],
+      "lowValue": false,
+      "isRegulatorySystem": false,
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-28T09:23:40.629Z"
     },
     {
       "key": "technology",
@@ -2767,33 +2567,17 @@
       "courseIds": [
         "13"
       ],
-      "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T08:37:26.005Z"
-    },
-    {
-      "key": "true match",
-      "text": "True Match",
-      "confidence": "phrase",
-      "acronym": false,
-      "docs": 1,
-      "courses": [],
-      "cases": [
-        "Case-027"
+      "valueScore": -10,
+      "valueReasons": [
+        "-10 通用英文词（精确命中）"
       ],
-      "count": 1,
-      "samples": [
-        {
-          "kind": "case",
-          "label": "Case-027 · questions",
-          "href": "/cases/case-027",
-          "context": "… ## Q3 核验需要做哪些动作？ ## Q4 如果核验后确认是**真实命中**（True Match），处置顺序是什么？ ## Q5 如果核验后确认是**误报**（False Posit…"
-        }
+      "valueCategory": [
+        "通用英文词"
       ],
-      "zh": "",
-      "fullName": "",
-      "courseIds": [],
+      "lowValue": true,
+      "isRegulatorySystem": false,
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
-      "lastSeenAt": "2026-09-20T07:00:35.831Z"
+      "lastSeenAt": "2026-09-28T11:15:34.376Z"
     },
     {
       "key": "wong siu ming",
@@ -2817,6 +2601,11 @@
       "zh": "",
       "fullName": "",
       "courseIds": [],
+      "valueScore": 0,
+      "valueReasons": [],
+      "valueCategory": [],
+      "lowValue": false,
+      "isRegulatorySystem": false,
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
       "lastSeenAt": "2026-09-20T07:00:35.831Z"
     },
@@ -2842,8 +2631,154 @@
       "zh": "",
       "fullName": "",
       "courseIds": [],
+      "valueScore": 0,
+      "valueReasons": [],
+      "valueCategory": [],
+      "lowValue": false,
+      "isRegulatorySystem": false,
       "firstSeenAt": "2026-09-20T07:00:35.831Z",
       "lastSeenAt": "2026-09-20T07:00:35.831Z"
     }
-  ]
+  ],
+  "regulatorySystems": {
+    "discovered": 1,
+    "newSystems": 1,
+    "existing": 0,
+    "missing": 14,
+    "found": [
+      {
+        "jurisdiction": "Cayman",
+        "name": "REEFS",
+        "note": "开曼 CIMA 监管申报系统",
+        "matched": "REEFS",
+        "docs": 3,
+        "samples": [
+          "工具包 · AMLCO / MLRO / DMLRO",
+          "工具包 · AMLCO / MLRO / DMLRO · 对照表",
+          "工具包 · AMLCO / MLRO / DMLRO · 常见误区"
+        ],
+        "exists": false
+      }
+    ],
+    "missingList": [
+      {
+        "jurisdiction": "Cayman",
+        "name": "CIMA Connect",
+        "aliases": [
+          "CIMA Connect Portal"
+        ],
+        "note": "开曼 CIMA 线上服务平台"
+      },
+      {
+        "jurisdiction": "Cayman",
+        "name": "DITC Portal",
+        "aliases": [
+          "DITC",
+          "Department for International Tax Cooperation Portal"
+        ],
+        "note": "开曼税务信息交换门户"
+      },
+      {
+        "jurisdiction": "Cayman",
+        "name": "AML Survey",
+        "aliases": [
+          "CIMA AML Survey"
+        ],
+        "note": "开曼 CIMA 年度反洗钱调查"
+      },
+      {
+        "jurisdiction": "BVI",
+        "name": "VIRRGIN",
+        "aliases": [
+          "VIRRGIN Portal",
+          "Virgin Islands Regulatory Reporting"
+        ],
+        "note": "BVI 公司注册与申报系统"
+      },
+      {
+        "jurisdiction": "BVI",
+        "name": "BOSS",
+        "aliases": [
+          "BOSS System",
+          "BVI Online System"
+        ],
+        "note": "BVI 商业公司在线系统"
+      },
+      {
+        "jurisdiction": "BVI",
+        "name": "BVIFARS",
+        "aliases": [
+          "BVI Financial Account Reporting System"
+        ],
+        "note": "BVI 金融账户申报系统（FATCA/CRS）"
+      },
+      {
+        "jurisdiction": "BVI",
+        "name": "FSC Portal",
+        "aliases": [
+          "BVI FSC Portal"
+        ],
+        "note": "BVI 金融服务委员会门户"
+      },
+      {
+        "jurisdiction": "Hong Kong",
+        "name": "FINI",
+        "aliases": [
+          "FINI Platform",
+          "Fast Interface for New Issuance"
+        ],
+        "note": "香港交易所新股结算平台"
+      },
+      {
+        "jurisdiction": "Hong Kong",
+        "name": "CORE",
+        "aliases": [
+          "CORE System",
+          "Company Registry Online"
+        ],
+        "note": "香港公司注册处综合系统"
+      },
+      {
+        "jurisdiction": "Hong Kong",
+        "name": "WISE",
+        "aliases": [
+          "WISE Portal"
+        ],
+        "note": "香港证券及期货事务监察委员会电子服务平台"
+      },
+      {
+        "jurisdiction": "Hong Kong",
+        "name": "eMPF",
+        "aliases": [
+          "eMPF Platform"
+        ],
+        "note": "香港强积金电子平台"
+      },
+      {
+        "jurisdiction": "International Tax",
+        "name": "FATCA Portal",
+        "aliases": [
+          "IRS FATCA Portal",
+          "FATCA Registration System"
+        ],
+        "note": "美国 FATCA 登记与申报门户"
+      },
+      {
+        "jurisdiction": "International Tax",
+        "name": "CRS Portal",
+        "aliases": [
+          "CRS Reporting Portal"
+        ],
+        "note": "CRS 共同申报标准报告门户"
+      },
+      {
+        "jurisdiction": "International Tax",
+        "name": "IRS Filing Platform",
+        "aliases": [
+          "IRS E-File"
+        ],
+        "note": "美国国税局电子申报平台"
+      }
+    ]
+  }
 }

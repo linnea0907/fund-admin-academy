@@ -59,11 +59,11 @@ export function getCandidateConfidence(id: CandidateConfidence): CandidateConfid
  * 候选条目
  * ================================================================ */
 export interface CandidateSample {
-  /** 来源类型：课程 / 案例 */
-  kind: "course" | "case";
+  /** 来源类型：课程 / 案例 / 工具包（V1.20.12 起含工具包） */
+  kind: "course" | "case" | "toolkit";
   /** 来源标签，如「第 02 讲 · 2.1 维度一：组织形式」 */
   label: string;
-  /** 站内跳转（课程 / 案例） */
+  /** 站内跳转（课程 / 案例 / 工具包） */
   href: string;
   /** 上下文摘录（±45 字符） */
   context: string;
@@ -103,6 +103,16 @@ export interface TermCandidate {
   firstSeenAt: string;
   /** 最近一次在语料中出现的时间（ISO 8601） */
   lastSeenAt: string;
+  /** V1.20.11 价值评分（-20 ~ +25，越高越值得入库） */
+  valueScore?: number;
+  /** 价值评分逐条原因（如 "+5 AML（精确命中）"） */
+  valueReasons?: string[];
+  /** 命中的价值类别（监管术语 / AML / KYC/CDD / 监管系统…） */
+  valueCategory?: string[];
+  /** 是否低于价值阈值（低价值候选，审核页可过滤，不自动删除） */
+  lowValue?: boolean;
+  /** V1.20.12 是否命中监管系统词典 */
+  isRegulatorySystem?: boolean;
 }
 
 export interface CandidatePoolBaseline {
@@ -122,6 +132,41 @@ export interface TermCandidatePool {
   generatedAt: string;
   baseline: CandidatePoolBaseline;
   candidates: TermCandidate[];
+  /** V1.20.12 监管系统发现报告 */
+  regulatorySystems?: RegulatorySystemReport;
+}
+
+/** V1.20.12 监管系统识别报告条目 */
+export interface RegulatorySystemFound {
+  /** 所属法域（Cayman / BVI / Hong Kong / International Tax） */
+  jurisdiction: string;
+  /** 系统名称（如 REEFS / VIRRGIN / BOSS） */
+  name: string;
+  /** 说明 */
+  note: string;
+  /** 命中的原文形式 */
+  matched: string;
+  /** 出现在多少篇语料文档中 */
+  docs: number;
+  /** 来源样例（最多 3 条） */
+  samples: string[];
+  /** 是否已在术语库中（term/alias 命中） */
+  exists: boolean;
+}
+
+export interface RegulatorySystemReport {
+  /** 在语料中发现的监管系统数 */
+  discovered: number;
+  /** 其中尚未入库（新增）数 */
+  newSystems: number;
+  /** 其中已存在数 */
+  existing: number;
+  /** 词典覆盖但语料未出现数 */
+  missing: number;
+  /** 发现的系统列表 */
+  found: RegulatorySystemFound[];
+  /** 遗漏列表（词典有、语料无） */
+  missingList: { jurisdiction: string; name: string; aliases: string[]; note: string }[];
 }
 
 /** 空池（`candidates.json` 缺失 / 损坏时的兜底，页面据此显示空态而非报错） */
