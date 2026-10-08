@@ -6,7 +6,7 @@ import type { CamsQuestion } from "@/types/cams";
  * **Tools and Technologies to Fight Financial Crime（20%，24 题）**
  *
  * 覆盖手册 D 域 17 条 test objective：客户生命周期各阶段可用的控制工具、
- * 数据质量/完整/权限/定义/分类、客户体验与摩擦、KYC 数字入职
+ * 数据质量/完整/权限/定义/分类、客户体验与摩擦、KYC 数字开户
  * （E-KYC、数字身份、人脸识别、活体检测、生物识别、地理定位）、
  * 外部数据源（征信机构、受益所有人登记、负面媒体、犯罪记录、政府身份核验）、
  * 名单筛查（联合国/OFAC/欧盟/内部名单）、持续监控（定期复核、永续 KYC、AI/ML）、
@@ -80,7 +80,7 @@ export const questionsD: CamsQuestion[] = [
     id: "D05",
     domain: "D",
     question:
-      "「数字入职（digital onboarding）」中的「电子 KYC（E-KYC）」通常包含哪些技术手段？",
+      "「数字开户（digital onboarding）」中的「电子 KYC（E-KYC）」通常包含哪些技术手段？",
     options: [
       "仅靠客户自行填写的表单",
       "电子身份文件核验、活体检测（liveness check）、人脸识别、生物识别（biometrics），有时结合地理定位（geolocation）与设备信息",
