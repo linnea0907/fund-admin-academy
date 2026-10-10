@@ -373,14 +373,6 @@ export const camsLessons: Lesson[] = [
     ],
     commonMistakes: [
       {
-        title: "命中即冻结",
-        detail: "漏掉误报排除步骤，误伤正常客户。",
-      },
-      {
-        title: "误报高就关系统",
-        detail: "应调优，关闭系统等于放弃控制。",
-      },
-      {
         title: "把受益所有人登记当唯一依据",
         detail: "登记可能滞后或不实，须独立交叉验证。",
       },

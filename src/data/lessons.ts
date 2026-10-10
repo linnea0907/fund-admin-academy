@@ -569,8 +569,7 @@ export const lessons: Lesson[] = [
         id: "m4",
         title: "7.4 持续合规：一张年度清单",
         body: [
-          "基金获准注册后进入持续合规周期，覆盖范围通常包括：审计与财务报表、年度申报与费用、估值安排、资产保管或所有权验证、现金监控、证券识别、治理、AML/CFT、AEOI（CRS/FATCA）、数据保护、经济实质以及实益所有权登记。各事项的启动时点、申报窗口与表格按 CIMA 现行指引执行。",
-          "注册时序、期限、表格与程序均属时点性内容，不建议在通用课程中写死；Fund Admin 应依托服务商的合规日历逐项跟踪并留痕。",
+          "基金获准注册后进入持续合规周期，覆盖范围通常包括：审计与财务报表、年度申报与费用、估值安排、资产保管或所有权验证、现金监控、证券识别、治理、AML/CFT、AEOI（CRS/FATCA）、数据保护、经济实质以及实益所有权登记。各事项的启动时点、申报窗口与表格按 CIMA 现行指引执行，Fund Admin 应依托服务商的合规日历逐项跟踪并留痕。",
         ],
         points: [
           "审计：经认可的审计师出具报告并按现行要求提交",
@@ -612,9 +611,9 @@ export const lessons: Lesson[] = [
           "“只投一个项目”不等于当然豁免 Private Fund 注册判断，须按集合投资安排与基金定义逐项核对。",
       },
       {
-        title: "把时点性流程写死进通用材料",
+        title: "凭旧材料办理时点性流程",
         detail:
-          "注册时序、期限、表格、费用会变化。写入培训材料时须附“办理时复核”，否则会迅速过时。",
+          "注册时序、期限、表格、费用会变化。办理时应按现行官方规则复核，而非照搬旧材料。",
       },
     ],
     checklist: [
@@ -1014,7 +1013,7 @@ export const lessons: Lesson[] = [
         title: "5.2 第二层：注册与角色安排",
         body: [
           "若基金属于需注册的主体：FATCA 下可能涉及向 IRS 注册取得 GIIN（依 IGA 或 FFI 协议路径）；CRS 下在本地税务机关/门户（如开曼的 TIA 门户）完成注册与分类申报，并指定联络角色（如 PPOC/Principal Point of Contact、Authorising Person）及申报授权安排。",
-          "注册角色（如 PPOC 与 Authorising Person）的资格、独立性及兼任规则须按办理时官方要求复核，课程不宜写死。GIIN 只是 FATCA 注册标识，不是金融牌照，也不能独立证明完整的 FATCA/CRS 合规状态。",
+          "注册角色（如 PPOC 与 Authorising Person）的资格、独立性及兼任规则须按办理时官方要求复核。GIIN 只是 FATCA 注册标识，不是金融牌照，也不能独立证明完整的 FATCA/CRS 合规状态。",
         ],
         points: [
           "GIIN：FATCA 注册标识；不代表持牌或整体合规证明",
@@ -1107,14 +1106,6 @@ export const lessons: Lesson[] = [
       {
         title: "UBO 直接当 Controlling Person",
         detail: "AML 与 CRS 口径不同，识别规则分开执行。",
-      },
-      {
-        title: "矛盾自我证明直接放行",
-        detail: "US Indicia 等矛盾信号必须先澄清取证。",
-      },
-      {
-        title: "零申报即零工作",
-        detail: "分类、校验、申报与留痕的年度流程必须完整。",
       },
     ],
     documentsToCheck: [
@@ -1336,18 +1327,6 @@ export const lessons: Lesson[] = [
       {
         title: "凭名称定分类",
         detail: "Private Fund 与 Private Investment Fund 名称相近但制度不同，看运作与现行法。",
-      },
-      {
-        title: "把 Approved Manager 当无监管",
-        detail: "范围与规模限制、董事、授权代表与年度申报都是持续义务。",
-      },
-      {
-        title: "用 Cayman ELP 逻辑套 BVI LP",
-        detail: "BVI 有限合伙可依法选择法律人格，规则与开曼不同。",
-      },
-      {
-        title: "ES 一锅端",
-        detail: "不按主体与业务类型分层，会导致申报主体与活动口径错误。",
       },
     ],
     documentsToCheck: [
