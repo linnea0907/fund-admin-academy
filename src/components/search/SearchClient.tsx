@@ -12,7 +12,6 @@ import {
 import { recordTermEvents } from "@/lib/wiki-metrics";
 import { displayNumber } from "@/lib/lesson-number";
 import { matchSynonymRedirect } from "@/lib/search-synonyms";
-import CaymanLawTimeline from "@/components/search/CaymanLawTimeline";
 
 function escapeRegExp(s: string): string {
   return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -546,9 +545,6 @@ export default function SearchClient({ data }: { data: SearchData }) {
               />
             </div>
           </section>
-
-          {/* ===== 开曼法规历史沿革（V1.20.13：可视化 + 可互动时间轴） ===== */}
-          <CaymanLawTimeline />
         </>
       ) : !hits || hits.total === 0 ? (
         /* ===== 无结果 ===== */

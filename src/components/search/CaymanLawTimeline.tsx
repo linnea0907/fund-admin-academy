@@ -474,7 +474,7 @@ function TimelineNode({
                       strokeLinejoin="round"
                     />
                   </svg>
-                  查看官方文本（外链）
+                  查看官方文本（PDF）
                 </a>
               </div>
             )}

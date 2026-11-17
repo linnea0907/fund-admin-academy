@@ -56,6 +56,7 @@ const NAV: NavItem[] = [
       { href: "/cases", label: "案例库" },
       { href: "/glossary", label: "术语库" },
       { href: "/toolkit", label: "实务工具包" },
+      { href: "/cayman-laws", label: "开曼法规沿革" },
     ],
   },
   { href: "/backlog", label: "案例工坊", icon: "workshop" },

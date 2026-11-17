@@ -54,7 +54,7 @@ export const CAYMAN_LAW_TIMELINE: CaymanLawMilestone[] = [
         "Fund Admin 经办的所有开曼基金载体（SPC、ELP、LLC 等）其设立与存续的根本依据都溯源至公司法；了解公司法基本盘是理解后续监管演变的前提。",
       keyItems: ["Exempted Company 豁免公司", "公司章程（Memorandum & Articles）", "注册处（Registrar）"],
     },
-    url: "https://legislation.gov.ky/",
+    url: "https://gov.ky/documents/35692/0/Companies+Act+(2026+Revision),.pdf",
     tags: ["公司法", "基金载体"],
   },
   {
@@ -98,7 +98,7 @@ export const CAYMAN_LAW_TIMELINE: CaymanLawMilestone[] = [
         "Fund Admin（基金行政管理人）作为独立持牌主体的地位被正式强化——资本要求、董事人数、审计义务都有明确门槛，直接关系到行政服务商的合规运营。",
       keyItems: ["Mutual Fund Administrator 持牌", "Section 4(4) 豁免雏形", "资本要求"],
     },
-    url: "https://legislation.gov.ky/",
+    url: "https://legislation.gov.ky/cms/images/LEGISLATION/PRINCIPAL/1993/1993-0013/MutualFundsAct_2020%20Revision.pdf",
     tags: ["共同基金", "注册基金"],
   },
   {
@@ -142,7 +142,7 @@ export const CAYMAN_LAW_TIMELINE: CaymanLawMilestone[] = [
         "「注册」与「持牌」双轨制成形——Fund Admin 需判断客户基金走哪条通道，并持续履行注册基金的年度审计报备与年费缴纳义务；注册基金也须接受 CIMA 持续监管。",
       keyItems: ["Registered Fund 注册基金", "注册 vs 持牌双轨", "持续合规义务"],
     },
-    url: "https://www.cima.ky/",
+    url: "https://legislation.gov.ky/cms/images/LEGISLATION/PRINCIPAL/1993/1993-0013/MutualFundsAct_2020%20Revision.pdf",
     tags: ["共同基金", "注册基金", "CIMA"],
   },
   {
@@ -164,7 +164,7 @@ export const CAYMAN_LAW_TIMELINE: CaymanLawMilestone[] = [
         "Fund Admin 在客户准入（onboarding）阶段须配合更严格的受益所有权与治理审查；AML/KYC 义务从「选择性」走向「结构性」，是 2019 年后所有基金行政工作的底色。",
       keyItems: ["CFATF 第四轮互评估", "Part XVIIA 受益所有权", "治理强化"],
     },
-    url: "https://legislation.gov.ky/",
+    url: "https://gov.ky/documents/35692/0/Companies+Act+(2026+Revision),.pdf",
     tags: ["公司法", "反洗钱", "受益所有权"],
   },
   {
@@ -187,7 +187,7 @@ export const CAYMAN_LAW_TIMELINE: CaymanLawMilestone[] = [
         "这是 Fund Admin 业务的重大拐点——大量此前不受监管的 PE / 房地产 / 基础设施基金第一次进入监管视野，须在过渡期内完成注册、建立年度审计与报备机制。",
       keyItems: ["封闭式基金定义", "注册 + 年度审计", "2020-08-07 过渡期"],
     },
-    url: "https://www.cima.ky/upimages/publicationdoc/TheNavigator-Marc_1585871995.pdf",
+    url: "https://www.cima.ky/upimages/commonfiles/PrivateFundsLaw2020_1581524961.PDF",
     tags: ["私募基金", "封闭式基金", "CIMA", "监管里程碑"],
   },
   {
@@ -209,7 +209,7 @@ export const CAYMAN_LAW_TIMELINE: CaymanLawMilestone[] = [
         "Fund Admin 需排查存量「少数投资者」基金是否落入新的注册义务；原以为可豁免的 4(4) 基金也须在过渡期内完成注册与审计，合规清单显著扩容。",
       keyItems: ["Section 4(4) 豁免取消", "Limited Investor Funds", "CI$300 注册费 / CI$3,500 年费"],
     },
-    url: "https://www.cima.ky/",
+    url: "https://legislation.gov.ky/cms/images/LEGISLATION/PRINCIPAL/1993/1993-0013/MutualFundsAct_2020%20Revision.pdf",
     tags: ["共同基金", "注册基金", "CIMA"],
   },
   {
@@ -231,7 +231,7 @@ export const CAYMAN_LAW_TIMELINE: CaymanLawMilestone[] = [
         "涉虚拟资产的基金及服务商须新增 VASP 注册与 AML 合规动作；Fund Admin 若服务数字资产基金，须评估自身是否落入 VASP 定义，并落实旅行规则下的交易对手信息传递。",
       keyItems: ["VASP 注册 / 许可", "Travel Rule 旅行规则", "AML/CFT 义务"],
     },
-    url: "https://legislation.gov.ky/",
+    url: "https://www.cima.ky/upimages/lawsregulations/VirtualAssetServiceProvidersLaw,2020_1594210684_1599485320.PDF",
     tags: ["虚拟资产", "VASP", "反洗钱", "FATF"],
   },
   {
@@ -275,7 +275,7 @@ export const CAYMAN_LAW_TIMELINE: CaymanLawMilestone[] = [
         "Fund Admin 须更审慎地识别并核验最终受益所有人（UBO），因为 BO 信息可能向公众 / 特定主体披露；客户准入时的「穿透识别」从形式审查走向实质审查。",
       keyItems: ["BO 公开披露框架", "替代 Part XVIIA", "UBO 穿透识别"],
     },
-    url: "https://legislation.gov.ky/",
+    url: "https://www.cima.ky/upimages/lawsregulations/BeneficialOwnershipTransparencyAct,2023_1705419743.pdf",
     tags: ["受益所有权", "反洗钱", "透明度"],
   },
   {
