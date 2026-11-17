@@ -70,10 +70,12 @@ export default function CaymanGuidanceTimeline() {
     const filtered = activeTag
       ? CAYMAN_GUIDANCE_TIMELINE.filter((m) => m.tags.includes(activeTag))
       : CAYMAN_GUIDANCE_TIMELINE;
-    return order === "asc" ? filtered : [...filtered].reverse();
+    // 显式按 year 升序，不依赖数组书写顺序
+    const sorted = [...filtered].sort((a, b) => a.year - b.year);
+    return order === "asc" ? sorted : sorted.reverse();
   }, [order, activeTag]);
 
-  const latest = CAYMAN_GUIDANCE_TIMELINE[CAYMAN_GUIDANCE_TIMELINE.length - 1];
+  const latest = [...CAYMAN_GUIDANCE_TIMELINE].sort((a, b) => b.year - a.year)[0];
 
   const toggle = (id: string) =>
     setExpanded((prev) => {

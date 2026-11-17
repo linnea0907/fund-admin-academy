@@ -66,10 +66,12 @@ export default function CaymanLawTimeline() {
     const filtered = activeTag
       ? CAYMAN_LAW_TIMELINE.filter((m) => m.tags.includes(activeTag))
       : CAYMAN_LAW_TIMELINE;
-    return order === "asc" ? filtered : [...filtered].reverse();
+    // 显式按 year 升序，不依赖数组书写顺序
+    const sorted = [...filtered].sort((a, b) => a.year - b.year);
+    return order === "asc" ? sorted : sorted.reverse();
   }, [order, activeTag]);
 
-  const latest = CAYMAN_LAW_TIMELINE[CAYMAN_LAW_TIMELINE.length - 1];
+  const latest = [...CAYMAN_LAW_TIMELINE].sort((a, b) => b.year - a.year)[0];
 
   const toggle = (id: string) =>
     setExpanded((prev) => {
