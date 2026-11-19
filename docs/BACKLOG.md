@@ -10,6 +10,44 @@
 
 ---
 
+## V1.21.6 已交付（来源：AML 合规计划规则 2026 简化版 / 完整对照版双版本）
+
+> 登记时间：2026-11-19
+
+**目标**：为《AML 有效合规计划规则（2026）》同时提供「简化版」与「完整对照版」两个版本，用户进入详情页可一键切换。
+
+**交付内容**：
+
+1. **数据层双版本**：`CaymanLawDetail` 新增可选字段 `summaryGroups?: CaymanLawProvisionGroup[]`；`aml-compliance-rule-2026` 保留 `groups`（s.3–s.14 完整对照版），新增 `summaryGroups`（归纳为 7 个核心要点 Rule 1–7 的简化版）。
+2. **详情页切换开关**：`CaymanLawDetailView` 增加 `view` state（`summary` / `full`），当 `summaryGroups` 存在时顶部渲染「简化版 / 完整对照版」分段按钮，显示各自条目数；默认展示简化版，可一键切换完整对照版。
+3. **其他 3 部法规不受影响**：仅 `aml-compliance-rule-2026` 提供双版本，其余法规 `summaryGroups` 缺省、仅显示完整版（不渲染切换开关）。
+
+**校验**：tsc 通过；eslint 通过；dev server 渲染验证——切换开关、简化版（Rule 1 五要素）、完整版（s.3(1) 目标声明等）均正确输出。
+
+---
+
+## V1.21.5 已交付（来源：AML 合规计划规则 2026 完整版中英对照 + 官方文本直链）
+
+> 登记时间：2026-11-19
+
+**目标**：为《AML 有效合规计划规则（2026）》补齐完整版条款级中英对照，并将速览卡片接入官方文本直链。
+
+**交付内容**：
+
+1. **完整版中英对照**：`aml-compliance-rule-2026` 的 `groups` 由原 7 个简化 Rule 条目扩展为 12 个章节（s.3–s.14），逐条英文原文 + 中文译注、一段段断开：
+   - s.3 目标声明 · s.4 法定授权 · s.5 适用范围 · s.6 定义
+   - s.7 治理与合规计划概览（含五要素）· s.8 反洗钱官任命（AMLCO/MLRO/DMLRO）
+   - s.9 风险为本方法的制定与文档化 · s.10 详细政策、程序与控制
+   - s.11 持续合规培训与员工筛查 · s.12 有效性的证明（独立审计）
+   - s.13 执法（含 AMLCO 个人责任）· s.14 生效日期（2026-09-18）
+2. **章节标题对齐官方 TOC**：依 CIMA 官方 Rule 文本的 Table of Contents 修正各章节英文标题（如 s.8 正式名为 "Designation of the AMLCO, MLRO and DMLRO"）。
+3. **官方文本直链更正**：`url` 由原先的意见征询反馈声明（Amalgamated Feedback Statement）更正为 CIMA 正式发布的 Rule 文本 PDF（`regulatorymeasures/Rule-EffectiveComplianceProgrammeforMLTFPF_1784900645.pdf`）。
+4. **速览卡片接入**：`/cayman-laws` 速览卡片已含「中英对照 ↕」与「官方文本（PDF）↗」两个入口。
+
+**校验**：tsc 通过；eslint 通过；新增条款术语引用全部有效（0 断链）。
+
+---
+
 ## V1.21.4 已交付（来源：法规内容全面正确性核查）
 
 > 登记时间：2026-11-19

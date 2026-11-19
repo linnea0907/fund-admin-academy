@@ -81,10 +81,9 @@ export default function CaymanLawsPage() {
         </div>
         <div className="mt-4 grid grid-cols-1 gap-3">
           {LATEST_DETAILS.map((d) => (
-            <Link
+            <div
               key={d.id}
-              href={`/cayman-laws/${d.id}`}
-              className="group flex flex-col rounded-xl border border-emerald-200 bg-emerald-50/50 p-4 transition hover:border-emerald-300 hover:shadow"
+              className="flex flex-col rounded-xl border border-emerald-200 bg-emerald-50/50 p-4 transition hover:border-emerald-300 hover:shadow"
             >
               <div className="flex items-center gap-1.5">
                 <span className="rounded bg-emerald-500 px-1.5 py-0.5 text-[10px] font-bold tabular-nums text-white">
@@ -97,15 +96,26 @@ export default function CaymanLawsPage() {
                   最新
                 </span>
               </div>
-              <p className="mt-2 text-[13px] font-semibold leading-snug text-slate-700 group-hover:text-[#0e2a5e]">
-                {d.nameZh}
-              </p>
+              <p className="mt-2 text-[13px] font-semibold leading-snug text-slate-700">{d.nameZh}</p>
               <p className="mt-1 text-[11px] leading-snug text-slate-400">{d.nameEn}</p>
               <p className="mt-2 text-xs leading-relaxed text-slate-500">{d.summary}</p>
-              <p className="mt-auto pt-2 text-[11px] font-semibold text-[#0e2a5e]">
-                中英对照 ↕
-              </p>
-            </Link>
+              <div className="mt-3 flex flex-wrap items-center gap-3 border-t border-emerald-100 pt-2.5">
+                <Link
+                  href={`/cayman-laws/${d.id}`}
+                  className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#0e2a5e] transition hover:underline"
+                >
+                  中英对照 ↕
+                </Link>
+                <a
+                  href={d.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#0e2a5e] transition hover:underline"
+                >
+                  官方文本（PDF）↗
+                </a>
+              </div>
+            </div>
           ))}
         </div>
       </section>

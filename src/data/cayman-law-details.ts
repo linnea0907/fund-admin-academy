@@ -54,8 +54,13 @@ export type CaymanLawDetail = {
   url: string;
   /** 法规关联术语（整部法规层面的核心术语 id） */
   relatedTerms: string[];
-  /** 条款级中英对照分组 */
+  /** 条款级中英对照分组（完整对照版，逐条英文原文 + 中文译注） */
   groups: CaymanLawProvisionGroup[];
+  /**
+   * 简化版分组（可选）：速览口径的归纳条目，与 `groups` 完整版并存。
+   * 详情页据此渲染「简化版 / 完整对照版」切换。
+   */
+  summaryGroups?: CaymanLawProvisionGroup[];
 };
 
 export const CAYMAN_LAW_DETAILS: CaymanLawDetail[] = [
@@ -422,16 +427,16 @@ export const CAYMAN_LAW_DETAILS: CaymanLawDetail[] = [
     id: "aml-compliance-rule-2026",
     milestoneId: "aml-compliance-rule-2026",
     nameEn:
-      "Rule on Effective Compliance Programme for the Prevention and Detection of ML/TF/PF (2026)",
+      "Rule on Effective Compliance Programme for the Prevention and Detection of Money Laundering, Terrorist Financing and Proliferation Financing for Financial Services Providers (2026)",
     nameZh: "AML 有效合规计划规则（2026）",
     kind: "Rule 规则",
     year: 2026,
     highlight: "反洗钱",
     summary:
-      "CIMA 2026-09-18 生效，将原先非约束性的 AML 指引升级为约束性规则，强制 FSP 建立五大要素的合规计划。",
+      "CIMA 2026-09-18 生效，将原先非约束性的 AML 指引升级为约束性规则，强制 FSP 建立并维护覆盖五大要素的有效合规计划。",
     faNote:
       "Fund Admin 须评估自身合规计划是否满足五要素（尤其独立审计职能与 AMLCO 独立性）；外包合规职能须尽调并通知 CIMA。",
-    url: "https://www.cima.ky/upimages/priorconsultation/EffectiveComplianceProgramme-AmalgamatedFeedbackStatement_1783954838.pdf",
+    url: "https://www.cima.ky/upimages/regulatorymeasures/Rule-EffectiveComplianceProgrammeforMLTFPF_1784900645.pdf",
     relatedTerms: [
       "effective-compliance-programme",
       "amlco",
@@ -444,6 +449,296 @@ export const CAYMAN_LAW_DETAILS: CaymanLawDetail[] = [
       "ongoing-monitoring",
     ],
     groups: [
+      {
+        titleEn: "s.3 Statement of Objectives",
+        titleZh: "目标声明",
+        provisions: [
+          {
+            ref: "s. 3(1)",
+            en: "The objective of this Rule is to prescribe the minimum standards for an effective compliance programme that a financial services provider must establish and maintain to prevent and detect money laundering, terrorist financing and proliferation financing.",
+            zh: "本规则的目标是规定「有效合规计划」的最低标准——金融服务提供商（FSP）必须建立并维护该合规计划，以防范和发现洗钱、恐怖融资及扩散融资。",
+            terms: ["effective-compliance-programme", "aml-cft"],
+          },
+          {
+            ref: "s. 3(2)",
+            en: "A compliance programme is a set of internal policies, procedures and controls designed to ensure compliance with the AML/CFT/PF obligations under the Proceeds of Crime Act, the Anti-Money Laundering Regulations and this Rule.",
+            zh: "合规计划是一套内部政策、程序与控制措施，旨在确保履行《犯罪收益法》、反洗钱条例及本规则项下的反洗钱 / 反恐怖融资 / 反扩散融资义务。",
+            terms: ["effective-compliance-programme", "aml", "aml-cft"],
+          },
+        ],
+      },
+      {
+        titleEn: "s.4 Statutory Authority",
+        titleZh: "法定授权",
+        provisions: [
+          {
+            ref: "s. 4(1)",
+            en: "This Rule is issued by the Authority (CIMA) pursuant to section 34(1) of the Monetary Authority Act (2020 Revision), which empowers CIMA to issue rules, statements of principle and guidance.",
+            zh: "本规则由管理局（CIMA）依《货币管理局法（2020 修订）》第 34(1) 条发布，该条授权 CIMA 发布规则、原则声明与指引。",
+            terms: ["cima"],
+          },
+          {
+            ref: "s. 4(2)",
+            en: "This Rule is supplemental to, and must be read together with, the Anti-Money Laundering Regulations (2023 Revision) and the associated Guidance Notes; it does not replace or derogate from those instruments.",
+            zh: "本规则是对反洗钱条例（2023 修订）及其配套指引的补充，须与之一并解读；本规则并不取代或减损上述文件的效力。",
+            terms: ["aml"],
+          },
+        ],
+      },
+      {
+        titleEn: "s.5 Scope of Application",
+        titleZh: "适用范围",
+        provisions: [
+          {
+            ref: "s. 5(1)",
+            en: "This Rule applies to every person carrying on relevant financial business in or from the Cayman Islands, including a fund, a fund administrator and other financial services providers.",
+            zh: "本规则适用于在开曼群岛内或从开曼群岛从事「相关金融业务」的每一主体，包括基金、基金行政管理人及其他金融服务提供商。",
+            terms: ["aml", "fund-administrator"],
+          },
+          {
+            ref: "s. 5(2)",
+            en: "Where an FSP operates through branches or subsidiaries, or is a member of a group, the compliance programme must take into account the AML/CFT/PF risks of those branches, subsidiaries and group members, unless local law prohibits it.",
+            zh: "主体通过分支机构或子公司运营、或属于某一集团成员时，其合规计划必须考虑该等分支机构、子公司与集团成员的洗钱 / 恐怖融资 / 扩散融资风险（除非当地法律禁止）。",
+            terms: ["aml-cft", "risk-based-approach"],
+          },
+          {
+            ref: "s. 5(3)",
+            en: "Where compliance functions are delegated to a third party or service provider, the FSP retains ultimate responsibility for compliance with this Rule.",
+            zh: "即便合规职能被委托给第三方或服务商，主体仍对遵守本规则承担最终责任。",
+            terms: ["amlco"],
+          },
+        ],
+      },
+      {
+        titleEn: "s.6 Definitions",
+        titleZh: "定义",
+        provisions: [
+          {
+            ref: "s. 6",
+            en: "Key defined terms include: 'AMLCO' (Anti-Money Laundering Compliance Officer); 'Beneficial Owner'; 'Business Relationship'; 'Compliance Programme'; 'Financial Services Provider' (FSP); and 'Governing Body', among others.",
+            zh: "关键定义包括：「反洗钱合规官 AMLCO」、「受益所有人」、「业务关系」、「合规计划」、「金融服务提供商（FSP）」、「治理机构」等。",
+            terms: ["amlco", "ubo", "governing-body"],
+          },
+          {
+            ref: "s. 6",
+            en: "'Governing Body' means the board of directors, general partner, trustee or other equivalent body with ultimate responsibility for the FSP and its compliance with the AML/CFT/PF obligations.",
+            zh: "「治理机构」指董事会、普通合伙人、受托人或其他对主体及其反洗钱 / 反恐怖融资 / 反扩散融资义务承担最终责任的同等机构。",
+            terms: ["governing-body"],
+          },
+        ],
+      },
+      {
+        titleEn: "s.7 Governance & Overview of the Compliance Programme",
+        titleZh: "治理与合规计划概览",
+        provisions: [
+          {
+            ref: "s. 7(1)",
+            en: "The governing body has overall responsibility for establishing, implementing and maintaining an effective compliance programme, and for ensuring that adequate resources are allocated to it.",
+            zh: "治理机构对建立、实施并维护有效的合规计划负有总体责任，并须确保为其配置充足资源。",
+            terms: ["governing-body", "effective-compliance-programme"],
+          },
+          {
+            ref: "s. 7(3)",
+            en: "The compliance programme must comprise five core components: (i) designation of an AMLCO; (ii) documented written policies and procedures; (iii) a risk management framework applying a risk-based approach; (iv) an ongoing compliance training programme; and (v) ongoing evaluations of effectiveness through independent audit.",
+            zh: "合规计划须包含五要素：（一）任命反洗钱合规官（AMLCO）；（二）书面政策与程序；（三）基于风险为本方法的风险管理框架；（四）持续合规培训计划；（五）通过独立审计持续评估有效性。",
+            terms: ["effective-compliance-programme", "amlco", "risk-based-approach"],
+          },
+          {
+            ref: "s. 7(4)",
+            en: "The governing body must approve the compliance programme, review it at least annually, and document its approval and review.",
+            zh: "治理机构须批准合规计划、至少每年复核一次，并将批准与复核情况书面化。",
+            terms: ["governing-body"],
+          },
+        ],
+      },
+      {
+        titleEn: "s.8 Designation of the AMLCO, MLRO & DMLRO",
+        titleZh: "反洗钱官的任命",
+        provisions: [
+          {
+            ref: "s. 8(1)",
+            en: "An FSP must designate an AMLCO who is a natural person at no lower than management level, with the requisite skills, knowledge and experience, and who has sufficient seniority and authority.",
+            zh: "主体须任命一名反洗钱合规官（AMLCO），须为不低于管理层的自然人，具备所需的技能、知识与经验，并拥有充分的资历与权限。",
+            terms: ["amlco"],
+          },
+          {
+            ref: "s. 8(2)",
+            en: "The AMLCO must perform the compliance function independently and objectively, separate from business and operational functions, and must report directly to the governing body at least annually.",
+            zh: "AMLCO 须独立、客观地履行合规职能（与业务及运营职能相分离），并至少每年直接向治理机构报告。",
+            terms: ["amlco", "governing-body"],
+          },
+          {
+            ref: "s. 8(3)",
+            en: "The AMLCO may not also be a director of the fund or of its general partner; where this is unavoidable for smaller entities, the conflict must be documented and mitigating measures put in place.",
+            zh: "AMLCO 不得同时担任基金或其普通合伙人的董事；对于较小实体确属无法避免的，须书面记录该利益冲突并落实缓释措施。",
+            terms: ["amlco"],
+          },
+          {
+            ref: "s. 8(4)",
+            en: "An FSP must also appoint an MLRO and a DMLRO, who must be different individuals; the AMLCO may also serve as the MLRO.",
+            zh: "主体还须任命洗钱申报官（MLRO）与副洗钱申报官（DMLRO），二者须为不同人员；AMLCO 可同时兼任 MLRO。",
+            terms: ["mlro", "dmlro", "amlco"],
+          },
+          {
+            ref: "s. 8(5)",
+            en: "The MLRO is responsible for receiving and evaluating internal reports of suspicious activity and, where appropriate, filing suspicious activity reports (SARs) with the Financial Reporting Authority.",
+            zh: "MLRO 负责接收并评估内部可疑交易报告，并视情况向金融报告局（FRA）提交可疑交易报告（SAR）。",
+            terms: ["mlro", "str", "tipping-off"],
+          },
+          {
+            ref: "s. 8(6)",
+            en: "The DMLRO acts in the MLRO's absence and must have the same level of authority, access to information and seniority as the MLRO.",
+            zh: "DMLRO 在 MLRO 缺席时代行其职，并须拥有与 MLRO 同等的权限、信息访问与资历。",
+            terms: ["dmlro", "mlro"],
+          },
+        ],
+      },
+      {
+        titleEn: "s.9 Development & Documentation of a Risk-Based Approach",
+        titleZh: "风险为本方法的制定与文档化",
+        provisions: [
+          {
+            ref: "s. 9(1)",
+            en: "An FSP must identify, assess and understand its ML/TF/PF risks, taking into account its customers, countries or geographic areas, products, services, transactions and delivery channels.",
+            zh: "主体须识别、评估并理解其洗钱 / 恐怖融资 / 扩散融资风险，评估维度包括客户、国别 / 地区、产品、服务、交易及交付渠道。",
+            terms: ["risk-based-approach", "customer-risk-rating"],
+          },
+          {
+            ref: "s. 9(2)",
+            en: "The risk assessment must take into account the Cayman Islands National Risk Assessment and any relevant findings, and must be documented in writing.",
+            zh: "风险评估须参照开曼群岛国家风险评估及相关结论，并以书面形式记录。",
+            terms: ["risk-based-approach"],
+          },
+          {
+            ref: "s. 9(3)",
+            en: "An FSP must design and implement policies, procedures and controls to manage and mitigate the risks identified, commensurate with the nature and size of its business.",
+            zh: "主体须设计并实施政策、程序与控制，以管理并缓释所识别的风险，且须与其业务性质与规模相称。",
+            terms: ["risk-based-approach", "inherent-risk", "residual-risk"],
+          },
+          {
+            ref: "s. 9(4)",
+            en: "The risk assessment must be kept up to date and reviewed at least annually, and must be updated without delay upon any material trigger event, such as a change in business model, new products, or a significant change in customer base.",
+            zh: "风险评估须保持最新并至少每年复核一次，并在任何重大触发事件（如商业模式变更、推出新产品、客户群重大变化）发生时及时更新。",
+            terms: ["risk-based-approach", "trigger-event"],
+          },
+        ],
+      },
+      {
+        titleEn: "s.10 Detailed Policies, Procedures & Controls",
+        titleZh: "详细政策、程序与控制",
+        provisions: [
+          {
+            ref: "s. 10(2)",
+            en: "The compliance programme must include documented policies and procedures covering customer due diligence (CDD), enhanced due diligence (EDD) for higher-risk situations, and simplified due diligence where permitted.",
+            zh: "合规计划须包含书面政策与程序，涵盖客户尽职调查（CDD）、高风险情形下的强化尽调（EDD），以及在允许情况下的简化尽调。",
+            terms: ["cdd", "edd"],
+          },
+          {
+            ref: "s. 10(3)",
+            en: "Policies and procedures must address the identification and verification of customers and beneficial owners, including electronic identification (e-KYC) where used, and must be approved by the governing body or senior management.",
+            zh: "政策与程序须涵盖客户与受益所有人的识别与核验（包括所使用的电子身份核验 e-KYC），并须经治理机构或高级管理层批准。",
+            terms: ["cdd", "ubo", "kyc"],
+          },
+          {
+            ref: "s. 10(4)",
+            en: "An FSP must apply CDD measures before or during the establishment of a business relationship, and must complete verification before or shortly after the relationship is established.",
+            zh: "主体须在建立业务关系时或过程中采取 CDD 措施，并在关系建立前或其后不久完成核验。",
+            terms: ["cdd", "trigger-event"],
+          },
+          {
+            ref: "s. 10(5)",
+            en: "Records obtained for CDD, together with transaction records, must be retained for at least five years after the end of the business relationship or the completion of the transaction.",
+            zh: "CDD 取得的记录及交易记录须在业务关系终止或交易完成后至少保存五年。",
+            terms: ["cdd"],
+          },
+          {
+            ref: "s. 10(7)",
+            en: "Where CDD or compliance functions are outsourced, the FSP must assess the risks, conduct due diligence on the service provider, document the arrangement, and notify CIMA of material outsourced functions; ultimate responsibility remains with the FSP.",
+            zh: "外包 CDD 或合规职能时，主体须评估风险、对服务商开展尽调、书面化安排，并就重大外包职能通知 CIMA；最终责任仍由主体承担。",
+            terms: ["amlco", "cima", "cdd"],
+          },
+        ],
+      },
+      {
+        titleEn: "s.11 Delivery of Ongoing Compliance Training & Employee Screening",
+        titleZh: "持续合规培训的开展与员工筛查",
+        provisions: [
+          {
+            ref: "s. 11(1)",
+            en: "An FSP must implement an ongoing training programme to ensure that all relevant employees are aware of their AML/CFT/PF obligations and of the procedures for reporting suspicious activity.",
+            zh: "主体须实施持续培训计划，确保所有相关员工了解其反洗钱 / 反恐怖融资 / 反扩散融资义务及可疑交易报告程序。",
+            terms: ["aml-cft", "str"],
+          },
+          {
+            ref: "s. 11(2)",
+            en: "Training must be provided at least annually and must be commensurate with the employee's role and the risks faced by the FSP.",
+            zh: "培训须至少每年提供一次，并须与员工职责及主体所面临的风险相称。",
+            terms: ["risk-based-approach"],
+          },
+          {
+            ref: "s. 11(3)",
+            en: "Records of training delivered must be retained to evidence compliance with the training obligation.",
+            zh: "须保存已开展培训的记录，以证明履行了培训义务。",
+            terms: ["aml-cft"],
+          },
+          {
+            ref: "s. 11(4)",
+            en: "An FSP must implement screening procedures, including at the time of hiring, to ensure the fitness and propriety of employees, and must screen employees in accordance with the FSP's risk-based approach.",
+            zh: "主体须实施员工筛查程序（含入职时），以确保员工的适格性与适当性，并依风险为本方法对员工进行筛查。",
+            terms: ["risk-based-approach"],
+          },
+        ],
+      },
+      {
+        titleEn: "s.12 Demonstration of the Effectiveness",
+        titleZh: "有效性的证明",
+        provisions: [
+          {
+            ref: "s. 12(1)",
+            en: "An FSP must carry out an independent audit to evaluate the adequacy and effectiveness of its compliance programme and its implementation.",
+            zh: "主体须开展独立审计，以评估其合规计划及其执行的充分性与有效性。",
+            terms: ["effective-compliance-programme", "auditor"],
+          },
+          {
+            ref: "s. 12(2)",
+            en: "The frequency and scope of the independent audit must be commensurate with the FSP's size, complexity and risk profile; an internal independent audit may be undertaken for no more than two consecutive cycles, after which an external audit is required.",
+            zh: "独立审计的频率与范围须与主体规模、复杂度及风险状况相称；内部独立审计连续开展不得超过两个周期，其后须进行外部审计。",
+            terms: ["effective-compliance-programme", "auditor"],
+          },
+          {
+            ref: "s. 12(3)",
+            en: "The independent audit must be carried out by suitably qualified persons who are independent and separate from those involved in the design, implementation or operation of the policies, procedures, systems and controls under audit, and who are free from any conflict of interest.",
+            zh: "独立审计须由具备相应资质、且独立于（并区别于）所审计政策、程序、系统与控制的设计、实施或运营人员的人士执行，且不得存在任何可能损害其客观判断的利益冲突。",
+            terms: ["auditor", "governing-body"],
+          },
+        ],
+      },
+      {
+        titleEn: "s.13 Enforcement",
+        titleZh: "执法",
+        provisions: [
+          {
+            ref: "s. 13",
+            en: "Failure to comply with this Rule is a contravention for which CIMA may exercise its enforcement powers, including the imposition of administrative fines, and the AMLCO may be personally liable where a compliance failure amounts to a breach of the AMLRs attributable to the officer's conduct.",
+            zh: "违反本规则构成违规，CIMA 可行使执法权，包括处以行政罚款；若合规失败构成归因于该反洗钱官行为的、对反洗钱条例的违反，AMLCO 可能承担个人责任。",
+            terms: ["cima", "amlco", "aml"],
+          },
+        ],
+      },
+      {
+        titleEn: "s.14 Effective Date",
+        titleZh: "生效日期",
+        provisions: [
+          {
+            ref: "s. 14",
+            en: "This Rule comes into force on 18 September 2026.",
+            zh: "本规则自 2026 年 9 月 18 日起生效。",
+          },
+        ],
+      },
+    ],
+    /* 简化版（速览口径）：归纳为 7 个核心要点，与上方完整对照版并存 */
+    summaryGroups: [
       {
         titleEn: "Five Core Components",
         titleZh: "合规计划五要素",

@@ -1,10 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { getTerm } from "@/lib/glossary";
 import TermLink from "@/components/glossary/TermLink";
-import type { CaymanLawDetail } from "@/data/cayman-law-details";
+import type { CaymanLawDetail, CaymanLawProvisionGroup } from "@/data/cayman-law-details";
 
 /**
  * 开曼核心法规 · 条款级中英对照（客户端视图）
@@ -12,8 +12,18 @@ import type { CaymanLawDetail } from "@/data/cayman-law-details";
  * - 左侧英文原文、右侧中文译注（桌面双栏；移动端上下堆叠）
  * - 条款中的术语用 TermLink 标注，点击打开右侧 Drawer 查看解释
  * - 顶部「本法规关联术语」chips，一键跳转术语详情页
+ * - 若法规同时提供 summaryGroups（简化版）与 groups（完整对照版），
+ *   顶部渲染「简化版 / 完整对照版」切换开关，默认展示简化版。
  */
 export default function CaymanLawDetailView({ detail }: { detail: CaymanLawDetail }) {
+  const hasSummary = Boolean(detail.summaryGroups && detail.summaryGroups.length > 0);
+  const [view, setView] = useState<"summary" | "full">(hasSummary ? "summary" : "full");
+
+  const groups: CaymanLawProvisionGroup[] = useMemo(
+    () => (view === "summary" && detail.summaryGroups ? detail.summaryGroups : detail.groups),
+    [view, detail]
+  );
+
   const related = useMemo(
     () =>
       detail.relatedTerms
@@ -99,8 +109,42 @@ export default function CaymanLawDetailView({ detail }: { detail: CaymanLawDetai
         </section>
       )}
 
+      {/* 简化版 / 完整对照版切换 */}
+      {hasSummary && (
+        <div className="flex items-center gap-1 rounded-xl border border-slate-200 bg-white p-1 shadow-sm">
+          <button
+            type="button"
+            onClick={() => setView("summary")}
+            className={`flex-1 rounded-lg px-3 py-2 text-xs font-semibold transition ${
+              view === "summary"
+                ? "bg-[#0e2a5e] text-white"
+                : "text-slate-500 hover:bg-slate-100"
+            }`}
+          >
+            简化版
+            <span className="ml-1.5 font-normal opacity-70">
+              {detail.summaryGroups?.reduce((n, g) => n + g.provisions.length, 0) ?? 0} 条
+            </span>
+          </button>
+          <button
+            type="button"
+            onClick={() => setView("full")}
+            className={`flex-1 rounded-lg px-3 py-2 text-xs font-semibold transition ${
+              view === "full"
+                ? "bg-[#0e2a5e] text-white"
+                : "text-slate-500 hover:bg-slate-100"
+            }`}
+          >
+            完整对照版
+            <span className="ml-1.5 font-normal opacity-70">
+              {detail.groups.reduce((n, g) => n + g.provisions.length, 0)} 条
+            </span>
+          </button>
+        </div>
+      )}
+
       {/* 条款级中英对照 */}
-      {detail.groups.map((g) => (
+      {groups.map((g) => (
         <section key={g.titleEn} className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
           <div className="flex flex-wrap items-baseline gap-2">
             <h2 className="text-sm font-bold text-slate-800">{g.titleZh}</h2>
