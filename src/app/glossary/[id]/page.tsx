@@ -10,6 +10,7 @@ import {
   termBrief,
 } from "@/lib/glossary";
 import { getTermRelations } from "@/lib/glossary-usage";
+import { getLawsByTerm } from "@/data/cayman-law-details";
 import { displayBadge } from "@/lib/lesson-number";
 import TermFavoriteButton from "@/components/favorites/TermFavoriteButton";
 import TermViewTracker from "@/components/glossary/TermViewTracker";
@@ -53,6 +54,7 @@ export default async function GlossaryTermPage({ params }: { params: Params }) {
   const category = getGlossaryCategory(term.category);
   const level = getTermLevel(term.level);
   const relations = getTermRelations(id);
+  const relatedLaws = getLawsByTerm(id);
   const isIsolated = relations.lessons.length === 0 && relations.cases.length === 0;
   const idx = GLOSSARY_TERMS.findIndex((t) => t.id === id);
   const prevT = idx > 0 ? GLOSSARY_TERMS[idx - 1] : null;
@@ -247,8 +249,41 @@ export default async function GlossaryTermPage({ params }: { params: Params }) {
           )}
         </div>
 
-        {/* 右列：关联课程 / 关联案例 */}
+        {/* 右列：相关法规 / 关联课程 / 关联案例 */}
         <aside className="space-y-5">
+          {relatedLaws.length > 0 && (
+            <section className="rounded-2xl border border-[#0e2a5e]/15 bg-[#0e2a5e]/[0.03] p-5">
+              <h2 className="flex items-center gap-2 text-sm font-bold text-[#0e2a5e]">
+                相关法规
+                <span className="rounded bg-[#0e2a5e]/10 px-1.5 py-0.5 text-[10px] font-semibold text-[#0e2a5e]">
+                  {relatedLaws.length}
+                </span>
+              </h2>
+              <ul className="mt-3 space-y-2">
+                {relatedLaws.map((law) => (
+                  <li key={law.id}>
+                    <Link
+                      href={`/cayman-laws/${law.id}`}
+                      className="block rounded-xl border border-slate-100 bg-white px-3 py-2.5 transition hover:border-[#0e2a5e] hover:bg-[#0e2a5e]/[0.03]"
+                    >
+                      <span className="flex items-center gap-2">
+                        <span className="shrink-0 rounded bg-slate-100 px-1.5 py-px text-[10px] font-bold text-slate-500">
+                          {law.year}
+                        </span>
+                        <span className="truncate text-sm font-semibold text-slate-700">
+                          {law.nameZh}
+                        </span>
+                      </span>
+                      <span className="mt-1 block text-[11px] leading-snug text-slate-400">
+                        {law.nameEn}
+                      </span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
+
           <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
             <h2 className="flex items-center gap-2 text-sm font-bold text-slate-800">
               关联课程

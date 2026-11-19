@@ -1,11 +1,14 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import Link from "next/link";
+import HighlightEngine from "@/components/reading/HighlightEngine";
 import {
   CAYMAN_GUIDANCE_TIMELINE,
   CAYMAN_GUIDANCE_TAGS,
   type CaymanGuidanceMilestone,
 } from "@/data/cayman-guidance-timeline";
+import { getCaymanLawDetailByMilestone } from "@/data/cayman-law-details";
 
 /**
  * 开曼法规 & 指引历史沿革（知识检索页内板块）
@@ -51,6 +54,8 @@ export default function CaymanGuidanceTimeline() {
   const [activeTag, setActiveTag] = useState<string | null>(null);
   const [showFilter, setShowFilter] = useState(false);
   const filterRef = useRef<HTMLDivElement>(null);
+  /** 阅读高亮引擎的正文作用域（时间轴 ol 容器，含各节点 data-reading-scope） */
+  const scopeRef = useRef<HTMLElement | null>(null);
   const [expanded, setExpanded] = useState<Set<string>>(
     () => new Set(CAYMAN_GUIDANCE_TIMELINE.filter((m) => m.highlight).map((m) => m.id))
   );
@@ -259,7 +264,7 @@ export default function CaymanGuidanceTimeline() {
       </div>
 
       {/* 左右错落时间轴 */}
-      <div className="relative mt-6">
+      <section ref={scopeRef} className="relative mt-6">
         <div
           className="absolute bottom-3 top-3 left-1/2 w-px -translate-x-1/2 bg-slate-200"
           aria-hidden="true"
@@ -276,11 +281,19 @@ export default function CaymanGuidanceTimeline() {
             />
           ))}
         </ol>
-      </div>
+      </section>
 
       <p className="mt-6 border-t border-slate-100 pt-3 text-[11px] leading-relaxed text-slate-400">
         注：本板块为知识索引，非法律意见。规则与指引以 CIMA（cima.ky）官方发布为准；完整现行文本请点击各节点超链接访问官方 PDF。
       </p>
+
+      {/* V1.20.14：阅读高亮引擎（选中正文文字 → 高亮/写笔记，与课程/案例一致） */}
+      <HighlightEngine
+        sourceType="cayman-guidance"
+        sourceId="cayman-guidance-timeline"
+        sourceTitle="开曼指引沿革"
+        scopeRef={scopeRef}
+      />
     </section>
   );
 }
@@ -316,16 +329,20 @@ function GuidanceNode({
 
       <div className={`flex ${isLeft ? "justify-start" : "justify-end"}`}>
         <div className={`w-full sm:w-[calc(50%-1.75rem)] ${isLeft ? "sm:pr-0" : "sm:pl-0"}`}>
-          <button
-            type="button"
-            onClick={onToggle}
-            className={`group w-full rounded-xl border bg-white text-left shadow-sm transition ${
+          <div
+            className={`w-full rounded-xl border bg-white text-left shadow-sm transition ${
               hl
                 ? `${hl.border} hover:shadow`
                 : "border-slate-100 hover:border-blue-200 hover:bg-blue-50/30"
             }`}
           >
-            <div className="flex items-start gap-3 px-3.5 py-3">
+            {/* 标题栏：独立展开/收起按钮（点击正文文本不再触发展开） */}
+            <button
+              type="button"
+              onClick={onToggle}
+              aria-expanded={expanded}
+              className="group flex w-full items-start gap-3 px-3.5 py-3 text-left"
+            >
               <span
                 className={`mt-0.5 shrink-0 rounded-md px-2 py-0.5 text-xs font-bold tabular-nums ${
                   hl ? `${hl.chip} ${hl.chipText}` : "bg-[#0e2a5e]/5 text-[#0e2a5e]"
@@ -384,10 +401,10 @@ function GuidanceNode({
               >
                 <path d="M4 6l4 4 4-4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
-            </div>
+            </button>
 
             {expanded && (
-              <div className="border-t border-slate-100 px-3.5 py-3">
+              <div data-reading-scope={`cayman-guidance-${item.id}`} className="border-t border-slate-100 px-3.5 py-3">
                 <p className="text-xs leading-relaxed text-slate-600">{item.summary}</p>
 
                 <div className="mt-3">
@@ -435,7 +452,6 @@ function GuidanceNode({
                   href={item.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  onClick={(e) => e.stopPropagation()}
                   className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-[#0e2a5e] transition hover:underline"
                 >
                   <svg className="h-3.5 w-3.5" viewBox="0 0 16 16" fill="none" aria-hidden="true">
@@ -449,9 +465,17 @@ function GuidanceNode({
                   </svg>
                   查看官方文本（PDF）
                 </a>
+                {getCaymanLawDetailByMilestone(item.id) && (
+                  <Link
+                    href={`/cayman-laws/${getCaymanLawDetailByMilestone(item.id)!.id}`}
+                    className="ml-3 inline-flex items-center gap-1 rounded-full bg-[#0e2a5e]/5 px-2.5 py-1 text-xs font-semibold text-[#0e2a5e] transition hover:bg-[#0e2a5e] hover:text-white"
+                  >
+                    中英对照 ↕
+                  </Link>
+                )}
               </div>
             )}
-          </button>
+          </div>
         </div>
       </div>
     </li>

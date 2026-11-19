@@ -1,12 +1,15 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import HighlightEngine from "@/components/reading/HighlightEngine";
+import Link from "next/link";
 import {
   CAYMAN_LAW_TIMELINE,
   CAYMAN_LAW_TAGS,
   CAYMAN_LAW_HIGHLIGHTS,
   type CaymanLawMilestone,
 } from "@/data/cayman-law-timeline";
+import { getCaymanLawDetailByMilestone } from "@/data/cayman-law-details";
 
 /**
  * 开曼法规历史沿革（知识检索页内板块）
@@ -45,6 +48,8 @@ export default function CaymanLawTimeline() {
   const [activeTag, setActiveTag] = useState<string | null>(null);
   const [showFilter, setShowFilter] = useState(false);
   const filterRef = useRef<HTMLDivElement>(null);
+  /** 阅读高亮引擎的正文作用域（时间轴 ol 容器，含各节点 data-reading-scope） */
+  const scopeRef = useRef<HTMLElement | null>(null);
   // 默认只展开「有高亮（反洗钱 / 基金）」的法规，普通法规仅保留标题行
   const [expanded, setExpanded] = useState<Set<string>>(
     () => new Set(CAYMAN_LAW_TIMELINE.filter((m) => m.highlight).map((m) => m.id))
@@ -269,7 +274,7 @@ export default function CaymanLawTimeline() {
       </div>
 
       {/* 左右错落时间轴 */}
-      <div className="relative mt-6">
+      <section ref={scopeRef} className="relative mt-6">
         {/* 中轴 */}
         <div
           className="absolute bottom-3 top-3 left-1/2 w-px -translate-x-1/2 bg-slate-200"
@@ -288,13 +293,21 @@ export default function CaymanLawTimeline() {
             />
           ))}
         </ol>
-      </div>
+      </section>
 
       {/* 底部说明 */}
       <p className="mt-6 border-t border-slate-100 pt-3 text-[11px] leading-relaxed text-slate-400">
         注：本板块为知识索引，非法律意见。法规沿革以 CIMA 与开曼政府官方公报为准；完整现行文本请点击各节点超链接访问
         legislation.gov.ky / cima.ky 官方来源。
       </p>
+
+      {/* V1.20.14：阅读高亮引擎（选中正文文字 → 高亮/写笔记，与课程/案例一致） */}
+      <HighlightEngine
+        sourceType="cayman-law"
+        sourceId="cayman-law-timeline"
+        sourceTitle="开曼法规沿革"
+        scopeRef={scopeRef}
+      />
     </section>
   );
 }
@@ -336,16 +349,20 @@ function TimelineNode({
         <div
           className={`w-full sm:w-[calc(50%-1.75rem)] ${isLeft ? "sm:pr-0" : "sm:pl-0"}`}
         >
-          <button
-            type="button"
-            onClick={onToggle}
-            className={`group w-full rounded-xl border bg-white text-left shadow-sm transition ${
+          <div
+            className={`w-full rounded-xl border bg-white text-left shadow-sm transition ${
               hl
                 ? `${hl.border} hover:shadow`
                 : "border-slate-100 hover:border-blue-200 hover:bg-blue-50/30"
             }`}
           >
-            <div className="flex items-start gap-3 px-3.5 py-3">
+            {/* 标题栏：独立展开/收起按钮（点击正文文本不再触发展开） */}
+            <button
+              type="button"
+              onClick={onToggle}
+              aria-expanded={expanded}
+              className="group flex w-full items-start gap-3 px-3.5 py-3 text-left"
+            >
               <span
                 className={`mt-0.5 shrink-0 rounded-md px-2 py-0.5 text-xs font-bold tabular-nums ${
                   hl ? hl.chip : "bg-[#0e2a5e]/5 text-[#0e2a5e]"
@@ -406,13 +423,11 @@ function TimelineNode({
                   strokeLinejoin="round"
                 />
               </svg>
-            </div>
+            </button>
 
-            {/* 折叠态：仅标题行（隐藏概括与详情，点开才显示） */}
-
-            {/* 展开态：结构化具体内容 */}
+            {/* 展开态：结构化具体内容（独立区域，可选中高亮/写笔记） */}
             {expanded && (
-              <div className="border-t border-slate-100 px-3.5 py-3">
+              <div data-reading-scope={`cayman-law-${item.id}`} className="border-t border-slate-100 px-3.5 py-3">
                 <p className="text-xs leading-relaxed text-slate-600">{item.summary}</p>
 
                 {/* 监管要点 */}
@@ -459,28 +474,37 @@ function TimelineNode({
                   </div>
                 )}
 
-                {/* 官方链接 */}
-                <a
-                  href={item.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={(e) => e.stopPropagation()}
-                  className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-[#0e2a5e] transition hover:underline"
-                >
-                  <svg className="h-3.5 w-3.5" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                    <path
-                      d="M6.5 4.5h-3a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h7a1 1 0 0 0 1-1v-3M9 3h4v4M8 8l5-5"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                  查看官方文本（PDF）
-                </a>
+                {/* 官方链接 + 中英对照入口 */}
+                <div className="mt-3 flex flex-wrap items-center gap-3">
+                  <a
+                    href={item.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 text-xs font-semibold text-[#0e2a5e] transition hover:underline"
+                  >
+                    <svg className="h-3.5 w-3.5" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                      <path
+                        d="M6.5 4.5h-3a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h7a1 1 0 0 0 1-1v-3M9 3h4v4M8 8l5-5"
+                        stroke="currentColor"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                    查看官方文本（PDF）
+                  </a>
+                  {getCaymanLawDetailByMilestone(item.id) && (
+                    <Link
+                      href={`/cayman-laws/${getCaymanLawDetailByMilestone(item.id)!.id}`}
+                      className="inline-flex items-center gap-1 rounded-full bg-[#0e2a5e]/5 px-2.5 py-1 text-xs font-semibold text-[#0e2a5e] transition hover:bg-[#0e2a5e] hover:text-white"
+                    >
+                      中英对照 ↕
+                    </Link>
+                  )}
+                </div>
               </div>
             )}
-          </button>
+          </div>
         </div>
       </div>
     </li>

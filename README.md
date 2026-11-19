@@ -62,6 +62,7 @@ src/
 │  ├─ courses/                 # 课程中心 + 课程详情 [slug]
 │  ├─ cases/                   # 案例库目录 + 案例详情 [id]
 │  ├─ glossary/                # 术语库列表（双页签）+ 术语详情 [id]
+│  ├─ cayman-laws/             # 开曼法规沿革（时间轴）+ 核心法规中英对照详情 [id]
 │  ├─ search/                  # 全站检索（8 范围）
 │  ├─ toolkit/                 # 实务工具包 + 详情 [id]
 │  ├─ cams-exam/               # 第 09 讲 CAMS 全真模拟考试
@@ -92,6 +93,8 @@ docs/                          # 规范与文档（见「文档索引」）
 | 术语库 | `src/data/glossary/*.ts`（8 分类各一文件） | **18 字段**；`term` / `aliases` 参与正文标注与检索；可选批量导入通道 `content/glossary/imported.json`（当前 0 条，全部为手写数据） |
 | 案例库 | `content/cases/Case-*.md` | frontmatter 7 字段 + 正文 10 个中文小节；规范见 `docs/CASE-LIBRARY-SPEC.md` |
 | 实务工具包 | `src/data/aml-toolkit.ts` | 5 份（`checklist` / `sop` / `comparison`） |
+| 开曼法规沿革 | `src/data/cayman-law-timeline.ts`（Law）、`cayman-guidance-timeline.ts`（Guidance） | 左右错落时间轴，含监管要点 / 实务影响 / 官方 PDF 直链 |
+| 开曼核心法规中英对照 | `src/data/cayman-law-details.ts` | 4 部核心法规条款级中英对照；`relatedTerms` / 条款 `terms` 关联术语库 id，与术语详情页双向互链 |
 | CAMS 题库与口径 | `src/types/cams.ts`、`src/data/cams/` | 四域权重 30/20/30/20；120 题 / 210 分钟 / 及格线 75 |
 | 展示编号 | `src/lib/lesson-number.ts` | 由 `orderedLessons` **下标派生**，无映射表 |
 | 版本号与品牌 | `src/lib/site-config.ts` | 升级版本只改此文件 |

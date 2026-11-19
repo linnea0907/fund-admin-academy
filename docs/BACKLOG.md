@@ -10,6 +10,26 @@
 
 ---
 
+## V1.21.0 已交付（来源：开曼核心法规中英对照 + 法规↔术语双向互链）
+
+> 登记时间：2026-11-19
+
+**交付内容**：
+
+1. **新增核心法规条款级中英对照** `src/data/cayman-law-details.ts`：为 4 部最重要法规建立条款级英文原文 + 中文译注 + 关联术语：
+   - Anti-Money Laundering Regulations (2023 Revision)
+   - Private Funds Law, 2020
+   - Beneficial Ownership Transparency Act, 2023
+   - Rule on Effective Compliance Programme (AML Compliance Rule, 2026)
+2. **新增法规详情页** `/cayman-laws/[id]`（SSG，4 页）：中英双栏对照 + 术语热词标注（TermLink 点开 Drawer）+ 「本法规关联术语」chips + Fund Admin 实务提示。
+3. **法规↔术语双向互链**：
+   - 时间轴节点（Law / Guidance）展开态新增「中英对照 ↕」入口；
+   - 术语详情页右栏新增「相关法规」区块，反向列出关联法规。
+
+**口径说明**：英文原文取自 CIMA / legislation.gov.ky / ciregistry.ky 官方文本；中文为学习译注（非官方翻译），不构成法律意见。
+
+---
+
 ## V1.15.4 已交付（来源：V1.15.3 冒烟期发现的**既有**缺陷）
 
 > 登记时间：2026-09-16　｜　状态：**已在 V1.15.4 修复并上线**
