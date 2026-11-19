@@ -13,9 +13,13 @@ import SearchClient, {
   type SearchTemplate,
   type SearchTermRelations,
   type SearchToolkit,
+  type SearchCaymanLaw,
 } from "@/components/search/SearchClient";
 import { AML_TOOLKIT } from "@/data/aml-toolkit";
 import { getToolkitCategory, getToolkitKind } from "@/types/aml-toolkit";
+import { CAYMAN_LAW_TIMELINE } from "@/data/cayman-law-timeline";
+import { CAYMAN_GUIDANCE_TIMELINE } from "@/data/cayman-guidance-timeline";
+import { CAYMAN_LAW_DETAILS } from "@/data/cayman-law-details";
 
 export const metadata: Metadata = {
   title: "知识检索",
@@ -114,6 +118,40 @@ export default function SearchPage() {
     };
   });
 
+  // 开曼法规（Law + Guidance + 中英对照）→ 纳入「法规」检索范围
+  const caymanLaws: SearchCaymanLaw[] = [
+    ...CAYMAN_LAW_TIMELINE.map((m) => ({
+      id: m.id,
+      kind: m.kind,
+      highlight: m.highlight,
+      year: m.year,
+      title: m.zh,
+      name: m.law,
+      detailId: undefined as string | undefined,
+      text: [m.law, m.zh, m.summary, ...m.details.points, m.details.impact, ...m.tags].join("\n"),
+    })),
+    ...CAYMAN_GUIDANCE_TIMELINE.map((m) => ({
+      id: m.id,
+      kind: m.type,
+      highlight: m.highlight,
+      year: m.year,
+      title: m.zh,
+      name: m.name,
+      detailId: undefined as string | undefined,
+      text: [m.name, m.zh, m.summary, ...m.details.points, m.details.impact, ...m.tags].join("\n"),
+    })),
+    ...CAYMAN_LAW_DETAILS.map((d) => ({
+      id: d.id,
+      kind: d.kind,
+      highlight: d.highlight,
+      year: d.year,
+      title: d.nameZh,
+      name: d.nameEn,
+      detailId: d.id,
+      text: [d.nameEn, d.nameZh, d.summary, d.faNote, ...d.relatedTerms].join("\n"),
+    })),
+  ];
+
   return (
     <SearchClient
       data={{
@@ -125,6 +163,7 @@ export default function SearchPage() {
         templates,
         checklists,
         toolkits,
+        caymanLaws,
         counts: {
           terms: GLOSSARY_TERMS.length,
           termsBuiltin: GLOSSARY_BUILTIN_COUNT,
@@ -140,6 +179,7 @@ export default function SearchPage() {
           templates: templates.length,
           checklists: checklists.length,
           toolkits: toolkits.length,
+          caymanLaws: caymanLaws.length,
         },
       }}
     />

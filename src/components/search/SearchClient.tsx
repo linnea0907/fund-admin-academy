@@ -124,6 +124,21 @@ export interface SearchToolkit {
   text: string;
 }
 
+/** 开曼法规（Law + Guidance + 中英对照）检索条目（V1.21.0） */
+export interface SearchCaymanLaw {
+  id: string;
+  /** 法规形态（主法 / 修订 / 合并修订版 / Rule 规则 / Regulation 细则 / …） */
+  kind: string;
+  highlight: "反洗钱" | "基金" | null;
+  year: number;
+  title: string;
+  name: string;
+  /** 若为中英对照详情，指向 /cayman-laws/[detailId]；否则为 undefined（指向时间轴锚点） */
+  detailId?: string;
+  /** 检索用长文本 */
+  text: string;
+}
+
 export interface SearchCounts {
   terms: number;
   termsBuiltin: number;
@@ -137,6 +152,7 @@ export interface SearchCounts {
   templates: number;
   checklists: number;
   toolkits: number;
+  caymanLaws: number;
 }
 
 interface SearchData {
@@ -148,6 +164,7 @@ interface SearchData {
   templates: SearchTemplate[];
   checklists: SearchChecklist[];
   toolkits: SearchToolkit[];
+  caymanLaws: SearchCaymanLaw[];
   counts: SearchCounts;
 }
 
@@ -167,7 +184,7 @@ interface TermHit {
   fields: string[];
 }
 
-/** 检索范围（Terms / Cases / Courses / 实务工具包 为一级；Knowledge Notes 三类为二级） */
+/** 检索范围（Terms / Cases / Courses / 实务工具包 为一级；Knowledge Notes 三类为二级；开曼法规 V1.21.0） */
 type Scope =
   | "all"
   | "term"
@@ -176,7 +193,8 @@ type Scope =
   | "toolkit"
   | "sop"
   | "template"
-  | "checklist";
+  | "checklist"
+  | "cayman";
 
 const SCOPES: { key: Scope; label: string }[] = [
   { key: "all", label: "全部" },
@@ -184,6 +202,7 @@ const SCOPES: { key: Scope; label: string }[] = [
   { key: "case", label: "Cases 案例" },
   { key: "course", label: "Courses 课程" },
   { key: "toolkit", label: "实务工具包" },
+  { key: "cayman", label: "开曼法规" },
   { key: "sop", label: "SOP 依据" },
   { key: "template", label: "邮件模板" },
   { key: "checklist", label: "Checklist" },
@@ -303,6 +322,11 @@ export default function SearchClient({ data }: { data: SearchData }) {
         .includes(lower)
     );
 
+    // 开曼法规（Law + Guidance + 中英对照；名称 / 摘要 / 要点 / 实务影响 / 标签）
+    const caymanHits = data.caymanLaws.filter((c) =>
+      [c.title, c.name, c.text].join("\n").toLowerCase().includes(lower)
+    );
+
     const total =
       termHits.length +
       derivedCases.length +
@@ -311,6 +335,7 @@ export default function SearchClient({ data }: { data: SearchData }) {
       moduleHits.length +
       caseHits.length +
       toolkitHits.length +
+      caymanHits.length +
       sopHits.length +
       templateHits.length +
       checklistHits.length;
@@ -323,6 +348,7 @@ export default function SearchClient({ data }: { data: SearchData }) {
       moduleHits,
       caseHits,
       toolkitHits,
+      caymanHits,
       sopHits,
       templateHits,
       checklistHits,
@@ -376,8 +402,8 @@ export default function SearchClient({ data }: { data: SearchData }) {
         </div>
         <p className="mt-1.5 text-sm text-slate-500">
           一次搜索直达 <b className="text-[#0e2a5e]">Terms 术语 · Cases 案例 · Courses 课程</b>
-          ，并覆盖 <b className="text-[#0e2a5e]">实务工具包</b>与 Knowledge Notes（SOP 依据 /
-          Checklist / 邮件模板）；命中术语时自动联出它的关联案例与关联课程（模糊匹配 · 不区分大小写）
+          ，并覆盖 <b className="text-[#0e2a5e]">实务工具包</b>、<b className="text-[#0e2a5e]">开曼法规</b>
+          与 Knowledge Notes（SOP 依据 / Checklist / 邮件模板）；命中术语时自动联出它的关联案例与关联课程（模糊匹配 · 不区分大小写）
         </p>
       </header>
 
@@ -481,7 +507,7 @@ export default function SearchClient({ data }: { data: SearchData }) {
       {/* ===== 空闲态：知识检索四级结构 ===== */}
       {!kw ? (
         <>
-          <section className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-5">
+          <section className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3">
             <DirCard
               href="/glossary"
               badge="Terms"
@@ -489,6 +515,14 @@ export default function SearchClient({ data }: { data: SearchData }) {
               title="Fund Admin Wiki"
               desc="术语层：缩写 / 全称 / 中文名互搜，定义 · 重要性 · 实务场景 · 关联案例与课程"
               meta={`${data.counts.terms} 条术语（内置 ${data.counts.termsBuiltin}）· 8 大类`}
+            />
+            <DirCard
+              href="/cayman-laws"
+              badge="Cayman Laws"
+              badgeCls="bg-red-100 text-red-700"
+              title="开曼法规沿革"
+              desc="现行核心法规速览 + 法规 / 指引历史沿革，核心法规含条款级中英对照"
+              meta={`${data.counts.caymanLaws} 项法规与指引 · 4 部核心中英对照`}
             />
             <DirCard
               href="/toolkit"
@@ -527,11 +561,12 @@ export default function SearchClient({ data }: { data: SearchData }) {
           <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
             <h2 className="text-sm font-bold text-slate-800">知识检索长期结构</h2>
             <p className="mt-1 text-xs leading-relaxed text-slate-400">
-              知识检索是 Fund Admin Academy 的核心入口，统一承载以下五层知识；原文页面与数据全部保留。
+              知识检索是 Fund Admin Academy 的核心入口，统一承载以下六层知识；原文页面与数据全部保留。
             </p>
             <div className="mt-3 flex flex-wrap gap-2">
               <Cat chip="Terms 术语" note={`${data.counts.terms} 条 · 悬停速览 · 点击展开释义`} href="/glossary" />
               <Cat chip="实务工具包" note={`${data.counts.toolkits} 个工具 · 清单 / SOP / 对比`} href="/toolkit" />
+              <Cat chip="开曼法规" note={`${data.counts.caymanLaws} 项 Law / Guidance · 核心法规中英对照`} href="/cayman-laws" />
               <Cat chip="Knowledge Notes 知识卡片" note="SOP 依据 / Checklist / 邮件模板，可在上方直接检索" />
               <Cat chip="Cases 案例" note={`${data.counts.cases} 个 Fund Admin 实务案例`} href="/cases" />
               <Cat chip="Courses 课程" note={`${data.counts.lessonsTotal} 讲课程与模块`} href="/courses" />
@@ -569,7 +604,8 @@ export default function SearchClient({ data }: { data: SearchData }) {
                 找到 {hits.total} 项结果（Terms {hits.termHits.length} · 术语派生{" "}
                 {hits.derivedCases.length + hits.derivedCourses.length} · Cases {hits.caseHits.length}{" "}
                 · Courses {hits.lessonHits.length + hits.moduleHits.length} · 实务工具包{" "}
-                {hits.toolkitHits.length} · SOP {hits.sopHits.length} · 模板{" "}
+                {hits.toolkitHits.length} · 开曼法规 {hits.caymanHits.length} · SOP {hits.sopHits.length}{" "}
+                · 模板{" "}
                 {hits.templateHits.length} · Checklist {hits.checklistHits.length}），关键词「
                 <span className="font-semibold text-[#0e2a5e]">{keyword}</span>」
               </>
@@ -887,6 +923,69 @@ export default function SearchClient({ data }: { data: SearchData }) {
                   </li>
                 ))}
               </ul>
+            </section>
+          )}
+
+          {/* ===== 开曼法规（Law + Guidance + 中英对照，V1.21.0） ===== */}
+          {show("cayman") && hits.caymanHits.length > 0 && (
+            <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+              <h2 className="flex flex-wrap items-center gap-2 text-sm font-bold text-slate-800">
+                开曼法规（{hits.caymanHits.length}）
+                <span className="rounded bg-[#0e2a5e]/5 px-1.5 py-0.5 text-[10px] font-semibold text-[#0e2a5e]">
+                  Cayman Law &amp; Guidance
+                </span>
+              </h2>
+              <ul className="mt-3 space-y-2">
+                {hits.caymanHits.slice(0, 30).map((c) => {
+                  const href = c.detailId
+                    ? `/cayman-laws/${c.detailId}`
+                    : `/cayman-laws#cayman-${c.id}`;
+                  const hlStyle =
+                    c.highlight === "反洗钱"
+                      ? "bg-red-50 text-red-700 ring-red-200"
+                      : c.highlight === "基金"
+                        ? "bg-amber-50 text-amber-700 ring-amber-200"
+                        : "bg-slate-100 text-slate-500 ring-slate-200";
+                  return (
+                    <li key={c.id}>
+                      <Link
+                        href={href}
+                        className="group flex items-start gap-3 rounded-xl border border-slate-100 px-3 py-3 transition hover:border-blue-200 hover:bg-blue-50/40"
+                      >
+                        <span
+                          className={`mt-0.5 shrink-0 rounded px-1.5 py-0.5 text-[10px] font-bold tabular-nums ring-1 ${hlStyle}`}
+                        >
+                          {c.year}
+                        </span>
+                        <span className="min-w-0 flex-1">
+                          <span className="flex flex-wrap items-center gap-1.5">
+                            <span className="block text-sm font-semibold text-slate-700 group-hover:text-[#0e2a5e]">
+                              <Highlight text={c.title} keyword={kw} />
+                            </span>
+                            {c.detailId && (
+                              <span className="rounded bg-emerald-50 px-1.5 py-0.5 text-[10px] font-semibold text-emerald-700">
+                                中英对照
+                              </span>
+                            )}
+                          </span>
+                          <span className="mt-0.5 block text-xs leading-snug text-slate-400">
+                            <Highlight text={c.name} keyword={kw} />
+                          </span>
+                        </span>
+                        <span className="mt-0.5 shrink-0 text-xs font-semibold text-[#0e2a5e]/60">
+                          查看 →
+                        </span>
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+              <p className="mt-3 border-t border-slate-100 pt-2 text-[11px] text-slate-400">
+                查看完整沿革与现行法规速览，前往{" "}
+                <Link href="/cayman-laws" className="font-semibold text-[#0e2a5e] hover:underline">
+                  开曼法规沿革
+                </Link>
+              </p>
             </section>
           )}
 
