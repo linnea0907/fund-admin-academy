@@ -33,16 +33,16 @@ export const CAYMAN_GUIDANCE_TIMELINE: CaymanGuidanceMilestone[] = [
     type: "Regulation 细则",
     highlight: "反洗钱",
     summary:
-      "开曼反洗钱 / 反恐怖融资 / 反扩散融资（AML/CFT/CPF）的核心法源，落实 FATF 40 项建议，适用于所有受监管实体。",
+      "开曼反洗钱 / 反恐怖融资 / 反扩散融资（AML/CFT/CPF）的核心法源，落实 FATF 40 项建议，适用于所有受监管实体；后经 2024 修订并合并为 2025 Revision。",
     details: {
       points: [
-        "落实 FATF 40 项建议，覆盖客户尽调（CDD）、政治公众人物（PEP）、可疑交易报告（STR）等",
+        "落实 FATF 40 项建议，覆盖客户尽调（CDD）、政治公众人物（PEP）、可疑交易报告（SAR）等",
         "定义「相关金融业务」（Relevant Financial Business），圈定适用主体",
-        "确立 AMLCO / MLRO / Deputy MLRO 等反洗钱岗位与职责",
+        "确立 AMLCO / MLRO / DMLRO 等反洗钱岗位与职责",
       ],
       impact:
-        "Fund Admin 在客户准入、持续监测、可疑交易上报等环节的直接法源；AMLRs 是 KYC/EDD/SDD 义务的最终依据，违规可被 CIMA 处以最高 CI$100 万行政罚款。",
-      keyItems: ["AMLCO / MLRO 岗位", "CDD / EDD / SDD", "STR 可疑交易报告"],
+        "Fund Admin 在客户准入、持续监测、可疑交易上报等环节的直接法源；AMLRs 是 KYC/EDD/SDD 义务的最终依据，违规可被 CIMA 处以最高 CI$100 万行政罚款（非常严重违规）。",
+      keyItems: ["AMLCO / MLRO / DMLRO 岗位", "CDD / EDD / SDD", "SAR 可疑交易报告"],
     },
     url: "https://www.cima.ky/upimages/lawsregulations/Anti-MoneyLaunderingRegulations2023Revision_1673895715.PDF",
     tags: ["反洗钱", "AML", "CIMA"],

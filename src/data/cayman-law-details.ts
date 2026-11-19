@@ -161,8 +161,8 @@ export const CAYMAN_LAW_DETAILS: CaymanLawDetail[] = [
           },
           {
             ref: "reg. 35",
-            en: "Where a person knows or suspects that funds are the proceeds of criminal conduct, a suspicious activity report must be filed with the Financial Reporting Authority.",
-            zh: "主体知晓或怀疑资金为犯罪所得时，须向金融报告局（FRA）提交可疑交易报告（SAR/STR）。",
+            en: "Where a person knows or suspects that funds are the proceeds of criminal conduct, a suspicious activity report (SAR) must be filed with the Financial Reporting Authority.",
+            zh: "主体知晓或怀疑资金为犯罪所得时，须向金融报告局（FRA）提交可疑交易报告（SAR）。",
             terms: ["str", "mlro", "tipping-off"],
           },
         ],
@@ -173,8 +173,8 @@ export const CAYMAN_LAW_DETAILS: CaymanLawDetail[] = [
         provisions: [
           {
             ref: "reg. 4",
-            en: "A person must appoint an Anti-Money Laundering Compliance Officer (AMLCO), a Money Laundering Reporting Officer (MLRO) and a Deputy MLRO, who are natural persons at no lower than management level.",
-            zh: "主体须任命反洗钱合规官（AMLCO）、反洗钱报告官（MLRO）与副报告官（DMLRO），且须为不低于管理层的自然人。",
+            en: "A person must appoint an Anti-Money Laundering Compliance Officer (AMLCO), a Money Laundering Reporting Officer (MLRO) and a Deputy MLRO (DMLRO), who are natural persons at no lower than management level.",
+            zh: "主体须任命反洗钱合规官（AMLCO）、洗钱申报官（MLRO）与副洗钱申报官（DMLRO），且均须为不低于管理层的自然人。",
             terms: ["amlco", "mlro", "dmlro"],
           },
           {
@@ -345,9 +345,9 @@ export const CAYMAN_LAW_DETAILS: CaymanLawDetail[] = [
         titleZh: "受益所有人的定义",
         provisions: [
           {
-            ref: "s. 4",
-            en: "A 'beneficial owner' means an individual who ultimately owns or controls a legal person, including through owning (directly or indirectly) 25% or more of the shares, voting rights or partnership interests, or who otherwise exercises ultimate effective control.",
-            zh: "「受益所有人」指最终拥有或控制法人的自然人，包括（直接或间接）持有 25% 或以上的股份、表决权或合伙权益，或以其他方式行使最终有效控制权。",
+            ref: "s. 4(1)",
+            en: "A 'beneficial owner' means an individual who: (a) ultimately owns or controls, whether directly or indirectly, 25% or more of the shares, voting rights or partnership interests in the legal person; (b) otherwise exercises ultimate effective control over the management of the legal person; or (c) is identified as exercising control of the legal person through other means.",
+            zh: "「受益所有人」指符合下列任一条件的自然人：(a) 直接或间接最终拥有或控制法人 25% 或以上的股份、表决权或合伙权益；(b) 以其他方式对法人的管理行使最终有效控制；或 (c) 被认定为通过其他方式（如可任免多数董事、重大否决权）对法人行使控制。",
             terms: ["ubo"],
           },
         ],
@@ -394,8 +394,8 @@ export const CAYMAN_LAW_DETAILS: CaymanLawDetail[] = [
         provisions: [
           {
             ref: "s. 22",
-            en: "Access to beneficial ownership information is available to specified authorities and, under the Legitimate Interest Access Regulations 2024, to members of the public meeting a legitimate interest test.",
-            zh: "受益所有权信息可供指定主管机关查阅；依《合法利益查阅细则（2024）》，满足「合法利益」标准的公众亦可申请查阅。",
+            en: "Access to beneficial ownership information is available to specified authorities and, under the Legitimate Interest Access Regulations 2024, to members of the public who meet a legitimate interest test — namely persons (a) engaged in journalism or bona fide academic research; (b) acting on behalf of a civil society organisation combating money laundering or terrorist financing; or (c) seeking the information in the context of a potential or actual business relationship with the legal person.",
+            zh: "受益所有权信息可供指定主管机关查阅；依《合法利益查阅细则（2024）》，满足「合法利益」标准的公众亦可申请查阅——包括：(a) 从事新闻或真实学术研究的人；(b) 代表打击洗钱或恐怖融资的民间组织行事的人；或 (c) 因与该法人存在潜在或实际业务关系而查询信息的人。",
             terms: ["ubo"],
           },
         ],
