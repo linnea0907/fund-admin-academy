@@ -17,10 +17,10 @@ export const metadata: Metadata = {
 
 /** 知识检索 · 开曼法规沿革（独立子版块，与案例库 / 术语库 / 实务工具包平级）
  *
- *  - 现行核心法规速览：当前有效的 4 部核心法规卡片，含生效年份 + 中英对照直达
- *  - 法律（Law）：CaymanLawTimeline —— 1960 公司法 → 2024 修正法，左右错落时间轴
- *  - 指引（Rules / Regulations / Guidance / SOG）：CaymanGuidanceTimeline —— CIMA 发布的监管指引
- *  - 两者均支持：旧→新/新→旧排序、跳到最新、主题筛选（下拉）、反洗钱/基金高亮、逐条展开结构化内容 + 官方 PDF 直链
+ *  - 现行核心指引速览：最新 2026 指引卡片，含中英对照直达
+ *  - 开曼法规历史沿革（Law）：CaymanLawTimeline —— 1960 公司法 → 2024 修正法（默认折叠）
+ *  - 开曼指引历史沿革（Guidance）：CaymanGuidanceTimeline —— CIMA 发布的监管指引（默认折叠）
+ *  - 两者均支持：旧→新/新→旧排序、跳到最新、主题筛选、反洗钱/基金高亮、逐条展开 + 官方 PDF 直链
  */
 export default function CaymanLawsPage() {
   return (
@@ -44,17 +44,17 @@ export default function CaymanLawsPage() {
           CAYMAN REGULATORY &amp; GUIDANCE TIMELINE
         </p>
         <h1 className="mt-2 text-xl font-black tracking-tight sm:text-2xl">
-          开曼法规 &amp; 指引历史沿革
+          开曼法规沿革 · 指引沿革
         </h1>
         <p className="mt-2 max-w-3xl text-[13px] leading-relaxed text-blue-100/90">
-          从 1960 年《公司法》到 2024 年修正法，梳理开曼基金 / 公司监管的立法演变；并同步收录
-          CIMA 发布的监管指引（Rules / Regulations / Guidance Notes / SOG）。
-          点击任意节点查看监管要点、对 Fund Admin 的实务影响与官方 PDF 原文。
+          上为<b className="font-semibold text-amber-200">开曼法规历史沿革</b>（Law，1960《公司法》至 2024 修正法），
+          下为<b className="font-semibold text-amber-200">开曼指引历史沿革</b>（Guidance，CIMA 发布的 Rules / Regulations /
+          Guidance Notes / SOG）。两个板块默认折叠，点击板块标题即可展开。
         </p>
 
         <div className="mt-4 flex flex-wrap gap-2">
           <span className="rounded-full bg-white/10 px-3 py-1 text-[11.5px] font-semibold text-blue-50 ring-1 ring-white/15">
-            法律 Law <span className="text-amber-300">{CAYMAN_LAW_TIMELINE.length}</span> 部
+            法规 Law <span className="text-amber-300">{CAYMAN_LAW_TIMELINE.length}</span> 部
           </span>
           <span className="rounded-full bg-white/10 px-3 py-1 text-[11.5px] font-semibold text-blue-50 ring-1 ring-white/15">
             指引 Guidance <span className="text-amber-300">{CAYMAN_GUIDANCE_TIMELINE.length}</span> 项
@@ -110,11 +110,11 @@ export default function CaymanLawsPage() {
         </div>
       </section>
 
-      {/* 指引沿革（优先展示，便于直接查询最新指引） */}
-      <CaymanGuidanceTimeline />
-
-      {/* 法规沿革（整体可折叠，默认收起） */}
+      {/* 开曼法规历史沿革（上半块，默认折叠） */}
       <CaymanLawTimeline />
+
+      {/* 开曼指引历史沿革（下半块，默认折叠） */}
+      <CaymanGuidanceTimeline />
 
       <p className="pt-1 text-center text-[11px] text-slate-400">
         法规名称与链接以 CIMA / legislation.gov.ky / gov.ky 官方发布为准，实施前请核对最新版本。
