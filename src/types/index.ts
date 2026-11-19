@@ -107,7 +107,7 @@ export type HLStatus = "active" | "partial" | "lost";
 
 /** 学习笔记 / 高亮（V1.11 学习笔记 Tab；V1.12 阅读划线写入同一结构） */
 export type NoteType = "highlight" | "note";
-export type NoteSourceType = "course" | "case";
+export type NoteSourceType = "course" | "case" | "cayman-law" | "cayman-guidance";
 
 export interface StudyNote {
   noteId: string;

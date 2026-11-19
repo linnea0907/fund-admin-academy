@@ -24,6 +24,8 @@ export const NOTE_TYPES: { key: NoteType; label: string }[] = [
 export const NOTE_SOURCES: { key: NoteSourceType; label: string }[] = [
   { key: "course", label: "课程" },
   { key: "case", label: "案例" },
+  { key: "cayman-law", label: "开曼法规" },
+  { key: "cayman-guidance", label: "开曼指引" },
 ];
 
 export const HL_STATUS_META: {
@@ -87,7 +89,12 @@ function normalizeNote(raw: unknown): StudyNote | null {
   const n = raw as Record<string, unknown>;
   if (typeof n.noteId !== "string" || !/^Note-\d{3,}$/.test(n.noteId)) return null;
   const type: NoteType = n.type === "highlight" ? "highlight" : "note";
-  const sourceType: NoteSourceType = n.sourceType === "case" ? "case" : "course";
+  const sourceType: NoteSourceType =
+    n.sourceType === "case" ||
+    n.sourceType === "cayman-law" ||
+    n.sourceType === "cayman-guidance"
+      ? (n.sourceType as NoteSourceType)
+      : "course";
   const note = normStr(n.note);
   // 手动笔记必须有内容；纯高亮允许空批注（note 可空），但必须有 selectedText
   if (type === "note" && !note) return null;
@@ -265,13 +272,13 @@ export interface NoteGroupCourse {
   kind: "required" | "elective";
 }
 
-export type NoteGroupKind = "all" | "required" | "elective" | "case" | "other";
+export type NoteGroupKind = "all" | "required" | "elective" | "case" | "cayman" | "other";
 
 export interface NoteGroup {
-  /** `all` | `course:<课程id>` | `case` | `other:<来源id>` */
+  /** `all` | `course:<课程id>` | `case` | `cayman` | `other:<来源id>` */
   key: string;
   kind: NoteGroupKind;
-  /** 展示名：全部 / `02 基金结构全景` / 案例 */
+  /** 展示名：全部 / `02 基金结构全景` / 案例 / 开曼法规沿革 */
   label: string;
   count: number;
   /** 组内笔记（最新在前） */
@@ -296,6 +303,7 @@ export function groupNotesBySource(
   const byCourse = new Map<string, StudyNote[]>();
   const orphan = new Map<string, StudyNote[]>();
   const caseNotes: StudyNote[] = [];
+  const caymanNotes: StudyNote[] = [];
   const bucket = (map: Map<string, StudyNote[]>, key: string) => {
     const list = map.get(key);
     if (list) return list;
@@ -306,6 +314,10 @@ export function groupNotesBySource(
   for (const n of sorted) {
     if (n.sourceType === "case") {
       caseNotes.push(n);
+      continue;
+    }
+    if (n.sourceType === "cayman-law" || n.sourceType === "cayman-guidance") {
+      caymanNotes.push(n);
       continue;
     }
     const target = known.has(n.sourceId) ? byCourse : orphan;
@@ -335,6 +347,16 @@ export function groupNotesBySource(
       label: "案例",
       count: caseNotes.length,
       notes: caseNotes,
+    });
+  }
+
+  if (caymanNotes.length > 0) {
+    out.push({
+      key: "cayman",
+      kind: "cayman",
+      label: "开曼法规沿革",
+      count: caymanNotes.length,
+      notes: caymanNotes,
     });
   }
 

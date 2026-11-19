@@ -275,7 +275,7 @@ export const CAYMAN_LAW_TIMELINE: CaymanLawMilestone[] = [
         "Fund Admin 须更审慎地识别并核验最终受益所有人（UBO），因为 BO 信息可能向公众 / 特定主体披露；客户准入时的「穿透识别」从形式审查走向实质审查。",
       keyItems: ["BO 公开披露框架", "替代 Part XVIIA", "UBO 穿透识别"],
     },
-    url: "https://www.cima.ky/upimages/lawsregulations/BeneficialOwnershipTransparencyAct,2023_1705419743.pdf",
+    url: "https://www.cima.ky/upimages/lawsregulations/BeneficialOwnershipTransparencyAct,2023_1705419742.pdf",
     tags: ["受益所有权", "反洗钱", "透明度"],
   },
   {

@@ -21,6 +21,7 @@ import {
   hlStatusMeta,
   loadNotes,
   matchNote,
+  noteSourceLabel,
   noteTypeLabel,
   upsertNote,
 } from "@/lib/notes";
@@ -449,6 +450,11 @@ function NotesPanel({
       const r = locateRecord(n, blocks);
       return { key: r.status, hint: meta(r.status).hint };
     }
+    // 开曼法规/指引：正文在时间轴组件客户端渲染，收藏夹读不到 → 用最近一次阅读恢复状态
+    if (n.sourceType === "cayman-law" || n.sourceType === "cayman-guidance") {
+      const st: HLStatus = n.status ?? "active";
+      return { key: st, hint: meta(st).hint };
+    }
     // 案例：无法在收藏夹读到 md 正文 → 用最近一次阅读恢复状态；整案下架才判失效
     if (!caseRefs.some((c) => c.id === n.sourceId)) {
       return { key: "lost", hint: meta("lost").hint };
@@ -471,6 +477,9 @@ function NotesPanel({
     if (n.sourceType === "course") {
       const l = courseMap.get(n.sourceId);
       return l ? `/courses/${l.slug}${hl}` : null;
+    }
+    if (n.sourceType === "cayman-law" || n.sourceType === "cayman-guidance") {
+      return `/cayman-laws${hl}`;
     }
     const c = caseRefs.find((x) => x.id === n.sourceId);
     return c ? `${c.href}${hl}` : null;
@@ -746,10 +755,15 @@ function NoteEditorModal({
   const options =
     sourceType === "course"
       ? courseOptions.map((o) => ({ id: o.id, title: o.title }))
-      : caseRefs.map((c) => ({ id: c.id, title: `${c.id} ${c.title}` }));
+      : sourceType === "case"
+        ? caseRefs.map((c) => ({ id: c.id, title: `${c.id} ${c.title}` }))
+        : [];
 
   const resolvedTitle = options.find((o) => o.id === sourceId)?.title ?? "";
   const dirty = (sourceId ? true : false) && body.trim().length > 0;
+
+  /** 开曼法规/指引笔记：来源由阅读高亮自动生成，编辑时锁定来源不可改 */
+  const isCayman = sourceType === "cayman-law" || sourceType === "cayman-guidance";
 
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/40 p-0 sm:items-center sm:p-4">
@@ -773,52 +787,65 @@ function NoteEditorModal({
         <div className="mt-4 space-y-3.5">
           <div>
             <p className="mb-1.5 text-xs font-semibold text-slate-500">来源类型</p>
-            <div className="flex gap-2">
-              {(
-                [
-                  ["course", "课程"],
-                  ["case", "案例"],
-                ] as [NoteSourceType, string][]
-              ).map(([k, label]) => (
-                <button
-                  key={k}
-                  type="button"
-                  onClick={() => {
-                    setSourceType(k);
-                    const first =
-                      k === "course"
-                        ? courseOptions[0]?.id ?? ""
-                        : caseRefs[0]?.id ?? "";
-                    setSourceId(first);
-                  }}
-                  className={`rounded-full px-4 py-1.5 text-xs font-medium transition ${
-                    sourceType === k
-                      ? "bg-[#0e2a5e] text-white"
-                      : "bg-slate-100 text-slate-500 hover:bg-slate-200"
-                  }`}
-                >
-                  {label}
-                </button>
-              ))}
-            </div>
+            {isCayman ? (
+              <div className="rounded-lg bg-slate-50 px-3 py-2 text-sm text-slate-600">
+                {noteSourceLabel(sourceType)}
+                <span className="ml-2 text-xs text-slate-400">（由阅读高亮自动生成，不可修改）</span>
+              </div>
+            ) : (
+              <div className="flex gap-2">
+                {(
+                  [
+                    ["course", "课程"],
+                    ["case", "案例"],
+                  ] as [NoteSourceType, string][]
+                ).map(([k, label]) => (
+                  <button
+                    key={k}
+                    type="button"
+                    onClick={() => {
+                      setSourceType(k);
+                      const first =
+                        k === "course"
+                          ? courseOptions[0]?.id ?? ""
+                          : caseRefs[0]?.id ?? "";
+                      setSourceId(first);
+                    }}
+                    className={`rounded-full px-4 py-1.5 text-xs font-medium transition ${
+                      sourceType === k
+                        ? "bg-[#0e2a5e] text-white"
+                        : "bg-slate-100 text-slate-500 hover:bg-slate-200"
+                    }`}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
 
           <div>
             <p className="mb-1.5 text-xs font-semibold text-slate-500">
-              内容 {sourceType === "course" ? "（课程）" : "（案例）"}
+              内容 {sourceType === "course" ? "（课程）" : sourceType === "case" ? "（案例）" : ""}
             </p>
-            <select
-              value={sourceId}
-              onChange={(e) => setSourceId(e.target.value)}
-              className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 outline-none transition focus:border-[#0e2a5e]"
-            >
-              {options.length === 0 && <option value="">暂无可用来源</option>}
-              {options.map((o) => (
-                <option key={o.id} value={o.id}>
-                  {o.title}
-                </option>
-              ))}
-            </select>
+            {isCayman ? (
+              <div className="rounded-lg bg-slate-50 px-3 py-2 text-sm text-slate-600">
+                {note?.sourceTitle || sourceId}
+              </div>
+            ) : (
+              <select
+                value={sourceId}
+                onChange={(e) => setSourceId(e.target.value)}
+                className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 outline-none transition focus:border-[#0e2a5e]"
+              >
+                {options.length === 0 && <option value="">暂无可用来源</option>}
+                {options.map((o) => (
+                  <option key={o.id} value={o.id}>
+                    {o.title}
+                  </option>
+                ))}
+              </select>
+            )}
           </div>
 
           <div>
