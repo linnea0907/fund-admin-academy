@@ -6,6 +6,9 @@ import { CAYMAN_LAW_TIMELINE } from "@/data/cayman-law-timeline";
 import { CAYMAN_GUIDANCE_TIMELINE } from "@/data/cayman-guidance-timeline";
 import { CAYMAN_LAW_DETAILS } from "@/data/cayman-law-details";
 
+/** 现行核心法规速览仅保留最新（2026）指引 */
+const LATEST_DETAILS = CAYMAN_LAW_DETAILS.filter((d) => d.year === 2026);
+
 export const metadata: Metadata = {
   title: "开曼法规沿革",
   description:
@@ -65,68 +68,53 @@ export default function CaymanLawsPage() {
         </div>
       </header>
 
-      {/* 现行核心法规速览（查询最新指引的直达入口） */}
+      {/* 现行核心指引速览（仅最新 2026 指引） */}
       <section
-        aria-label="现行核心法规速览"
+        aria-label="现行核心指引速览"
         className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6"
       >
         <div className="flex flex-wrap items-center gap-2">
-          <h2 className="text-sm font-bold text-slate-800">现行核心法规速览</h2>
+          <h2 className="text-sm font-bold text-slate-800">现行核心指引速览</h2>
           <span className="rounded bg-emerald-100 px-1.5 py-0.5 text-[10px] font-semibold text-emerald-700">
-            当前有效 · 中英对照
+            最新 · 中英对照
           </span>
-          <p className="ml-auto text-[11px] text-slate-400">
-            日常查证优先看这几部，其余见下方时间轴
-          </p>
         </div>
-        <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
-          {CAYMAN_LAW_DETAILS.map((d) => {
-            const is2026 = d.year === 2026;
-            return (
-              <Link
-                key={d.id}
-                href={`/cayman-laws/${d.id}`}
-                className={`group flex flex-col rounded-xl border p-4 transition ${
-                  is2026
-                    ? "border-emerald-200 bg-emerald-50/50 hover:border-emerald-300 hover:shadow"
-                    : "border-slate-200 bg-white hover:border-[#0e2a5e]/30 hover:shadow"
-                }`}
-              >
-                <div className="flex items-center gap-1.5">
-                  <span
-                    className={`rounded px-1.5 py-0.5 text-[10px] font-bold tabular-nums ${
-                      is2026 ? "bg-emerald-500 text-white" : "bg-slate-800 text-white"
-                    }`}
-                  >
-                    {d.year}
-                  </span>
-                  <span className="rounded bg-slate-100 px-1.5 py-0.5 text-[10px] font-semibold text-slate-500">
-                    {d.kind}
-                  </span>
-                  {is2026 && (
-                    <span className="rounded bg-emerald-100 px-1.5 py-0.5 text-[10px] font-semibold text-emerald-700">
-                      最新
-                    </span>
-                  )}
-                </div>
-                <p className="mt-2 text-[13px] font-semibold leading-snug text-slate-700 group-hover:text-[#0e2a5e]">
-                  {d.nameZh}
-                </p>
-                <p className="mt-1 line-clamp-2 text-[11px] leading-snug text-slate-400">{d.nameEn}</p>
-                <p className="mt-auto pt-2 text-[11px] font-semibold text-[#0e2a5e]">
-                  中英对照 ↕
-                </p>
-              </Link>
-            );
-          })}
+        <div className="mt-4 grid grid-cols-1 gap-3">
+          {LATEST_DETAILS.map((d) => (
+            <Link
+              key={d.id}
+              href={`/cayman-laws/${d.id}`}
+              className="group flex flex-col rounded-xl border border-emerald-200 bg-emerald-50/50 p-4 transition hover:border-emerald-300 hover:shadow"
+            >
+              <div className="flex items-center gap-1.5">
+                <span className="rounded bg-emerald-500 px-1.5 py-0.5 text-[10px] font-bold tabular-nums text-white">
+                  {d.year}
+                </span>
+                <span className="rounded bg-slate-100 px-1.5 py-0.5 text-[10px] font-semibold text-slate-500">
+                  {d.kind}
+                </span>
+                <span className="rounded bg-emerald-100 px-1.5 py-0.5 text-[10px] font-semibold text-emerald-700">
+                  最新
+                </span>
+              </div>
+              <p className="mt-2 text-[13px] font-semibold leading-snug text-slate-700 group-hover:text-[#0e2a5e]">
+                {d.nameZh}
+              </p>
+              <p className="mt-1 text-[11px] leading-snug text-slate-400">{d.nameEn}</p>
+              <p className="mt-2 text-xs leading-relaxed text-slate-500">{d.summary}</p>
+              <p className="mt-auto pt-2 text-[11px] font-semibold text-[#0e2a5e]">
+                中英对照 ↕
+              </p>
+            </Link>
+          ))}
         </div>
       </section>
 
-      {/* 法律沿革 */}
-      <CaymanLawTimeline />
-
-      {/* 指引沿革 */}
+      {/* 指引沿革（优先展示，便于直接查询最新指引） */}
       <CaymanGuidanceTimeline />
+
+      {/* 法规沿革（整体可折叠，默认收起） */}
+      <CaymanLawTimeline />
 
       <p className="pt-1 text-center text-[11px] text-slate-400">
         法规名称与链接以 CIMA / legislation.gov.ky / gov.ky 官方发布为准，实施前请核对最新版本。

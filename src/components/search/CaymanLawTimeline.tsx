@@ -47,6 +47,8 @@ export default function CaymanLawTimeline() {
   const [order, setOrder] = useState<"asc" | "desc">("asc");
   const [activeTag, setActiveTag] = useState<string | null>(null);
   const [showFilter, setShowFilter] = useState(false);
+  /** 整体折叠：默认收起，优先露出下方指引沿革 */
+  const [collapsed, setCollapsed] = useState(true);
   const filterRef = useRef<HTMLDivElement>(null);
   /** 阅读高亮引擎的正文作用域（时间轴 ol 容器，含各节点 data-reading-scope） */
   const scopeRef = useRef<HTMLElement | null>(null);
@@ -122,38 +124,62 @@ export default function CaymanLawTimeline() {
           </p>
         </div>
         <div className="flex shrink-0 items-center gap-2">
-          <button
-            type="button"
-            onClick={jumpToLatest}
-            className="rounded-full bg-[#0e2a5e] px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-[#0e2a5e]/90"
-          >
-            ⤵ 跳到最新法规
-          </button>
-          <div className="flex overflow-hidden rounded-full border border-slate-200 text-xs font-semibold">
+          {collapsed ? (
             <button
               type="button"
-              onClick={() => setOrder("asc")}
-              className={`px-2.5 py-1.5 transition ${
-                order === "asc" ? "bg-[#0e2a5e] text-white" : "bg-white text-slate-500 hover:bg-slate-50"
-              }`}
+              onClick={() => setCollapsed(false)}
+              className="inline-flex items-center gap-1.5 rounded-full bg-[#0e2a5e] px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-[#0e2a5e]/90"
             >
-              旧 → 新
+              展开 {CAYMAN_LAW_TIMELINE.length} 部法规
+              <svg className="h-3.5 w-3.5" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M4 6l4 4 4-4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
             </button>
-            <button
-              type="button"
-              onClick={() => setOrder("desc")}
-              className={`px-2.5 py-1.5 transition ${
-                order === "desc" ? "bg-[#0e2a5e] text-white" : "bg-white text-slate-500 hover:bg-slate-50"
-              }`}
-            >
-              新 → 旧
-            </button>
-          </div>
+          ) : (
+            <>
+              <button
+                type="button"
+                onClick={jumpToLatest}
+                className="rounded-full bg-[#0e2a5e] px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-[#0e2a5e]/90"
+              >
+                ⤵ 跳到最新法规
+              </button>
+              <div className="flex overflow-hidden rounded-full border border-slate-200 text-xs font-semibold">
+                <button
+                  type="button"
+                  onClick={() => setOrder("asc")}
+                  className={`px-2.5 py-1.5 transition ${
+                    order === "asc" ? "bg-[#0e2a5e] text-white" : "bg-white text-slate-500 hover:bg-slate-50"
+                  }`}
+                >
+                  旧 → 新
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setOrder("desc")}
+                  className={`px-2.5 py-1.5 transition ${
+                    order === "desc" ? "bg-[#0e2a5e] text-white" : "bg-white text-slate-500 hover:bg-slate-50"
+                  }`}
+                >
+                  新 → 旧
+                </button>
+              </div>
+              <button
+                type="button"
+                onClick={() => setCollapsed(true)}
+                className="rounded-full border border-slate-200 px-2.5 py-1.5 text-xs font-semibold text-slate-500 transition hover:bg-slate-50"
+              >
+                收起
+              </button>
+            </>
+          )}
         </div>
       </div>
 
-      {/* 图例 + 筛选下拉 + 展开/收起 */}
-      <div className="relative mt-4 flex flex-wrap items-center gap-x-4 gap-y-3">
+      {!collapsed && (
+        <>
+          {/* 图例 + 筛选下拉 + 展开/收起 */}
+          <div className="relative mt-4 flex flex-wrap items-center gap-x-4 gap-y-3">
         {/* 高亮图例 */}
         <div className="flex items-center gap-3 text-[11px] text-slate-500">
           <span className="font-semibold text-slate-600">高亮图例</span>
@@ -308,6 +334,8 @@ export default function CaymanLawTimeline() {
         sourceTitle="开曼法规沿革"
         scopeRef={scopeRef}
       />
+        </>
+      )}
     </section>
   );
 }
